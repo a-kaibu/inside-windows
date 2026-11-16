@@ -824,3 +824,504 @@ pages_ja['page-61'] = r"""<p>さらに WDK には、重要な内部データ構�
 <h3>まとめ（Conclusion）</h3>
 <p>本章では、本書全体を通じて基礎となる Windows の主要なアーキテクチャ概念と基本用語（API、プロセス、スレッド、仮想メモリ、実行モード、ハイパーバイザー、オブジェクト、セキュリティ等）を整理し、内部構造を解明するための強力な調査ツール群（タスクマネージャー、Process Explorer、パフォーマンスモニター、WinDbg/LiveKd、WDK）の基本操作を紹介しました。</p>
 <p>これでWindowsの内部世界を探究する準備が整いました。続く第2章では、システム全体の全体像と各コアコンポーネントがどのように結合しているかを解き明かす「システムアーキテクチャ」の旅へと進みましょう。</p>"""
+# ==============================================================================
+# CHAPTER 2: SYSTEM ARCHITECTURE (Pages 62 - 117)
+# ==============================================================================
+
+pages_ja['page-62'] = r"""<h2>第2章 システムアーキテクチャ</h2>
+<p>第1章で必須となる専門用語、基本概念、および調査ツールの操作方法を習得したところで、いよいよ Microsoft Windows オペレーティングシステム（OS）の内部設計思想と全体構造の探究に入りましょう。本章では、システムの全体アーキテクチャ、主要コンポーネント群、それらの相互作用、そしてそれぞれが実行されるコンテキスト（特権モードやアドレス空間）について詳しく解説します。まずは、Windows の仕様と設計を決定づけた当初の要件と目標から振り返ります。</p>
+
+<h3>要件と設計目標</h3>
+<p>1989年に Windows NT の仕様策定が始まった際、開発チームには以下の厳格な要件が課されていました：</p>
+<ul>
+  <li>真の32ビット（および将来の64ビット）、プリエンプティブ、リエントラントな仮想記憶OSを提供すること。</li>
+  <li>複数のハードウェアアーキテクチャおよびプラットフォーム上で稼働可能であること（移植性）。</li>
+  <li>複数のプロセッサ上でシームレスにスケールし、並列実行できること（対称型マルチプロセッシング：SMP）。</li>
+  <li>分散コンピューティング環境に適した堅牢なネットワーク基盤を備えること。</li>
+  <li>政府機関や企業の厳格なセキュリティ要件（C2クラス等）を満たすこと。</li>
+  <li>主要な業界標準仕様および既存のアプリケーション環境（Win16, DOS, POSIX, OS/2等）と高度な互換性を維持すること。</li>
+</ul>"""
+
+pages_ja['page-63'] = r"""<ul>
+  <li><strong>互換性（Compatibility）</strong>：既存の技術を継承・拡張しつつ、ユーザーインターフェースおよびAPIは従来の Windows や MS-DOS と高い互換性を維持すること。また、UNIX、OS/2、NetWare など異種OS環境とも円滑に相互運用できること。</li>
+  <li><strong>パフォーマンス（Performance）</strong>：他の設計目標の制約の範囲内で、各ハードウェアプラットフォーム上で最大限の高速性と応答性を発揮すること。</li>
+</ul>
+
+<p>Windowsの内部構造を読み進めるにつれ、これら当初の設計目標と市場要件が、システムの細部に至るまで極めて見事に織り込まれていることが理解できるはずです。詳細な探究を始める前に、まず Windows の全体的な設計モデルを眺め、他の現代OSと比較してみましょう。</p>
+
+<h3>オペレーティングシステムモデル</h3>
+<p>学術的なOSの分類において、OSアーキテクチャは主に「モノリシックカーネル（単一巨大カーネル）」と「マイクロカーネル（極小カーネル）」の2つに大別されます。</p>
+<p>Windows は、伝統的なモノリシックカーネル（すべてのOS機能がカーネル空間で動作）と、純粋なマイクロカーネル（カーネル空間には最小限のIPC・スケジューリングのみを残し、ファイルシステムやドライバをユーザー空間サーバーとして動作させる）の双方の長所を巧みに組み合わせた「<strong>ハイブリッド構造</strong>」を採用しています。</p>
+<p>Windows では、スレッドスケジューリング、割り込み・例外処理、マルチプロセッサ同期などを司るコア部分を「カーネル」として階層化しつつ、その上位にあるメモリ管理、プロセス管理、セキュリティ、I/Oマネージャーなどの「エグゼクティブ」コンポーネント、そしてグラフィックス・ウィンドウ管理（USER/GDI）やデバイスドライバ群も、性能（コンテキストスイッチのオーバーヘッド回避）のために同一のカーネルモード空間で高速に動作させています。一方で、APIインターフェースの提供や環境ごとの仕様差は、ユーザーモードの「環境サブシステム」として独立プロセスに切り離すモジュール化設計を貫いています。</p>"""
+
+pages_ja['page-64'] = r"""<p>なお、Windows はシステムリソースを表現するために「オブジェクト」という概念を徹底的に活用していますが、厳密な意味でのオブジェクト指向言語で書かれているわけではありません。カーネルモードのOSコードの大部分は、極めて高い実行速度と移植性を確保するために <strong>C言語</strong> で記述されています。C言語はクラス継承やポリモーフィズムを直接構文としてはサポートしていないため、Windows におけるオブジェクト実装は、オブジェクト指向の利点を設計思想として巧みに取り入れた独自のC言語ベースの構造体モデルに基づいています。</p>
+
+<h3>アーキテクチャの全体像（Architecture overview）</h3>
+<p>Windows の主要なシステムコンポーネントとその階層関係を簡略化して図2-1に示します。この図は理解を助けるための基本構造であり、内部のあらゆる詳細を含んでいるわけではありませんが、全体像を把握する上で極めて重要です。</p>
+
+<figure><img loading="lazy" width="560" height="420" src="assets/1b8a5ca03c6f19766dd262c2.webp" alt="Windows システムアーキテクチャの全体像"><figcaption>図2-1：Windows の基本システムアーキテクチャ</figcaption></figure>
+
+<p>図を見れば明らかなように、Windows は大きく <strong>ユーザーモード（User Mode）</strong> と <strong>カーネルモード（Kernel Mode）</strong> の2つの世界に明確に二分されています。</p>"""
+
+pages_ja['page-65'] = r"""<p>ユーザーモードで動作するプロセス群は、主に以下の4つの基本タイプに分類されます：</p>
+<ul>
+  <li><strong>固定システムプロセス（Fixed System Processes）</strong>：OSの稼働に不可欠なシステムプロセス群です（ログオンを管理する <code>Winlogon.exe</code>、セッション管理を行う <code>Smss.exe</code>、認証を担う <code>Lsass.exe</code> など）。これらはWindowsサービスとしては構成されておらず、OSの起動シーケンスの中で直接起動されます。</li>
+  <li><strong>サービスプロセス（Service Processes）</strong>：タスクスケジューラや印刷スプーラー、Windows Update など、ユーザーのログオン状態とは無関係にバックグラウンドで常駐・実行されるWindowsサービスをホストするプロセスです。Microsoft SQL Server や Exchange Server などのサーバー製品もサービスプロセスとして稼働します。</li>
+  <li><strong>ユーザーアプリケーション（User Applications）</strong>：一般ユーザーが起動して利用する対話型プログラムです。Win32（32ビット/64ビット）、Windows Runtime（UWP）アプリなどがこれに該当します（16ビットアプリは32ビット版Windowsでのみ動作し、POSIXサブシステムはWindows 8で廃止されました）。</li>
+  <li><strong>環境サブシステムサーバープロセス（Environment Subsystem Processes）</strong>：OSのネイティブサービスを、特定のOS環境（Windows API等）の仕様に合わせたセマンティクスとしてアプリケーションに提示するサーバープロセスです（<code>Csrss.exe</code>）。</li>
+</ul>
+
+<p>ユーザーアプリケーションは、システムサービスを直接呼び出すのではなく、各サブシステムに対応した <strong>サブシステムDLL</strong>（<code>Kernel32.dll</code>, <code>User32.dll</code>, <code>Gdi32.dll</code>, <code>Advapi32.dll</code> 等）を介してAPIを利用します。サブシステムDLLは、要求に応じてユーザーモードのサブシステムプロセスにメッセージを送信するか、あるいはネイティブシステムコール（<code>Ntdll.dll</code>）を発行してカーネルへと処理を橋渡しします。</p>"""
+
+pages_ja['page-66'] = r"""<p>一方、カーネルモードのシステムコンポーネント群は以下の要素で構成されています：</p>
+<ul>
+  <li><strong>Windows エグゼクティブ（Executive）</strong>：OSの上位レベルの基盤機能を提供するモジュール群です。メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク通信、プロセス間通信（ALPC）などが含まれます。</li>
+  <li><strong>Windows カーネル（Kernel）</strong>：CPUに最も近い低レベルの制御を受け持ちます。スレッドスケジューリング、割り込みおよび例外のディスパッチ、マルチプロセッサ同期（スピンロック等）を提供し、エグゼクティブが上位構造を構築するための基礎オブジェクトを提供します。</li>
+  <li><strong>デバイスドライバ（Device Drivers）</strong>：ハードウェアを直接制御するドライバ（ストレージ、ネットワークカード、グラフィックカード等）や、ファイルシステムドライバ、ネットワークプロトコルスタック、フィルタドライバなどのソフトウェアドライバが含まれます。</li>
+  <li><strong>ハードウェア抽象化レイヤー（HAL: Hardware Abstraction Layer）</strong>：マザーボードやチップセットの差異、割り込みコントローラ（APIC等）の差異を隠蔽し、カーネルやドライバに対して統一された抽象ハードウェアインターフェースを提供する独立した低レベルモジュール（<code>Hal.dll</code>）です。</li>
+  <li><strong>ウィンドウ管理・グラフィックスサブシステム（USER/GDI）</strong>：GUIウィンドウの描画、メニュー、ダイアログ、マウスやキーボードの入力イベント配送を行うモジュールです（<code>Win32k.sys</code>）。Windows NT 4.0 においてパフォーマンス向上のためユーザーモードからカーネルモードへと移行されました。</li>
+</ul>"""
+
+pages_ja['page-67'] = r"""<h3>移植性（Portability）</h3>
+<p>Windows は最初から多様な CPU アーキテクチャ上で動作するように設計されました。最初の Windows NT 3.1（1993年）は x86 と MIPS の2つのアーキテクチャをサポートして出荷され、直後に DEC Alpha AXP への対応が追加されました（Alpha版は64ビットCPU上で32ビットモードで動作）。その後 Windows NT 3.51 で Motorola PowerPC が追加されました。市場動向の変化により MIPS、PowerPC、Alpha のサポートは順次終了しましたが、Windows はその優れた移植性設計により、後の 64ビット時代において <strong>Intel Itanium（IA-64）</strong>、<strong>x64（AMD64 / Intel 64）</strong>、そしてモバイル・組み込みからPCにまで広がる <strong>ARM / ARM64</strong> へと迅速かつ極めてスムーズに適応することができました。</p>
+
+<p>Windows がこれほど高い移植性を実現できている理由は、以下の2つの決定的な設計指針にあります：</p>
+<ol>
+  <li><strong>階層化アーキテクチャと HAL</strong>：マザーボードやチップセットの差異、タイマー、I/O割り込みコントローラの制御といったハードウェア依存の処理はすべて <strong>HAL（Hardware Abstraction Layer）</strong> に隔離されており、カーネルやエグゼクティブ本体はハードウェア差異を意識する必要がありません。</li>
+  <li><strong>高級言語（C言語 / C++）による記述の徹底</strong>：OSコードの圧倒的大部分（95%以上）がポータブルな標準C言語で書かれており、CPUアーキテクチャ固有の命令（レジスタの直接操作、コンテキストスイッチのスタック操作、MMUのページテーブル制御等）が必要なごく一部のコア部分のみがアセンブリ言語で書かれています。</li>
+</ol>"""
+
+pages_ja['page-68'] = r"""<h3>対称型マルチプロセッシング（Symmetric Multiprocessing: SMP）</h3>
+<p>マルチタスクOSが複数のCPU（またはCPUコア）を扱う方式には、非対称型（ASMP）と対称型（SMP）の2つがあります。ASMPではOSのコードが特定の1つのCPUでのみ動作し、他のCPUはアプリケーション処理のみを実行するという非効率な制約がありました。</p>
+<p>これに対し Windows は、最初から完全な <strong>対称型マルチプロセッシング（SMP）</strong> モデルを採用しています。すべてのCPUコアが対等に扱われ、カーネルモードのOSコードもユーザーモードのアプリコードも、システム内の任意のCPU上で自由に並列実行されます（図2-2）。</p>
+
+<figure><img loading="lazy" width="462" height="312" src="assets/b310969da8b0fa495c424c27.webp" alt="対称型マルチプロセッシング（SMP）の構造"><figcaption>図2-2：対称型マルチプロセッシング（SMP）モデル</figcaption></figure>
+
+<p>あるCPUがカーネル内でファイルシステム処理を実行している間に、別のCPUが別のスレッドのメモリ割り当て処理を並行して実行できます。カーネルの共有データ構造はスピンロックやプッシュロックなどの極めて洗練された同期プリミティブで保護されており、複数のプロセッサが互いを阻害することなく最大限のパフォーマンスを発揮します。</p>"""
+
+pages_ja['page-69'] = r"""<h3>スケーラビリティ（Scalability）</h3>
+<p>プロセッサ数の増加に合わせてシステム全体の処理能力が直線的に向上する能力を「スケーラビリティ」と呼びます。単に複数のCPUを並べるだけでは、共通リソースへのロック競合（ロックの取り合い）によってCPUが増えるほど性能が頭打ちになります。</p>
+<p>Windows は、スケーラビリティを高めるために長年にわたってカーネルの大規模な改良を重ねてきました：</p>
+<ul>
+  <li><strong>きめ細かなロッキング（Fine-grained locking）</strong>：単一の巨大なカーネルロックを廃止し、データ構造ごと、キューごと、プロセッサごとにロックを細分化。</li>
+  <li><strong>プロセッサごとのデータ構造（Per-Processor Data Structures）</strong>：スレッドの実行可能キュー（Ready Queue）やメモリの割り当てキャッシュ（ルックアサイドリスト）などをプロセッサごとに独立して保持することで、他のCPUと一切競合することなく処理を完結可能に。</li>
+  <li><strong>NUMA（Non-Uniform Memory Access）対応</strong>：物理メモリが各プロセッサノードに分散配置される大規模マルチソケットサーバーにおいて、スレッドが自身に近いローカルメモリを優先的に利用するようスケジューラとメモリマネージャーが協調。</li>
+</ul>"""
+
+pages_ja['page-70'] = r"""<p>内部的な処理効率のため、Windows はCPUの稼働状態や割り当て（アフィニティ）を、マシンのネイティブワードサイズ（32ビットまたは64ビット）と同じビット数の「アフィニティマスク（ビットマスク）」で管理してきました。これにより、CPUレジスタ1つで極めて高速にプロセッサのビット演算が行えます。</p>
+<p>しかしこの設計には、64ビット環境であっても最大64個の論理プロセッサしか扱えないという制約がありました。現代のデータセンター向けサーバーでは、論理コア数が数百個に達するシステムが珍しくありません。この壁を打破するため、Windows 7 / Server 2008 R2 以降、Windows は「<strong>プロセッサグループ（Processor Groups）</strong>」という上位概念を導入しました。</p>
+<p>プロセッサグループは最大64個のプロセッサを1つのグループとしてまとめ、システム全体で最大4つのグループ（計256プロセッサ）、そして Windows 10 / Server 2016 では <strong>最大64グループ（計4,096プロセッサ）</strong> という驚異的なスケーラビリティを誇ります。既存のアプリケーションとの互換性を保ちつつ、超並列サーバーの全パワーを引き出すことが可能です。</p>"""
+
+pages_ja['page-71'] = r"""<h3>クライアント版とサーバー版の違い</h3>
+<p>Windows は、単一の統一されたソースコードベースからクライアント版（Windows 10）とサーバー版（Windows Server 2016）の双方のバイナリをビルドしています。実際、両者のカーネルイメージ（<code>Ntoskrnl.exe</code>）や主要コンポーネントは本質的に同一です。</p>
+
+<p>デスクトップPC向けの Windows 10 には、Home、Pro、Enterprise、Education などのエディションが存在します。サーバー向けには、Essentials、Standard、Datacenter などのエディションが提供されています。これらは単一のコードから生成されているにもかかわらず、サポートするCPU数や最大物理メモリ容量、提供される機能が大きく異なります。</p>
+
+<p>表2-2に、主要な Windows エディションにおけるプロセッサおよびメモリの仕様制限を示します。</p>
+
+<p><strong>表2-2：主要エディションのプロセッサ・メモリ制限の比較</strong></p>
+<table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;">
+<thead><tr style="border-bottom:2px solid var(--line);text-align:left;">
+<th style="padding:6px;">エディション</th><th style="padding:6px;">最大ソケット数 (x64)</th><th style="padding:6px;">最大論理プロセッサ数</th><th style="padding:6px;">最大物理メモリ (x64)</th>
+</tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Home</td><td style="padding:6px;">1 ソケット</td><td style="padding:6px;">64</td><td style="padding:6px;">128 GB</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Pro</td><td style="padding:6px;">2 ソケット</td><td style="padding:6px;">128</td><td style="padding:6px;">2 TB</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Enterprise</td><td style="padding:6px;">2 ソケット</td><td style="padding:6px;">128</td><td style="padding:6px;">2 TB</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows Server 2016 Standard</td><td style="padding:6px;">64 ソケット</td><td style="padding:6px;">512</td><td style="padding:6px;">24 TB</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows Server 2016 Datacenter</td><td style="padding:6px;">64 ソケット</td><td style="padding:6px;">512</td><td style="padding:6px;">24 TB</td></tr>
+</tbody></table>"""
+
+pages_ja['page-72'] = r"""<p>同じカーネルバイナリが、どのようにして自身がクライアント版かサーバー版か、あるいはどのエディションかを判別し、振る舞いを変えているのでしょうか？</p>
+
+<p>Windows カーネルは起動時、プロダクトタイプを内部変数（<code>SharedUserData->NtProductType</code>）に読み込みます：</p>
+<ul>
+  <li><code>NtProductWinNt</code>（1）：デスクトップクライアント版（Windows 10）</li>
+  <li><code>NtProductLanManNt</code>（2）：ドメインコントローラーサーバー</li>
+  <li><code>NtProductServer</code>（3）：通常のメンバーサーバー（Windows Server）</li>
+</ul>
+
+<p>さらに現代のWindowsでは、100項目を超える詳細な機能制限が「<strong>ソフトウェアライセンスポリシー（Product Policy）</strong>」データとして暗号・デジタル署名付きでレジストリ（<code>HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions</code>）に格納されています。BitLocker、Hyper-V、リモートデスクトップ接続数、最大メモリ容量などの機能の可否は、カーネル内のライセンスマネージャーがこのポリシー値を評価することによって動的に制御されます。</p>"""
+
+pages_ja['page-73'] = r"""<p>また、クライアントとサーバーではシステムのチューニング（最適化の方向性）も自動的に切り替わります：</p>
+<ul>
+  <li><strong>スレッドのタイムスライス（クォンタム）</strong>：クライアント版では、前景で操作しているGUIアプリの応答性を最優先にするため、短めのクォンタム（約20ミリ秒）が割り当てられ、フォアグラウンドウィンドウに優先的なブーストが与えられます。一方、サーバー版ではコンテキストスイッチのオーバーヘッドを減らしバックグラウンドのスループットを最大化するため、約6倍長いクォンタム（約120ミリ秒）が既定となります。</li>
+  <li><strong>メモリ管理の配分</strong>：クライアント版ではアプリケーションのワーキングセット（プロセス物理メモリ）を優先し、サーバー版ではファイルシステムキャッシュ（スタンバイリスト）やシステムプールの拡張を優先するチューニングが行われます。</li>
+</ul>
+
+<h4>実験：ライセンスポリシーによる有効化機能の確認</h4>
+<p>Windowsが内部で保持するライセンスポリシー設定は、非公開のネイティブAPIを呼び出すことでダンプできます。本書のサンプルツール（<code>LicenseInfo.exe</code>）を実行すると、以下のように現在のOSで許可されている詳細なポリシー値が表示されます：</p>"""
+
+pages_ja['page-74'] = r"""<pre>Kernel
+------
+Maximum allowed processor sockets: 64
+Maximum memory allowed in MB (x86): 4096
+Maximum memory allowed in MB (x64): 4194304
+Add physical memory allowed: Yes
+Add VM physical memory allowed: Yes
+Maximum physical page in bytes: 0
+Native VHD boot: Yes
+Dynamic Partitioning supported: Yes
+Virtual Dynamic Partitioning supported: Yes
+Memory Mirroring supported: Yes
+Persist defective memory list: Yes</pre>
+
+<h3>チェックドビルド（Checked Build）</h3>
+<p>マイクロソフト社内およびデバッグ用途向けに、通常の製品版（Free build / Retail build）とは別に <strong>チェックドビルド（Checked build）</strong> と呼ばれる特殊なデバッグ用ビルドが存在します（Windows 8.1 以前はMSDN等で外部公開されていました）。</p>
+<p>チェックドビルドは、コンパイル時マクロ <code>DBG=1</code> を有効にして再コンパイルされたバイナリ群です。コードの最適化が無効化されているか控えめになっており、内部のパラメータ検証、引数の厳格なチェック、メモリ破壊の追跡コードが埋め込まれています。</p>"""
+
+pages_ja['page-75'] = r"""<p>システムがチェックドビルドで稼働しているかどうかは、PowerShell から WMI を照会することで簡単に判定できます：</p>
+<pre>PS C:\> (Get-CimInstance Win32_OperatingSystem).Debug
+False</pre>
+
+<p>通常の製品環境では <code>False</code> と表示されます。</p>
+
+<p>チェックドビルド内部の追加コードの多くは、WDKヘッダーで定義されている <code>ASSERT</code> や <code>NT_ASSERT</code> マクロによるものです。これらは関数の入力値やポインタの妥当性を常に監視しており、万一不正な値（論理エラー）を検知すると、即座にカーネルデバッガーにブレークして開発者に問題の発生箇所を通報します。デバイスドライバの開発やカーネルモジュールの厳密なテストにおいて、潜在的なバグを早期発見するための極めて強力な武器となります。</p>"""
+# Chapter 2: Pages 76 - 90
+
+pages_ja['page-76'] = r"""<h3>仮想化ベースのセキュリティ（VBS）アーキテクチャ概要</h3>
+<p>第1章で触れたように、通常のユーザーモードとカーネルモードの二元分離は、悪意ある（またはバグのある）ユーザープログラムからOSを保護する上で不可欠な境界です。しかし、いったん不正なコードがカーネルモードに入り込んでしまうと（パッチ未適用の脆弱性の悪用や、悪意あるドライバのロードなど）、カーネルコードはシステム全体の全メモリに完全な権限を持つため、システムは完全に陥落してしまいます。</p>
+
+<p>この根本的なリスクを封じ込めるため、Windows 10 / Server 2016 で導入されたのが <strong>仮想化ベースのセキュリティ（VBS: Virtualization-Based Security）</strong> です。VBSは、プロセッサの仮想化支援機能（Intel VT-x / AMD-V）と Hyper-V ハイパーバイザーを利用して、CPUのハードウェア特権レベルを拡張し、2つの独立した「仮想信頼レベル（VTL: Virtual Trust Level）」を創出します（図2-3）。</p>
+
+<figure><img loading="lazy" width="560" height="340" src="assets/5313687017785a0e800ec33d.webp" alt="VBS アーキテクチャの概要"><figcaption>図2-3：仮想化ベースのセキュリティ（VBS）の基本アーキテクチャ</figcaption></figure>
+
+<ul>
+  <li><strong>VTL 0（通常ワールド）</strong>：従来のWindows環境全体（通常カーネル、ドライバ、ユーザーモードアプリ）がそのまま稼働する領域です。たとえRing 0（カーネルモード）であってもVTL 0に属します。</li>
+  <li><strong>VTL 1（セキュアワールド）</strong>：VTL 0からハードウェア（SLAT/EPT）レベルで完全に隔離された特権領域です。VTL 1には独立した <strong>セキュアカーネル（Secure Kernel）</strong> と、隔離されたユーザーモード環境（IUM: Isolated User Mode）が存在します。</li>
+</ul>"""
+
+pages_ja['page-77'] = r"""<p>セキュアカーネルは、ディスク上では <code>securekernel.exe</code> という独立したバイナリファイルとして存在します。VTL 1内部で動作する隔離ユーザーモード（IUM）は、通常のユーザーモードプロセスから機密データを守るシェルターとして機能します。</p>
+
+<p>VTL 1で動作するプロセスは、通常のシステムコールではなく、VTL 1専用のセキュアシステムコールを使用します。これらのセキュアAPIは、通常版の <code>Ntdll.dll</code> や <code>Kernelbase.dll</code> に対応する特殊なライブラリ（<code>Iumdll.dll</code> および <code>Iumbase.dll</code>）を通じて提供されます。標準のWin32ライブラリのコードを賢く共有することで、VTL 1アプリケーションのメモリフットプリントを最小限に抑えています。</p>"""
+
+pages_ja['page-78'] = r"""<p>VTL 1の環境は強力な権限を持つため、任意のプログラムを勝手に実行させるわけにはいきません。そのため、マイクロソフトによって特別に署名された <strong>トラストレット（Trustlet）</strong> と呼ばれる厳選されたバイナリのみがVTL 1で動作することを許されています。</p>
+<p>トラストレットの代表例が、認証セキュリティを守る <strong>分離型LSA（Credential Guard: <code>lsaiso.exe</code>）</strong> です。パスワードのNTLMハッシュや Kerberos チケット生成鍵などの認証シークレットは、通常の <code>lsass.exe</code>（VTL 0）から切り離され、すべて VTL 1 の <code>lsaiso.exe</code> 内に隔離保管されます。これにより、Mimikatz などのメモリ走査ツールを用いて管理者権限でカーネルメモリをダンプしても、認証資格情報を奪取することが原理的に不可能となります。</p>
+
+<h3>主要システムコンポーネント（Key system components）</h3>
+<p>図2-4に、Windows の全体構造を構成する主要コンポーネントの詳細な配置図を示します。</p>
+
+<figure><img loading="lazy" width="620" height="480" src="assets/d7cb34bac61b0d19d384ccba.webp" alt="主要システムコンポーネントの全体図"><figcaption>図2-4：Windows を構成する主要コンポーネントの詳細構造</figcaption></figure>
+
+<p>以降のセクションでは、この図に示されている主要なコンポーネント群を1つずつ詳しく見ていきます。</p>"""
+
+pages_ja['page-79'] = r"""<h3>環境サブシステムとサブシステムDLL</h3>
+<p><strong>環境サブシステム</strong> の役割は、Windows の基本エグゼクティブシステムサービスの一部を、特定のOSセマンティクス（API仕様）に合わせてアプリケーションに公開することです。アプリケーションは、Windows のネイティブサービス（<code>Nt...</code> システムコール）を直接呼ぶのではなく、特定のサブシステム向けに作成されたAPI（Win32など）を呼び出して処理を行います。</p>
+
+<figure><img loading="lazy" width="480" height="280" src="assets/7b2aa17eaf52150c61989584.webp" alt="環境サブシステムとサブシステムDLL"><figcaption>図：環境サブシステムとアプリケーションの通信</figcaption></figure>
+
+<p>実行可能ファイル（PEヘッダー）には、そのプログラムがどのサブシステム向けにビルドされたかを示す「サブシステムタイプ」フィールドが含まれています。</p>"""
+
+pages_ja['page-80'] = r"""<h4>実験：イメージのサブシステムタイプの確認（dumpbin）</h4>
+<p>Visual Studio のコマンドプロンプトから <code>dumpbin /headers</code> を実行すると、実行ファイルのヘッダー情報を確認できます。以下にメモ帳（<code>notepad.exe</code>）とコマンドプロンプト（<code>cmd.exe</code>）の出力比較を示します：</p>
+
+<figure><img loading="lazy" width="643" height="151" src="assets/96e4b41750a0c122fd0cc8a7.webp" alt="dumpbin によるサブシステムタイプの確認"><figcaption>図：dumpbin による GUI と Console サブシステムの判別</figcaption></figure>
+
+<p>メモ帳は <code>Windows GUI</code>、コマンドプロンプトは <code>Windows CUI (Console)</code> と表示されています。ただしこれは実行時のウィンドウの扱いの違いを示すフラグに過ぎず、背後にあるサブシステム自体は同一の「Windows サブシステム」です。</p>
+
+<p>アプリケーションがサブシステムDLLの関数を呼び出した際、内部では以下の3パターンのいずれかが発生します：</p>
+<ol>
+  <li><strong>DLL内で完全に完結</strong>：処理がサブシステムDLLのユーザーモードコードだけで完結する（例: <code>GetCurrentProcessId</code> はPEB/TEBから即座に返すためシステムコールも不要）。</li>
+  <li><strong>カーネルのシステムコールを発行</strong>：メモリ確保やファイル操作などのため、<code>Ntdll.dll</code> を経由してカーネルモードのエグゼクティブサービスを直接呼び出す。</li>
+  <li><strong>サブシステムプロセスと通信</strong>：プロセスの起動・終了通知やコンソール制御など、サブシステムサーバープロセス（<code>Csrss.exe</code>）にALPC経由でリクエストを送信する。</li>
+</ol>"""
+
+pages_ja['page-81'] = r"""<h4>サブシステムの起動と構成</h4>
+<p>システム起動時にどのサブシステムをロードするかは、レジストリキー <code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\SubSystems</code> に定義されています（図2-5）。</p>
+
+<figure><img loading="lazy" width="551" height="299" src="assets/f0832319fbe2756e82899225.webp" alt="サブシステムのレジストリ設定"><figcaption>図2-5：レジストリに登録されたサブシステム設定</figcaption></figure>
+
+<p><code>Required</code> 値には、システムの稼働に絶対に必要なサブシステムとして <code>Windows</code> が指定されています。そのファイル定義として指定されているのが <code>Csrss.exe</code>（クライアント/サーバーランタイムサブシステム）です。</p>
+
+<h4>Windows サブシステム</h4>
+<p><strong>Windows サブシステム</strong> は、現代のWindowsにおいて最も中核となる必須のサブシステムです。他のすべてのプロセスが依存しており、以下の主要コンポーネントで構成されています：</p>
+<ul>
+  <li><strong>環境サブシステムプロセス（<code>Csrss.exe</code>）</strong>：セッションごとに1つ稼働し、プロセスの生成・消滅の追跡、SxS（Side-by-Side）マニフェストキャッシュの管理などを行います。</li>
+  <li><strong>カーネルモードグラフィックスドライバ（<code>Win32k.sys</code>, <code>Win32kbase.sys</code>, <code>Win32kfull.sys</code>）</strong>：ウィンドウマネージャー、GDI描画エンジン、入力イベント配送を担当します。</li>
+  <li><strong>サブシステムDLL群</strong>：<code>Kernel32.dll</code>, <code>Advapi32.dll</code>, <code>User32.dll</code>, <code>Gdi32.dll</code> など、膨大な公開Windows APIを実装するライブラリ群です。</li>
+</ul>"""
+
+pages_ja['page-82'] = r"""<p>歴史的には、GUI描画を司るウィンドウマネージャーとGDIも <code>Csrss.exe</code> のユーザーモード空間に存在していました。しかし、ウィンドウの描画やマウスの追跡のたびに膨大なクライアント/サーバーIPC（コンテキストスイッチ）が発生し性能の重大なボトルネックとなったため、Windows NT 4.0 においてこれらグラフィックスエンジンはカーネルモード（<code>Win32k.sys</code>）へと大胆に移設され、劇的な描画高速化を達成しました。</p>
+
+<p>現代のWindows 10では、モジュール性とセキュリティをさらに高めるため、巨大な <code>Win32k.sys</code> は <strong><code>Win32kbase.sys</code>（基本機能）</strong> と <strong><code>Win32kfull.sys</code>（高度なGUI機能）</strong> の2つに分割構成されています。</p>"""
+
+pages_ja['page-83'] = r"""<h4>コンソールウィンドウホスト（Conhost.exe）</h4>
+<p>Windows 7 より前の古いアーキテクチャでは、コマンドプロンプトなどのコンソールアプリケーションの文字描画や入出力管理はすべて特権プロセスである <code>Csrss.exe</code> が直接担っていました。しかし、未特権のコンソールアプリが特権の <code>Csrss.exe</code> と直接通信することは、重大なセキュリティ侵害（権限昇格攻撃）の温床となっていました。</p>
+<p>この問題を根本解決するため、Windows 7 以降、<strong><code>conhost.exe</code>（コンソールウィンドウホスト）</strong> という専用の独立した分離プロセスが導入されました。コンソールアプリが起動すると、そのアプリと同じユーザー権限で個別の <code>conhost.exe</code> が立ち上がり、ウィンドウ描画やスクロールバッファ管理を行います。さらに Windows 8 以降では、通信の仲介を担う専用カーネルドライバ <strong><code>Condrv.sys</code></strong> が導入され、パフォーマンスとセキュリティが極限まで高められました。</p>"""
+
+pages_ja['page-84'] = r"""<figure><img loading="lazy" width="480" height="260" src="assets/af715a2fdcc6ef9c98307960.webp" alt="コンソールウィンドウホストの構造"><figcaption>図：Conhost.exe による安全なコンソール入出力アーキテクチャ</figcaption></figure>
+
+<h3>その他のサブシステム</h3>
+<p>Windowsの柔軟なサブシステムモデルは、Windows API以外の全く異なるOS環境をネイティブに稼働させることも可能にしています。その最も先進的な成果が、Windows 10 で導入された <strong>WSL（Windows Subsystem for Linux）</strong> です。</p>"""
+
+pages_ja['page-85'] = r"""<h4>Pico プロバイダと Windows Subsystem for Linux (WSL)</h4>
+<p>初代の WSL（WSL 1）は、仮想マシンを動かすのではなく、<strong>Linux の ELF バイナリを Windows カーネル上で直接ネイティブ実行</strong> するという驚異的な仕組みを実現しました。</p>
+<p>これを支えているのが「<strong>Pico プロセス（Pico Process）</strong>」と「<strong>Pico プロバイダ（Pico Provider）</strong>」というカーネルフレームワークです。Picoプロセスは、通常のWindowsプロセスのようなPEBやTEBを持たない極限まで無駄を削ぎ落とした「空っぽのアドレス空間」です。PicoプロセスのスレッドがLinuxのシステムコール（<code>sys_fork</code>, <code>sys_open</code>, <code>sys_epoll</code> 等）を発行すると、WindowsのPicoプロバイダドライバ（<code>Lxcore.sys</code> および <code>Lxss.sys</code>）がそのシステムコールを直接インターセプトし、対応するWindowsカーネルの処理へとリアルタイムに変換して実行します。</p>"""
+
+pages_ja['page-86'] = r"""<figure><img loading="lazy" width="480" height="260" src="assets/bdad455e3a4e3d3482c102dc.webp" alt="WSL と Pico プロセスの構造"><figcaption>図：Pico プロセスと Lxcore.sys による Linux システムコールのエミュレーション</figcaption></figure>
+
+<h4>Ntdll.dll</h4>
+<p><strong><code>Ntdll.dll</code></strong> は、Windowsのあらゆるユーザーモードプロセスの最下層に位置する、最も重要かつ特別なシステムDLLです。すべてのプロセスのアドレス空間に必ず最初にマッピングされます。<code>Ntdll.dll</code> の主な役割は以下の通りです：</p>
+<ul>
+  <li><strong>ネイティブシステムサービスディスパッチャのスタブ</strong>：カーネルモードのシステムコールを呼び出すためのプロセッサ命令（<code>syscall</code> や <code>sysenter</code>）を発行するエントリポイント（<code>NtCreateFile</code>, <code>NtAllocateVirtualMemory</code> 等）。</li>
+  <li><strong>イメージローダー（Ldr）</strong>：実行ファイル（EXE）や依存する各種DLLをメモリに読み込み、アドレスの再配置、インポートテーブルの解決、TLS初期化を行うエンジン。</li>
+  <li><strong>ユーザーモードヒープマネージャー（RtlHeap）</strong>：<code>malloc</code> や <code>HeapAlloc</code> の基盤となる高速なメモリヒープ管理機構。</li>
+  <li><strong>ユーザーモード例外ディスパッチャ（KiUserExceptionDispatcher）</strong>：アクセス違反などのハードウェア例外をSEH（構造化例外処理）ハンドラへと配送するハブ。</li>
+  <li><strong>スレッドプールおよび非同期I/O完了ルーチン群</strong></li>
+</ul>"""
+
+pages_ja['page-87'] = r"""<h4>実験：システムサービスディスパッチャの逆アセンブル（ntdll.dll）</h4>
+<p>デバッガーや逆アセンブラで <code>Ntdll.dll</code> のシステムサービス関数を見ると、その中身が極めてシンプルであることが分かります。例えば 64ビット版 Windows で <code>NtReadFile</code> を逆アセンブルすると、以下のわずか数行の命令で構成されています：</p>
+
+<pre>ntdll!NtReadFile:
+mov r10, rcx
+mov eax, 0x0006  ; システムコール番号 (SSN)
+syscall          ; カーネルモードへ遷移
+ret</pre>
+
+<p>レジスタ <code>EAX</code> に目的のシステムサービス番号（System Service Number: SSN）をセットし、特権命令 <code>syscall</code> を実行してCPUをカーネルへと切り替えているだけであることが確認できます。</p>"""
+
+pages_ja['page-88'] = r"""<h4>ネイティブイメージ（Native Images）</h4>
+<p>Windows には、いかなるサブシステムDLLにも依存せず、<code>Ntdll.dll</code> のネイティブAPIのみを直接呼び出して動作する特殊な実行可能ファイルが存在します。これらは <strong>ネイティブイメージ（Native Image）</strong> と呼ばれます。</p>
+<p>ネイティブイメージの代表例が、セッションマネージャー（<code>Smss.exe</code>）や、ブート時にファイルシステムチェックを行う <code>Autochk.exe</code> です。これらはWindowsサブシステム（<code>Csrss.exe</code>）が起動する前の極めて早いブート段階で実行されるため、Win32 APIを一切使わずに純粋な <code>Nt...</code> 関数のみで処理を遂行します。</p>
+
+<h3>エグゼクティブ（Executive）</h3>
+<p><strong>Windows エグゼクティブ</strong> は、カーネルイメージ（<code>Ntoskrnl.exe</code>）の上位層を占める、OSの本格的なシステム機能を提供するモジュール群の総称です（図2-6）。</p>"""
+
+pages_ja['page-89'] = r"""<figure><img loading="lazy" width="560" height="400" src="assets/7a789e31678f8e5ee4ed92e2.webp" alt="エグゼクティブの主要コンポーネント"><figcaption>図2-6：Windows エグゼクティブの主要モジュール群</figcaption></figure>
+
+<p>エグゼクティブに含まれる主要なマネージャーコンポーネントは以下の通りです：</p>
+<ul>
+  <li><strong>オブジェクトマネージャー（Ob）</strong>：すべてのWindowsオブジェクト（プロセス、スレッド、ファイル、イベント等）の作成、削除、名前空間管理、セキュリティ保護、参照カウント管理を一元的に司る。</li>
+  <li><strong>メモリマネージャー（Mm）</strong>：仮想アドレス空間の管理、ページング、ワーキングセットの制御、システムヒープ（ページプール/非ページプール）の管理を行う。</li>
+  <li><strong>プロセスおよびスレッドマネージャー（Ps）</strong>：プロセスおよびスレッドオブジェクトの生成・終了、コンテキストのセットアップ、ジョブオブジェクトの制御を行う。</li>
+  <li><strong>セキュリティリファレンスモニター（Se）</strong>：アクセストークンとセキュリティ記述子を照合し、アクセス権の検証と監査ログの生成を行う。</li>
+  <li><strong>I/Oマネージャー（Io）</strong>：非同期パケット駆動型のI/O要求（IRP）を生成し、適切なデバイスドライバスタックへとディスパッチする。</li>
+  <li><strong>高度ローカルプロシージャコール（Alpc）</strong>：同一マシン上のプロセス間で超高速にメッセージや共有メモリをやり取りする通信基盤。</li>
+</ul>"""
+
+pages_ja['page-90'] = r"""<ul>
+  <li><strong>構成マネージャー（Cm）</strong>：Windows レジストリの読み書き、ハイブファイルの管理、メモリ内キャッシュキーの管理を行う。</li>
+  <li><strong>電源マネージャー（Po）</strong>：スリープ、休止状態、省電力ポリシー、および動的電源フレームワーク（PoFx）の統括制御を行う。</li>
+  <li><strong>プラグ＆プレイマネージャー（Pnp）</strong>：ハードウェアデバイスの動的な接続・切断を検知し、適切なドライバスタックを自動構成する。</li>
+  <li><strong>カーネルトランザクションマネージャー（Ktm）</strong>：ファイルシステム（TxF）やレジストリ（TxR）に対するアトミックなトランザクション処理を提供する。</li>
+</ul>
+
+<p>エグゼクティブが公開するエクスポート関数は、頭文字でその担当コンポーネントが明確に判別できるように統一されています（<code>Io...</code> はI/Oマネージャー、<code>Mm...</code> はメモリマネージャー、<code>Ob...</code> はオブジェクトマネージャーなど）。</p>"""
+# Chapter 2: Pages 91 - 105
+
+pages_ja['page-91'] = r"""<h3>カーネル（Kernel）</h3>
+<p>エグゼクティブが大規模なシステム方針（ポリシー）と抽象化を受け持つのに対し、<strong>カーネル（Kernel / プレーンカーネル）</strong> は、純粋なハードウェア制御メカニズムとCPUスケジューリングのコア機能を提供します（関数プレフィックスは <code>Ke...</code>）。</p>
+
+<p>カーネルの主たる責務は以下の通りです：</p>
+<ul>
+  <li><strong>スレッドスケジューリングとディスパッチ</strong>：32段階の優先順位に基づくプリエンプティブなCPU時間の配分とコンテキストスイッチ。</li>
+  <li><strong>割り込みおよび例外のハンドリング</strong>：ハードウェア割り込み、トラップ、ページフォールト、システムコールのCPUベクター処理。</li>
+  <li><strong>マルチプロセッサ同期プリミティブ</strong>：カーネルモードでの競合を防ぐスピンロック、キュー付きスピンロック、インターロック命令の実装。</li>
+  <li><strong>基礎オブジェクト（カーネルオブジェクト）の提供</strong>：エグゼクティブが上位の複雑なオブジェクトを構築するための素朴なビルディングブロック（ディスパッチャオブジェクト、制御オブジェクト）。</li>
+</ul>"""
+
+pages_ja['page-92'] = r"""<h4>カーネルオブジェクト（Kernel Objects）</h4>
+<p>エグゼクティブレベルのオブジェクト（プロセス、スレッド、イベント等）には、ハンドルテーブルによる参照、セキュリティ検証、メモリクォータ計算などの管理オーバーヘッドが伴います。カーネル内部ではこれらのオーバーヘッドを排除し、極めて軽量で高速な <strong>カーネルオブジェクト</strong> を直接操作します。</p>
+
+<p>カーネルオブジェクトは主に以下の2系統に分類されます：</p>
+<ul>
+  <li><strong>制御オブジェクト（Control Objects）</strong>：OSの動作制御を司るオブジェクト（非同期プロシージャコール［APC］、遅延プロシージャコール［DPC］、割り込みオブジェクト［KINTERRUPT］など）。</li>
+  <li><strong>ディスパッチャオブジェクト（Dispatcher Objects）</strong>：スレッドの待機や同期を制御するオブジェクト。内部に「シグナル状態（Signaled / Nonsignaled）」のフラグと、そのオブジェクトを待機しているスレッドのリスト（Wait Block リスト）を保持しています（カーネルスレッド、カーネルミューテックス、カーネルイベント、カーネルセマフォ、タイマー等）。</li>
+</ul>"""
+
+pages_ja['page-93'] = r"""<h4>プロセッサ制御領域（KPCR）とプロセッサ制御ブロック（KPRCB）</h4>
+<p>カーネルは、システム内の各CPUコアごとに独立した重要な制御構造体をメモリ上に保持しています：</p>
+<ul>
+  <li><strong>KPCR（Kernel Processor Control Region）</strong>：ハードウェアに近いプロセッサ制御情報を保持する構造体。割り込みコントローラの状態や、現在の割り込み要求レベル（IRQL）、IDT（割り込み記述子テーブル）やGDT（グローバル記述子テーブル）へのポインタが含まれます。64ビットWindowsでは、CPUセグメントレジスタ <code>GS</code> が常に現在のCPUの KPCR アドレスを直接指すように設定されており、OSは極めて高速に自プロセッサの情報へアクセスできます。</li>
+  <li><strong>KPRCB（Kernel Processor Control Block）</strong>：KPCR の内部に含まれる、カーネルのスケジューラや統計情報の核心となる構造体です。</li>
+</ul>"""
+
+pages_ja['page-94'] = r"""<p>KPRCB には、プロセッサごとに完全に独立した以下のデータが格納されています：</p>
+<ul>
+  <li>現在実行中のスレッド（<code>CurrentThread</code>）、次に実行予定のスレッド（<code>NextThread</code>）、アイドルスレッド（<code>IdleThread</code>）へのポインタ</li>
+  <li>32段階の優先度ごとの実行可能スレッドキュー（Ready Queue）</li>
+  <li>DPC（遅延プロシージャコール）の実行キュー</li>
+  <li>CPUごとの詳細な統計情報（I/O回数、DPC時間、割り込み時間、カーネル時間、ユーザー時間）</li>
+  <li>NUMAアーキテクチャに最適化されたプロセッサごとのメモリ割り当てキャッシュ（ルックアサイドリスト）</li>
+</ul>
+
+<h4>実験：KPCR と KPRCB のダンプ（!pcr, !prcb）</h4>
+<p>カーネルデバッガーで <code>!pcr</code> コマンドを実行すると、現在のプロセッサの KPCR の内容が表示されます：</p>"""
+
+pages_ja['page-95'] = r"""<pre>lkd> !pcr
+KPCR for Processor 0 at fffff803c3b23000:
+    Major 1 Minor 1
+    NtTib.ExceptionList: 0000000000000000
+        NtTib.StackBase: ffffd00020610000
+       NtTib.StackLimit: ffffd0002060a000
+     NtTib.SubSystemTib: 0000000000000000
+          NtTib.FiberData: 0000000000000000
+          NtTib.ArbitraryUserPointer: 0000000000000000
+                 NtTib.Self: 00007ff819bb7000
+                    SelfPcr: fffff803c3b23000
+                       Prcb: fffff803c3b23180
+                       Irql: 0000000000000000
+
+lkd> !prcb
+PRCB for Processor 0 at fffff803c3b23180:
+Current IRQL -- 0
+Threads--  Current ffffe0020535a800 Next 0000000000000000 Idle fffff803c3b99740
+Processor Index 0 Number (0, 0) GroupSetMember 1
+Interrupt Count -- 0010d637
+Times -- Dpc    000000f4 Interrupt 00000119
+Kernel 0000d952 User      0000425d</pre>
+
+<p>現在そのCPU上で走行しているスレッドのアドレスや、アイドルスレッドのアドレス、割り込み回数などがリアルタイムに取得できることが確認できます。</p>"""
+
+pages_ja['page-96'] = r"""<h3>ハードウェア抽象化レイヤー（HAL）</h3>
+<p><strong>HAL（Hardware Abstraction Layer）</strong> は、<code>Hal.dll</code> という独立したバイナリとして提供される低レベルのハードウェア隔離モジュールです。</p>
+<p>同じCPU（例: x64）を採用したPCであっても、マザーボードメーカーごとにマザーボード上のタイマーチップ、APIC（高度プログラマブル割り込みコントローラ）、PCIeバスマネージャー、DMAコントローラの物理的な配線や制御方法は微妙に異なります。もしカーネル本体がそれらの違いを直接コーディングしていたら、新しいチップセットが登場するたびにOSカーネルを書き直さなければならなくなります。</p>
+<p>HALは、これらのマザーボード固有の差異を完全に吸収し、カーネルやデバイスドライバに対して「標準化された抽象ハードウェア関数（<code>Hal...</code>）」を提供します。</p>"""
+
+pages_ja['page-97'] = r"""<figure><img loading="lazy" width="540" height="260" src="assets/a58a67ea16dc4b5c5e304c83.webp" alt="HAL の階層構造"><figcaption>図：HAL によるハードウェア差異の隠蔽</figcaption></figure>
+
+<p>現代のWindows 10では、モジュール性をさらに極限まで高めるため、<strong>HAL拡張（HAL Extensions）</strong> というプラグイン方式のDLL（例: <code>HalExtPL080.dll</code>、<code>HalExtIntcLpioDMA.dll</code>）がサポートされています。IoT機器や省電力SoCなどの特殊なハードウェアコントローラが存在する場合、ブートローダーが該当するHAL拡張DLLを追加ロードすることで、コアの <code>Hal.dll</code> を書き換えることなくシームレスに特殊チップに対応できます。</p>"""
+
+pages_ja['page-98'] = r"""<h4>実験：Ntoskrnl.exe と HAL の依存関係の確認（Depends）</h4>
+<p>Dependency Walker で <code>Ntoskrnl.exe</code> を開くと、驚くべき事実が確認できます。<code>Ntoskrnl.exe</code> が直接インポートしているモジュールは、<code>Hal.dll</code> と、ブートビデオドライバ（<code>Bootvid.dll</code>）、デバッガ通信（<code>Kdcom.dll</code>）、コード整合性（<code>Ci.dll</code>）などのわずか数点しかありません。OSカーネルの上位コンポーネントが、ハードウェアの詳細からいかに美しく切り離されているかが一目で分かります。</p>
+
+<h3>デバイスドライバ（Device Drivers）</h3>
+<p><strong>デバイスドライバ</strong> は、ロード可能なカーネルモードの実行可能モジュール（通常は拡張子 <code>.sys</code>）です。ハードウェアとエグゼクティブ/アプリケーションとの間の橋渡しを担います。</p>"""
+
+pages_ja['page-99'] = r"""<p>Windowsのデバイスドライバは、ハードウェアを直接動かすものだけに限定されません。役割に応じて以下のように極めて多彩なカテゴリが存在します：</p>
+<ul>
+  <li><strong>ハードウェアデバイスドライバ</strong>：物理デバイス（グラフィックス、ネットワーク、ストレージコントローラ、USBコントローラ等）を直接操作する。</li>
+  <li><strong>ファイルシステムドライバ</strong>：ディスク上の生セクターをファイルやフォルダの構造として解釈・操作する（NTFS, ReFS, FAT, UDF 等）。</li>
+  <li><strong>ファイルシステムフィルタドライバ</strong>：ファイルI/Oの途中に割り込み、ウイルススキャン（ウイルス対策ソフト）や暗号化（BitLocker）、バックアップなどの付加価値を提供する。</li>
+  <li><strong>ネットワークプロトコルスタックドライバ</strong>：TCP/IPスタック（<code>Tcpip.sys</code>）など。</li>
+  <li><strong>ソフトウェアドライバ</strong>：ハードウェアを直接制御するのではなく、特権的なシステム操作を行うためにロードされるドライバ（Process Explorer や Process Monitor のドライバなど）。</li>
+</ul>"""
+
+pages_ja['page-100'] = r"""<h4>Windows Driver Model（WDM）</h4>
+<p>Windows 2000 で導入された <strong>WDM</strong> は、階層化されたモジュール型ドライバモデルです。デバイスに対する1つのI/O要求は、以下のように積み重なった「ドライバスタック」を上から下へと流れていきます：</p>
+<ul>
+  <li><strong>クラスドライバ（上層）</strong>：特定のデバイスカテゴリ（ディスク、キーボード等）に共通する一般的な処理を行う。</li>
+  <li><strong>フィルタドライバ（中間層）</strong>：機能の拡張やI/Oの監視を行う（上位フィルタ、下位フィルタ）。</li>
+  <li><strong>ミニポート / ファンクションドライバ（下層）</strong>：特定のハードウェアチップ固有のレジスタ操作を行う。</li>
+  <li><strong>バスドライバ（最下層）</strong>：デバイスが接続されているバス（PCIe, USB, I2C等）の電源管理やリソース割り振りを担う。</li>
+</ul>"""
+
+pages_ja['page-101'] = r"""<h4>Windows Driver Foundation（WDF）</h4>
+<p>WDMドライバの作成は、複雑なマルチプロセッサ同期、非同期I/Oキャンセル、プラグ＆プレイ状態機械、電源遷移などをすべて手動で記述しなければならず、極めて難解でバグを生みやすいものでした。</p>
+<p>そこでマイクロソフトが開発したのが <strong>WDF（Windows Driver Foundation）</strong> です。WDFは複雑なOSの低レベル処理をフレームワークが安全に代行します。WDFには以下の2つの形態があります：</p>
+<ul>
+  <li><strong>KMDF（Kernel-Mode Driver Framework）</strong>：カーネルモードで動作する高性能ドライバ向けのオブジェクト指向C言語フレームワーク。</li>
+  <li><strong>UMDF（User-Mode Driver Framework）</strong>：USBデバイス、各種センサー、ポータブルオーディオなどのドライバを <strong>ユーザーモード空間で安全に稼働</strong> させる画期的なフレームワーク。万一ドライバがクラッシュしてもOS全体が巻き込まれることがなく、自動的にドライバプロセスが再起動されます。</li>
+</ul>"""
+
+pages_ja['page-102'] = r"""<figure><img loading="lazy" width="520" height="320" src="assets/8ea325d9f9789b6c6b8a6102.webp" alt="KMDF と UMDF のアーキテクチャ"><figcaption>図：WDF（KMDF / UMDF）による安全なドライバ構築</figcaption></figure>
+
+<h4>ユニバーサル Windows ドライバ</h4>
+<p>OneCore の完成に伴い、Windows 10 では <strong>ユニバーサル Windows ドライバ（Universal Windows Drivers: UWD）</strong> が導入されました。開発者は単一のドライバパッケージを作成するだけで、デスクトップ、サーバー、Xbox、IoT、HoloLens に至るすべての Windows 10 プラットフォームに共通してインストール・稼働させることができます。</p>"""
+
+pages_ja['page-103'] = r"""<h4>実験：インストール済みデバイスドライバの一覧表示</h4>
+<p>Windows標準の <code>msinfo32</code>（システム情報）を開き、「ソフトウェア環境 → システム ドライバ」を展開するか、コマンドプロンプトで <code>driverquery</code> を実行すると、システムに登録・ロードされている全デバイスドライバの完全な一覧を取得できます。</p>
+
+<figure><img loading="lazy" width="600" height="380" src="assets/846d683853546d09554d56d5.webp" alt="システム情報でのドライバ一覧"><figcaption>図：msinfo32 によるロード済みシステムドライバの確認</figcaption></figure>
+
+<p>また、管理者権限のコマンドプロンプトから <code>driverquery /v</code> を実行すると、各ドライバのページプール・非ページプールのメモリ消費量や開始モード（ブート時、自動、手動）まで詳細に出力されます。</p>"""
+
+pages_ja['page-104'] = r"""<h3>システムプロセス（System Processes）</h3>
+<p>Windows が起動を完了すると、常にバックグラウンドで稼働し続ける一連の重要な <strong>システムプロセス群</strong> が存在します。これらはタスクマネージャーや Process Explorer で常に確認できます。</p>
+
+<p>主要なシステムプロセスは以下の通りです：</p>
+<ul>
+  <li><strong>System Idle Process（PID 0）</strong></li>
+  <li><strong>System プロセス（PID 4）</strong></li>
+  <li><strong>Secure System プロセス（VBS有効時）</strong></li>
+  <li><strong>Memory Compression プロセス</strong></li>
+  <li><strong>Session Manager（<code>Smss.exe</code>）</strong></li>
+  <li><strong>Windows 初期化プロセス（<code>Wininit.exe</code>）</strong></li>
+  <li><strong>サービス制御マネージャー（<code>Services.exe</code>）</strong></li>
+  <li><strong>ローカルセキュリティ機関（<code>Lsass.exe</code>）</strong></li>
+  <li><strong>ログオンマネージャー（<code>Winlogon.exe</code> / <code>LogonUI.exe</code>）</strong></li>
+</ul>"""
+
+pages_ja['page-105'] = r"""<h4>システムアイドルプロセス（System Idle Process / PID 0）</h4>
+<p>システムアイドルプロセスは、CPUコアごとに1つの「アイドルスレッド」を保持する特殊な擬似プロセスです。他のどのスレッドもCPUの実行を要求していない時、このアイドルスレッドがCPUコア上で実行されます。</p>
+<p>アイドルスレッドの主な役目は、CPUの消費電力を劇的に削減することです。ACPI仕様に定義された省電力状態（Cステート：HALT命令、C1/C2/C3スリープ等）をプロセッサに発行し、CPUを低消費電力待機状態へと移行させます。タスクマネージャーで「CPU使用率 95% のアイドル」と表示されている場合、それはCPUが酷使されているのではなく、95%の時間省電力スリープしていることを意味します。</p>
+
+<h4>システムプロセス（System / PID 4）</h4>
+<p>PID 4 の <strong>System プロセス</strong> は、すべてのカーネルモード「<strong>システムスレッド</strong>」の母体となる特別なプロセスです。通常、カーネルやデバイスドライバのコードは呼び出し元プロセスのコンテキストで実行されますが、遅延書き込み、ワーキングセットのトリミング、メモリの圧縮、非同期I/Oの完了処理など、特定のユーザープロセスに属さないOSのバックグラウンド作業を行うため、カーネル自身が生成したスレッドがこの System プロセス内で永久に稼働し続けます。</p>"""
+# Chapter 2: Pages 106 - 117 (Complete Chapter 2)
+
+pages_ja['page-106'] = r"""<h4>Secure System プロセス</h4>
+<p>VBS（仮想化ベースのセキュリティ）が有効な環境では、通常の System プロセスのほかに <strong>Secure System プロセス</strong> が現れます。このプロセスは、VTL 1（セキュアワールド）のセキュアカーネル空間で稼働する各種バックグラウンドスレッドを抽象化して表現したものです。</p>
+
+<h4>メモリ圧縮プロセス（Memory Compression）</h4>
+<p>Windows 10 で新たに導入された革新的なメモリ管理機能が <strong>メモリ圧縮（Memory Compression）</strong> です。物理メモリが逼迫した際、Windows は古いページを直ちに低速なディスク（ページングファイル）へ書き出す（ページアウトする）のではなく、高速な圧縮アルゴリズム（Xpress / LZNT1）を用いてメモリ上で 2〜4 倍に圧縮して専用の「圧縮ストア」に保持します。</p>
+<p>タスクマネージャーや Process Explorer では、この圧縮メモリを管理するカーネルスレッド群が「Memory Compression」または System プロセス内部のスレッドとして観測されます（第5章で詳解）。</p>"""
+
+pages_ja['page-107'] = r"""<h4>セッションマネージャー（Smss.exe）</h4>
+<p><strong><code>Smss.exe</code>（Session Manager Subsystem）</strong> は、カーネルモードの初期化が完了した直後に、カーネル（初期システムスレッド）がユーザーモード空間で最初に起動する <strong>すべてのユーザーモードプロセスの祖先</strong> です。</p>
+<p><code>Smss.exe</code> の主な役割は以下の通りです：</p>
+<ol>
+  <li>システムの初期環境変数の定義</li>
+  <li>ページングファイル（<code>pagefile.sys</code>）の作成とマッピング</li>
+  <li>システム全体の基本DOSデバイス名（<code>\GLOBAL??</code>）のシンボリックリンク作成</li>
+  <li>レジストリハイブの完全ロードと整合性チェック</li>
+  <li>保留中のファイル名前変更操作（<code>PendingFileRenameOperations</code>：再起動時のファイル置換処理）の実行</li>
+  <li>Windowsサブシステム（<code>Csrss.exe</code>）および初期化プロセス（<code>Wininit.exe</code> / <code>Winlogon.exe</code>）の起動</li>
+  <li>新しいユーザーセッション（リモートデスクトップ接続や高速ユーザー切り替え）の作成と初期化</li>
+</ol>"""
+
+pages_ja['page-108'] = r"""<p><code>Smss.exe</code> は、セッション0用のサブシステムを起動した後、追加のセッションが要求されるたびに自身の子プロセス（一時的な <code>Smss.exe</code>）をフォークして新しいセッション環境（セッション専用の <code>Csrss.exe</code> と <code>Winlogon.exe</code>）を立ち上げます。環境のセットアップが完了すると子 <code>Smss.exe</code> は直ちに終了するため、新セッションのプロセス群は親プロセスを持たない（孤立した）形で稼働を続けます。</p>"""
+
+pages_ja['page-109'] = r"""<p>このセッション生成のアーキテクチャにより、Windows は複数の対話型セッションを完全にメモリ上で独立させ、極めて高い安全性と堅牢性を維持しています。</p>"""
+
+pages_ja['page-110'] = r"""<p><code>Smss.exe</code> の起動シーケンスにおける細かな初期化手順は、第11章「起動とシャットダウン」でより詳細に紐解かれます。</p>"""
+
+pages_ja['page-111'] = r"""<p>クラッシュダンプの設定やメモリダンプファイルの準備、NUMAアーキテクチャに応じたメモリ最適化など、OSが本格的なユーザー空間を受け入れるための基盤整備はすべてこの <code>Smss.exe</code> によって完了されます。</p>"""
+
+pages_ja['page-112'] = r"""<h4>Windows 初期化プロセス（Wininit.exe）</h4>
+<p><strong><code>Wininit.exe</code></strong> は、セッション 0 におけるコアシステムサービスの初期化を統括するプロセスです。</p>
+<p><code>Wininit.exe</code> は以下の重要処理を順次実行します：</p>
+<ol>
+  <li>自身およびプライマリスレッドを「クリティカル（Critical）」としてマーク（これにより、万一 <code>Wininit.exe</code> が異常終了した場合はシステムクラッシュ（BSoD）となり、中途半端な不安定状態でOSが走り続けるのを防ぎます）。</li>
+  <li>ベースの名前付きオブジェクトディレクトリ（<code>\BaseNamedObjects</code>）の初期化。</li>
+  <li><strong>サービス制御マネージャー（<code>Services.exe</code>）</strong> の起動。</li>
+  <li><strong>ローカルセキュリティ機関サブシステム（<code>Lsass.exe</code>）</strong> の起動。</li>
+  <li><strong>ローカルセッショントランスレーター（<code>Lsm.exe</code>）</strong>（Windows 7以降はサービスDLL化）の起動。</li>
+</ol>"""
+
+pages_ja['page-113'] = r"""<p><code>Wininit.exe</code> はこれら基幹プロセスを起動した後、システムがシャットダウンされるか、または管理対象の基幹プロセスのいずれかが異常終了するまで待機し続けます。</p>
+
+<h4>サービス制御マネージャー（Services.exe）</h4>
+<p><strong><code>Services.exe</code>（Service Control Manager: SCM）</strong> は、Windowsにおけるすべてのバックグラウンド「Windowsサービス」の起動、停止、一時停止、および障害回復を統括する中央司令塔です。UNIXにおける <code>init</code> や <code>systemd</code> に相当します。</p>
+<p>SCMは、レジストリの <code>HKLM\SYSTEM\CurrentControlSet\Services</code> キーを読み込み、自動起動（Auto-start）や遅延起動（Delayed auto-start）、トリガー起動（Trigger-start）に設定されたサービスを順次起動していきます。</p>"""
+
+pages_ja['page-114'] = r"""<h4>実験：インストール済みサービスの一覧とプロパティの確認</h4>
+<p>ファイル名を指定して実行（Win+R）から <code>services.msc</code> を実行すると、GUIのサービス管理コンソールが開きます：</p>
+
+<figure><img loading="lazy" width="540" height="388" src="assets/878b9e383256165ecf745b4f.webp" alt="サービス管理コンソール"><figcaption>図：services.msc によるサービス一覧の表示</figcaption></figure>
+
+<p>任意のサービス（例: Windows Update）をダブルクリックすると、詳細なプロパティが表示されます：</p>
+
+<figure><img loading="lazy" width="249" height="287" src="assets/b5bad8ff9c1196ffa2206279.webp" alt="サービスのプロパティ"><figcaption>図：Windows Update サービスの実行パスとスタートアップの種類</figcaption></figure>
+
+<p>「実行ファイルのパス」欄を見ると、多くのサービスが <code>C:\Windows\system32\svchost.exe -k ...</code> と指定されていることが確認できます。これはメモリを節約するため、複数のサービスDLLを単一の汎用共有プロセス（<code>svchost.exe</code>）に同居させてホストしているためです（Windows 10 バージョン 1703 以降では、RAMが 3.5 GB 以上のPCにおいて安定性と隔離性の向上のため多くのサービスが個別プロセスへと分離されました）。</p>"""
+
+pages_ja['page-115'] = r"""<h4>実験：サービスプロセス内部の調査（Process Explorer）</h4>
+<p>Process Explorer を使用すると、<code>svchost.exe</code> の内部で実際にどのサービス群が稼働しているかをグラフィカルに確認できます。サービスホストプロセス（ピンク色）をダブルクリックし、「Services」タブを開きます：</p>
+
+<figure><img loading="lazy" width="326" height="340" src="assets/ba7decbd5c6a9fad025f5612.webp" alt="Process Explorer の Services タブ"><figcaption>図：Process Explorer によるホスト中サービスDLLの一覧</figcaption></figure>
+
+<p>サービス名、表示名、説明文、および実際に呼び出されているサービスDLLのファイルパスが綺麗に一覧化されて表示されます。</p>
+
+<h4>Winlogon、LogonUI、Userinit</h4>
+<p>ユーザーの対話型ログオンと認証を担うのが <strong><code>Winlogon.exe</code></strong> です。<code>Winlogon.exe</code> は安全なキーストローク（SAS: セキュアアテンションシーケンス、<code>Ctrl+Alt+Delete</code>）の監視を行います。</p>"""
+
+pages_ja['page-116'] = r"""<p>ユーザーがログオン画面を開くと、<code>Winlogon.exe</code> は資格情報入力UIを表示する子プロセス <strong><code>LogonUI.exe</code></strong> を起動します。<code>LogonUI.exe</code> はパスワード、PIN、生体認証（Windows Hello）などのクレデンシャルプロバイダを読み込み、ユーザーの入力を受け付けます。入力が完了すると、情報は直ちに <code>Lsass.exe</code> へと渡されて安全に認証され、<code>LogonUI.exe</code> は破棄されます。</p>
+
+<p>認証が成功すると、<code>Winlogon.exe</code> は <strong><code>Userinit.exe</code></strong> を起動します。<code>Userinit.exe</code> はログオンスクリプトの実行、グループポリシーの適用、ネットワークドライブの再接続を行い、最後にユーザーのシェルである <strong><code>Explorer.exe</code>（デスクトップ環境）</strong> を立ち上げて自身を終了します。</p>
+
+<h3>まとめ（Conclusion）</h3>
+<p>本章では、Windows の全体システムアーキテクチャを包括的に概観しました。ハイブリッドOSモデルの設計思想から、対称型マルチプロセッシング（SMP）、NUMA対応とプロセッサグループによる超高スケーラビリティ、VBSによるハードウェア仮想化防衛、環境サブシステム（Win32, WSL）、エグゼクティブとカーネルの階層化、HALによるハードウェア抽象化、WDFドライバモデル、そして主要システムプロセス群（Smss, Wininit, Services, Lsass, Winlogon）の役割に至るまで、現代のWindowsを支えるすべての屋台骨を解き明かしました。</p>
+<p>続く第3章からは、いよいよ個別の基幹メカニズムの深層へと足を踏み入れます。まずはすべての実行基盤である「プロセスとジョブ」の内部構造を解き明かしていきましょう。</p>"""
+pages_ja['page-117'] = ""
