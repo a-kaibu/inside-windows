@@ -1,7 +1,7 @@
 import re
 import os
 
-print("Building unified ja.html skeleton with all chapters...")
+print("Building unified ja.html (removing cover photo, copyright/imprint, and raw contents)...")
 
 with open('part1.html', 'r', encoding='utf-8') as f:
     p1_html = f.read()
@@ -9,7 +9,7 @@ with open('part1.html', 'r', encoding='utf-8') as f:
 with open('part2.html', 'r', encoding='utf-8') as f:
     p2_html = f.read()
 
-# Try loading translated pages if available
+# Load translated pages
 try:
     import translate_pages
     translated_dict = translate_pages.pages_ja
@@ -26,13 +26,34 @@ aside1 = p1_html[p1_html.find('<aside'):p1_html.find('</aside>')+8]
 aside2 = p2_html[p2_html.find('<aside'):p2_html.find('</aside>')+8]
 
 chapter_trans = {
-    'Cover': '表紙',
-    'Title Page': 'タイトル',
-    'Copyright Page': '権利表記',
-    'Acknowledgments': '謝辞',
-    'Contents': '目次',
     'Introduction': 'はじめに',
+    'Acknowledgments': '謝辞',
     'Chapter 1 Concepts and tools': '第1章 概念とツール',
+    'Windows operating system versions': 'Windows OS のバージョン',
+    'Windows 10 and future Windows versions': 'Windows 10 と将来のバージョン',
+    'Windows 10 and OneCore': 'Windows 10 と OneCore',
+    'Foundation concepts and terms': '基本概念と用語',
+    'Windows API': 'Windows API',
+    'Services, functions, and routines': 'サービス、関数、ルーチン',
+    'Processes': 'プロセス',
+    'Threads': 'スレッド',
+    'Jobs': 'ジョブ',
+    'Virtual memory': '仮想メモリ',
+    'Kernel mode vs. user mode': 'カーネルモードとユーザーモード',
+    'Hypervisor': 'ハイパーバイザー',
+    'Firmware': 'ファームウェア',
+    'Terminal Services and multiple sessions': 'ターミナルサービスとマルチセッション',
+    'Objects and handles': 'オブジェクトとハンドル',
+    'Security': 'セキュリティ',
+    'Registry': 'レジストリ',
+    'Unicode': 'Unicode',
+    'Digging into Windows internals': 'Windows 内部の深掘り',
+    'Performance Monitor and Resource Monitor': 'パフォーマンスモニターとリソースモニター',
+    'Kernel debugging': 'カーネルデバッグ',
+    'Windows Software Development Kit': 'Windows SDK',
+    'Windows Driver Kit': 'Windows Driver Kit (WDK)',
+    'Sysinternals tools': 'Sysinternals ツール',
+    'Conclusion': 'まとめ',
     'Chapter 2 System architecture': '第2章 システムアーキテクチャ',
     'Chapter 3 Processes and jobs': '第3章 プロセスとジョブ',
     'Chapter 4 Threads': '第4章 スレッド',
@@ -46,11 +67,16 @@ chapter_trans = {
     'Chapter 12 Startup and shutdown': '第12章 起動とシャットダウン',
 }
 
+# Remove unwanted links from TOC: Cover, Title Page, Copyright Page, Contents
+unwanted_toc = {'Cover', 'Title Page', 'Copyright Page', 'Contents', 'Contents at a Glance'}
+
 def clean_and_translate_aside(aside_html, id_prefix=''):
     def repl(m):
         style = m.group(1)
         href = m.group(2)
         text = m.group(3).strip()
+        if text in unwanted_toc:
+            return ''  # Delete from TOC
         trans = chapter_trans.get(text, text)
         new_href = href if not id_prefix else f"#{id_prefix}{href[1:]}"
         return f'<a {style} href="{new_href}">{trans}</a>'
@@ -73,30 +99,38 @@ unified_header = """<header>
 <a href="./" style="text-decoration:none" aria-label="本棚へ戻る">← 本棚</a>
 <strong>Windows Internals 第7版 · 日本語統合版</strong>
 <label id="sizeLabel">文字 <button id="smaller" aria-label="文字を小さく">−</button> <button id="larger" aria-label="文字を大きく">＋</button></label>
-<label>Part 1 頁 <input id="pageInput" type="number" min="1" max="801" value="1"></label>
+<label>Part 1 頁 <input id="pageInput" type="number" min="12" max="801" value="12"></label>
 <button id="jump">移動</button>
 </header>"""
 
 # 4. Intro block
 unified_intro = """<div class="intro">
 <h1>Windows Internals 第7版<br>日本語統合版 (Part 1 &amp; Part 2)</h1>
-<p>本書は『Windows Internals Seventh Edition』Part 1 および Part 2 の全1,713ページを統合したWebリーダーです。</p>
-<p>「原本ページを表示」展開枠およびPDF特有のページ境界バーをすべて排除し、文章としてスムーズに通読できるようにレイアウトを整形しています。翻訳完了済みの章から順次、自然で読みやすい日本語テキストへと差し替えを行っています。</p>
+<p>本書は『Windows Internals Seventh Edition』Part 1 および Part 2 を統合したWebリーダーです。</p>
+<p>表紙画像や発行クレジット、原本の目次・ページ境界バー・原本ページ表示枠を排除し、文章としてスムーズに通読できるようにレイアウトを整形しています。翻訳済みの章から順次、自然で読みやすい日本語テキストへと差し替えを行っています。</p>
 <div style="margin-top:10px;padding:8px 12px;background:var(--panel);border-radius:4px;font-size:14px;">
-<strong>現在の翻訳状況：</strong> 前付（はじめに・謝辞等）および「第1章 概念とツール」（全44ページ分）が日本語化完了済みです。第2章以降の英文骨格もすべて移植済みで、順次日本語へ更新されます。
+<strong>現在の翻訳状況：</strong> 「はじめに」および「第1章 概念とツール」（全44ページ分）が日本語化完了済みです。第2章以降の英文骨格もすべて移植済みで、順次日本語へ更新されます。
 </div>
 </div>"""
+
+# Pages to omit:
+# Part 1: page-1 (Cover), page-2 (Title Page), page-3 (Copyright), page-4..page-11 (Contents)
+p1_omit = {f"page-{i}" for i in range(1, 12)}
+
+# Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
+p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
 
 # 5. Extract and clean Part 1 pages
 p1_pages = re.findall(r'<section class=\"page\" id=\"(page-\d+)\"[^>]*>(.*?)</section>', p1_html, re.DOTALL)
 body_sections = []
 
 for pid, content in p1_pages:
+    if pid in p1_omit:
+        continue
     if pid in translated_dict:
         clean_content = translated_dict[pid]
         body_sections.append(f'<section class="page" id="{pid}" aria-label="{pid}">{clean_content}</section>')
     else:
-        # Strip details (原本ページを表示) and pagebar
         cleaned = re.sub(r'<details>.*?</details>', '', content, flags=re.DOTALL)
         cleaned = re.sub(r'<div class="pagebar">.*?</div>', '', cleaned, flags=re.DOTALL)
         body_sections.append(f'<section class="page" id="{pid}" aria-label="{pid}">{cleaned}</section>')
@@ -105,6 +139,8 @@ for pid, content in p1_pages:
 p2_pages = re.findall(r'<section class=\"page\" id=\"(page-\d+)\"[^>]*>(.*?)</section>', p2_html, re.DOTALL)
 for pid, content in p2_pages:
     p2_pid = f"p2-{pid}"
+    if p2_pid in p2_omit:
+        continue
     if p2_pid in translated_dict:
         clean_content = translated_dict[p2_pid]
         body_sections.append(f'<section class="page" id="{p2_pid}" aria-label="{p2_pid}">{clean_content}</section>')
@@ -146,4 +182,4 @@ with open('ja.html', 'w', encoding='utf-8') as out:
     out.write(full_html)
 
 size_mb = os.path.getsize('ja.html') / (1024 * 1024)
-print(f"Generated unified ja.html: {size_mb:.2f} MB ({len(body_sections)} pages)")
+print(f"Updated ja.html: {size_mb:.2f} MB ({len(body_sections)} pages)")
