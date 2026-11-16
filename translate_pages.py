@@ -714,3 +714,113 @@ pages_ja['page-57'] = r"""<h3>Sysinternals ツール群</h3>
 <h3>まとめ（Conclusion）</h3>
 <p>本章では、本書全体を通じて基礎となる Windows の主要なアーキテクチャ概念と基本用語（API、プロセス、スレッド、仮想メモリ、実行モード、オブジェクト、セキュリティ等）を整理し、内部構造を解明するための強力な調査ツール群の基本操作を紹介しました。</p>
 <p>これでWindowsの内部世界を探究する準備が整いました。続く第2章では、システム全体の全体像と各コアコンポーネントがどのように結合しているかを解き明かす「システムアーキテクチャ」の旅へと進みましょう。</p>"""
+
+# Chapter 1: Pages 58 - 61 (Complete Chapter 1)
+
+pages_ja['page-58'] = r"""<h4>実験：カーネル構造体の型情報の表示（dt nt!_*）</h4>
+<p>カーネルデバッガー（WinDbg や LiveKd）で <code>dt nt!_*</code> と入力すると、カーネルシンボルに含まれる構造体のうち、型情報が提供されている一覧が表示されます（<code>ntkrnlmp</code> は64ビットマルチプロセッサカーネルの内部ファイル名です。詳細は第2章を参照）：</p>
+<pre>lkd> dt nt!_*
+ntkrnlmp!_KSYSTEM_TIME
+ntkrnlmp!_NT_PRODUCT_TYPE
+ntkrnlmp!_ALTERNATIVE_ARCHITECTURE_TYPE
+ntkrnlmp!_KUSER_SHARED_DATA
+ntkrnlmp!_ULARGE_INTEGER
+ntkrnlmp!_TP_POOL
+ntkrnlmp!_TP_CLEANUP_GROUP
+ntkrnlmp!_ACTIVATION_CONTEXT
+ntkrnlmp!_TP_CALLBACK_INSTANCE
+ntkrnlmp!_TP_CALLBACK_PRIORITY
+ntkrnlmp!_TP_CALLBACK_ENVIRON_V3
+ntkrnlmp!_TEB</pre>
+
+<p><code>dt</code> コマンドではワイルドカードを用いた部分一致検索も可能です。例えば、割り込みオブジェクトの構造体名を探したい場合は、<code>dt nt!_*interrupt*</code> と入力します：</p>
+<pre>lkd> dt nt!_*interrupt*
+ntkrnlmp!_KINTERRUPT_MODE
+ntkrnlmp!_KINTERRUPT_POLARITY
+ntkrnlmp!_PEP_ACPI_INTERRUPT_RESOURCE
+ntkrnlmp!_KINTERRUPT
+ntkrnlmp!_UNEXPECTED_INTERRUPT
+ntkrnlmp!_INTERRUPT_CONNECTION_DATA
+ntkrnlmp!_INTERRUPT_VECTOR_DATA
+ntkrnlmp!_INTERRUPT_HT_INTR_INFO
+ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
+
+<p>構造体名が判明したら、以下のように <code>dt</code> コマンドに対象構造体名を指定して実行することで、構造体の詳細なフィールド定義をダンプできます（デバッガーは大文字小文字を区別しません）：</p>
+<pre>lkd> dt nt!_KINTERRUPT
++0x000 Type             : Int2B
++0x002 Size             : Int2B
++0x008 InterruptListEntry : _LIST_ENTRY
++0x018 ServiceRoutine   : Ptr64     unsigned char
++0x020 MessageServiceRoutine : Ptr64     unsigned char
++0x028 MessageIndex     : Uint4B
++0x030 ServiceContext   : Ptr64 Void
++0x038 SpinLock         : Uint8B
++0x040 TickCount        : Uint4B
++0x048 ActualLock       : Ptr64 Uint8B
++0x050 DispatchAddress  : Ptr64     void
++0x058 Vector           : Uint4B
++0x05c Irql             : UChar</pre>"""
+
+pages_ja['page-59'] = r"""<pre>+0x05d SynchronizeIrql  : UChar
++0x05e FloatingSave     : UChar
++0x05f Connected        : UChar
++0x060 Number           : Uint4B
++0x064 ShareVector      : UChar
++0x065 EmulateActiveBoth : UChar
++0x066 ActiveCount      : Uint2B
++0x068 InternalState    : Int4B
++0x06c Mode             : _KINTERRUPT_MODE
++0x070 Polarity         : _KINTERRUPT_POLARITY
++0x074 ServiceCount     : Uint4B
++0x078 DispatchCount    : Uint4B
++0x080 PassiveEvent     : Ptr64 _KEVENT
++0x088 TrapFrame        : Ptr64 _KTRAP_FRAME
++0x090 DisconnectData   : Ptr64 Void
++0x098 ServiceThread    : Ptr64 _KTHREAD
++0x0a0 ConnectionData   : Ptr64 _INTERRUPT_CONNECTION_DATA
++0x0a8 IntTrackEntry    : Ptr64 Void
++0x0b0 IsrDpcStats      : _ISRDPCSTATS
++0x0f0 RedirectObject   : Ptr64 Void
++0x0f8 Padding          : [8] UChar</pre>
+
+<p>なお、既定では <code>dt</code> コマンドは内部に含まれるサブ構造体（入れ子の構造体）の中身までは展開しません。サブ構造体のフィールドまで再帰的に展開して表示するには、<code>-r</code> スイッチまたは <code>-b</code> スイッチを使用します。例えば、カーネル割り込みオブジェクトを表示する際にこのスイッチを指定すると、<code>InterruptListEntry</code> フィールドに格納されている <code>_LIST_ENTRY</code> 構造体の内部フォーマット（<code>Flink</code>, <code>Blink</code>）まで詳細に展開されます：</p>
+<pre>lkd> dt nt!_KINTERRUPT -r
++0x000 Type             : Int2B
++0x002 Size             : Int2B
++0x008 InterruptListEntry : _LIST_ENTRY
++0x000 Flink            : Ptr64 _LIST_ENTRY
++0x000 Flink            : Ptr64 _LIST_ENTRY
++0x008 Blink            : Ptr64 _LIST_ENTRY
++0x008 Blink            : Ptr64 _LIST_ENTRY
++0x000 Flink            : Ptr64 _LIST_ENTRY
++0x008 Blink            : Ptr64 _LIST_ENTRY
++0x018 ServiceRoutine   : Ptr64     unsigned char</pre>
+
+<p><code>-r</code> スイッチの後ろに数値を付けることで、再帰展開の深さを指定することも可能です。例えば <code>dt nt!_KINTERRUPT -r1</code> と指定すると、1階層分だけサブ構造体を展開します。</p>
+<p>デバッガーのセットアップや詳しいコマンド体系については、Debugging Tools for Windows のヘルプファイル（<code>Debugger.chm</code>）に網羅されています。さらにデバイスドライバ開発者を主眼に置いたデバッグ手法の詳細については、WDK の公式ドキュメントを参照してください。</p>"""
+
+pages_ja['page-60'] = r"""<h4>LiveKd ツール</h4>
+<p>Sysinternals の <strong>LiveKd</strong> は、OSをデバッグモードで起動していなくても、稼働中のWindows上で即座に WinDbg や kd によるカーネルデバッグを可能にする画期的な無償ツールです。</p>
+<p>デバッグモードを有効にしていない実稼働マシン上で急遽カーネルレベルの障害調査が必要になった場合や、再起動すると再現しなくなってしまうトラブルを調査する際に極めて大きな威力を発揮します。</p>
+<p>LiveKd の使い方は WinDbg や kd とほぼ同様です。指定したコマンドラインオプションは、背後で起動されるデバッガーへとそのまま渡されます。既定ではコンソール版の <code>kd</code> が起動しますが、<code>-w</code> スイッチを付与することで GUI 版の WinDbg を起動できます（利用可能なオプション一覧は <code>livekd -?</code> で確認できます）。</p>
+<p>LiveKd は稼働中システムの仮想メモリのスナップショット（仮想的なクラッシュダンプ）を透過的に生成してデバッガーに提示するため、マシンの再起動や2台接続の機材を用意することなく、手軽に安全にカーネル内部の生データを調査できます。なお、メモリは起動時点のスナップショットであるため、時間の経過によって自動更新はされません。システム状態を更新したい場合は、<code>q</code> コマンドでデバッガーを一度終了すると、LiveKd が再起動するか尋ねてきます。デバッガーの出力がループして止まらない場合は <code>Ctrl+C</code>、ハングした場合は <code>Ctrl+Break</code> を押すことでデバッガープロセスを終了できます。</p>
+
+<h3>Windows Software Development Kit (Windows SDK)</h3>
+<p><strong>Windows SDK</strong> は、MSDN サブスクリプションまたはマイクロソフトの開発者ポータル（<a href="https://developer.microsoft.com/windows/downloads/windows-10-sdk" target="_blank" rel="noopener">Windows 10 SDK 配布ページ</a>）から誰でも無償でダウンロードできます。Visual Studio のインストーラーからもオプションとして導入可能です。Windows SDK のバージョンは常に最新の Windows OS に追従して提供されます。</p>
+<p>Windows SDK には、前述の「Debugging Tools for Windows」に加えて、Windows アプリケーションをコンパイル・リンクするための C言語ヘッダーファイルとライブラリ群が含まれています。Windows 内部構造を探究する観点において特に価値が高いのは、<strong>公式の API ヘッダーファイル群</strong>（例: <code>C:\Program Files (x86)\Windows Kits\10\Include</code>）と、付属する各種ユーティリティ（<code>Bin</code> フォルダ）です。また、オフラインでも参照できる膨大な技術ドキュメントや、SDK および MSDN ライブラリに付属するサンプルソースコードも重要な知見を与えてくれます。</p>
+
+<h3>Windows Driver Kit (WDK)</h3>
+<p><strong>Windows Driver Kit (WDK)</strong> も同様に、MSDN サブスクリプションおよび公式サイトから無償で入手できます。WDK のドキュメントは MSDN ライブラリに完全に統合されています。</p>
+<p>WDK は本来デバイスドライバ開発者向けのキットですが、<strong>Windows の内部構造に関する比類なき情報源</strong>でもあります。例えば、第6章では I/O システムのアーキテクチャやドライバモデルの骨格を解説しますが、個々のカーネルサポート関数の詳細なパラメータまでは網羅していません。WDK のドキュメント（特に『Kernel-Mode Driver Architecture Design Guide』および『Kernel-Mode Driver Reference』）には、すべてのカーネルサポート関数とドライバ機構のチュートリアルおよびリファレンスが網羅されています。</p>"""
+
+pages_ja['page-61'] = r"""<p>さらに WDK には、重要な内部データ構造体、システム定数、未公開内部ルーチンのインターフェースを定義したヘッダーファイル群（とりわけ <code>ntddk.h</code>、<code>ntifs.h</code>、<code>wdm.h</code>）が同梱されています。本書では構造体の全体的なレイアウトや役割を解説していますが、個々のフィールドの詳細なサイズやデータ型までは掲載していません。オブジェクトディスパッチャヘッダー、待機ブロック、イベント、ミュータント、セマフォなどの正確な構造体定義は、これらの WDK ヘッダーファイルを調べることで完全に把握できます。</p>
+<p>本書の解説を超えてさらに深く I/O システムやドライバモデルを極めたい方には、WDK 公式ドキュメントの熟読を強くお勧めします。また、Walter Oney 著『Programming the Microsoft Windows Driver Model, Second Edition』（Microsoft Press, 2002年）や、Penny Orwick & Guy Smith 著『Developing Drivers with the Windows Driver Foundation』（Microsoft Press, 2007年）も非常に有益な参考資料となります。</p>
+
+<h3>Sysinternals ツール群</h3>
+<p>本書で紹介する実験の多くは、<strong>Windows Sysinternals</strong>（<a href="https://technet.microsoft.com/sysinternals" target="_blank" rel="noopener">sysinternals.com</a>）の無償ツールを使用しています。著者の1人である Mark Russinovich が中心となって開発したこれらのツールは、世界中のWindows管理者やセキュリティ技術者のデファクトスタンダードとなっています。</p>
+<p>最も著名な Process Explorer や Process Monitor のほか、Autoruns、Handle、WinObj など、OS内部の可視化において比類なき威力を発揮します。なお、これらツールの多くはカーネルモードの専用デバイスドライバを動的にロードして動作するため、管理者特権（昇格した権限）での実行が必要ですが、一部の機能は標準ユーザー権限でも稼働します。</p>
+<p>Sysinternals ツールは頻繁に新機能の追加やバグ修正が行われているため、常に最新版をダウンロードして活用してください。ツールの更新情報は「Sysinternals Site Blog」（RSSフィードあり）で追跡できます。全ツールの詳しい解説やトラブルシューティングの実例集については、Mark Russinovich & Aaron Margosis 著『Windows Sysinternals Administrator’s Reference』（Microsoft Press, 2011年）および Sysinternals 公式フォーラムをご参照ください。</p>
+
+<h3>まとめ（Conclusion）</h3>
+<p>本章では、本書全体を通じて基礎となる Windows の主要なアーキテクチャ概念と基本用語（API、プロセス、スレッド、仮想メモリ、実行モード、ハイパーバイザー、オブジェクト、セキュリティ等）を整理し、内部構造を解明するための強力な調査ツール群（タスクマネージャー、Process Explorer、パフォーマンスモニター、WinDbg/LiveKd、WDK）の基本操作を紹介しました。</p>
+<p>これでWindowsの内部世界を探究する準備が整いました。続く第2章では、システム全体の全体像と各コアコンポーネントがどのように結合しているかを解き明かす「システムアーキテクチャ」の旅へと進みましょう。</p>"""
