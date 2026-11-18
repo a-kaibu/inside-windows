@@ -1,6 +1,9 @@
 import re
 import os
 
+from translate_pages import pages_ja
+from translate_new_pages import new_pages_ja
+
 print("Building unified ja.html (removing cover photo, copyright/imprint, and raw contents)...")
 
 with open('part1.html', 'r', encoding='utf-8') as f:
@@ -9,12 +12,7 @@ with open('part1.html', 'r', encoding='utf-8') as f:
 with open('part2.html', 'r', encoding='utf-8') as f:
     p2_html = f.read()
 
-# Load translated pages
-try:
-    import translate_pages
-    translated_dict = translate_pages.pages_ja
-except Exception as e:
-    translated_dict = {}
+translated_dict = {**pages_ja, **new_pages_ja}
 
 # 1. Header & Styles
 head_match = re.search(r'(<head>.*?</head>)', p1_html, re.DOTALL)
@@ -192,7 +190,7 @@ unified_header = """<header>
 # 4. Intro block
 unified_intro = """<div class="intro">
 <div style="margin-top:10px;padding:8px 12px;background:var(--panel);border-radius:4px;font-size:14px;">
-<strong>現在の翻訳状況：</strong> 「はじめに」および「第1章 概念とツール」（全44ページ分）が日本語化完了済みです。第2章以降の英文骨格もすべて移植済みで、順次日本語へ更新されます。
+<strong>翻訳作業中：</strong> 日本語の箇所には章の要約も含まれます。日本語の本文がないページは英語原文を表示します。
 </div>
 </div>"""
 
@@ -203,34 +201,36 @@ p1_omit = {f"page-{i}" for i in range(1, 12)}
 # Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
 p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
 
-# 5. Extract and clean Part 1 pages
-p1_pages = re.findall(r'<section class=\"page\" id=\"(page-\d+)\"[^>]*>(.*?)</section>', p1_html, re.DOTALL)
-body_sections = []
+# 5–6. Use the original text whenever a translation is missing or empty.
+original_pre_marker = '<!-- original-pre -->'
+reader_controls = re.compile(r'<details>.*?</details>|<div class="pagebar">.*?</div>', re.DOTALL)
 
-for pid, content in p1_pages:
-    if pid in p1_omit:
-        continue
-    if pid in translated_dict:
-        clean_content = translated_dict[pid]
-        body_sections.append(f'<section class="page" id="{pid}" aria-label="{pid}">{clean_content}</section>')
-    else:
-        cleaned = re.sub(r'<details>.*?</details>', '', content, flags=re.DOTALL)
-        cleaned = re.sub(r'<div class="pagebar">.*?</div>', '', cleaned, flags=re.DOTALL)
-        body_sections.append(f'<section class="page" id="{pid}" aria-label="{pid}">{cleaned}</section>')
 
-# 6. Extract and clean Part 2 pages
-p2_pages = re.findall(r'<section class=\"page\" id=\"(page-\d+)\"[^>]*>(.*?)</section>', p2_html, re.DOTALL)
-for pid, content in p2_pages:
-    p2_pid = f"p2-{pid}"
-    if p2_pid in p2_omit:
-        continue
-    if p2_pid in translated_dict:
-        clean_content = translated_dict[p2_pid]
-        body_sections.append(f'<section class="page" id="{p2_pid}" aria-label="{p2_pid}">{clean_content}</section>')
-    else:
-        cleaned = re.sub(r'<details>.*?</details>', '', content, flags=re.DOTALL)
-        cleaned = re.sub(r'<div class="pagebar">.*?</div>', '', cleaned, flags=re.DOTALL)
-        body_sections.append(f'<section class="page" id="{p2_pid}" aria-label="{p2_pid}">{cleaned}</section>')
+def render_pages(html, omit, prefix=''):
+    pages = re.findall(r'<section class="page" id="(page-\d+)"[^>]*>(.*?)</section>', html, re.DOTALL)
+    for source_id, content in pages:
+        pid = prefix + source_id
+        if pid in omit:
+            continue
+        body = translated_dict.get(pid, '').strip()
+        lang = ''
+        if original_pre_marker in body:
+            blocks = re.findall(r'<pre>.*?</pre>', reader_controls.sub('', content), flags=re.DOTALL)
+            if body.count(original_pre_marker) != len(blocks):
+                raise ValueError(f'{pid}: original-pre marker count does not match the source')
+            original_blocks = iter(blocks)
+            body = re.sub(original_pre_marker, lambda _: next(original_blocks), body)
+        elif not body:
+            body = reader_controls.sub('', content).strip()
+            lang = ' lang="en"'
+        if body:
+            yield f'<section class="page" id="{pid}" aria-label="{pid}"{lang}>{body}</section>'
+        else:
+            # Keep the URL target for a blank source page, but don't render a page border.
+            yield f'<div id="{pid}" aria-hidden="true"></div>'
+
+
+body_sections = [*render_pages(p1_html, p1_omit), *render_pages(p2_html, p2_omit, prefix='p2-')]
 
 # 7. Footer & Script
 script_and_footer = """<footer>
