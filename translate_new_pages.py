@@ -1,6 +1,26 @@
 # Page-aligned translations keyed by the original reader's page IDs.
 # Each <!-- original-pre --> inserts the next verbatim output block from that page.
 new_pages_ja = {
+    'page-278': '''<p>Windows Store で配布される Kali Linux は、Centennial アプリケーションの典型例です。レジストリのマージと仮想化は、NT カーネル（Configuration Manager）に統合された Virtual Registry Namespace Filter ドライバー（WscVReg）が提供します。パッケージのアクティブ化時に、ユーザーモードの AppInfo サービスは VRegDriver デバイスと通信し、Centennial アプリケーションのレジストリ操作をマージおよびリダイレクトします。</p>
+<p>アプリが仮想化されたハイブにあるレジストリ値を読み取ろうとすると、I/O はパッケージのハイブへリダイレクトされます。この種の値への書き込みは許可されません。値が仮想化ハイブにまだ存在しなければ、リダイレクトせず実際のハイブに作成します。別のリダイレクト方式は <code>HKEY_CURRENT_USER</code> ルートキー全体に適用されます。</p>''',
+    'page-279': '''<p>Centennial ランタイムがシロのアプリケーションコンテナーを設定するとき、パッケージの VFS フォルダーにあるファイルとディレクトリをすべて走査します。これはパッケージのアクティブ化が行う Centennial Virtual File System 構成の一部です。Centennial ランタイムは、表8-35のように VFS 内の各フォルダーに対応するマッピング一覧を持ちます。</p>
+<p>表8-35：Centennial アプリで仮想化されるシステムフォルダー</p>
+<table><thead><tr><th>フォルダー</th><th>リダイレクト先</th><th>アーキテクチャ</th></tr></thead><tbody><tr><td>SystemX86</td><td><code>C:\\Windows\\SysWOW64</code></td><td>32／64ビット</td></tr><tr><td>System</td><td><code>C:\\Windows\\System32</code></td><td>32／64ビット</td></tr><tr><td>SystemX64</td><td><code>C:\\Windows\\System32</code></td><td>64ビットのみ</td></tr><tr><td>ProgramFilesX86</td><td><code>C:\\Program Files (x86)</code></td><td>32／64ビット</td></tr><tr><td>ProgramFilesX64</td><td><code>C:\\Program Files</code></td><td>64ビットのみ</td></tr><tr><td>Windows</td><td><code>C:\\Windows</code></td><td>共通</td></tr><tr><td>CommonAppData</td><td><code>C:\\ProgramData</code></td><td>共通</td></tr></tbody></table>
+<p>ファイルシステム仮想化は、フィルタードライバーによって提供されます。</p>''',
+    'page-280': '''<p>重要なのは、BindFlt フィルターは個々のファイルを扱う一方、Wcnfs および Wcifs ドライバーはフォルダーを扱う点です。Centennial はミニフィルターの通信ポートを使って、仮想ファイルシステム基盤を正しく設定します。設定はメッセージベースの通信で行い、Centennial ランタイムがミニフィルターへメッセージを送り、その応答を待ちます。</p>
+<p>アプリケーションのサスペンドと再開は Host Activity Manager（HAM）が管理します。アプリがフォアグラウンドでなくなった場合、システムのリソースが限られている場合、省電力モードに移る場合、またはUIイベントを待っている場合などにサスペンドできます。</p>''',
+    'page-281': '''<p>サスペンドが要求されると、アプリにはサスペンド状態へ移るための限られた時間（通常は最大5秒）が与えられます。時間内に移行できなければ終了させられます。</p>
+<p>パッケージ化されたアプリケーションを正しくサスペンド・再開するため、Host Activity Manager は新しいカーネルAPI <code>PsFreezeProcess</code> と <code>PsThawProcess</code> を使います。プロセスの Freeze／Thaw はサスペンド／再開に似ていますが、次の違いがあります。</p>
+<ul><li>深く Freeze されたプロセスのコンテキストに新しいスレッドを注入または作成しても、作成時に <code>CREATE_SUSPENDED</code> を指定しなかった場合や <code>NtResumeProcess</code> を呼んだ場合でも、そのスレッドは実行されません。</li><li>EPROCESS データ構造に Freeze カウンターが追加されています。プロセスを複数回 Freeze でき、Thaw 要求数が Freeze 要求数と一致したときに限り、サスペンドされていないスレッドが実行可能になります。</li></ul>
+<h3>State Repository</h3><p>Modern Application Model は、パッケージ化されたアプリの設定、パッケージ依存関係、一般的なアプリケーションデータを保存する新しい方法を導入しました。</p>''',
+    'page-282': '''<p>アプリケーションのファイル一覧と、各モダンアプリのマニフェストファイルのコピーを保持します。Deployment パーティションは通常 <code>StateRepository-Deployment.srd</code> というファイルに保存されます。</p>
+<p>すべてのパーティションは SQLite データベースとして保存されます。Windows は独自の SQLite を <code>StateRepository.Core.dll</code> に組み込み、このライブラリは State Repository サービスが呼び出す Data Access Layer（DAL）API を提供します。これらのAPIは主に内部データベースエンジンのラッパーです。</p>
+<p>State Repository のデータが書き込まれたり変更されたりしたことを、各種コンポーネントが知る必要がある場合があります。Windows 10 Anniversary Update では、変更とイベントの追跡が追加され、複数のシナリオに対応しました。</p>''',
+    'page-283': '''<ul><li>コンポーネントは特定のエンティティのデータ変更を購読でき、データが変更されるとコールバックを受け取ります。これは SQL トランザクションで実装されます。</li><li>複数の SQL トランザクションが一つの Deployment 操作を構成する場合、それらをまとめて追跡できます。</li></ul>
+<p>State Repository の参照は、モダンアプリのインストールやアクティブ化など、Modern Application Model の各処理で行われます。</p>''',
+    'page-286': '''<h3>Dependency Mini Repository</h3><p>SQLite データベースを開き、SQL クエリで必要な情報を抽出する処理は高コストになる場合があります。また、現在のアーキテクチャでは RPC によるプロセス間通信も必要です。この2つの制約を満たせない場面があります。</p>
+<p>典型例は、ユーザーがコマンドラインから新しいアプリケーション（Execution Alias など）を起動する場合です。プロセスを作成するたびに State Repository を調べると、大きな性能問題になります。これを解決するため、Application Model はモダンアプリの情報を保持する、より小さなストアである Dependency Mini Repository（DMR）を導入しました。</p>
+<p>State Repository と異なり、DMR はデータベースを使いません。Microsoft 独自のバイナリ形式でデータを保存し、カーネルモードドライバーを含め、どのセキュリティコンテキストからもファイルシステム経由でアクセスできます。</p>''',
     'page-287': '''<h3>バックグラウンドタスクと Broker インフラストラクチャ</h3><p>UWP アプリケーションは、メインのフォアグラウンドプロセスとやり取りせずにコードの一部をバックグラウンドで実行する必要がある場合があります。UWP のバックグラウンドタスクを使うと、メインプロセスが中断中または動作していない間もアプリケーションの機能を提供できます。リアルタイム通信、メール、インスタントメッセージ、音楽や動画の再生など、さまざまな用途があります。</p>
 <p>バックグラウンドタスクにはトリガーと条件を関連付けられます。トリガーはシステム全体の非同期イベントで、発生するとタスクの開始を通知します。条件によってはタスクを開始しない場合もあります。たとえば、インスタントメッセージアプリのタスクを、ユーザーのログオン時に限り、かつインターネット接続がある場合だけ開始できます。</p>
 <p>Windows 10 には2種類のバックグラウンドタスクがあります。</p>''',
