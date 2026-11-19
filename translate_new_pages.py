@@ -1,6 +1,17 @@
 # Page-aligned translations keyed by the original reader's page IDs.
 # Each <!-- original-pre --> inserts the next verbatim output block from that page.
 new_pages_ja = {
+    'page-294': '''<h3>パッケージのアクティブ化</h3><p>新しい AppExecution エイリアスを除き、パッケージ化されたアプリケーションは EXE ファイルを実行するだけでは起動できません。モダンアプリを起動するには、モダンメニューのタイルをクリックする、Explorer が解釈できる特別なリンクファイルを使う、アプリケーションの文書をダブルクリックする、専用URLを呼び出すなどの方法を使います。ShellExperienceHost プロセスは、アプリケーションの種類に応じて起動方法を決めます。</p>
+<h4>UWP アプリケーション</h4><p>この種のアクティブ化を管理する主なコンポーネントは Activation Manager です。ActivationManager.dll に実装され、ユーザーのデスクトップとやり取りする必要があるため、sihost.exe サービス内で動作します。Activation Manager は他のシステムコンポーネントと連携してアプリケーションを起動します。</p>''',
+    'page-295': '''<p>残りのアクティブ化処理は <code>Kernelbase.dll</code> で続きます。<code>DcomLaunch</code> が作成したトークンはまだ AppContainer ではありませんが、UWP のセキュリティ属性を含みます。<code>CreateProcessInternal</code> の特別なコードは Dependency Mini Repository のレジストリキャッシュを使い、パッケージ化されたアプリケーションのルートフォルダー、パッケージ状態、AppContainer パッケージSID、アプリケーション機能一覧を取得します。次にライセンスが改ざんされていないことを検証します（ゲームで広く使われる機能です）。ここで Dependency Mini Repository ファイルを親プロセスへマップし、UWP アプリケーションDLLの代替ロードパスを解決します。</p>
+<p>AppContainer トークン、そのオブジェクト名前空間、その他のセキュリティ情報を準備した後、アプリケーションプロセスを作成します。</p>''',
+    'page-296': '''<h3>AppExecution エイリアス</h3><p>前述のとおり、パッケージ化されたアプリケーションは実行ファイルを直接実行して起動できません。これは新しいモダンなコンソールアプリケーションにとって大きな制約です。コマンドラインからモダンアプリ（Centennial および UWP）を起動できるように、Windows 10 Fall Creators Update（ビルド1709）から Modern Application Model に AppExecution エイリアスが導入されました。この機能で、コンソールから Edge などのモダンアプリを起動できます。</p>
+<p>AppExecution エイリアスは、基本的には <code>C:\\Users\\&lt;UserName&gt;\\AppData\\Local\\Microsoft\\WindowsApps</code> に置かれる長さ0バイトの実行ファイルです。この場所は <code>PATH</code> 環境変数を通じて実行ファイル検索パスに追加されるため、ユーザーは完全なパスを指定せずにファイル名だけでアプリを実行できます。0バイトのファイルからどうやってアプリを起動するのでしょうか。答えは、ファイルシステムのあまり知られていない機能である再解析ポイントにあります。</p>''',
+    'page-297': '''<h3>パッケージの登録</h3><p>モダンアプリをインストールするとき、ユーザーは通常 AppStore を開き、アプリを探して「入手」をクリックします。これにより、パッケージマニフェスト、アプリケーションのデジタル署名、署名に含まれる証明書の信頼チェーンを表すブロックマップなどを含むアーカイブのダウンロードが始まります。アーカイブは最初に <code>C:\\Windows\\SoftwareDistribution\\Download</code> に保存されます。AppStore プロセス（<code>WinStore.App.exe</code>）は、ダウンロード要求を管理する Windows Update サービス（<code>wuaueng.dll</code>）と通信します。</p>
+<p>ダウンロードされたマニフェストには、モダンアプリの全ファイル、依存関係、ライセンス情報、パッケージを正しく登録する手順が記載されています。Windows Update サービスは要求がモダンアプリ向けであることを認識し、呼び出し元トークン（AppContainer である必要があります）を検証します。さらに AppXDeploymentClient.dll のサービスを使って、パッケージがシステムに未インストールであることを確かめます。その後 AppX Deployment 要求を作成し、RPC 経由で AppX Deployment Server に送信します。このサーバーは共有サービスホストプロセス内で PPL サービスとして動作します。</p>
+<p>ステージング処理では、まずアプリケーションファイル用のディスク領域を事前に確保し、最終的なダウンロードサイズを計算して、AppX ファイル内に圧縮されたパッケージ一式を置くサーバーURLを取得します。最後に Windows Update サービスを使い、リモートサーバーから AppX をダウンロードします。</p>
+<h4>フェーズ2：ユーザーデータのステージング</h4><p>このフェーズはアプリケーションを更新する場合だけ実行します。以前のパッケージのユーザーデータを復元し、新しいアプリケーションパスに保存します。</p>
+<h4>フェーズ3：パッケージの登録</h4><p>展開で最も重要なフェーズです。AppXDeploymentExtensions.onecore.dll（デスクトップ固有の展開処理では AppXDeploymentExtensions.desktop.dll）のサービスを使います。これを Package Core Installation と呼びます。AppX Deployment Server は主に State Repository を更新し、パッケージ、そのパッケージを構成する1つ以上のアプリケーション、新しいタイル、パッケージの機能、アプリケーションライセンスなどのエントリを作成します。データベーストランザクションを使い、以前のエラーがなければ最後にコミットします。エラーがあればトランザクションは破棄されます。</p>''',
     'p2-page-153': '''<p>3. 保護プロセスとして作成する必要がある場合は、署名ポリシーも確認します。</p>
 <p>4. 作成するプロセスがモダンアプリの場合、ライセンスを確認して、実行が許可されているかを調べます。Windows にプリインストールされたアプリは、ライセンスの状態にかかわらず実行できます。設定アプリでアプリのサイドローディングが許可されていれば、ストア経由でなくても、署名済みアプリを実行できます。</p>
 <p>5. プロセスが Trustlet の場合、セキュアカーネルが使用できるよう、セクションオブジェクトに特別なフラグを設定します。</p>
