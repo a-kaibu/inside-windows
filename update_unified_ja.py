@@ -727,22 +727,19 @@ unified_header = """<header>
 </header>"""
 
 # 4. Intro block
-unified_intro = """<div class="intro">
-<div style="margin-top:10px;padding:8px 12px;background:var(--panel);border-radius:4px;font-size:14px;">
-<strong>翻訳作業中：</strong> 日本語の箇所には章の要約も含まれます。日本語の本文がないページは英語原文を表示します。
-</div>
-</div>"""
+unified_intro = ""
 
 # Pages to omit:
 # Part 1: page-1 (Cover), page-2 (Title Page), page-3 (Copyright), page-4..page-11 (Contents)
 p1_omit = {f"page-{i}" for i in range(1, 12)} | {"page-117", "page-209"}
+p1_omit |= {f"page-{i}" for i in range(788, 802)}
 
 # Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
 p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
+p2_omit |= {f"p2-page-{i}" for i in range(892, 913)}
 
 # The added page summaries preserve the complete source in a collapsed disclosure.
-preserve_source_pages = {f"page-{i}" for i in range(788, 802)}
-preserve_source_pages |= {f"p2-page-{i}" for i in range(236, 275)}
+preserve_source_pages = {f"p2-page-{i}" for i in range(236, 275)}
 preserve_source_pages |= {f"p2-page-{i}" for i in (284, 285, 292, 293, 335)}
 preserve_source_pages |= {f"p2-page-{i}" for i in range(808, 913)}
 
@@ -847,27 +844,41 @@ for index, section in enumerate(body_sections):
     content = re.sub(r'(<table\b.*?</table>)', r'<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます">\1</div>', content, flags=re.DOTALL)
     body_sections[index] = f'<section class="page" id="{section_id}" aria-label="{section_id}">{content}</section>'
 
-toc_links = []
-group_title = None
-group_anchor = None
-group_children = []
-def flush_toc_group():
-    if group_title is None:
-        return
-    child_markup = ''.join(group_children)
-    toc_links.append(f'<details class="toc-group" data-toc-group><summary><a href="#{html_module.escape(group_anchor, quote=True)}">{html_module.escape(group_title)}</a></summary><template>{child_markup}</template></details>')
-for level, anchor, title in toc_entries:
+def build_toc_tree(entries):
+    roots = []
+    stack = [(1, roots)]
+    for level, anchor, title in entries:
+        node = {"level": level, "anchor": anchor, "title": title, "children": []}
+        while stack and stack[-1][0] >= level:
+            stack.pop()
+        if not stack:
+            stack = [(1, roots)]
+        stack[-1][1].append(node)
+        stack.append((level, node["children"]))
+    return roots
+
+def render_toc_node(node):
+    level, anchor, title, children = node["level"], node["anchor"], node["title"], node["children"]
     escaped_anchor = html_module.escape(anchor, quote=True)
     escaped_title = html_module.escape(title)
-    if level == 2:
-        flush_toc_group()
-        group_title, group_anchor, group_children = title, anchor, []
-    elif group_title is not None:
-        indent = min(max(level - 2, 0), 4)
-        group_children.append(f'<a class="toc-level-{indent}" href="#{escaped_anchor}">{escaped_title}</a>')
+    indent = min(max(level - 3, 0), 4)
+    if not children:
+        return f'<li><a class="toc-level-{indent}" href="#{escaped_anchor}">{escaped_title}</a></li>'
+    child_markup = ''.join(render_toc_node(child) for child in children)
+    return (f'<li><details class="toc-subgroup" data-toc-lazy>'
+            f'<summary><a class="toc-level-{indent}" href="#{escaped_anchor}">{escaped_title}</a></summary>'
+            f'<template><ul>{child_markup}</ul></template></details></li>')
+
+toc_links = []
+toc_roots = build_toc_tree(toc_entries)
+for node in toc_roots:
+    anchor = html_module.escape(node["anchor"], quote=True)
+    title = html_module.escape(node["title"])
+    if node["children"]:
+        children = ''.join(render_toc_node(child) for child in node["children"])
+        toc_links.append(f'<details class="toc-group" open><summary><a href="#{anchor}">{title}</a></summary><ul>{children}</ul></details>')
     else:
-        toc_links.append(f'<details class="toc-group"><summary><a href="#{escaped_anchor}">{escaped_title}</a></summary></details>')
-flush_toc_group()
+        toc_links.append(f'<a class="toc-chapter-link" href="#{anchor}">{title}</a>')
 unified_aside = '<aside aria-label="目次"><h2>目次</h2>' + ''.join(toc_links) + '</aside>'
 
 # Tables stay within the viewport; readers can scroll wide tables independently.
@@ -876,7 +887,7 @@ head_html = head_html.replace('</style>', '''
 .table-scroll table{width:max-content;min-width:100%;border-collapse:collapse;margin:0}
 .table-scroll th,.table-scroll td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
 .table-scroll th{background:var(--panel)}
-.toc-group{margin:0;border-bottom:1px solid var(--line)}.toc-group summary{list-style:none;cursor:pointer}.toc-group summary::-webkit-details-marker{display:none}.toc-group summary>a{display:block}.toc-group>div{padding-left:12px}
+.toc-group{margin:0;border-bottom:1px solid var(--line)}.toc-group summary,.toc-subgroup summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:6px}.toc-group summary::-webkit-details-marker,.toc-subgroup summary::-webkit-details-marker{display:none}.toc-group summary::after,.toc-subgroup summary::after{content:'⌄';font:12px system-ui;color:var(--muted);flex:none}.toc-group:not([open])>summary::after,.toc-subgroup:not([open])>summary::after{content:'›'}.toc-group summary>a,.toc-subgroup summary>a{display:block;flex:1}.toc-group>ul,.toc-subgroup>ul{list-style:none;padding:0 0 0 10px;margin:0}.toc-subgroup{margin:0}.toc-chapter-link{border-bottom:1px solid var(--line)}.toc-chapter-link,.toc-group>summary{font-weight:600}.toc-subgroup summary>a{font-weight:400}
 .source-english{margin-top:1em;border-top:1px solid var(--line);padding-top:.5em}.source-english>summary{cursor:pointer;color:var(--muted)}.source-english h1,.source-english h2,.source-english h3,.source-english h4,.source-english h5,.source-english h6{font-size:1em;margin:.75em 0}.toc-level-1{padding-left:14px!important}.toc-level-2{padding-left:28px!important}.toc-level-3{padding-left:42px!important}.toc-level-4{padding-left:56px!important}
 @media(max-width:900px){.table-scroll{max-width:calc(100vw - 40px)}.page{min-width:0}main{min-width:0;overflow-x:hidden}}
 </style>''')
@@ -891,7 +902,7 @@ Windows Internals 第7版 Web Reader (日本語統合版)<br>
 document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open){const i=d.querySelector('img');if(i.dataset.src){i.src=i.dataset.src;delete i.dataset.src}}}));
 document.getElementById('tocToggle').onclick=()=>{if(innerWidth<=900)document.body.classList.toggle('mobile-toc');else document.body.classList.toggle('toc-hidden')};
 document.querySelector('aside').addEventListener('click',e=>{if(e.target.closest('a'))document.body.classList.remove('mobile-toc')});
-document.querySelectorAll('aside details[data-toc-group]').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&!d.dataset.loaded){d.append(d.querySelector('template').content.cloneNode(true));d.querySelector('template').remove();d.dataset.loaded='true'}}));
+document.querySelector('aside').addEventListener('toggle',e=>{const d=e.target;if(d instanceof HTMLDetailsElement&&d.open&&d.hasAttribute('data-toc-lazy')&&!d.dataset.loaded){d.append(d.querySelector('template').content.cloneNode(true));d.querySelector('template').remove();d.dataset.loaded='true'}},true);
 document.querySelectorAll('table').forEach(t=>{if(!t.closest('.table-scroll')){const w=document.createElement('div');w.className='table-scroll';w.setAttribute('role','region');w.setAttribute('tabindex','0');w.setAttribute('aria-label','表。横にスクロールできます');t.replaceWith(w);w.append(t)}});
 let size=18;document.getElementById('larger').onclick=()=>{size=Math.min(28,size+1);document.documentElement.style.fontSize=size+'px'};document.getElementById('smaller').onclick=()=>{size=Math.max(14,size-1);document.documentElement.style.fontSize=size+'px'};
 </script>
