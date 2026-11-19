@@ -18,7 +18,7 @@ translated_dict = {**pages_ja, **new_pages_ja}
 head_match = re.search(r'(<head>.*?</head>)', p1_html, re.DOTALL)
 head_html = head_match.group(1) if head_match else ''
 head_html = re.sub(r'<title>.*?</title>', '<title>Windows Internals 第7版 — Reader (日本語統合版)</title>', head_html)
-favicon = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">'
+favicon = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪟</text></svg>">'
 if not re.search(r'<link[^>]+rel=["\'](?:shortcut )?icon', head_html, re.I):
     head_html = head_html.replace('</title>', f'</title>{favicon}', 1)
 
@@ -81,7 +81,7 @@ chapter_trans = {
     'Creating other kinds of processes': 'その他のプロセス作成',
     'Process internals': 'プロセスの内部構造',
     'Protected processes': '保護プロセス (Protected Processes)',
-    'Protected Process Light (PPL)': 'Protected Process Light (PPL)',
+    'Protected Process Light (PPL)': '保護プロセスライト（PPL）',
     'Third-party PPL support': 'サードパーティ製 PPL のサポート',
     'Minimal and Pico processes': 'Minimal プロセスと Pico プロセス',
     'Minimal processes': 'Minimal プロセス',
@@ -215,8 +215,8 @@ chapter_trans = {
     'UWP applications': 'UWP アプリケーション',
     'Centennial applications': 'Centennial アプリケーション',
     'The Host Activity Manager': 'Host Activity Manager（HAM）',
-    'The State Repository': 'State Repository',
-    'The Dependency Mini Repository': 'Dependency Mini Repository',
+    'The State Repository': '状態リポジトリ',
+    'The Dependency Mini Repository': '依存関係ミニリポジトリ',
     'Background tasks and the Broker Infrastructure': 'バックグラウンドタスクと Broker Infrastructure',
     'Packaged applications setup and startup': 'パッケージ化アプリケーションの設定と起動',
     'Package activation': 'パッケージのアクティブ化',
@@ -242,7 +242,7 @@ chapter_trans = {
     'Virtualization-based security (VBS)': '仮想化ベースのセキュリティ（VBS）',
     'Virtual trust levels (VTLs) and Virtual Secure Mode (VSM)': '仮想トラストレベル（VTL）と Virtual Secure Mode（VSM）',
     'Services provided by the VSM and requirements': 'VSM が提供するサービスと要件',
-    'The Secure Kernel': 'Secure Kernel',
+    'The Secure Kernel': 'セキュアカーネル',
     'Virtual interrupts': '仮想割り込み',
     'Secure intercepts': 'セキュアインターセプト',
     'VSM system calls': 'VSM のシステムコール',
@@ -325,7 +325,7 @@ chapter_trans = {
     'Driver shims': 'ドライバーシム',
     'Device shims': 'デバイスシム',
     'Chapter 11 Caching and file systems': '第11章 キャッシュとファイルシステム',
-    ' Terminology': '用語',
+    'Terminology': '用語',
     'Key features of the cache manager': 'キャッシュマネージャーの主な機能',
     'Single, centralized system cache': '単一の集中型システムキャッシュ',
     'The memory manager': 'メモリマネージャー',
@@ -521,7 +521,7 @@ chapter_trans = {
     'Protecting memory': 'メモリ保護',
     'Data Execution Prevention': 'データ実行防止（DEP）',
     'Copy-on-write': 'コピーオンライト',
-    'Address Windowing Extensions': 'Address Windowing Extensions（AWE）',
+    'Address Windowing Extensions': 'アドレスウィンドウ拡張（AWE）',
     'Kernel-mode heaps (system memory pools)': 'カーネルモードヒープ（システムメモリプール）',
     'Pool sizes': 'プールサイズ',
     'Monitoring pool usage': 'プール使用状況の監視',
@@ -535,7 +535,7 @@ chapter_trans = {
     'The segment heap': 'セグメントヒープ',
     'Heap security features': 'ヒープのセキュリティ機能',
     'Heap debugging features': 'ヒープのデバッグ機能',
-    'Pageheap': 'Pageheap',
+    'Pageheap': 'ページヒープ',
     'Fault-tolerant heap': 'フォールトトレラントヒープ',
     'Virtual address space layouts': '仮想アドレス空間のレイアウト',
     'x86 address space layouts': 'x86 のアドレス空間レイアウト',
@@ -720,11 +720,11 @@ def clean_and_translate_aside(aside_html, id_prefix=''):
 new_aside1 = clean_and_translate_aside(aside1)
 new_aside2 = clean_and_translate_aside(aside2, id_prefix='p2-')
 
-unified_aside = f"""<aside aria-label="Table of contents">
+unified_aside = f"""<aside aria-label="目次">
 <h2>目次</h2>
-<div style="font-weight:bold;margin:10px 0 5px;color:var(--accent);">■ Part 1</div>
+<div style="font-weight:bold;margin:10px 0 5px;color:var(--accent);">■ 第1部</div>
 {new_aside1[new_aside1.find('</h2>')+5:new_aside1.find('</aside>')]}
-<div style="font-weight:bold;margin:20px 0 5px;color:var(--accent);">■ Part 2</div>
+<div style="font-weight:bold;margin:20px 0 5px;color:var(--accent);">■ 第2部</div>
 {new_aside2[new_aside2.find('</h2>')+5:new_aside2.find('</aside>')]}
 </aside>"""
 
