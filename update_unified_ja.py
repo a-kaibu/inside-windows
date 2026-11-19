@@ -18,6 +18,9 @@ translated_dict = {**pages_ja, **new_pages_ja}
 head_match = re.search(r'(<head>.*?</head>)', p1_html, re.DOTALL)
 head_html = head_match.group(1) if head_match else ''
 head_html = re.sub(r'<title>.*?</title>', '<title>Windows Internals 第7版 — Reader (日本語統合版)</title>', head_html)
+favicon = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📘</text></svg>">'
+if not re.search(r'<link[^>]+rel=["\'](?:shortcut )?icon', head_html, re.I):
+    head_html = head_html.replace('</title>', f'</title>{favicon}', 1)
 
 # 2. Unified TOC
 aside1 = p1_html[p1_html.find('<aside'):p1_html.find('</aside>')+8]
