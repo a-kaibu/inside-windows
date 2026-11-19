@@ -1,4 +1,5 @@
 import re
+import html as html_module
 import os
 
 from translate_pages import pages_ja
@@ -22,9 +23,7 @@ favicon = '<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3
 if not re.search(r'<link[^>]+rel=["\'](?:shortcut )?icon', head_html, re.I):
     head_html = head_html.replace('</title>', f'</title>{favicon}', 1)
 
-# 2. Unified TOC
-aside1 = p1_html[p1_html.find('<aside'):p1_html.find('</aside>')+8]
-aside2 = p2_html[p2_html.find('<aside'):p2_html.find('</aside>')+8]
+# 2. The table of contents is built from the headings that are actually rendered.
 
 chapter_trans = {
     'Introduction': 'はじめに',
@@ -719,31 +718,7 @@ chapter_trans.update({
     'Minstore I/O': 'Minstore の I/O',
 })
 
-# Remove unwanted links from TOC: Cover, Title Page, Copyright Page, Contents
-unwanted_toc = {'Cover', 'Title Page', 'Copyright Page', 'Contents', 'Contents at a Glance'}
-
-def clean_and_translate_aside(aside_html, id_prefix=''):
-    def repl(m):
-        style = m.group(1)
-        href = m.group(2)
-        text = m.group(3).strip()
-        if text in unwanted_toc:
-            return ''  # Delete from TOC
-        trans = chapter_trans.get(text, text)
-        new_href = href if not id_prefix else f"#{id_prefix}{href[1:]}"
-        return f'<a {style} href="{new_href}">{trans}</a>'
-    return re.sub(r'<a (style=\"[^\"]+\") href=\"(#[^\"]+)\">([^<]+)</a>', repl, aside_html)
-
-new_aside1 = clean_and_translate_aside(aside1)
-new_aside2 = clean_and_translate_aside(aside2, id_prefix='p2-')
-
-unified_aside = f"""<aside aria-label="目次">
-<h2>目次</h2>
-<div style="font-weight:bold;margin:10px 0 5px;color:var(--accent);">■ 第1部</div>
-{new_aside1[new_aside1.find('</h2>')+5:new_aside1.find('</aside>')]}
-<div style="font-weight:bold;margin:20px 0 5px;color:var(--accent);">■ 第2部</div>
-{new_aside2[new_aside2.find('</h2>')+5:new_aside2.find('</aside>')]}
-</aside>"""
+unified_aside = ''
 
 # 3. Reader Header Bar
 unified_header = """<header>
@@ -760,10 +735,51 @@ unified_intro = """<div class="intro">
 
 # Pages to omit:
 # Part 1: page-1 (Cover), page-2 (Title Page), page-3 (Copyright), page-4..page-11 (Contents)
-p1_omit = {f"page-{i}" for i in range(1, 12)}
+p1_omit = {f"page-{i}" for i in range(1, 12)} | {"page-117", "page-209"}
 
 # Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
 p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
+
+# The added page summaries preserve the complete source in a collapsed disclosure.
+preserve_source_pages = {f"page-{i}" for i in range(788, 802)}
+preserve_source_pages |= {f"p2-page-{i}" for i in range(236, 275)}
+preserve_source_pages |= {f"p2-page-{i}" for i in (284, 285, 292, 293, 335)}
+preserve_source_pages |= {f"p2-page-{i}" for i in range(808, 913)}
+
+def render_plain_translation(text):
+    if re.search(r"<(?:p|h[1-6]|ul|ol|table|pre|div|details)\b", text, re.I):
+        return text
+    out = []
+    list_tag = None
+    paragraph = []
+    def flush_paragraph():
+        if paragraph:
+            out.append("<p>" + " ".join(paragraph) + "</p>")
+            paragraph.clear()
+    def close_list():
+        nonlocal list_tag
+        if list_tag:
+            out.append(f"</{list_tag}>")
+            list_tag = None
+    for line in text.splitlines():
+        line = line.strip()
+        heading = re.match(r"^(#{1,6})\s+(.*)$", line)
+        bullet = re.match(r"^[-*]\s+(.*)$", line)
+        number = re.match(r"^\d+[.)]\s+(.*)$", line)
+        if not line:
+            flush_paragraph(); close_list(); continue
+        if heading:
+            flush_paragraph(); close_list(); level = len(heading.group(1))
+            out.append(f"<h{level}>{heading.group(2)}</h{level}>"); continue
+        item = bullet or number
+        if item:
+            flush_paragraph(); wanted = "ul" if bullet else "ol"
+            if list_tag != wanted:
+                close_list(); out.append(f"<{wanted}>"); list_tag = wanted
+            out.append(f"<li>{item.group(1)}</li>"); continue
+        close_list(); paragraph.append(line)
+    flush_paragraph(); close_list()
+    return "\n".join(out)
 
 # 5–6. Use the original text whenever a translation is missing or empty.
 original_pre_marker = '<!-- original-pre -->'
@@ -788,6 +804,12 @@ def render_pages(html, omit, prefix=''):
             body = reader_controls.sub('', content).strip()
             lang = ' lang="en"'
         if body:
+            if lang == '':
+                body = render_plain_translation(body)
+            if pid in preserve_source_pages:
+                source = reader_controls.sub('', content).strip()
+                source = re.sub(r'<h([1-6])([^>]*)>(.*?)</h\1>', r'<p><strong>\3</strong></p>', source, flags=re.DOTALL)
+                body += '<details class="source-english"><summary>原文（英語）</summary>' + source + '</details>'
             yield f'<section class="page" id="{pid}" aria-label="{pid}"{lang}>{body}</section>'
         else:
             # Keep the URL target for a blank source page, but don't render a page border.
@@ -795,6 +817,69 @@ def render_pages(html, omit, prefix=''):
 
 
 body_sections = [*render_pages(p1_html, p1_omit), *render_pages(p2_html, p2_omit, prefix='p2-')]
+
+# Give headings semantic, readable anchors and derive the sidebar from those
+# same headings, so its labels and destinations cannot drift apart.
+toc_entries = []
+used_heading_ids = set()
+for index, section in enumerate(body_sections):
+    section_match = re.match(r'<section class="page" id="([^"]+)"[^>]*>(.*?)</section>', section, re.DOTALL)
+    if not section_match:
+        continue
+    section_id, content = section_match.groups()
+
+    def add_heading_id(match):
+        level, attrs, title_html = match.groups()
+        title = html_module.unescape(re.sub(r'<[^>]+>', '', title_html)).strip()
+        title = chapter_trans.get(title, title)
+        slug = re.sub(r'[^\w\-]+', '-', title, flags=re.UNICODE).strip('-')[:72] or f'section-{index}'
+        anchor = slug
+        suffix = 2
+        while anchor in used_heading_ids:
+            anchor = f'{slug}-{suffix}'
+            suffix += 1
+        used_heading_ids.add(anchor)
+        toc_entries.append((int(level), anchor, title))
+        rendered_title = html_module.escape(title) if title != html_module.unescape(re.sub(r'<[^>]+>', '', title_html)).strip() else title_html
+        return f'<h{level}{attrs} id="{anchor}">{rendered_title}</h{level}>'
+
+    content = re.sub(r'<h([2-6])([^>]*)>(.*?)</h\1>', add_heading_id, content, flags=re.DOTALL)
+    content = re.sub(r'(<table\b.*?</table>)', r'<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます">\1</div>', content, flags=re.DOTALL)
+    body_sections[index] = f'<section class="page" id="{section_id}" aria-label="{section_id}">{content}</section>'
+
+toc_links = []
+group_title = None
+group_anchor = None
+group_children = []
+def flush_toc_group():
+    if group_title is None:
+        return
+    child_markup = ''.join(group_children)
+    toc_links.append(f'<details class="toc-group" data-toc-group><summary><a href="#{html_module.escape(group_anchor, quote=True)}">{html_module.escape(group_title)}</a></summary><template>{child_markup}</template></details>')
+for level, anchor, title in toc_entries:
+    escaped_anchor = html_module.escape(anchor, quote=True)
+    escaped_title = html_module.escape(title)
+    if level == 2:
+        flush_toc_group()
+        group_title, group_anchor, group_children = title, anchor, []
+    elif group_title is not None:
+        indent = min(max(level - 2, 0), 4)
+        group_children.append(f'<a class="toc-level-{indent}" href="#{escaped_anchor}">{escaped_title}</a>')
+    else:
+        toc_links.append(f'<details class="toc-group"><summary><a href="#{escaped_anchor}">{escaped_title}</a></summary></details>')
+flush_toc_group()
+unified_aside = '<aside aria-label="目次"><h2>目次</h2>' + ''.join(toc_links) + '</aside>'
+
+# Tables stay within the viewport; readers can scroll wide tables independently.
+head_html = head_html.replace('</style>', '''
+.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;margin:1.25em 0;border:1px solid var(--line);border-radius:5px;-webkit-overflow-scrolling:touch}
+.table-scroll table{width:max-content;min-width:100%;border-collapse:collapse;margin:0}
+.table-scroll th,.table-scroll td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+.table-scroll th{background:var(--panel)}
+.toc-group{margin:0;border-bottom:1px solid var(--line)}.toc-group summary{list-style:none;cursor:pointer}.toc-group summary::-webkit-details-marker{display:none}.toc-group summary>a{display:block}.toc-group>div{padding-left:12px}
+.source-english{margin-top:1em;border-top:1px solid var(--line);padding-top:.5em}.source-english>summary{cursor:pointer;color:var(--muted)}.source-english h1,.source-english h2,.source-english h3,.source-english h4,.source-english h5,.source-english h6{font-size:1em;margin:.75em 0}.toc-level-1{padding-left:14px!important}.toc-level-2{padding-left:28px!important}.toc-level-3{padding-left:42px!important}.toc-level-4{padding-left:56px!important}
+@media(max-width:900px){.table-scroll{max-width:calc(100vw - 40px)}.page{min-width:0}main{min-width:0;overflow-x:hidden}}
+</style>''')
 
 # 7. Footer & Script
 script_and_footer = """<footer>
@@ -805,8 +890,9 @@ Windows Internals 第7版 Web Reader (日本語統合版)<br>
 <script>
 document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open){const i=d.querySelector('img');if(i.dataset.src){i.src=i.dataset.src;delete i.dataset.src}}}));
 document.getElementById('tocToggle').onclick=()=>{if(innerWidth<=900)document.body.classList.toggle('mobile-toc');else document.body.classList.toggle('toc-hidden')};
-document.querySelectorAll('aside a').forEach(a=>a.onclick=()=>document.body.classList.remove('mobile-toc'));
-function navigate(id){const target=document.getElementById(id);if(!target)return;location.hash=id;target.scrollIntoView();setTimeout(()=>target.scrollIntoView(),150);setTimeout(()=>target.scrollIntoView(),450)};document.querySelectorAll('aside a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();navigate(a.hash.slice(1))}));
+document.querySelector('aside').addEventListener('click',e=>{if(e.target.closest('a'))document.body.classList.remove('mobile-toc')});
+document.querySelectorAll('aside details[data-toc-group]').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&!d.dataset.loaded){d.append(d.querySelector('template').content.cloneNode(true));d.querySelector('template').remove();d.dataset.loaded='true'}}));
+document.querySelectorAll('table').forEach(t=>{if(!t.closest('.table-scroll')){const w=document.createElement('div');w.className='table-scroll';w.setAttribute('role','region');w.setAttribute('tabindex','0');w.setAttribute('aria-label','表。横にスクロールできます');t.replaceWith(w);w.append(t)}});
 let size=18;document.getElementById('larger').onclick=()=>{size=Math.min(28,size+1);document.documentElement.style.fontSize=size+'px'};document.getElementById('smaller').onclick=()=>{size=Math.max(14,size-1);document.documentElement.style.fontSize=size+'px'};
 </script>
 <script src="reader-progress.js"></script>
