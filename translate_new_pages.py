@@ -1,6 +1,15 @@
 # Page-aligned translations keyed by the original reader's page IDs.
 # Each <!-- original-pre --> inserts the next verbatim output block from that page.
 new_pages_ja = {
+    'page-275': '''<p>AppContainer はもともと WinRT 向けに設計され、現在も UWP アプリケーションで使われています。AppContainer のセキュリティ面は第1部第7章で説明しました。UWP アプリを適切に実行・管理するため、Windows には内部で AppModel と呼ばれる新しいアプリケーションモデル（Modern Application Model）が構築されました。このモデルはOSの各リリースで何度も進化・変更されています。本書では Windows 10 のモデルを扱います。複数のコンポーネントが連携し、パッケージ化アプリの状態とバックグラウンド処理を電力効率よく管理します。</p>
+<h4>Host Activity Manager（HAM）</h4><p>Host Activity Manager は Windows 10 で導入された新しいコンポーネントです。UWP アプリのライフサイクルと状態を制御していた従来の複数コンポーネント（Process Lifetime Manager、Foreground Manager、Resource Policy、Resource Manager）を置き換え、統合します。Background Task Infrastructure サービス（BrokerInfrastructure）内で動作します。Background Broker Infrastructure と混同しないでください。また Process State Manager と緊密に連携します。クライアント側の <code>Rmclient.dll</code> とサーバー側の <code>PsmServiceExtHost.dll</code> という2つのライブラリに実装されています。</p>''',
+    'page-276': '''<p>Windows 10 S のようなセキュアなデバイスでも標準 Win32 アプリケーションを実行できるようにし、従来アプリを新しいモデルへ変換できるよう、Microsoft は Desktop Bridge（内部名 Centennial）を設計しました。開発者は Visual Studio または Desktop App Converter から利用できます。Win32 アプリを AppContainer 内で実行すること自体は可能ですが、推奨されません。標準 Win32 アプリは広いシステムAPIへのアクセスを前提に設計されており、AppContainer ではその多くが制限されるためです。</p>
+<h4>UWP アプリケーション</h4><p>UWP アプリケーションの概要と実行時のセキュリティ環境は第1部第7章で説明しました。この章の概念を理解するため、モダンな UWP アプリの基本的な属性を整理します。Windows 8 では、プロセスに次の重要な属性が導入されました。</p><ul><li>パッケージID</li><li>アプリケーションID</li><li>AppContainer</li><li>Modern UI</li></ul>
+<p>AppContainer はすでに詳しく説明しました。ユーザーがモダンな UWP アプリをダウンロードすると、通常は AppX パッケージに格納されています。一つのパッケージに、同じ発行元が公開し、相互に関連する複数のアプリケーションを含めることができます。</p>''',
+    'page-277': '''<p>パッケージIDはパッケージを一意に識別する論理的な識別子です。発行元名、リソースID、バージョンなどから構成されます。パッケージファミリー名は、たとえば <code>AdobeSystemsIncorporated.AdobePhotoshopExpress_ynb6jyjzte8ga</code> のような簡略名です。</p>
+<p>パッケージ内の各アプリケーションは、アプリケーションIDで表されます。これは、実装方法にかかわらず、単一のユーザー向けプログラムを構成するウィンドウ、プロセス、ショートカット、アイコン、機能の集合を一意に識別します。UWP では単純な文字列である Package Relative Application ID（PRAID）を使います。PRAID とパッケージファミリー名を組み合わせたものが Application User Model ID（AUMID）です。</p>
+<p>たとえば Windows のモダンなスタートメニューの AUMID は <code>Microsoft.Windows.ShellExperienceHost_cw5n1h2txyewy!App</code> です。このうち <code>App</code> が PRAID です。パッケージの完全名とアプリケーションIDは、モダンアプリのセキュリティコンテキストを表すトークンの <code>WIN://SYSAPPID</code> セキュリティ属性に格納されます。</p>
+<h4>Centennial アプリケーション</h4><p>Windows 10 以降の新しいアプリケーションモデルでは、Desktop Bridge を通じて従来のデスクトップアプリケーションをパッケージ化できます。</p>''',
     'page-278': '''<p>Windows Store で配布される Kali Linux は、Centennial アプリケーションの典型例です。レジストリのマージと仮想化は、NT カーネル（Configuration Manager）に統合された Virtual Registry Namespace Filter ドライバー（WscVReg）が提供します。パッケージのアクティブ化時に、ユーザーモードの AppInfo サービスは VRegDriver デバイスと通信し、Centennial アプリケーションのレジストリ操作をマージおよびリダイレクトします。</p>
 <p>アプリが仮想化されたハイブにあるレジストリ値を読み取ろうとすると、I/O はパッケージのハイブへリダイレクトされます。この種の値への書き込みは許可されません。値が仮想化ハイブにまだ存在しなければ、リダイレクトせず実際のハイブに作成します。別のリダイレクト方式は <code>HKEY_CURRENT_USER</code> ルートキー全体に適用されます。</p>''',
     'page-279': '''<p>Centennial ランタイムがシロのアプリケーションコンテナーを設定するとき、パッケージの VFS フォルダーにあるファイルとディレクトリをすべて走査します。これはパッケージのアクティブ化が行う Centennial Virtual File System 構成の一部です。Centennial ランタイムは、表8-35のように VFS 内の各フォルダーに対応するマッピング一覧を持ちます。</p>
