@@ -861,7 +861,7 @@ def render_toc_node(node):
     level, anchor, title, children = node["level"], node["anchor"], node["title"], node["children"]
     escaped_anchor = html_module.escape(anchor, quote=True)
     escaped_title = html_module.escape(title)
-    indent = min(max(level - 3, 0), 4)
+    indent = min(max(level - 2, 1), 4)
     if not children:
         return f'<li><a class="toc-level-{indent}" href="#{escaped_anchor}">{escaped_title}</a></li>'
     child_markup = ''.join(render_toc_node(child) for child in children)
