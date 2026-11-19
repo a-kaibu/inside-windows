@@ -702,6 +702,23 @@ chapter_trans = {
     'HyperGuard': 'HyperGuard',
 }
 
+# Some source TOC labels already include their English acronym in parentheses.
+# Translate those exact display strings as well as the bare chapter titles above.
+chapter_trans.update({
+    'Trusted Computer System Evaluation Criteria（TCSEC）': '信頼できるコンピューターシステム評価基準（TCSEC）',
+    'Windows Driver Foundation（WDF）': 'Windows ドライバーフレームワーク（WDF）',
+    'Kernel-Mode Driver Framework（KMDF）': 'カーネルモードドライバーフレームワーク（KMDF）',
+    'User-Mode Driver Framework（UMDF）': 'ユーザーモードドライバーフレームワーク（UMDF）',
+    'Windows Notification Facility（WNF）': 'Windows 通知機能（WNF）',
+    'Windows Biometric Framework': 'Windows 生体認証フレームワーク',
+    'Hypervisor-Enforced Code Integrity': 'ハイパーバイザー強制コード整合性',
+    'Windows Management Instrumentation（WMI）': 'Windows 管理基盤（WMI）',
+    'Event Tracing for Windows（ETW）': 'Windows イベントトレース（ETW）',
+    'Windows Error Reporting（WER）': 'Windows エラー報告（WER）',
+    'Resilient File System（ReFS）': '回復性ファイルシステム（ReFS）',
+    'Minstore I/O': 'Minstore の I/O',
+})
+
 # Remove unwanted links from TOC: Cover, Title Page, Copyright Page, Contents
 unwanted_toc = {'Cover', 'Title Page', 'Copyright Page', 'Contents', 'Contents at a Glance'}
 
