@@ -2549,8 +2549,7 @@ KERNELBASE.dll
 ...</pre></section><section class="page" id="page-184" aria-label="page-184"><ol start="2">
 <li><code>Ldr</code> 行のアドレスは、前述の <code>PEB_LDR_DATA</code> 構造体へのポインターです。WinDbg は3つのリストのアドレスを表示し、初期化順のリストについて、各モジュールの完全パス、タイムスタンプ、ベースアドレスを出力します。</li>
 <li>モジュールリストをたどり、各アドレスのデータを <code>LDR_DATA_TABLE_ENTRY</code> 構造体として表示すると、個別のエントリを詳しく調べられます。1件ずつ操作する代わりに、WinDbg の拡張コマンド <code>!list</code> を次のように使うと、大半の処理を自動化できます。
-<pre>!list –x &quot;dt ntdll!_LDR_DATA_TABLE_ENTRY&quot; @@C++(&amp;@$peb-&gt;Ldr-
-&gt;InLoadOrderModuleList)</pre></li>
+<pre>!list -x &quot;dt ntdll!_LDR_DATA_TABLE_ENTRY&quot; @@C++(&amp;@$peb-&gt;Ldr-&gt;InLoadOrderModuleList)</pre></li>
 <li>次のように、モジュールごとのエントリが表示されます。
 <pre>+0x000 InLoadOrderLinks : _LIST_ENTRY [ 0x00000228&#x27;15d23d10 -
 0x00007ffe&#x27;855d23b0 ]
