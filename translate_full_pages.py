@@ -18434,3 +18434,19 @@ full_pages_ja['page-639'] = full_pages_ja['page-639'].replace(
     'ファイルは別の名前空間にあるので',
     'ファイルは二次名前空間にあるので',
 )
+
+
+# Use the integrity level names from Table 7-3 in the access-check examples.
+for _page in ('page-673', 'page-676'):
+    for _label, _name in (
+        ('「低」', 'Low'),
+        ('「中」', 'Medium'),
+        ('「高」', 'High'),
+        ('「システム」', 'System'),
+    ):
+        full_pages_ja[_page] = full_pages_ja[_page].replace(_label, _name)
+for _label, _name in (('低', 'Low'), ('中', 'Medium'), ('高', 'High')):
+    full_pages_ja['page-676'] = full_pages_ja['page-676'].replace(
+        f'<th scope="row">{_label}</th>', f'<th scope="row">{_name}</th>'
+    )
+full_pages_ja['page-676'] = full_pages_ja['page-676'].replace('MediumLow', 'Medium と Low').replace('HighSystem', 'High と System').replace('Lowは', 'Low は').replace('Systemは', 'System は').replace('Medium以上', 'Medium 以上')
