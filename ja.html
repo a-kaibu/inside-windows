@@ -26118,7 +26118,7 @@ DefaultPool  OK                Healthy      False
 PS C:\&gt; Get-StoragePool DefaultPool | New-StorageTier -FriendlyName HDD -MediaType HDD
 ...</code></pre>
 <p>仮想ディスク名と各階層の容量を指定して、階層化仮想ディスクを作ります。
-例では <code>TieredVirtualDisk</code> に128 GBのパフォーマンス層と1,000 GBの容量層を指定します。容量は原文のコマンドに合わせています。</p>
+例では <code>TieredVirtualDisk</code> に128 GBのパフォーマンス層と1,000 GBの容量層を指定します。原文の説明ではパフォーマンス層は120 GBですが、ここでは原文のコマンドにある128 GBを使います。</p>
 <pre><code>PS C:\&gt; $SSD = Get-StorageTier -FriendlyName SSD
 PS C:\&gt; $HDD = Get-StorageTier -FriendlyName HDD
 PS C:\&gt; Get-StoragePool DefaultPool | New-VirtualDisk -FriendlyName &quot;TieredVirtualDisk&quot;
@@ -26139,10 +26139,12 @@ TieredVirtualDisk OK
 <pre><code>PS E:\&gt; fsutil tiering regionList e:
 このボリュームの領域数: 2
 この操作が返した領域数: 2
+領域 0
 階層 ID: {448ABAB8-F00B-42D6-B345-C8DA68869020}
 名前: TieredVirtualDisk-SSD
 オフセット: 0x0000000000000000
 長さ: 0x0000001dff000000
+領域 1
 階層 ID: {16A7BB83-CE3E-4996-8FF3-BEE98B68EBE4}
 名前: TieredVirtualDisk-HDD
 オフセット: 0x0000001dff000000
