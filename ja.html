@@ -1981,14 +1981,14 @@ Windows のクライアント側ライブラリ <code>Kernel32.dll</code>（実�
 <tbody>
 <tr><th scope="row"><code>PS_CP_MITIGATION_OPTIONS</code></th><td><code>PROC_THREAD_ATTRIBUTE_MITIGATION_POLICY</code></td><td>入力</td><td>SEHOP、ATL エミュレーション、NX など、プロセスで有効または無効にする緩和策を指定します。</td></tr>
 <tr><th scope="row"><code>PS_CP_PROTECTION_LEVEL</code></th><td><code>PROC_THREAD_ATTRIBUTE_PROTECTION_LEVEL</code></td><td>入力</td><td>表3-1にある許可された保護レベルの値、または親と同じ保護レベルを表す PROTECTION_LEVEL_SAME を指す必要があります。</td></tr>
-<tr><th scope="row"><code>PS_CP_SECURE_PROCESS</code></th><td>なし</td><td>入力</td><td>分離ユーザーモード（IUM）のトラストレットとして実行することを示します。内部で使われます。詳しくは第2部の第8章を参照してください。</td></tr>
+<tr><th scope="row"><code>PS_CP_SECURE_PROCESS</code></th><td>なし</td><td>入力</td><td>分離ユーザーモード（IUM）のトラストレットとして実行することを示します。内部で使われます。詳しくは本章の「<a href="#トラストレット-セキュアプロセス">トラストレット（セキュアプロセス）</a>」を参照してください。</td></tr>
 <tr><th scope="row"><code>PS_CP_JOB_LIST</code></th><td>なし</td><td>入力</td><td>プロセスを指定されたジョブの一覧に割り当てます。原文では内部向けとされています。</td></tr>
 <tr><th scope="row"><code>PS_CP_CHILD_PROCESS_POLICY</code></th><td><code>PROC_THREAD_ATTRIBUTE_CHILD_PROCESS_POLICY</code></td><td>入力</td><td>新しいプロセスが子プロセスを直接作成できるか、あるいは WMI などを介して間接的に作成できるかを指定します。</td></tr>
 <tr><th scope="row"><code>PS_CP_ALL_APPLICATION_PACKAGES_POLICY</code></th><td><code>PROC_THREAD_ATTRIBUTE_ALL_APPLICATION_PACKAGES_POLICY</code></td><td>入力</td><td>ALL APPLICATION PACKAGES グループを含む ACL の検査から AppContainer トークンを除外するかを指定します。除外する場合は、代わりに ALL RESTRICTED APPLICATION PACKAGES グループを使います。</td></tr>
 <tr><th scope="row"><code>PS_CP_WIN32K_FILTER</code></th><td><code>PROC_THREAD_ATTRIBUTE_WIN32K_FILTER</code></td><td>入力</td><td>Win32k.sys への GDI／USER システムコールの多くをブロックするか、許可したうえで監査するかを指定します。Microsoft Edge が攻撃対象領域を縮小するために使います。</td></tr>
 <tr><th scope="row"><code>PS_CP_SAFE_OPEN_PROMPT_ORIGIN_CLAIM</code></th><td>なし</td><td>入力</td><td>Mark of the Web が内部で使用し、ファイルの入手元が信頼されていないことを示します。</td></tr>
 <tr><th scope="row"><code>PS_CP_BNO_ISOLATION</code></th><td><code>PROC_THREAD_ATTRIBUTE_BNO_ISOLATION</code></td><td>入力</td><td>プロセスのプライマリトークンを分離された BaseNamedObjects ディレクトリに関連付けます。名前付きオブジェクトは第2部の第8章を参照してください。</td></tr>
-<tr><th scope="row"><code>PS_CP_DESKTOP_APP_POLICY</code></th><td><code>PROC_THREAD_ATTRIBUTE_DESKTOP_APP_POLICY</code></td><td>入力</td><td>モダンアプリケーションが従来のデスクトップアプリケーションを起動できるか、どの方法で起動できるかを指定します。</td></tr>
+<tr><th scope="row"><code>PS_CP_DESKTOP_APP_POLICY</code></th><td><code>PROC_THREAD_ATTRIBUTE_DESKTOP_APP_POLICY</code></td><td>入力</td><td>モダンアプリケーションが従来のデスクトップアプリケーションを起動できるかどうかと、許可する場合の起動方法を指定します。</td></tr>
 <tr><th scope="row">なし</th><td><code>PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES</code></td><td>入力</td><td>SECURITY_CAPABILITIES 構造体へのポインターを指定します。NtCreateUserProcess を呼ぶ前に、プロセスの AppContainer トークンを作るために使われます。ネイティブ側の対応は内部用です。</td></tr>
 </tbody></table></div>
 <ol start="6"><li>プロセスがジョブオブジェクトに属している場合、作成フラグで別個の仮想 DOS マシン（VDM）を要求していても、そのフラグは無視されます。</li></ol></section><section class="page" id="page-151" aria-label="page-151"><ol start="7">
