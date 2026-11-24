@@ -18423,3 +18423,14 @@ full_pages_ja['page-634'] = full_pages_ja['page-634'].replace(
     '証明書の署名者や SHA-2 ハッシュといった',
     'コード署名の証明書で識別される署名者や SHA-2 ハッシュといった',
 )
+
+
+full_pages_ja['page-638'] = full_pages_ja['page-638'].replace(
+    '別の名前空間に対象がなければ、見つけたあとに内部関数',
+    '二次名前空間に属さないオブジェクトであれば、対象を見つけたあとに内部関数',
+)
+
+full_pages_ja['page-639'] = full_pages_ja['page-639'].replace(
+    'ファイルは別の名前空間にあるので',
+    'ファイルは二次名前空間にあるので',
+)
