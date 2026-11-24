@@ -26655,7 +26655,7 @@ BCD エントリには、Bootmgr、Winload、その他の起動コンポーネ�
 <caption>表12-4　Windows OS ローダー（Winload）の BCD オプション（続き）</caption>
 <thead><tr><th scope="col">オプション名</th><th scope="col">値の型</th><th scope="col">BCD 要素コード<sup>3</sup></th><th scope="col">意味</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>safebootalternateshell</code></th><td>真偽値</td><td><code>SAFEBOOT_ALTERNATE_SHELL</code></td><td>既定の Windows エクスプローラーに代え、<code>HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\AlternateShell</code> の値で指定されたプログラムをシェルとして使います。代替ブートメニューでは「セーフ モードとコマンド プロンプト」と表示されます。</td></tr>
+<tr><th scope="row"><code>safebootalternateshell</code></th><td>真偽値</td><td><code>SAFEBOOT_ALTERNATE_SHELL</code></td><td>既定の Windows エクスプローラーに代え、<code>HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\AlternateShell</code> の値で指定されたプログラムを、グラフィカルシェルの代わりに起動します。代替ブートメニューでは「セーフ モードとコマンド プロンプト」と表示されます。</td></tr>
 <tr><th scope="row"><code>sos</code></th><td>真偽値</td><td><code>SOS</code></td><td>起動時に読み込むよう指定されたデバイスドライバーを一覧表示し、続いてシステムのバージョン番号（ビルド番号を含む）、物理メモリ量、プロセッサー数を表示します。</td></tr>
 <tr><th scope="row"><code>systemroot</code></th><td>文字列</td><td><code>SYSTEM_ROOT</code></td><td>OS のインストール先を <code>osdevice</code> からの相対パスで指定します。</td></tr>
 <tr><th scope="row"><code>targetname</code></th><td>名前</td><td><code>KERNEL_DEBUGGER_USB_TARGETNAME</code></td><td>USB デバッグの対象となるコンピューターに名前を割り当てます。</td></tr>
