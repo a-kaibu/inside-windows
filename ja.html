@@ -18672,7 +18672,7 @@ wmic process where "name='notepad++.exe'" get ExecutablePath</code></pre></secti
 <pre><code>mklink "%USERPROFILE%\Desktop\notepad.exe" "&lt;Notepad++ の実行ファイルの完全パス&gt;"
 mklink "%USERPROFILE%\Desktop\camera.exe" "&lt;WindowsCamera の実行ファイルの完全パス&gt;"</code></pre>
 <p>コマンドプロンプトと2つのアプリを閉じます。デスクトップには新しいリンクが2つあります。<code>notepad.exe</code> のリンクではアプリが起動しますが、<code>camera.exe</code> のリンクから「カメラ」を起動しようとすると、アクティブ化に失敗して次のようなエラーが表示されます。</p>
-<figure><img loading="lazy" width="475" height="114" src="assets/d94e0e29755bdac2c133addc.webp" alt="カメラを実行ファイルへのリンクから起動した場合のエラーダイアログ"></figure>
+<figure><img loading="lazy" width="475" height="114" src="assets/d94e0e29755bdac2c133addc.webp" alt="カメラを実行ファイルへのリンクから起動した場合のエラーダイアログ"><figcaption>指定されたデバイス、パス、またはファイルに Windows がアクセスできません。この項目にアクセスするための権限がない可能性があります。</figcaption></figure>
 <p>エクスプローラーは、実行ファイルへのリンクを開く際に Shell32 ライブラリを使います。Shell32 は、このリンクの対象が UWP アプリケーションであると判断できないため、パッケージ ID を指定せずに <code>CreateProcessAsUser</code> を呼び出します。一方、Centennial アプリは識別できるため、アクティブ化の手順が実行され、アプリケーションが起動します。コマンドプロンプトから2つのリンクを実行すると、どちらのアプリも正常に起動しません。コマンドプロンプトは Shell32 を使わず、自身のコードから <code>CreateProcess</code> を直接呼ぶためです。この実験で、パッケージ化されたアプリの種類によってアクティブ化の経路が異なることを確認できます。</p>
 <aside><p><strong>注</strong>　Windows 10 Creators Update（RS2）から、モダンアプリケーションモデルはオプションパッケージ（内部名 <code>RelatedSet</code>）に対応しています。ダウンロードコンテンツ（DLC）や拡張を提供するゲームや、Microsoft Office のような製品スイートで広く使われます。たとえば Word をダウンロードしてインストールすると、Office の共通コードを含むフレームワークパッケージもインストールされます。Word はその Office フレームワークのオプションパッケージなので、後から Excel を追加する際に、配置処理はフレームワークの再ダウンロードを省略できます。</p>
 <p>オプションパッケージは、マニフェストでメインパッケージとの関係を定義します。依存先のメインパッケージは AUMID で指定します。オプションパッケージのアーキテクチャの詳細は本書の範囲外です。</p></aside></section><section class="page" id="p2-page-294" aria-label="p2-page-294"><h5 id="アプリ実行エイリアス">アプリ実行エイリアス</h5>
