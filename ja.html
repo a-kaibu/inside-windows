@@ -3129,8 +3129,8 @@ THREAD ffffe0001f0b5800  Cid 23b0.3398  Teb: 00000000003e3000 Win32Thread:
 0000000000000000 WAIT: (UserRequest) UserMode Alertable
 ffffe0001d19d790  SynchronizationEvent
 ffffe00022b42660  SynchronizationTimer</pre>
-<p>紙幅の都合でスレッドの一覧は一部を省略しています。各項目には、<code>!thread</code> に渡せる <code>ETHREAD</code> のアドレス、クライアント ID（<code>Cid</code>）、スレッド環境ブロック（TEB）、スレッドの状態が表示されます。<code>Cid</code> はプロセス ID とスレッド ID の組です。ここに挙げたスレッドはすべて同じ <code>explorer.exe</code> プロセスに属するため、プロセス ID は共通です。TEB はこのあと説明します。ほとんどのスレッドは待機状態（<code>WAIT</code>）で、待機の理由は括弧内に表示されます。次の行以降に、そのスレッドが待っている同期オブジェクトが表示される場合もあります。</p>
-<p>特定のスレッドを詳しく調べるには、そのアドレスを <code>!thread</code> に渡します。</p>
+<p>以下はスレッド一覧の抜粋です。各項目には、<code>!thread</code> に渡せる <code>ETHREAD</code> のアドレス、クライアント ID（<code>Cid</code>）、スレッド環境ブロック（TEB）、スレッドの状態が表示されます。<code>Cid</code> はプロセス ID とスレッド ID の組です。ここに挙げたスレッドはすべて同じ <code>explorer.exe</code> プロセスに属するため、プロセス ID は共通です。TEB はこのあと説明します。ほとんどのスレッドは待機状態（<code>WAIT</code>）で、待機の理由は括弧内に表示されます。次の行以降に、そのスレッドが待っている同期オブジェクトが表示される場合もあります。</p>
+<p>特定のスレッドを詳しく調べるには、一覧の <code>THREAD</code> 行にある <code>ETHREAD</code> のアドレスを <code>!thread</code> に渡します。</p>
 <pre>lkd&gt; !thread ffffe0001d45d800
 THREAD ffffe0001d45d800  Cid 23b0.452c  Teb: 000000000026d000 Win32Thread:
 ffffe0001aace630 WAIT: (UserRequest) UserMode Non-Alertable
