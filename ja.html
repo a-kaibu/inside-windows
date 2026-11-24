@@ -338,22 +338,20 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <figure><img loading="lazy" width="269" height="147" src="assets/bc299bfa7a6177bfa3b308a1.webp" alt="Process Explorer のシンボル設定に Dbghelp.dll とシンボルサーバーを指定した画面"></figure>
 <p>この例では、必要に応じてシンボルサーバーからファイルを取得し、ローカルの <code>C:\symbols</code> にコピーを保存します。空き容量に余裕がなければ、別のドライブなどのフォルダーを指定できます。詳細は MSDN のシンボルサーバーの設定資料を参照してください。</p>
 <blockquote><p><strong>ヒント</strong>　環境変数 <code>_NT_SYMBOL_PATH</code> に画面例のシンボルパスを設定できます。Process Explorer、Windows 用デバッグツールの各デバッガー、Visual Studio などが自動的にこの変数を参照するため、ツールごとに設定する手間を省けます。</p></blockquote>
-<p>Process Explorer は起動すると、既定でプロセスツリーを表示します。下ペインを開くと、開いているハンドルや、マップ済みの DLL とメモリマップトファイルを確認できます。これらについては第5章「メモリ管理」と、第2部の第8章を参照してください。プロセスにマウスポインターを重ねると、コマンドラインとパスがツールチップに表示されます。</p></section><section class="page" id="page-34" aria-label="page-34"><p>Process Explorer を起動すると、上部ペインにプロセーツリーがグラフィカルに表示されます。下部ペイン（View → Show Lower Pane）を開くことで、選択中のプロセスが保持するハンドル一覧や、ロードされているDLLおよびメモリマップトファイルの一覧を瞬時に確認できます。また、プロセスの名前にマウスカーソルを合わせると、ツールチップでフルパスやコマンドラインが表示されます。特定のプロセスでは以下のような付加情報もツールチップに表示されます：</p>
+<p>Process Explorer は起動すると、既定でプロセスツリーを表示します。下ペインを開くと、開いているハンドルや、マップ済みの DLL とメモリマップトファイルを確認できます。これらについては第5章「メモリ管理」と、第2部の第8章を参照してください。プロセスにマウスポインターを重ねると、コマンドラインとパスがツールチップに表示されます。</p></section><section class="page" id="page-34" aria-label="page-34"><p>プロセスの種類によっては、名前にマウスポインターを重ねたときのツールチップに、次の情報も表示されます。</p>
 <ul>
-  <li><code>svchost.exe</code> などのサービスホスト内部で稼働しているサービス名</li>
-  <li><code>taskhostw.exe</code> などのタスクホスト内部で稼働しているスケジュールタスク名</li>
-  <li>コントロールパネル等から呼ばれた <code>rundll32.exe</code> の呼び出し先ターゲット</li>
-  <li><code>dllhost.exe</code>（COMサロゲート）内でホストされている COM クラス情報</li>
-  <li><code>WmiPrvSE.exe</code> などの WMI ホストが提供しているプロバイダ情報</li>
-  <li>UWP/Windowsストアアプリのパッケージメタデータ</li>
+<li><code>Svchost.exe</code> などがホストするサービス。</li>
+<li><code>TaskHostw.exe</code> などがホストするタスク。</li>
+<li>コントロール パネルの項目などで使われる <code>Rundll32.exe</code> が呼び出す対象。</li>
+<li>既定の COM+ サロゲートとも呼ばれる <code>Dllhost.exe</code> がホストする COM クラスの情報。</li>
+<li><code>WMIPrvSE.exe</code> などの Windows Management Instrumentation（WMI）ホストプロセスのプロバイダー情報。WMI は第2部の第8章で説明します。</li>
+<li>Windows アプリのパッケージ情報。対象は Windows ランタイムをホストするプロセスです。Windows ランタイムについては本章の前半を参照してください。</li>
 </ul>
-
-<figure><img loading="lazy" width="562" height="390" src="assets/00806f91cd73b0f134142718.webp" alt="Process Explorer のメイン画面"><figcaption>図：Process Explorer によるプロセス詳細の可視化</figcaption></figure>
-
-<p>以下の手順で Process Explorer の基本操作を体験してみましょう：</p>
+<figure><img loading="lazy" width="562" height="390" src="assets/00806f91cd73b0f134142718.webp" alt="Process Explorer のプロセスツリーとツールチップ"></figure>
+<p>次の手順で、Process Explorer の基本機能を確認します。</p>
 <ol>
-  <li><strong>プロセスの色分け</strong>：既定ではサービスホストはピンク色、自身が起動した通常プロセスは青色などで色分けされています。これらは <strong>Options → Configure Colors</strong> から自由にカスタマイズ可能です。</li>
-  <li><strong>ツールチップの確認</strong>：プロセス名の上にマウスを置くと、実行ファイルのフルパスやコマンドライン、ホスト中のサービス名などがポップアップ表示されます。</li>
+<li>サービスをホストするプロセスは既定でピンク、自分のプロセスは青で表示されます。「Options」メニューの「Configure Colors」で色を変更できます。</li>
+<li>プロセスのイメージ名にマウスポインターを重ねます。ツールチップに完全なパスが表示されます。プロセスの種類によっては、前述した追加情報も表示されます。</li>
 </ol></section><section class="page" id="page-35" aria-label="page-35"><ol start="3">
   <li><strong>表示列の追加</strong>：<strong>View → Select Columns</strong> を開き、「Process Image」タブで「Image Path（実行ファイルパス）」にチェックを入れて列を追加してみましょう。</li>
   <li><strong>ツリー表示とソートの切り替え</strong>：「Process」列ヘッダーをクリックすると、プロセス名によるアルファベット順ソートに切り替わり、ツリー表示が一時的に解除されます。もう一度クリックすると逆順（Z〜A）になり、3回目をクリックすると元のプロセーツリー表示に戻ります。</li>
