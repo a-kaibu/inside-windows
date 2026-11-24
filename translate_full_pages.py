@@ -18772,3 +18772,8 @@ full_pages_ja['p2-page-375'] = full_pages_ja['p2-page-375'].replace(
     '次の図では VBS が有効で、ハイパーバイザーによって適用されるコード整合性（HVCI）、UEFI ランタイムの仮想化（<span lang="en">UEFI Readonly</span>）、モードベース実行制御（MBEC）を確認できます。',
     '次の図では VBS が有効です。システム情報には、コード整合性（HVCI）が <code>Hypervisor Enforced Code Integrity</code>、UEFI ランタイムの仮想化が <code>UEFI Readonly</code>、モードベース実行制御（MBEC）が <code>Mode Based Execution Control</code> と表示されています。',
 )
+
+full_pages_ja['p2-page-383'] = full_pages_ja['p2-page-383'].replace(
+    '仮想プロセッサー上でセキュア VTL のコードを実行する側との双方向通信に使います。',
+    '仮想プロセッサーのセキュア VTL で動作するコードとの双方向通信に使います。',
+)
