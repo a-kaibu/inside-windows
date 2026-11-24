@@ -26569,7 +26569,7 @@ BCD エントリには、Bootmgr、Winload、その他の起動コンポーネ�
 <caption>表12-3　ブートアプリケーション用の BCD ライブラリオプション（続き）</caption>
 <thead><tr><th scope="col">オプション名</th><th scope="col">値の型</th><th scope="col">BCD 要素コード<sup>2</sup></th><th scope="col">意味</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>configaccesspolicy</code></th><td>Default、DisallowMmConfig</td><td><code>CONFIG_ACCESS_POLICY</code></td><td>PCI メーカーの構成空間へのアクセスにメモリマップド I/O を使うか、HAL の I/O ポートアクセスルーチンに切り替えるかを設定します。機器の問題の解決に役立つことがあります。</td></tr>
+<tr><th scope="row"><code>configaccesspolicy</code></th><td>Default、DisallowMmConfig</td><td><code>CONFIG_ACCESS_POLICY</code></td><td>PCI デバイスの構成空間へのアクセスにメモリマップ I/O を使うか、代わりに HAL の I/O ポートアクセスルーチンを使うかを設定します。プラットフォーム上のデバイスの問題を解決できる場合があります。</td></tr>
 <tr><th scope="row"><code>debugaddress</code></th><td>ハードウェアアドレス</td><td><code>DEBUGGER_PORT_ADDRESS</code></td><td>デバッグに使うシリアル（COM）ポートのハードウェアアドレスを指定します。</td></tr>
 <tr><th scope="row"><code>debugport</code></th><td>COM ポート番号</td><td><code>DEBUGGER_PORT_NUMBER</code></td><td>リモートカーネルデバッガーの接続先となる既定のシリアルポートを変更します。シリアルポートが2つ以上あるシステムでは通常 COM2 が既定です。</td></tr>
 <tr><th scope="row"><code>debugstart</code></th><td>Active、AutoEnable、Disable</td><td><code>DEBUGGER_START_POLICY</code></td><td>カーネルデバッグ有効時の設定です。AutoEnable はブレークポイントやカーネル例外（カーネルクラッシュを含む）の発生時にデバッガーを有効にします。</td></tr>
