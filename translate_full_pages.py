@@ -18376,3 +18376,13 @@ full_pages_ja['page-606'] = full_pages_ja['page-606'].replace(
     'ホストプロセスが十分な時間内に要求に応答するかを監視し',
     'ホストプロセスが要求に対して所定の時間内に応答するかを監視し',
 )
+
+full_pages_ja['page-609'] = full_pages_ja['page-609'].replace(
+    'S0 から S1 から S5 のいずれかに移ること',
+    'S0 から S1〜S5 のいずれかに移ること',
+)
+
+full_pages_ja['page-611'] = full_pages_ja['page-611'].replace(
+    'これは S0 の一形態です。',
+    '本書が説明する ACPI の分類では、これは独立した電源状態ではなく、S0 の一形態です。',
+)
