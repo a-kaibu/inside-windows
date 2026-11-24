@@ -3293,7 +3293,7 @@ LastErrorValue:       0
 LastStatusValue:      c0000034
 Count Owned Locks:    0
 HardErrorMode:        0</pre></li>
-<li>同じ TEB のアドレスを使って、構造体そのものを表示することもできます。次の出力は紙幅の都合で一部を省略しています。
+<li>同じ TEB のアドレスを <code>dt ntdll!_teb</code> に渡すと、構造体の各フィールドを表示できます。以下は出力の抜粋です。
 <pre>0:005&gt; dt ntdll!_teb 000000ef&#x27;125f1000
 +0x000 NtTib            : _NT_TIB
 +0x038 EnvironmentPointer : (null)
