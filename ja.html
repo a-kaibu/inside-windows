@@ -1760,7 +1760,7 @@ ELAM は第7章で詳しく説明します。ここで重要なのは、ソフ�
 </ul>
 <p>第2章で説明したように、Windows 10 には少なくとも System プロセスとメモリ圧縮プロセスの2つの最小プロセスがあります。
 仮想化ベースのセキュリティが有効であれば、3つ目の Secure System プロセスも動作します。この機能の詳細は第2章と第7章を参照してください。
-Windows 10 で最小プロセスを動かすもう一つの方法は、第2章で取り上げた Windows Subsystem for Linux（WSL）のオプション機能を有効にすることです。これにより、Windows に同梱された Pico プロバイダーがインストールされます。</p></section><section class="page" id="page-138" aria-label="page-138"><h4 id="Pico-プロセス">Pico プロセス</h4>
+Windows 10 で最小プロセスを動かすもう一つの方法は、第2章で取り上げた Windows Subsystem for Linux（WSL）のオプション機能を有効にすることです。これにより、Windows に同梱された Pico プロバイダーがインストールされます。このプロバイダーは <code>Lxss.sys</code> と <code>LxCore.sys</code> の2つのドライバーで構成されます。</p></section><section class="page" id="page-138" aria-label="page-138"><h4 id="Pico-プロセス">Pico プロセス</h4>
 <p>最小プロセスの用途は、カーネルコンポーネントがユーザーモードの仮想アドレス空間にアクセスし、その空間を保護できるようにすることなどに限られます。
 Pico プロセスでは、Pico プロバイダーという専用コンポーネントが、OS の観点から実行の大部分を制御できます。
 これにより、プロバイダーは別の OS のカーネルの動作をエミュレートできます。ユーザーモードのバイナリは、Windows 上で動いていることを意識せずに実行されます。
