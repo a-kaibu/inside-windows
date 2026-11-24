@@ -23493,7 +23493,7 @@ B 木インデックスで管理できるデータには、セキュリティ記
 このインデックスは GUID であるオブジェクト ID の順にエントリを並べるため、NTFS は ID からファイルをすばやく探せます。
 アプリケーションはネイティブ API の <code>NtCreateFile</code> に <code>FILE_OPEN_BY_FILE_ID</code> フラグを指定すると、オブジェクト ID でファイルやディレクトリを開けます。
 図11-51に <code>$ObjId</code> メタデータファイルと MFT レコードの <code>$OBJECT_ID</code> 属性の対応を示します。</p>
-<figure><p>アプリケーションがファイルを開く際に渡したオブジェクト ID を、<code>$ObjId</code> の <code>$O</code> インデックスで引きます。
+<figure><p>アプリケーションがファイルを開く際に渡したオブジェクト ID を、<code>$ObjId</code> の <code>$O</code> インデックスで検索します。
 <code>$ObjId</code> の MFT エントリは、標準情報、ファイル名、<code>$O</code> のインデックスルートとインデックス割り当てを持ちます。
 図のオブジェクト ID 0、1、2の各インデックスエントリには、対応する MFT エントリ番号と <code>FILE_OBJECTID_BUFFER</code> が入っています。
 ファイル1、2、3の MFT エントリにも、各ファイルの <code>$OBJECT_ID</code> 属性が入っています。</p>
