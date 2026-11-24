@@ -20033,7 +20033,7 @@ lkd&gt; k
 </ul>
 <h3 id="レジストリのデータ型">レジストリのデータ型</h3>
 <p>レジストリはディスクボリュームに似た構造を持つデータベースです。ディレクトリに相当するキーと、ファイルに相当する値があります。キーはサブキーや値を格納する入れ物です。値はデータを格納します。最上位のキーをルートキーと呼びます。この節では、サブキーとキーを同じ意味で使います。</p>
-<p>キーと値の命名規則はファイルシステムと同じです。たとえば、<code>trade</code> キーに格納された <code>mark</code> という値は、<code>trade&#92;mark</code> で一意に識別できます。この規則の例外は、各キーの名前のない値です。Regedit ではこの値を「(既定)」と表示します。</p>
+<p>キーと値の命名規則はファイルシステムと同じです。たとえば、<code>trade</code> キーに格納された <code>mark</code> という値は、<code>trade&#92;mark</code> で一意に識別できます。この規則の例外は、各キーの名前のない値です。Regedit ではこの値を「(既定)」と表示します。英語版の表示は「(Default)」です。</p>
 <p>値は表10-1の12種類の型のいずれかです。多くの値は <code>REG_DWORD</code>、<code>REG_BINARY</code>、<code>REG_SZ</code> のいずれかです。<code>REG_DWORD</code> には数値や真偽値、<code>REG_BINARY</code> には32ビットを超える数値や暗号化済みパスワードなどの生データを格納できます。<code>REG_SZ</code> は Unicode 文字列を格納し、名前、ファイル名、パス、型などを表します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表10-1　レジストリ値の型</caption>
 <thead><tr><th scope="col">値の型</th><th scope="col">説明</th></tr></thead>

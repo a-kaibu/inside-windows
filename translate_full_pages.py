@@ -18792,3 +18792,8 @@ full_pages_ja['p2-page-395'] = full_pages_ja['p2-page-395'].replace(
     'HVCI が無効なら、すべてのプライベートページが非特権ページです。',
     'HVCI が無効なら、すべてのプライベートページが非特権ページです。この場合、NT カーネルが自身のページをすべて制御します。',
 )
+
+full_pages_ja['p2-page-424'] = full_pages_ja['p2-page-424'].replace(
+    'Regedit ではこの値を「(既定)」と表示します。',
+    'Regedit ではこの値を「(既定)」と表示します。英語版の表示は「(Default)」です。',
+)
