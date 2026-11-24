@@ -18234,3 +18234,8 @@ full_pages_ja['page-536'] = full_pages_ja['page-536'].replace(
     'Part 2 の第10章',
     '第2部の第10章',
 )
+
+full_pages_ja['page-537'] = full_pages_ja['page-537'].replace(
+    '必要な処理を行ってから IRP を次の層に渡すこともできます。',
+    'IRP を次の層に渡すこともできます。その前に、必要に応じて独自の処理を行えます。',
+)
