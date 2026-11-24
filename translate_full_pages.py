@@ -18287,3 +18287,13 @@ full_pages_ja['page-564'] = full_pages_ja['page-564'].replace(
     'アイドル時に処理する優先順位の I/O には、別のキューを使います。',
     'アイドル時に処理する優先順位の I/O には、別のキューを使います（原文のこの箇所には「非アイドル」とありますが、直後の説明と図6-26に合わせています）。',
 )
+
+full_pages_ja['page-568'] = full_pages_ja['page-568'].replace(
+    '<code>File_1</code> への書き込みが表示されるまでスクロールします。',
+    '対象ファイルへの読み取りが表示されるまでスクロールします（原文は <code>File_1</code> への書き込みとしていますが、画面の選択行は <code>_File_7920</code> に対する <code>ReadFile</code> です）。',
+)
+
+full_pages_ja['page-568'] = full_pages_ja['page-568'].replace(
+    'Process Monitor に表示された低優先度のファイル書き込み',
+    'Process Monitor に表示された低優先度のファイル読み取り',
+)

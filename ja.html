@@ -8343,8 +8343,8 @@ Args: 00000000 00000000 83360020 00000000</pre>
 <figure><img loading="lazy" width="309" height="340" src="assets/a97e54b75552cd65204ed88f.webp" alt="Process Explorer で低い I/O 優先順位のスレッドを確認した画面"></figure></li>
 <li>Process Monitor で IO Priority が発行する I/O を追跡し、各要求の I/O 優先順位ヒントを確認することもできます。Process Monitor を起動して <code>IoPriority.exe</code> のフィルターを設定し、実験を繰り返します。このアプリケーションでは、各スレッドが <code>_File_</code> にスレッド ID を連結した名前のファイルから読み取ります。</li>
 </ol></section><section class="page" id="page-568" aria-label="page-568"><ol start="6">
-<li><code>File_1</code> への書き込みが表示されるまでスクロールします。次のような出力が表示されます。
-<figure><img loading="lazy" width="599" height="192" src="assets/d5d5d8651564434b16babc43.webp" alt="Process Monitor でファイル I/O の優先順位と発行間隔を確認する画面"><figcaption>Process Monitor に表示された低優先度のファイル書き込み</figcaption></figure></li>
+<li>対象ファイルへの読み取りが表示されるまでスクロールします（原文は <code>File_1</code> への書き込みとしていますが、画面の選択行は <code>_File_7920</code> に対する <code>ReadFile</code> です）。次のような出力が表示されます。
+<figure><img loading="lazy" width="599" height="192" src="assets/d5d5d8651564434b16babc43.webp" alt="Process Monitor でファイル I/O の優先順位と発行間隔を確認する画面"><figcaption>Process Monitor に表示された低優先度のファイル読み取り</figcaption></figure></li>
 <li>画面例で <code>_File_7920</code> 宛ての I/O の優先順位が <code>Very Low</code> であることを確認します。「Time of Day」と「Relative Time」の列を見ると、I/O の間隔が0.5秒であることもわかります。これも、アイドル時処理の方式が働いていることを示します。</li>
 </ol>
 <h4 id="実験-I-O-優先順位の引き上げと補正を調べる">実験：I/O 優先順位の引き上げと補正を調べる</h4>
