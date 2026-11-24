@@ -26789,7 +26789,7 @@ TPM からキーを取り出せなければ、図12-6のような画面を表示
 <p>対象 OS のローダーの読み取りと検証にはファームウェアを使います。
 検証を担当するコード整合性ライブラリは、システム標準とカスタムのセキュアブートポリシーを、ファイルのデジタル署名に適用します。
 ブートアプリケーションに制御を渡す前に、そのアプリケーションを起動することを、登録済みのコンポーネント、特に ETW とメジャードブートに通知します。
-さらに、TPM で他のデータの封印を解除できないようにしてから制御を渡します。</p></section><section class="page" id="p2-page-832" aria-label="p2-page-832"><figure><img loading="lazy" width="690" height="444" src="assets/5c65d1b737fa8a7120c032d5.webp" alt="BitLocker が回復キーの入力を求める画面"><figcaption>図12-6　起動構成の変更によって BitLocker の回復手順が始まったところ</figcaption></figure>
+さらに、TPM で他のデータの封印を解除できないようにしてから制御を渡します。</p></section><section class="page" id="p2-page-832" aria-label="p2-page-832"><figure><img loading="lazy" width="690" height="444" src="assets/5c65d1b737fa8a7120c032d5.webp" alt="BitLocker が回復キーの入力を求める画面"><figcaption>図12-6　起動構成の変更によって BitLocker の回復手順が始まったところ</figcaption><p>画面では、<code>&#92;Windows&#92;system32&#92;winload.efi</code> のブート構成データ設定 <code>16000010</code> が変更されたため、回復キーの入力が必要だと表示されています。入力欄の下には、別のコンピューターやモバイル端末で回復キーを探すための案内と、キー ID が表示されています。</p></figure>
 <p>最後に、<code>BlImgStartBootApplication</code> を通じて Windows ローダーへ制御を渡します。
 このルーチンから制御が戻るのは、特定のエラーが起きた場合だけです。
 その場合も、ブートマネージャーは Windows の回復シーケンスを起動して対処します。</p>
