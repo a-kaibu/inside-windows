@@ -19163,3 +19163,9 @@ full_pages_ja['p2-page-566'] = full_pages_ja['p2-page-566'].replace(
     'ユーザーモードのプロセスとカーネルモードのシステムで発生したクラッシュの報告を自動送信する仕組みです。',
     'ユーザーモードのプロセスがクラッシュした場合と、カーネルモードでシステム全体がクラッシュした場合に、障害報告を自動送信する仕組みです。',
 )
+
+full_pages_ja['p2-page-567'] = (
+    full_pages_ja['p2-page-567']
+    .removesuffix('\n<figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"></figure>')
+    .replace('<p>図10-38 コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</p>', '<figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"><figcaption>図10-38\u3000コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</figcaption></figure>', 1)
+)

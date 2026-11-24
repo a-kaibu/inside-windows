@@ -21647,15 +21647,14 @@ Since starts the system has gained 0x00017A00 pages (378 MB).</code></pre>
 <p>ドライバーが保留中の IRP を完了させるたびに、シンボルサーバースレッドが起き、Windows Image Helper ライブラリ（<code>Dbghelp.dll</code>）を使って必要なシンボルをダウンロードし、解析します。ドライバーは次の IOCTL を待ち、その IOCTL から解析結果を受け取ります。その後、スレッドはドライバーが次のシンボルを必要とするまで待機します。</p>
 <h4 id="Windows-エラー報告-WER">Windows エラー報告（WER）</h4>
 <p>Windows エラー報告（WER）は、ユーザーモードのプロセスがクラッシュした場合と、カーネルモードでシステム全体がクラッシュした場合に、障害報告を自動送信する仕組みです。ユーザーモードのプロセス、保護プロセス、トラストレット、カーネルのクラッシュに対応するため、複数のシステムコンポーネントが連携します。</p>
-<p>以前のバージョンにあった、クラッシュ時に WER が収集し、Microsoft または管理者指定の社内サーバーに送る情報の詳細をユーザーが設定するダイアログは、Windows 10 では廃止されています。図10-38に示すように、Windows 10 ではコントロールパネルの「セキュリティとメンテナンス」から、アプリケーションやカーネルのクラッシュ時に作成された報告の履歴と基本情報を確認できます。</p></section><section class="page" id="p2-page-567" aria-label="p2-page-567"><p>図10-38 コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</p>
+<p>以前のバージョンにあった、クラッシュ時に WER が収集し、Microsoft または管理者指定の社内サーバーに送る情報の詳細をユーザーが設定するダイアログは、Windows 10 では廃止されています。図10-38に示すように、Windows 10 ではコントロールパネルの「セキュリティとメンテナンス」から、アプリケーションやカーネルのクラッシュ時に作成された報告の履歴と基本情報を確認できます。</p></section><section class="page" id="p2-page-567" aria-label="p2-page-567"><figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"><figcaption>図10-38　コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</figcaption></figure>
 <p>Windows エラー報告は、発生するクラッシュの種類に応じて、複数の OS コンポーネントで処理します。</p>
 <ul>
 <li>Windows エラー報告サービス（<code>WerSvc.dll</code>）は、ユーザーモードのプロセス、保護プロセス、トラストレットがクラッシュしたときの報告の作成と送信を管理します。</li>
 <li>Windows 障害報告とセキュア障害報告（<code>WerFault.exe</code>、<code>WerFaultSecure.exe</code>）は、主にクラッシュしたアプリケーションのスナップショットを取得し、報告の生成と、Microsoft のオンラインクラッシュ解析サイトまたは設定済みの社内サーバーへの送信を開始します。</li>
 <li>報告の生成と送信を実際に行うのは、Windows エラー報告 DLL（<code>Wer.dll</code>）です。WER エンジンの内部関数に加え、アプリケーションが WER を利用するための公開 API も実装しています。一部の API は <code>Kernelbase.dll</code> や <code>Faultrep.dll</code> にも実装されています。詳細は <a href="https://learn.microsoft.com/windows/win32/api/_wer/">Windows エラー報告 API リファレンス</a>を参照してください。</li>
 <li>Windows ユーザーモードクラッシュ報告 DLL（<code>Faultrep.dll</code>）には、ユーザーモードアプリケーションのクラッシュやハング時に <code>Kernel32.dll</code> や WER サービスなどが使う共通のスタブが含まれます。クラッシュのシグネチャを作成し、ハングを WER サービスに報告し、報告の作成と送信に使うセキュリティコンテキストを管理します。これには適切なセキュリティトークンで <code>WerFault</code> を起動する処理も含まれます。</li>
-</ul>
-<figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"></figure></section><section class="page" id="p2-page-568" aria-label="p2-page-568"><ul>
+</ul></section><section class="page" id="p2-page-568" aria-label="p2-page-568"><ul>
 <li>Windows エラー報告ダンプエンコードライブラリ（<code>Werenc.dll</code>）は、トラストレットのクラッシュ時にセキュア障害報告がダンプファイルを暗号化するために使います。</li>
 <li>Windows エラー報告カーネルドライバー（<code>WerKernel.sys</code>）は、稼働中のカーネルのメモリダンプを取得し、Microsoft のオンラインクラッシュ解析サイトに報告を送信する関数を公開するカーネルライブラリです。カーネルモードドライバーがユーザーモードの障害について報告を作成し、送信するための API も含まれます。</li>
 </ul>
