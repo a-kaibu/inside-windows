@@ -11360,7 +11360,7 @@ Other  [CFG Bitmap]</pre>
 <tr><th scope="row">従来の OS のチェック違反（<code>0x0</code>）</th><td>従来のバイナリのバッファーセキュリティチェックが失敗し、セキュリティアサーションとして扱われました。</td></tr>
 <tr><th scope="row">仮想関数テーブルのガード違反（<code>0x1</code>）</th><td>Internet Explorer 10 以降の Virtual Table Guard が、仮想関数テーブルのポインターの破損を検出しました。</td></tr>
 <tr><th scope="row">スタッククッキーの検証失敗（<code>0x2</code>）</th><td><code>/GS</code> コンパイラーオプションが生成したスタッククッキー（スタックカナリア）が破損しています。</td></tr>
-<tr><th scope="row">リストエントリの破損（<code>0x3</code>）</th><td><code>LIST_ENTRY</code> を操作するマクロが、双方向リンクの不整合を検出しました。操作対象の親や子を指すべきリンクが、対応するエントリを指していません。</td></tr>
+<tr><th scope="row">リストエントリの破損（<code>0x3</code>）</th><td><code>LIST_ENTRY</code> を操作するマクロが、双方向リンクの不整合を検出しました。隣接するエントリの前方リンクと後方リンクが互いに対応していません。</td></tr>
 <tr><th scope="row">不正なスタック（<code>0x4</code>）</th><td>ユーザーモードまたはカーネルモードの API が、想定外のスタックで呼び出されました。ROP などによるスタックの改変を示すことがあります。</td></tr>
 <tr><th scope="row">無効な引数（<code>0x5</code>）</th><td>ユーザーモードの CRT API など、厳密な検証を行う関数に無効な引数が渡されました。ROP による呼び出しや、ほかの原因によるスタックの破損を示すことがあります。</td></tr>
 <tr><th scope="row">スタッククッキーの初期化失敗（<code>0x6</code>）</th><td>スタッククッキーの初期化に失敗しました。イメージの改変や破損を示すことがあります。</td></tr>
