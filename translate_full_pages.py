@@ -18683,3 +18683,12 @@ full_pages_ja['p2-page-273'] = full_pages_ja['p2-page-273'].replace(
     'WinDbg が開いている、名前のないデバッグオブジェクトのハンドル',
     'WinDbg が開いている、無名のデバッグオブジェクトへのハンドル',
 )
+
+
+full_pages_ja['p2-page-277'] = full_pages_ja['p2-page-277'].replace(
+    'PRAID とパッケージファミリ名を組み合わせると、アプリケーションユーザーモデル ID（AUMID）になります。',
+    'パッケージファミリ名の後に <code>!</code> と PRAID を続けると、アプリケーションユーザーモデル ID（AUMID）になります。',
+).replace(
+    'ランタイムはトークンを展開して実際の値に戻します。',
+    'ランタイムはトークンを展開して実際の値に戻します。原文では、この処理を detokenizing と呼んでいます。',
+)
