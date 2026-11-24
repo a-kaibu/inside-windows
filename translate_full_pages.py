@@ -19109,3 +19109,8 @@ full_pages_ja['p2-page-546'] = (
     .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure>')
     .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></li>')
 )
+
+full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
+    'PMC のサンプリングイベント',
+    'パフォーマンスモニタリングカウンター（PMC）のサンプリングイベント',
+)
