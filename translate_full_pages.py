@@ -18465,3 +18465,13 @@ full_pages_ja['p2-page-558'] = full_pages_ja['p2-page-558'].replace(
     '先ほどの2つのコマンドを実行し直すと、非公開関数のプローブも出力されます。',
     '先ほどの2つのコマンドを実行し直すと、列挙結果が変わり、非公開関数のプローブも出力されます。',
 )
+
+
+full_pages_ja['p2-page-45'] = full_pages_ja['p2-page-45'].replace(
+    '<p><strong>図8-6の説明</strong> 原論文のグラフは、',
+    '<figure><img loading="lazy" width="319" height="67" '
+    'src="assets/0ad6b9bf47a1add0df85f640.webp" '
+    'alt="大半のページでアクセス時間が同程度で、1か所だけ明確に短いことを示すグラフ">'
+    '<figcaption>図8-6　メモリアクセス時間の測定結果</figcaption></figure>\n'
+    '<p>図8-6は、',
+)
