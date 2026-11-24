@@ -11382,7 +11382,7 @@ Other  [CFG Bitmap]</pre>
 <tr><th scope="row">証明書の処理失敗（<code>0x14</code>）</th><td>暗号化サービスの API が、証明書の解析中に問題を検出したか、無効な ASN.1 ストリームを検出しました。</td></tr>
 <tr><th scope="row">無効な例外チェーン（<code>0x15</code>）</th><td><code>/SAFESEH</code> でリンクされたイメージ、または SEHOP が適用されたイメージで、不正な例外ハンドラーへのディスパッチを検出しました。</td></tr>
 <tr><th scope="row">暗号化ライブラリの障害（<code>0x16</code>）</th><td><code>CNG.SYS</code>、<code>KSECDD.SYS</code>、またはそれらに相当するユーザーモード API で重大な障害が発生しました。</td></tr>
-<tr><th scope="row">DLL コールバック内の不正な呼び出し（<code>0x17</code>）</th><td>ユーザーモードローダーの通知コールバック内で、呼び出しが安全でない関数を実行しようとしました。</td></tr>
+<tr><th scope="row">DLL コールバック内の不正な呼び出し（<code>0x17</code>）</th><td>ユーザーモードローダーの通知コールバックの実行中に、安全でない関数を呼び出そうとしました。</td></tr>
 <tr><th scope="row">無効なイメージベース（<code>0x18</code>）</th><td>ユーザーモードイメージローダーが、<code>__ImageBase</code>（<code>IMAGE_DOS_HEADER</code> 構造体）の無効な値を検出しました。</td></tr>
 <tr><th scope="row">遅延読み込みの保護違反（<code>0x19</code>）</th><td>インポート関数の遅延読み込み中に IAT の破損を検出しました。CFG と遅延読み込み IAT の保護が有効な場合にのみ検査します。</td></tr>
 <tr><th scope="row">安全でない拡張 API の呼び出し（<code>0x1A</code>）</th><td>一部のカーネルモード拡張 API を呼び出したときに、呼び出し元の状態が不正でした。</td></tr>
@@ -11441,7 +11441,7 @@ Other  [CFG Bitmap]</pre>
 <ul>
 <li>実行イメージ（EXE と COM）</li>
 <li>ダイナミックリンクライブラリ（DLL と OCX）</li>
-<li>Microsoft Software Installer（MSI と MSP）。インストールとアンインストールの両方が対象です。</li>
+<li>Windows Installer のファイル（MSI と MSP）。インストールとアンインストールの両方が対象です。</li>
 <li>スクリプト
 <ul>
 <li>Windows PowerShell（PS1）</li>
