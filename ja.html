@@ -3539,7 +3539,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 ... explorer!__wmainCRTStartup + 0x1d6</pre></li>
 </ol>
 <h3 id="保護プロセスのスレッドに対する制限">保護プロセスのスレッドに対する制限</h3>
-<p>第3章で説明したように、従来の保護プロセスと軽量保護プロセス（PPL）では、システム上で最も強い特権を持つユーザーにも、付与されるアクセス権に制限があります。この制限は、プロセス内のスレッドにも適用されます。標準の Windows 関数でスレッドを操作するためのアクセス権が付与されないので、保護プロセス内で実行されるコードの乗っ取りや改変を防げます。付与されるアクセス権は、<code>THREAD_SUSPEND_RESUME</code>、<code>THREAD_SET_LIMITED_INFORMATION</code>、<code>THREAD_QUERY_LIMITED_INFORMATION</code> に限られます。</p></section><section class="page" id="page-230" aria-label="page-230"><h4 id="実験-Process-Explorer-で保護プロセスのスレッド情報を表示する">実験：Process Explorer で保護プロセスのスレッド情報を表示する</h4>
+<p>第3章で説明したように、従来の保護プロセスと軽量保護プロセス（PPL）では、システム上で最も強い特権を持つユーザーにも、付与されるアクセス権に制限があります。この制限は、プロセス内のスレッドにも適用されます。スレッドが実行するコードを乗っ取ったり改変したりする標準の Windows 関数には、保護プロセスのスレッドに対して認められないアクセス権が必要です。付与されるアクセス権は、<code>THREAD_SUSPEND_RESUME</code>、<code>THREAD_SET_LIMITED_INFORMATION</code>、<code>THREAD_QUERY_LIMITED_INFORMATION</code> に限られます。</p></section><section class="page" id="page-230" aria-label="page-230"><h4 id="実験-Process-Explorer-で保護プロセスのスレッド情報を表示する">実験：Process Explorer で保護プロセスのスレッド情報を表示する</h4>
 <p>次の手順で、保護プロセスのスレッドについて取得できる情報を確認します。</p>
 <ol>
 <li>プロセス一覧で、Audiodg.exe や Csrss.exe などの保護プロセスまたは軽量保護プロセス（PPL）を探します。</li>
