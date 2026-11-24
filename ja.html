@@ -3545,7 +3545,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>プロセス一覧で、Audiodg.exe や Csrss.exe などの保護プロセスまたは軽量保護プロセス（PPL）を探します。</li>
 <li>対象プロセスの「Properties」ダイアログを開き、「Threads」タブを選びます。
 <figure><img loading="lazy" width="332" height="426" src="assets/8559b7647cedeab4bb14a45a.webp" alt="保護プロセスのスレッドに対して Process Explorer が表示できる情報"></figure></li>
-<li>開始アドレスの列には、Win32 スレッドの開始アドレスの代わりに、Ntdll.dll にある標準のスレッド起動ラッパーが表示されます。「Stack」ボタンを押すとエラーになります。スタックを表示するには対象プロセスの仮想メモリを読む必要がありますが、Process Explorer には保護プロセスのメモリを読む権限がありません。</li>
+<li>開始アドレスの列には、アプリケーションが指定した Win32 の開始アドレスに代わり、<code>Ntdll.dll</code> にある標準のスレッド起動ラッパーのアドレスが表示されます。「Stack」ボタンを押すとエラーになります。スタックを表示するには対象プロセスの仮想メモリを読む必要がありますが、Process Explorer には保護プロセスのメモリを読む権限がありません。</li>
 <li>基本優先度と動的優先度は表示されますが、I/O 優先度、メモリ優先度、サイクル数（「Cycles」）は表示されません。これは、制限付きの照会権限 <code>THREAD_QUERY_LIMITED_INFORMATION</code> と、完全な照会権限 <code>THREAD_QUERY_INFORMATION</code> の違いの一例です。</li>
 <li>保護プロセス内のスレッドを強制終了しようとすると、ここでもアクセス拒否のエラーになります。必要な <code>THREAD_TERMINATE</code> 権限が付与されていないためです。</li>
 </ol></section><section class="page" id="page-231" aria-label="page-231"><h3 id="スレッドスケジューリング">スレッドスケジューリング</h3>
