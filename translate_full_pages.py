@@ -18913,3 +18913,8 @@ full_pages_ja['p2-page-466'] = full_pages_ja['p2-page-466'].replace(
     '（クライアントのみ）',
     '（クライアント版 Windows のみ）',
 )
+
+full_pages_ja['p2-page-468'] = full_pages_ja['p2-page-468'].replace(
+    'ほぼすべての特権を取り除くには、変更通知の特権だけを指定できます。',
+    'ほかの特権を取り除くには、変更通知の特権（<code>SeChangeNotifyPrivilege</code>）だけを指定します。',
+)
