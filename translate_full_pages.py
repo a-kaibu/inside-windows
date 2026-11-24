@@ -19023,3 +19023,8 @@ full_pages_ja['p2-page-511'] = full_pages_ja['p2-page-511'].replace(
     '実行するセキュリティプリンシパル',
     'タスクの実行主体となるセキュリティプリンシパル',
 )
+
+full_pages_ja['p2-page-513'] = full_pages_ja['p2-page-513'].replace(
+    'UBPM は対話型トークンにも対応します。',
+    'UBPM はさらに、アクティブな対話型セッションのトークンを使ったタスクの実行にも対応します。',
+)
