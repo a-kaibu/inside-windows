@@ -8652,9 +8652,8 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'は <code>IRP_MJ_READ</code> 型の IRP を作り、対象ファイルがあるボリュームの FSD に送ります。その際、ファイルオブジェクトに格納された FSD '
                 'のデバイスオブジェクトを取得し、<code>IoCallDriver</code> を呼び出します。I/O マネージャーは、このデバイスオブジェクトから FSD を特定し、IRP '
                 'を渡します。</p>\n'
-                '<p>図11-23 ドライブ文字の名前解決。</p>\n'
                 '<figure><img loading="lazy" width="594" height="678" '
-                'src="assets/565a6f19ebee4508494e6c03.webp" alt="ファイルの作成要求（原文の図1）"></figure>',
+                'src="assets/565a6f19ebee4508494e6c03.webp" alt="グローバル名前空間の C: が Device ディレクトリの HarddiskVolume6 を指す WinObj の画面"><figcaption>図11-23 ドライブ文字の名前解決</figcaption></figure>',
  'p2-page-652': '<p>ファイルを開くときに <code>CreateFile</code> に <code>FILE_FLAG_NO_BUFFERING</code> '
                 'を指定していなければ、読み取りにキャッシュを使えます。FSD は、そのファイルオブジェクトのキャッシュをすでに初期化したか確認します。初期化済みなら、ファイルオブジェクトの '
                 '<code>PrivateCacheMap</code> フィールドは、前節で説明したプライベートキャッシュマップを指します。FSD '
