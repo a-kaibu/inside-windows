@@ -19763,7 +19763,7 @@ PROCESS ffff8904dfdaa080
     SessionId: 0  Cid: 02e8    Peb: 8074164000  ParentCid: 0250
     DirBase: 3e590002  ObjectTable: ffffb00d0f4dab00  HandleCount:  42.
 Image: LsaIso.exe</code></pre>
-<p>プロセス環境ブロック（PEB）を調べると、一部のフィールドが0か、読み取り不能になっています。</p>
+<p>プロセス環境ブロック（PEB）の出力では、<code>Ldr</code> や <code>ProcessHeap</code> が0で、ウィンドウタイトルや DLL の検索パスは読み取れません。</p>
 <pre><code>lkd&gt; .process /P ffff8904dfdaa080
 lkd&gt; !peb 8074164000
 PEB at 0000008074164000
