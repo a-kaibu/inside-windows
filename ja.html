@@ -6628,7 +6628,7 @@ a5fc09          6        0        1
 <p>Windows には、物理メモリ、ページプール、非ページプール、コミットに使える余裕が少ない場合や十分な場合に、ユーザーモードプロセスやカーネルモードドライバーに通知する仕組みがあります。これらの通知をもとに、メモリの使用量を調整できます。たとえば、利用可能なメモリが少なければアプリケーションは消費量を減らし、ページプールに余裕があればドライバーは追加のメモリを割り当てられます。メモリマネージャーには、破損したページを検出したときに通知するイベントもあります。</p>
 <p>ユーザーモードのプロセスが受け取れるのは、利用可能な物理メモリが少ないか十分にあるかの通知です。アプリケーションは <code>CreateMemoryResourceNotification</code> を呼び出し、不足と余裕のどちらの通知を受け取るかを指定します。返されたハンドルは待機関数に渡せます。指定した状態になると待機が完了し、スレッドに伝わります。<code>QueryMemoryResourceNotification</code> を使えば、呼び出し元スレッドを待機させずに、任意の時点でシステムのメモリ状態を確認できます。</p></section><section class="page" id="page-441" aria-label="page-441"><p>ドライバーは、メモリマネージャーがオブジェクトマネージャーの <code>\KernelObjects</code> ディレクトリに登録したイベントを、名前で参照します。メモリマネージャーは、所定のメモリ状態を検出すると、表5-18にあるグローバルな名前付きイベントのうち、対応するものをシグナル状態にし、待機中のスレッドを起こします。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-18　メモリマネージャーの通知イベント</caption><thead><tr><th scope="col">イベント名</th><th scope="col">説明</th></tr></thead><tbody>
-<tr><td><code>HighCommitCondition</code></td><td>コミットチャージが上限に近づいたときに通知します。物理メモリやページファイルの空きがわずかで、OS がページファイルを拡張できない状態です。</td></tr>
+<tr><td><code>HighCommitCondition</code></td><td>コミットチャージが最大のコミット上限に近づいたときに通知します。メモリ使用量が非常に多く、物理メモリやページファイルの空きがわずかで、OS がページファイルを拡張できない状態です。</td></tr>
 <tr><td><code>HighMemoryCondition</code></td><td>空いている物理メモリの量が所定のしきい値を超えたときに通知します。</td></tr>
 <tr><td><code>HighNonPagedPoolCondition</code></td><td>非ページプールの空き容量が所定のしきい値を超えたときに通知します。</td></tr>
 <tr><td><code>HighPagedPoolCondition</code></td><td>ページプールの空き容量が所定のしきい値を超えたときに通知します。</td></tr>
@@ -6637,7 +6637,7 @@ a5fc09          6        0        1
 <tr><td><code>LowNonPagedPoolCondition</code></td><td>非ページプールの空き容量が所定のしきい値を下回ったときに通知します。</td></tr>
 <tr><td><code>LowPagedPoolCondition</code></td><td>ページプールの空き容量が所定のしきい値を下回ったときに通知します。</td></tr>
 <tr><td><code>MaximumCommitCondition</code></td><td>コミットチャージが最大のコミット上限に近づいたときに通知します。物理メモリやページファイルの空きがわずかで、OS がページファイルのサイズも個数も増やせない状態です。</td></tr>
-<tr><td><code>MemoryErrors</code></td><td>ゼロで埋められているはずのページにゼロ以外の値が残っているなど、不良ページを検出したことを示します。</td></tr>
+<tr><td><code>MemoryErrors</code></td><td>ゼロで埋められているはずのページにゼロ以外の値が残っていることを検出したときに通知します。</td></tr>
 </tbody></table></div>
 <blockquote><p><strong>注</strong>　空きメモリの上下のしきい値は、レジストリキー <code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management</code> に DWORD 値 <code>LowMemoryThreshold</code> または <code>HighMemoryThreshold</code> を追加して変更できます。値は MB 単位です。また、同じキーの DWORD 値 <code>PageValidationAction</code> を1にすると、不良ページの検出時にイベントを通知する代わりに、システムを停止するよう構成できます。</p></blockquote>
 <h4 id="実験-メモリリソースの通知イベントを確認する">実験：メモリリソースの通知イベントを確認する</h4>
