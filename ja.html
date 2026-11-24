@@ -5854,7 +5854,7 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-9 プロセスのクォータの種類</caption><thead><tr><th scope="col">値の名前</th><th scope="col">意味</th><th scope="col">単位</th><th scope="col">稼働中の変更</th><th scope="col">必要な特権</th></tr></thead><tbody>
 <tr><th scope="row"><code>PagedPoolQuota</code></th><td>プロセスがページプールから割り当てられる最大容量。</td><td>MB</td><td>システムトークンで動作するプロセスのみ</td><td><code>SeIncreaseQuotaPrivilege</code></td></tr>
 <tr><th scope="row"><code>NonPagedPoolQuota</code></th><td>プロセスが非ページプールから割り当てられる最大容量。</td><td>MB</td><td>システムトークンで動作するプロセスのみ</td><td><code>SeIncreaseQuotaPrivilege</code></td></tr>
-<tr><th scope="row"><code>PagingFileQuota</code></th><td>プロセスがページングファイルを裏付けとして使える最大ページ数。</td><td>ページ数</td><td>システムトークンで動作するプロセスのみ</td><td><code>SeIncreaseQuotaPrivilege</code></td></tr>
+<tr><th scope="row"><code>PagingFileQuota</code></th><td>プロセスがページングファイルをバッキングストアとして使える最大ページ数。</td><td>ページ数</td><td>システムトークンで動作するプロセスのみ</td><td><code>SeIncreaseQuotaPrivilege</code></td></tr>
 <tr><th scope="row"><code>WorkingSetPagesQuota</code></th><td>プロセスのワーキングセットとして物理メモリに保持できる最大ページ数。</td><td>ページ数</td><td>可</td><td>ワーキングセットを空にする要求を除き、<code>SeIncreaseBasePriorityPrivilege</code></td></tr>
 </tbody></table></div>
 <h3 id="ユーザーアドレス空間の配置">ユーザーアドレス空間の配置</h3>
@@ -5863,7 +5863,7 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <h4 id="実験-ユーザー仮想アドレス空間を分析する">実験：ユーザー仮想アドレス空間を分析する</h4>
 <p>Sysinternals の VMMap では、マシン上の任意のプロセスが使う仮想メモリの詳細を確認できます。表示される情報は、割り当ての種類に応じて次のカテゴリに分かれます。</p>
 <dl>
-<dt>Image</dt><dd>実行可能ファイル、その依存先（動的ライブラリなど）、その他のメモリマップ済みイメージファイル（PE 形式）に使う割り当てです。</dd>
+<dt>Image</dt><dd>実行可能ファイル、その依存先（動的ライブラリなど）、その他の PE 形式のイメージファイルをメモリにマップするための割り当てです。</dd>
 <dt>Mapped File</dt><dd>メモリにマップされたデータファイルに使う割り当てです。</dd>
 <dt>Shareable</dt><dd>共有可能としてマークされた割り当てです。通常は共有メモリが含まれます。メモリマップトファイルは Image または Mapped File に分類されます。</dd>
 <dt>Heap</dt><dd>このプロセスが所有するヒープに割り当てられたメモリです。</dd>
