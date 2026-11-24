@@ -19133,3 +19133,8 @@ full_pages_ja['p2-page-555'] = full_pages_ja['p2-page-555'].replace(
     'SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）、Administrators（S-1-5-32-544）に',
     'SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）の各アカウントと、Administrators グループ（S-1-5-32-544）に',
 )
+
+full_pages_ja['p2-page-556'] = full_pages_ja['p2-page-556'].replace(
+    '収集できるのは、OS やサードパーティのフレームワーク（.NET CLR など）、アプリケーションの既定のコンポーネントが生成するイベントです。',
+    'ETW のトレースは静的で、OS、フレームワーク（.NET CLR など）、アプリケーションのコンポーネントにあらかじめ組み込まれたイベントだけを収集できます。',
+)
