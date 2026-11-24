@@ -23680,7 +23680,7 @@ NTFS は列挙を <code>FSCTL_QUERY_FILE_LAYOUT</code> のディスパッチ関�
 <strong>ハード予約</strong>（ID 1）にはセットアップのファイルを格納し、ほかのアプリケーションはそれらを削除したり置き換えたりできません。
 <strong>ソフト予約</strong>（ID 2）には、システムログや Windows Update がダウンロードしたファイルなどの一時ファイルを格納します。
 この例では、セットアップはすべてのファイルのインストールを終え、Windows Update も動作していないので、ハード予約は空です。
-ソフト予約の領域はすべて割り当て済みです。
+ソフト予約の使用済み容量は409 MBです。この出力例では、どちらの予約の保証容量も0 MBと表示されています。
 <code>fsutil storagereserve findById</code> ですべての所属ファイルを列挙できます。
 出力が長い場合は <code>&gt;</code> でファイルにリダイレクトできます。</p>
 <pre><code>C:\&gt;fsutil storagereserve findbyid c: 2
