@@ -4406,7 +4406,7 @@ Unable to get MiNodeInformation</pre>
 <li>アプリケーションをビルドするときに、イメージヘッダーでアフィニティマスクを指定します。</li>
 </ul>
 <p><strong>ヒント</strong> Windows のイメージ形式の詳細は、Microsoft の「<a href="https://learn.microsoft.com/en-us/windows/win32/debug/pe-format">Portable Executable and Common Object File Format Specification</a>」を参照してください。</p>
-<p>リンク時にイメージに単一プロセッサフラグを設定することもできます。このフラグがあると、システムはプロセス作成時にプロセッサを1つ選び（<code>MmRotatingProcessorNumber</code>）、そのプロセッサだけを含むアフィニティマスクを割り当てます。グループの先頭から順に選び、最後まで達すると先頭に戻ります。たとえば、2プロセッサのシステムでは、このフラグを持つイメージを起動するたびに CPU 0、CPU 1、CPU 0、CPU 1 の順に割り当てます。マルチスレッドプログラムの同期に不具合があり、単一プロセッサでは発生せず、マルチプロセッサで競合が起きたときだけ現れる場合に、一時的な回避策として使えます。こうした症状を示すイメージが未署名なら、PE（Portable Executable）イメージ編集ツールでヘッダーにフラグを追加できます。署名済みの実行ファイルにも対応する方法は、Microsoft Application Compatibility Toolkit で互換性シムを追加し、起動時に互換性データベースの設定に従って、イメージを単一プロセッサ専用として扱わせることです。</p>
+<p>リンク時にイメージに単一プロセッサフラグを設定することもできます。このフラグがあると、システムはプロセス作成時にプロセッサを1つ選び（<code>MmRotatingProcessorNumber</code>）、そのプロセッサだけを含むアフィニティマスクを割り当てます。グループの先頭から順に選び、最後まで達すると先頭に戻ります。たとえば、2プロセッサのシステムでは、このフラグを持つイメージを起動するたびに CPU 0、CPU 1、CPU 0、CPU 1 の順に割り当てます。マルチスレッドプログラムの同期に不具合があり、競合状態が原因で、マルチプロセッサシステムでのみその不具合が表面化する場合に、一時的な回避策として使えます。こうした症状を示すイメージが未署名なら、PE（Portable Executable）イメージ編集ツールでヘッダーにフラグを追加できます。署名済みの実行ファイルにも対応する方法は、Microsoft Application Compatibility Toolkit で互換性シムを追加し、起動時に互換性データベースの設定に従って、イメージを単一プロセッサ専用として扱わせることです。</p>
 <h5 id="実験-プロセスのアフィニティを表示-変更する">実験：プロセスのアフィニティを表示・変更する</h5>
 <p>この実験では、プロセスのアフィニティ設定を変更し、新しく起動したプロセスにその設定が継承されることを確認します。</p></section><section class="page" id="page-293" aria-label="page-293"><ol>
 <li>コマンドプロンプト（<code>Cmd.exe</code>）を起動します。</li>
@@ -4424,7 +4424,7 @@ Unable to get MiNodeInformation</pre>
 <p>拡張アフィニティマスクと、それを扱う API を使うと、プロセスに最初に割り当てられたグループの外でも、そのプロセスのスレッドを実行できます。たとえば、256個のプロセッサを持つマシンで、あるプロセスに4つのスレッドがあるとします。各スレッドがグループ0、1、2、3にそれぞれ <code>0x10</code>（2進数で <code>0b10000</code>）のアフィニティマスクを設定すれば、スレッド1はプロセッサ4、スレッド2は68、スレッド3は132、スレッド4は196で実行できます。また、それぞれの所属グループで全ビットが1のマスク（<code>0xFFFF…</code>）を設定すれば、プロセス全体ではシステム内のどのプロセッサでも使えます。ただし、個々のスレッドは自分のグループ内でしか実行できません。</p>
 <p>スレッドを作成するときに拡張アフィニティを使うには、スレッドの属性リストの <code>PROC_THREAD_ATTRIBUTE_GROUP_AFFINITY</code> でグループ番号を指定します。既存のスレッドには <code>SetThreadGroupAffinity</code> を使います。</p>
 <h5 id="システムアフィニティマスク">システムアフィニティマスク</h5>
-<p>Windows のドライバーは通常、System プロセス内で独立して動くのではなく、呼び出し元のスレッドや任意のスレッドのコンテキストで実行されます。そのため、アプリケーションの開発者が指定したアフィニティがドライバーコードにも適用される場合があります。その制約はドライバーの処理には関係なく、割り込みやキューに入った作業を正しく処理できなくなる場合もあります。ドライバーは、<code>KeSetSystemAffinityThread</code>、<code>KeSetSystemAffinityThreadEx</code>、<code>KeSetSystemGroupAffinityThread</code> でユーザースレッドのアフィニティを一時的に上書きできます。復元には <code>KeRevertToUserAffinityThread</code>、<code>KeRevertToUserAffinityThreadEx</code>、<code>KeRevertToUserGroupAffinityThread</code> を使います。</p>
+<p>Windows のドライバーは通常、System プロセス内で独立して動くのではなく、呼び出し元のスレッドや任意のスレッドのコンテキストで実行されます。そのため、アプリケーションの開発者が指定したアフィニティがドライバーコードにも適用される場合があります。その制約はアプリケーションの都合で設定されたものです。ドライバーにも適用されると、割り込みやキューに入った作業の処理を妨げる場合があります。ドライバーは、<code>KeSetSystemAffinityThread</code>、<code>KeSetSystemAffinityThreadEx</code>、<code>KeSetSystemGroupAffinityThread</code> でユーザースレッドのアフィニティを一時的に上書きできます。復元には <code>KeRevertToUserAffinityThread</code>、<code>KeRevertToUserAffinityThreadEx</code>、<code>KeRevertToUserGroupAffinityThread</code> を使います。</p>
 <h5 id="優先プロセッサと直前のプロセッサ">優先プロセッサと直前のプロセッサ</h5>
 <p>カーネルのスレッド制御ブロックには、スレッドごとに次の3つの CPU 番号が入ります。</p>
 <dl>
