@@ -18450,3 +18450,9 @@ for _label, _name in (('低', 'Low'), ('中', 'Medium'), ('高', 'High')):
         f'<th scope="row">{_label}</th>', f'<th scope="row">{_name}</th>'
     )
 full_pages_ja['page-676'] = full_pages_ja['page-676'].replace('MediumLow', 'Medium と Low').replace('HighSystem', 'High と System').replace('Lowは', 'Low は').replace('Systemは', 'System は').replace('Medium以上', 'Medium 以上')
+
+
+full_pages_ja['p2-page-681'] = full_pages_ja['p2-page-681'].replace(
+    'すぐに階層を最適化するには、',
+    '階層化エンジンの次回の実行を待たずに最適化するには、',
+)
