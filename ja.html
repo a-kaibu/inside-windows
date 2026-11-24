@@ -682,11 +682,11 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <p>もう1本の境界線は、Windows のカーネルモード部分とハイパーバイザーを分けています。ハイパーバイザーも CPU の特権レベル0で動きますが、Intel の VT-x や AMD の SVM が提供する専用の CPU 命令を使うため、カーネルから分離された状態でカーネルやアプリケーションを監視できます。この分離を「リング −1」と呼ぶことがありますが、実際にその番号の CPU 特権リングがあるわけではありません。</p></section><section class="page" id="page-65" aria-label="page-65"><p>ユーザーモードプロセスは、大きく次の4種類に分けられます。</p>
 <ul>
 <li><strong>ユーザープロセス</strong>　32ビットまたは64ビットの Windows アプリケーション、16ビットの Windows 3.1 または MS-DOS アプリケーション、32ビットまたは64ビットの POSIX アプリケーションが該当します。Windows 8 以降で Windows ランタイム上で動く Windows アプリも、Windows アプリケーションに含まれます。16ビットアプリケーションは32ビット版 Windows でのみ実行できます。Windows 8 以降、従来の POSIX アプリケーションはサポートされません。</li>
-<li><strong>サービスプロセス</strong>　タスク スケジューラや Print Spooler などの Windows サービスをホストします。サービスは通常、ユーザーがサインインしているかどうかにかかわらず動作する必要があります。Microsoft SQL Server や Microsoft Exchange Server など、多くのサーバーアプリケーションにも、サービスとして動くコンポーネントがあります。詳細は第2部の管理機構の章を参照してください。</li>
+<li><strong>サービスプロセス</strong>　タスク スケジューラや Print Spooler などの Windows サービスをホストします。サービスは通常、ユーザーがサインインしているかどうかにかかわらず動作する必要があります。Microsoft SQL Server や Microsoft Exchange Server など、多くのサーバーアプリケーションにも、サービスとして動くコンポーネントがあります。詳しくは、第2部の第10章「<a href="#Windows-サービス">Windows サービス</a>」を参照してください。</li>
 <li><strong>システムプロセス</strong>　サインインを処理するプロセスやセッションマネージャーなど、OS に組み込まれたプロセスです。サービス制御マネージャーが起動する Windows サービスには含まれません。</li>
 <li><strong>環境サブシステムのサーバープロセス</strong>　ユーザーや開発者に提供される OS 環境の一部を実装します。Windows NT には当初、Windows、POSIX、OS/2 の3つの環境サブシステムが同梱されていました。OS/2 サブシステムが同梱された最後の版は Windows 2000、従来の POSIX サブシステムでは Windows XP です。Windows 7 の Ultimate と Enterprise、および Windows Server 2008 R2 の全エディションは、拡張された POSIX サブシステムである Subsystem for UNIX-based Applications（SUA）に対応していました。SUA の提供は終了しており、クライアント版とサーバー版のどちらでもオプション機能として提供されていません。</li>
 </ul>
-<blockquote><p><strong>注</strong>　Windows 10 バージョン1607には、開発者向けベータ版の Windows Subsystem for Linux（WSL）が含まれています。WSL の仕組みは、ここで説明する環境サブシステムとは異なります。本章の後半で WSL と関連する Pico プロバイダーを説明します。Pico プロセスについては第3章「プロセスとジョブ」を参照してください。</p></blockquote>
+<blockquote><p><strong>注</strong>　原著執筆時点の Windows 10 バージョン1607には、開発者向けベータ版の Windows Subsystem for Linux（WSL）が含まれています。WSL の仕組みは、ここで説明する環境サブシステムとは異なります。本章の後半で WSL と関連する Pico プロバイダーを説明します。Pico プロセスについては、第3章の「<a href="#Pico-プロセス">Pico プロセス</a>」を参照してください。</p></blockquote>
 <p>図2-1では、サービスプロセスとユーザープロセスの下に、サブシステム DLL の箱があります。Windows のユーザーアプリケーションは、1つ以上のサブシステム DLL を介して OS のネイティブサービスを呼び出します。DLL は文書化された関数を、主に <code>Ntdll.dll</code> に実装されたネイティブシステムサービスの呼び出しに変換します。ネイティブサービスの大半は文書化されていません。変換の際には、ユーザープロセスを処理する環境サブシステムのプロセスにメッセージを送る場合もあります。</p>
 <p>Windows のカーネルモードコンポーネントには、次のようなものがあります。</p>
 <ul><li><strong>エグゼクティブ</strong>　メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク、プロセス間通信など、OS の基本サービスを備えます。</li></ul></section><section class="page" id="page-66" aria-label="page-66"><ul>
