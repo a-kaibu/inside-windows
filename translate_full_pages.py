@@ -18862,3 +18862,9 @@ full_pages_ja['p2-page-449'] = full_pages_ja['p2-page-449'].replace(
     'ハイブログ',
     'ハイブのログファイル',
 )
+
+full_pages_ja['p2-page-450'] = (
+    full_pages_ja['p2-page-450']
+    .replace('ハイブログにエントリを書き込んだあと', 'ハイブのログファイルにエントリを書き込んだあと')
+    .replace('主ハイブが未確定の状態にあり', '主ハイブがダーティな状態にあり')
+)
