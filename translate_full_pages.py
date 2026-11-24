@@ -18650,3 +18650,9 @@ full_pages_ja['p2-page-264'] = full_pages_ja['p2-page-264'].replace(
     'WNF でいう persistent の存続期間は1回の起動セッションです。',
     'WNF でいう persistent の存続期間は、起動してから次に再起動するまでです。',
 )
+
+
+full_pages_ja['p2-page-267'] = full_pages_ja['p2-page-267'].replace(
+    'この場合も状態が有効になり、購読側にシグナルが送られます。',
+    'データを保存しない場合でも、状態の変更が購読側に通知されます。',
+)
