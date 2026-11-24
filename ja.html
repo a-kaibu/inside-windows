@@ -12379,7 +12379,7 @@ Windows では、プロセッサはその割り込みや例外に対応する関
 同じデータを使い、同じ条件でプログラムを再実行すると、例外を再現できる場合があります。
 メモリアクセス違反、一部のデバッガー命令、ゼロ除算エラーなどが例外に当たります。
 カーネルはシステムサービスの呼び出しも例外として扱います。厳密にはシステムトラップです。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/0de93d21588653f4082c72f0.webp" alt="割り込み、システムサービス呼び出し、仮想アドレス例外、ハードウェア例外、ソフトウェア例外のディスパッチ先"><figcaption>図8-11 トラップのディスパッチ</figcaption></figure>
+<figure><img loading="lazy" width="356" height="286" src="assets/trap-dispatching.webp" alt="割り込み、システムサービス呼び出し、各種例外のディスパッチ先"><figcaption>図8-11 トラップのディスパッチ</figcaption></figure>
 <ul>
 <li>割り込みは、トラップハンドラーから割り込みサービスルーチンに渡されます。</li>
 <li>システムサービスの呼び出しは、対応するシステムサービスに渡されます。</li>
@@ -12572,7 +12572,7 @@ x64 システムではさらに、APIC のタスク優先度レジスタ（TPR�
 Windows などの現在の OS は、このレジスタに現在のソフトウェア割り込みの優先度（Windows では IRQL）を保持し、ルーティングを決める際に I/O APIC にその優先度を伝えます。
 IRQL の扱いはこの後で説明します。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/4205c7e2acd8319ba3081e5f.webp" alt="デバイス割り込みを受ける i8259A 相当の PIC と I/O APIC、および CPU 0 と CPU 1 のプロセッサコアとローカル APIC">
+<img loading="lazy" width="298" height="279" src="assets/apic-architecture.webp" alt="I/O APIC、CPU 内のローカル APIC、i8259A 互換 PIC の接続">
 <figcaption>図8-12 APIC の構成</figcaption>
 </figure></section><section class="page" id="p2-page-68" aria-label="p2-page-68"><h4 id="実験-PIC-と-APIC-を確認する">実験：PIC と APIC を確認する</h4>
 <p>カーネルデバッガーでは、単一プロセッサのシステムの PIC 設定を <code>!pic</code> で、マルチプロセッサのシステムの現在のローカル APIC の設定を <code>!apic</code> で確認できます。
