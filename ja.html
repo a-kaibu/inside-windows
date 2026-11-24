@@ -1188,7 +1188,7 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <tr><th scope="row"><code>Dbg</code></th><td>カーネルデバッグのサポート</td></tr>
 <tr><th scope="row"><code>Dbgk</code></th><td>ユーザーモードデバッグフレームワーク</td></tr>
 <tr><th scope="row"><code>Em</code></th><td>エラッタマネージャー</td></tr>
-<tr><th scope="row"><code>Etw</code></th><td>Event Tracing for Windows</td></tr>
+<tr><th scope="row"><code>Etw</code></th><td>Windows イベントトレーシング（ETW）</td></tr>
 <tr><th scope="row"><code>Ex</code></th><td>エグゼクティブのサポートルーチン</td></tr>
 <tr><th scope="row"><code>FsRtl</code></th><td>ファイルシステムランタイムライブラリ</td></tr>
 <tr><th scope="row"><code>Hv</code></th><td>ハイブライブラリ</td></tr>
@@ -1196,7 +1196,7 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <tr><th scope="row"><code>Io</code></th><td>I/O マネージャー</td></tr>
 <tr><th scope="row"><code>Kd</code></th><td>カーネルデバッガー</td></tr>
 <tr><th scope="row"><code>Ke</code></th><td>カーネル</td></tr>
-<tr><th scope="row"><code>Kse</code></th><td>Kernel Shim Engine</td></tr>
+<tr><th scope="row"><code>Kse</code></th><td>カーネルシムエンジン</td></tr>
 <tr><th scope="row"><code>Lsa</code></th><td>ローカルセキュリティ機関</td></tr>
 <tr><th scope="row"><code>Mm</code></th><td>メモリマネージャー</td></tr>
 <tr><th scope="row"><code>Nt</code></th><td>NT システムサービス（ユーザーモードからシステムコールを介して利用可能）</td></tr>
@@ -1212,18 +1212,18 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <tr><th scope="row"><code>Sm</code></th><td>ストアマネージャー</td></tr>
 <tr><th scope="row"><code>Tm</code></th><td>トランザクションマネージャー</td></tr>
 <tr><th scope="row"><code>Ttm</code></th><td>ターミナルタイムアウトマネージャー</td></tr>
-<tr><th scope="row"><code>Vf</code></th><td>Driver Verifier</td></tr>
+<tr><th scope="row"><code>Vf</code></th><td>ドライバー検証ツール</td></tr>
 </tbody>
 </table></div></section><section class="page" id="page-105" aria-label="page-105"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表2-5　よく使われる関数名の接頭辞（続き）</caption>
 <thead><tr><th scope="col">接頭辞</th><th scope="col">コンポーネント</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>Vsl</code></th><td>仮想セキュアモードのライブラリ</td></tr>
-<tr><th scope="row"><code>Wdi</code></th><td>Windows Diagnostic Infrastructure</td></tr>
+<tr><th scope="row"><code>Wdi</code></th><td>Windows 診断インフラストラクチャ</td></tr>
 <tr><th scope="row"><code>Wfp</code></th><td>Windows の指紋認証</td></tr>
-<tr><th scope="row"><code>Whea</code></th><td>Windows Hardware Error Architecture</td></tr>
+<tr><th scope="row"><code>Whea</code></th><td>Windows ハードウェアエラーアーキテクチャ（WHEA）</td></tr>
 <tr><th scope="row"><code>Wmi</code></th><td>Windows Management Instrumentation</td></tr>
-<tr><th scope="row"><code>Zw</code></th><td><code>Nt</code> で始まるシステムサービスに対応する、カーネルモードの呼び出し元向けの入口。引数はカーネルモードから渡されたものとして扱われ、ユーザーモード向けの検証は行われません。</td></tr>
+<tr><th scope="row"><code>Zw</code></th><td><code>Nt</code> で始まるシステムサービスに対応する、カーネルモードの呼び出し元向けのエントリポイント。前回のアクセスモードをカーネルモードに設定します。<code>Nt</code> のシステムサービスがパラメーターを検証するのは、前回のアクセスモードがユーザーモードの場合だけなので、この設定により検証が省略されます。</td></tr>
 </tbody>
 </table></div>
 <p>Windows のシステムルーチンには、名前から役割を読み取るための規則があります。一般的な形式は次のとおりです。</p>
