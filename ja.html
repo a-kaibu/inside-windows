@@ -3585,9 +3585,9 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>アイドル（1）</li>
 </ul>
 <p>Windows API の <code>SetPriorityClass</code> で、プロセスの優先度クラスをこのいずれかに変更できます。</p>
-<p>次に、プロセス内のスレッドごとに相対優先度を割り当てます。括弧内の数値は、プロセスの基本優先度に対する差分です。</p>
+<p>次に、プロセス内のスレッドごとに相対優先度を割り当てます。括弧内の数値は、原則としてプロセスの基本優先度に加える差分です。時間優先とアイドルは、後述する飽和値です。</p>
 <ul>
-<li>時間優先（15）</li>
+<li>時間優先（Time-Critical、+15）</li>
 <li>最高（2）</li>
 <li>通常より上（1）</li>
 <li>通常（0）</li>
