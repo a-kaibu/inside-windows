@@ -9341,7 +9341,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '全体が容量階層に割り当てられています。実際に確認するには、階層化ディスクから高速な SSD '
                 'ボリュームへファイルをコピーします。転送速度は回転式ディスクの性能によって異なりますが、通常は160〜250 MB/s 程度です。</p>\n'
                 '<figure><img loading="lazy" width="380" height="243" '
-                'src="assets/01b60fa2715339464912bdd1.webp" alt="階層化ボリューム（原文の図1）"></figure>',
+                'src="assets/01b60fa2715339464912bdd1.webp" alt="Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗25％、転送速度163 MB/s"></figure>',
  'p2-page-681': '<p>次に、<code>Set-FileStorageTier</code> でファイルを指定の階層に固定します。まず <code>Get-StorageTier</code> で '
                 'SSD の階層名を確認します。</p>\n'
                 '<pre><code>PS E:&#92;&gt; Get-StorageTier -MediaType SSD | FL FriendlyName, Size, '
