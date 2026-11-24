@@ -18199,3 +18199,8 @@ full_pages_ja['page-524'] = full_pages_ja['page-524'].replace(
     '<code>CreateFile</code> または <code>CreateFile2</code> に渡された、ファイルオブジェクトが参照する仮想ファイルを識別します。',
     'ファイルオブジェクトが参照する仮想ファイルを識別する名前です。<code>CreateFile</code> または <code>CreateFile2</code> に渡された名前が使われます。',
 )
+
+full_pages_ja['page-526'] = full_pages_ja['page-526'].replace(
+    'ハンドル <code>0x348</code> の情報を表示します。',
+    '画面で選択されているハンドル <code>0x348</code> の情報を表示します（原文の本文は <code>0xD4</code> と記載していますが、画面とコマンド例は <code>0x348</code> です）。',
+)
