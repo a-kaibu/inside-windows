@@ -19126,3 +19126,5 @@ full_pages_ja['p2-page-551'] = (
     .removesuffix('<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure>')
     .replace('図のように作成したデータコレクターセットが表示されます。</li>', '図のように作成したデータコレクターセットが表示されます。\n<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure></li>')
 )
+
+full_pages_ja['p2-page-552'] += '\n<p>プロバイダーの構成データを検証したあと、ETW は通常の ETW セッションと同様に、内部関数 <code>EtwpEnableTrace</code> を使ってセッション内でプロバイダーを有効にします。</p>'
