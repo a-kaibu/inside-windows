@@ -18998,3 +18998,8 @@ full_pages_ja['p2-page-500'] = full_pages_ja['p2-page-500'].replace(
     'この関数は User Manager を呼び戻して、現在ログオンしているユーザーのトークンを取得します。',
     'この関数は User Manager に問い合わせ、現在ログオンしているユーザーのトークンを取得します。',
 )
+
+full_pages_ja['p2-page-502'] = full_pages_ja['p2-page-502'].replace(
+    'セキュリティ属性 <code>WIN://ScmUserService</code> があれば',
+    'セキュリティ属性 <code>WIN://SCMUserService</code> が表示されていれば',
+)
