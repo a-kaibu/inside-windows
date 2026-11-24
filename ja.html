@@ -26720,7 +26720,7 @@ Windows ブートマネージャーは、ディスク上のハイブにもメモ
 後述の「ブートメニュー」で説明するように、起動オプションのすべてをディスク上のハイブに保存する必要はありません。</p>
 <p>ブート構成データのハイブが破損していたり、起動エントリの解析中にエラーが発生したりすると、ブートマネージャーは回復用 BCD ハイブを使って処理をやり直します。
 回復用 BCD は通常 <code>\EFI\Microsoft\Recovery\BCD</code> にあります。
-UEFI の起動変数に保存される <code>recoverybcd</code> パラメーター、または <code>Bootstat.log</code> により、通常のストアを経由せずに、回復用のストアを直接使うように設定することもできます。</p></section><section class="page" id="p2-page-829" aria-label="p2-page-829"><figure><img loading="lazy" width="689" height="384" src="assets/0448cf10bfcfae42719d4966.webp" alt="BCD オブジェクトとその配下にある起動オプションの表示例"><figcaption>図12-5　Windows ブートマネージャーの BCD オブジェクトと、対応する起動オプション（BCD 要素）</figcaption></figure>
+UEFI の起動変数に保存される <code>recoverybcd</code> パラメーター、または <code>Bootstat.log</code> により、通常のストアを経由せずに、回復用のストアを直接使うように設定することもできます。</p></section><section class="page" id="p2-page-829" aria-label="p2-page-829"><figure><img loading="lazy" width="689" height="384" src="assets/0448cf10bfcfae42719d4966.webp" alt="BCD オブジェクトとその配下にある起動オプションの表示例"><figcaption>図12-5　Windows ブートマネージャーの BCD オブジェクトと、対応する起動オプション（BCD 要素）</figcaption><p>レジストリエディターでは、ブートマネージャーの BCD オブジェクトの <code>Elements</code> の下に、要素ごとのサブキーが表示されています。選択した <code>12000002</code> の <code>Element</code> 値は文字列（<code>REG_SZ</code>）で、<code>&#92;EFI&#92;Microsoft&#92;Boot&#92;bootmgfw.efi</code> を指します。</p></figure>
 <p>ここまでで、システムはセキュアブートのポリシーを読み込み、必要ならブートメニューを表示し、ブートアプリケーションを起動できる状態になります。
 ファームウェアが信頼する署名と拒否する署名の一覧は、UEFI の認証付き変数 <code>db</code> と <code>dbx</code> にあります。
 コード整合性を担当するブートライブラリはこれらの変数を読み取って解析します。
