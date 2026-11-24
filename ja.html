@@ -19096,7 +19096,7 @@ bcdedit /set hypervisordebug on</code></pre>
 <ol>
 <li><code>WHvCreatePartition</code> API を使って、VID ライブラリ（<code>Vid.dll</code>）にパーティションを作成します。</li>
 <li><code>WHvSetPartitionProperty</code> API を使って、仮想プロセッサーの数、APIC のエミュレーションモード、発生させる <code>VMEXIT</code> の種類など、内部プロパティを設定します。</li>
-<li><code>WHvSetupPartition</code> API を使って、VID ドライバーとハイパーバイザーにパーティションを作成します。ハイパーバイザーでは、この種のパーティションを EXO パーティションと呼びます。詳しくは後述します。この API は、停止状態の仮想プロセッサーも作成します。</li>
+<li><code>WHvSetupPartition</code> API を使って、VID ドライバーとハイパーバイザーにパーティションを作成します。ハイパーバイザーでは、この種のパーティションを EXO パーティションと呼びます。詳しくは後述します。この API は、パーティションの仮想プロセッサーも中断状態で作成します。</li>
 <li><code>WHvCreateVirtualProcessor</code> API を使って、対応する仮想プロセッサーを VID ライブラリに作成します。この API はメッセージバッファーも設定し、ユーザーモードアプリケーションのアドレス空間にマップします。アプリケーションは、このバッファーを使ってハイパーバイザーや仮想 CPU を実行するスレッドと非同期に通信します。</li>
 <li><code>VirtualAlloc</code> 関数で広い仮想メモリ範囲を予約してパーティションのアドレス空間を確保し、<code>WHvMapGpaRange</code> API でハイパーバイザーにマップします。<code>VirtualAlloc</code> の詳細は第1部の第5章を参照してください。予約した仮想メモリの各範囲を個別にコミットすれば、ゲスト物理メモリを割り当てるときに範囲ごとの保護を指定できます。</li>
 </ol></section><section class="page" id="p2-page-337" aria-label="p2-page-337"><ol start="6">
