@@ -725,14 +725,28 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <blockquote><p><strong>注</strong>　Windows 10 バージョン1607には、開発者向けベータ版の Windows Subsystem for Linux（WSL）が含まれています。WSL の仕組みは、ここで説明する環境サブシステムとは異なります。本章の後半で WSL と関連する Pico プロバイダーを説明します。Pico プロセスについては第3章「プロセスとジョブ」を参照してください。</p></blockquote>
 <p>図2-1では、サービスプロセスとユーザープロセスの下に、サブシステム DLL の箱があります。Windows のユーザーアプリケーションは、1つ以上のサブシステム DLL を介して OS のネイティブサービスを呼び出します。DLL は文書化された関数を、主に <code>Ntdll.dll</code> に実装されたネイティブシステムサービスの呼び出しに変換します。ネイティブサービスの大半は文書化されていません。変換の際には、ユーザープロセスを処理する環境サブシステムのプロセスにメッセージを送る場合もあります。</p>
 <p>Windows のカーネルモードコンポーネントには、次のようなものがあります。</p>
-<ul><li><strong>エグゼクティブ</strong>　メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク、プロセス間通信など、OS の基本サービスを備えます。</li></ul></section><section class="page" id="page-66" aria-label="page-66"><p>一方、カーネルモードのシステムコンポーネント群は以下の要素で構成されています：</p>
-<ul>
-  <li><strong>Windows エグゼクティブ（Executive）</strong>：OSの上位レベルの基盤機能を提供するモジュール群です。メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク通信、プロセス間通信（ALPC）などが含まれます。</li>
-  <li><strong>Windows カーネル（Kernel）</strong>：CPUに最も近い低レベルの制御を受け持ちます。スレッドスケジューリング、割り込みおよび例外のディスパッチ、マルチプロセッサ同期（スピンロック等）を提供し、エグゼクティブが上位構造を構築するための基礎オブジェクトを提供します。</li>
-  <li><strong>デバイスドライバ（Device Drivers）</strong>：ハードウェアを直接制御するドライバ（ストレージ、ネットワークカード、グラフィックカード等）や、ファイルシステムドライバ、ネットワークプロトコルスタック、フィルタドライバなどのソフトウェアドライバが含まれます。</li>
-  <li><strong>ハードウェア抽象化レイヤー（HAL: Hardware Abstraction Layer）</strong>：マザーボードやチップセットの差異、割り込みコントローラ（APIC等）の差異を隠蔽し、カーネルやドライバに対して統一された抽象ハードウェアインターフェースを提供する独立した低レベルモジュール（<code>Hal.dll</code>）です。</li>
-  <li><strong>ウィンドウ管理・グラフィックスサブシステム（USER/GDI）</strong>：GUIウィンドウの描画、メニュー、ダイアログ、マウスやキーボードの入力イベント配送を行うモジュールです（<code>Win32k.sys</code>）。Windows NT 4.0 においてパフォーマンス向上のためユーザーモードからカーネルモードへと移行されました。</li>
-</ul></section><section class="page" id="page-67" aria-label="page-67"><h3 id="移植性-Portability">移植性（Portability）</h3>
+<ul><li><strong>エグゼクティブ</strong>　メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク、プロセス間通信など、OS の基本サービスを備えます。</li></ul></section><section class="page" id="page-66" aria-label="page-66"><ul>
+<li><strong>Windows カーネル</strong>　スレッドのスケジューリング、割り込みと例外のディスパッチ、マルチプロセッサー間の同期など、OS の低レベル機能を実装します。エグゼクティブのほかの部分が上位の機能を実装するために使うルーチンと基本オブジェクトも提供します。</li>
+<li><strong>デバイスドライバー</strong>　ユーザーからの I/O 関数呼び出しを個別のハードウェアへの I/O 要求に変換するドライバーと、ファイルシステムやネットワークのドライバーなど、特定のハードウェアを直接扱わないドライバーが含まれます。</li>
+<li><strong>ハードウェア抽象化レイヤー（HAL）</strong>　マザーボードの違いなど、プラットフォーム固有の差異を吸収し、カーネル、デバイスドライバー、エグゼクティブのほかの部分に影響が及ばないようにします。</li>
+<li><strong>ウィンドウシステムとグラフィックスシステム</strong>　ウィンドウ、ユーザーインターフェイスのコントロール、描画などの処理を実装します。Windows の USER と GDI の機能がこれにあたります。</li>
+<li><strong>ハイパーバイザー層</strong>　この環境にあるコンポーネントはハイパーバイザーそのもので、ドライバーやほかのモジュールはありません。内部には複数の層とサービスがあり、専用のメモリマネージャー、仮想プロセッサーのスケジューラー、割り込みとタイマーの管理、同期ルーチン、パーティション（仮想マシンのインスタンス）の管理、パーティション間通信（IPC）などが含まれます。</li>
+</ul>
+<p>表2-1に、Windows の主要コンポーネントのファイル名を示します。本書では一部のシステムファイルを名前で参照します。各コンポーネントの詳細は、本章の後半と以降の章で説明します。</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
+<caption>表2-1　Windows の主要なシステムファイル</caption>
+<thead><tr><th scope="col">ファイル名</th><th scope="col">コンポーネント</th></tr></thead>
+<tbody>
+<tr><td><code>Ntoskrnl.exe</code></td><td>エグゼクティブとカーネル</td></tr>
+<tr><td><code>Hal.dll</code></td><td>HAL</td></tr>
+<tr><td><code>Win32k.sys</code></td><td>Windows サブシステム（GUI）のカーネルモード部分</td></tr>
+<tr><td><code>Hvix64.exe</code>（Intel）、<code>Hvax64.exe</code>（AMD）</td><td>ハイパーバイザー</td></tr>
+<tr><td><code>\SystemRoot\System32\Drivers</code> 内の <code>.sys</code> ファイル</td><td>DirectX、ボリュームマネージャー、TCP/IP、TPM、ACPI サポートなどの主要ドライバー</td></tr>
+<tr><td><code>Ntdll.dll</code></td><td>内部サポート関数と、エグゼクティブの関数へシステムサービスを渡すディスパッチスタブ</td></tr>
+<tr><td><code>Kernel32.dll</code>、<code>Advapi32.dll</code>、<code>User32.dll</code>、<code>Gdi32.dll</code></td><td>Windows サブシステムの主要 DLL</td></tr>
+</tbody>
+</table></div>
+<p>各コンポーネントの詳細に入る前に、Windows カーネルの設計の基本を確認します。まず、複数のハードウェアアーキテクチャへの移植性をどのように確保しているかを見ていきます。</p></section><section class="page" id="page-67" aria-label="page-67"><h3 id="移植性-Portability">移植性（Portability）</h3>
 <p>Windows は最初から多様な CPU アーキテクチャ上で動作するように設計されました。最初の Windows NT 3.1（1993年）は x86 と MIPS の2つのアーキテクチャをサポートして出荷され、直後に DEC Alpha AXP への対応が追加されました（Alpha版は64ビットCPU上で32ビットモードで動作）。その後 Windows NT 3.51 で Motorola PowerPC が追加されました。市場動向の変化により MIPS、PowerPC、Alpha のサポートは順次終了しましたが、Windows はその優れた移植性設計により、後の 64ビット時代において <strong>Intel Itanium（IA-64）</strong>、<strong>x64（AMD64 / Intel 64）</strong>、そしてモバイル・組み込みからPCにまで広がる <strong>ARM / ARM64</strong> へと迅速かつ極めてスムーズに適応することができました。</p>
 
 <p>Windows がこれほど高い移植性を実現できている理由は、以下の2つの決定的な設計指針にあります：</p>
