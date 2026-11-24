@@ -15067,7 +15067,8 @@ NT カーネルは、対象プロセスにネイティブ版と CHPE 版の Ntdl
 これを確認するには、<code>lm</code> コマンドで現在読み込まれているモジュールを列挙し、<code>.f+</code> コマンドでスタックの次のフレームに移動します。
 逆アセンブリウィンドウに <code>LdrpLoadWow64</code> ルーチンの呼び出しが表示されます。</p>
 <pre>00007ffb`bd47dde4 97fed31b bl
-                                         ntdll!LdrpLoadWow64 (00007ffb`bd432a50)</pre></section><section class="page" id="p2-page-155" aria-label="p2-page-155"><p><code>g</code> コマンドまたは F5 キーで実行を再開します。
+                                         ntdll!LdrpLoadWow64 (00007ffb`bd432a50)</pre>
+<figure><img loading="lazy" width="449" height="401" src="assets/bc67b7a486765dcdbe74de13.webp" alt="WOW64 の読み込みに使うルーチンを逆アセンブリウィンドウで確認"><figcaption>WinDbg で WOW64 の読み込みを確認</figcaption></figure></section><section class="page" id="p2-page-155" aria-label="p2-page-155"><p><code>g</code> コマンドまたは F5 キーで実行を再開します。
 プロセスのアドレス空間に複数のモジュールが読み込まれ、今度は x86 のコンテキストで別のブレークポイントに達します。
 <code>k</code> でもう一度スタックを表示すると、新しい列が加わり、デバッガーのプロンプトにも <code>x86</code> と表示されます。</p>
 <pre>0:000:x86&gt; k
@@ -15902,7 +15903,8 @@ WinObjEx64 はより多くのオブジェクト型に対応しているため、
 <li>WinObj や WinObjEx64 のほかに、本章の「実験：開いているハンドルを表示する」で紹介した Process Explorer や、同様の表示機能を持つ Process Hacker でも、プロセスのハンドルテーブルを確認できます。
 <code>Explorer.exe</code> のハンドルテーブルを開くと、<code>\Sessions\n\BaseNamedObjects</code> ディレクトリを指す Directory オブジェクトのハンドルが見つかります。
 <code>n</code> は起動時に決まるセッション番号です。セッションごとの名前空間については後で説明します。
-そのハンドルをダブルクリックして［Security］タブを選ぶと、先ほどと同様のダイアログが表示されます。この例では、より多くのユーザーと付与された権限が表示されます。</li>
+そのハンドルをダブルクリックして［Security］タブを選ぶと、先ほどと同様のダイアログが表示されます。この例では、より多くのユーザーと付与された権限が表示されます。
+<figure><img loading="lazy" width="361" height="379" src="assets/c4209e6737bab7c8b016994d.webp" alt="オブジェクトに対してユーザーごとに付与されたアクセス権の一覧"><figcaption>オブジェクトのセキュリティ情報の表示例</figcaption></figure></li>
 <li>AccessChk の <code>-o</code> オプションでも、任意のオブジェクトのセキュリティ情報を照会できます。
 次の出力はその例です。AccessChk ではオブジェクトの整合性レベルも確認できます。
 整合性レベルとセキュリティ参照モニターについては第1部の第7章を参照してください。</li>
@@ -16261,14 +16263,12 @@ Windows サブシステムの DLL は、Windows アプリケーションが渡�
 アクティブなセッションごとに、そのセッション ID を名前にしたサブディレクトリが表示されます。
 いずれかを開くと、<code>DosDevices</code>、<code>Windows</code>、<code>AppContainerNamedObjects</code>、<code>BaseNamedObjects</code> が表示されます。
 これらは、セッションのローカル名前空間を構成するサブディレクトリです。</p>
-<figure>
-<img loading="lazy" width="770" height="953" src="assets/70885e2f32f43f1e6289c638.webp" alt="WinObj のセッションディレクトリと Process Explorer のハンドル一覧を示す原本ページ">
-<figcaption>WinObj に表示されたセッションのローカル名前空間と、Process Explorer に表示されたウィンドウステーションのハンドル</figcaption>
-</figure>
+<figure><img loading="lazy" width="577" height="310" src="assets/f32682f8359795c2cfce6bc8.webp" alt="WinObj のツリーに表示されたセッションのサブディレクトリ"><figcaption>WinObj に表示されたセッションのローカル名前空間</figcaption></figure>
 <p>次に Process Explorer を起動し、自分のセッションのプロセス（たとえば <code>Explorer.exe</code>）を選択します。
 ［View］→［Lower Pane View］→［Handles］の順に選び、ハンドルテーブルを表示します。
 <code>\Sessions\n</code> の下にある <code>\Windows\WindowStations\WinSta0</code> へのハンドルが表示されます。
-ここで <code>n</code> はセッション ID です。</p></section><section class="page" id="p2-page-201" aria-label="p2-page-201"><h4 id="オブジェクトのフィルタリング">オブジェクトのフィルタリング</h4>
+ここで <code>n</code> はセッション ID です。</p>
+<figure><img loading="lazy" width="559" height="229" src="assets/ec4e447293f86b449d95fb94.webp" alt="Process Explorer が表示する WinSta0 へのハンドル"><figcaption>Process Explorer に表示されたウィンドウステーションのハンドル</figcaption></figure></section><section class="page" id="p2-page-201" aria-label="p2-page-201"><h4 id="オブジェクトのフィルタリング">オブジェクトのフィルタリング</h4>
 <p>Windows のオブジェクトマネージャーには、ファイルシステムのミニフィルターや、第10章で説明するレジストリコールバックに似たフィルタリングモデルがあります。
 既存のフィルターと同じく、実行順を表す高度（altitude）を使えるため、複数のドライバーがフィルタースタック内の適切な位置でオブジェクトマネージャーのイベントを処理できます。
 ドライバーは <code>NtOpenThread</code> や <code>NtOpenProcess</code> などの呼び出しを捕捉し、プロセスマネージャーに要求されるアクセスマスクを変更することもできます。
