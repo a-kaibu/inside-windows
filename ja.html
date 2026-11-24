@@ -5540,7 +5540,7 @@ E0 size of optional header
 Executable
 Application can handle large (&gt;2GB) addresses
 32 bit word machine</pre>
-<p><code>VirtualAlloc</code>、<code>VirtualAllocEx</code>、<code>VirtualAllocExNuma</code> は、既定で低い仮想アドレスから割り当てを始め、順に高い方へ進みます。大量のメモリを確保するか、仮想アドレス空間が大きく断片化しない限り、プロセスに非常に高い仮想アドレスが返ることはありません。テストで高いアドレスから割り当てるには、<code>VirtualAlloc*</code> に <code>MEM_TOP_DOWN</code> を指定します。レジストリキー <code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management</code> に DWORD 値 <code>AllocationPreference</code> を作り、<code>0x100000</code> を設定する方法もあります。</p>
+<p><code>VirtualAlloc</code>、<code>VirtualAllocEx</code>、<code>VirtualAllocExNuma</code> は、既定では低い仮想アドレスから高い方へ向かって、割り当てに使える範囲を探します。大量のメモリを確保するか、仮想アドレス空間が大きく断片化しない限り、プロセスに非常に高い仮想アドレスが返ることはありません。テストで高いアドレスから割り当てるには、<code>VirtualAlloc*</code> に <code>MEM_TOP_DOWN</code> を指定します。レジストリキー <code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management</code> に DWORD 値 <code>AllocationPreference</code> を作り、<code>0x100000</code> を設定する方法もあります。</p>
 <p>次の出力は、<code>increaseuserva</code> を指定せずに起動した32ビット版 Windows 上で、先の実験で使った TestLimit を実行し、メモリを予約したまま解放しなかったときのものです。</p>
 <pre>Testlimit.exe -r
 Testlimit v5.24 - test Windows limits
@@ -5548,7 +5548,7 @@ Copyright (C) 2012-2015 Mark Russinovich
 Sysinternals - www.sysinternals.com
 Process ID: 5500
 Reserving private bytes (MB)...
-Leaked 1978 MB of reserved memory (1940 MB total leaked). Lasterror: 8</pre></section><section class="page" id="page-369" aria-label="page-369"><p>プロセスは、2 GBの上限に近い領域を予約できました。通常のプロセスでは、EXE のコードや各種 DLL がすでにアドレス空間にマップされているため、アドレス空間全体をまとめて予約することはできません。</p>
+Leaked 1978 MB of reserved memory (1940 MB total leaked). Lasterror: 8</pre></section><section class="page" id="page-369" aria-label="page-369"><p>プロセスは、2 GBの上限に近い領域を予約できました。通常のプロセスでは、EXE のコードや各種 DLL がすでにアドレス空間にマップされているため、TestLimit が予約できる容量は、ユーザーアドレス空間の上限を下回ります。</p>
 <p>同じシステムでユーザーアドレス空間を3 GBに切り替えるには、管理者権限で開いたコマンドプロンプトで次を実行します。</p>
 <pre>C:\WINDOWS\system32&gt;bcdedit /set increaseuserva 3072
 The operation completed successfully.</pre>
