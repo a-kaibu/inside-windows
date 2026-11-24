@@ -19169,3 +19169,8 @@ full_pages_ja['p2-page-567'] = (
     .removesuffix('\n<figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"></figure>')
     .replace('<p>図10-38 コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</p>', '<figure><img loading="lazy" width="689" height="442" src="assets/0b99fb17298367bbb6131b71.webp" alt="信頼性モニターに表示された障害履歴と、アプリケーションの障害レポートの詳細"><figcaption>図10-38\u3000コントロールパネルの「セキュリティとメンテナンス」にある信頼性モニター。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-571'] = full_pages_ja['p2-page-571'].replace(
+    '解決策を確認するようユーザーに求める間隔',
+    '解決策の有無を確認するようユーザーに促す通知の間隔',
+)

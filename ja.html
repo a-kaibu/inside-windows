@@ -21706,7 +21706,7 @@ Since starts the system has gained 0x00017A00 pages (378 MB).</code></pre>
 <tr><td><code>LoggingDisabled</code></td><td>ログに記録するか</td><td>1で無効</td></tr>
 <tr><td><code>MaxArchiveCount</code></td><td>アーカイブの最大ファイル数</td><td>1〜5000</td></tr>
 <tr><td><code>MaxQueueCount</code></td><td>キューの最大件数</td><td>1〜500</td></tr>
-<tr><td><code>QueuePesterInterval</code></td><td>解決策を確認するようユーザーに求める間隔</td><td>日数</td></tr>
+<tr><td><code>QueuePesterInterval</code></td><td>解決策の有無を確認するようユーザーに促す通知の間隔</td><td>日数</td></tr>
 </tbody></table></div>
 <p><code>-u</code> で起動した Windows 障害報告プロセスは、クラッシュデータを含む共有メモリセクションを再びマップし、例外レコードと記述子を特定して、先に作成したスナップショットを取得します。スナップショットがなければ、<code>WerFault</code> は一時停止中の障害プロセスを直接調べます。まず、サービス、ネイティブ、標準、シェルのどの種類のプロセスかを判定します。そのプロセスが <code>SetErrorMode</code> でハードエラーを報告しないよう指定していれば、処理を打ち切り、報告を作成しません。それ以外の場合は、<code>HKLM&#92;SOFTWARE&#92;Microsoft&#92;Windows NT&#92;CurrentVersion</code> 配下の <code>AeDebug</code> キー（保護プロセスでは <code>AeDebugProtected</code>）を参照し、既定の事後デバッガーが有効かどうかを調べます。表10-20に両キーの設定値を示します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表10-20 AeDebug と AeDebugProtected の有効なレジストリ値</caption><thead><tr><th>値の名前</th><th>意味</th><th>データ</th></tr></thead><tbody>
