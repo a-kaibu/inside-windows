@@ -20135,7 +20135,7 @@ lkd&gt; k
 <h4 id="HKEY_CURRENT_CONFIG">HKEY_CURRENT_CONFIG</h4>
 <p><code>HKEY_CURRENT_CONFIG</code> は、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Hardware Profiles&#92;Current</code> にある現在のハードウェアプロファイルへのリンクです。Windows ではすでにハードウェアプロファイルのサポートが終了していますが、このキーの存在を前提とする旧来のアプリケーションとの互換性のため、キーは残されています。</p></section><section class="page" id="p2-page-432" aria-label="p2-page-432"><h4 id="HKEY_PERFORMANCE_DATA-と-HKEY_PERFORMANCE_TEXT">HKEY_PERFORMANCE_DATA と HKEY_PERFORMANCE_TEXT</h4>
 <p>Windows では、OS コンポーネントとサーバーアプリケーションのどちらのパフォーマンスカウンター値にも、レジストリを介してアクセスできます。通常のレジストリ API でリモートアクセスできるため、リモートのパフォーマンス監視にも同じ仕組みを使えます。</p>
-<p>パフォーマンスカウンター情報を直接取得するには、<code>HKEY_PERFORMANCE_DATA</code> という特殊なキーを開いて、その配下の値を照会します。このキーはレジストリエディターには表示されず、<code>RegQueryValueEx</code> などの Windows レジストリ関数を使ってプログラムからアクセスします。パフォーマンス情報の実体は、パフォーマンスデータプロバイダーが返すリアルタイムのデータです。レジストリ関数はこのキーへのアクセスをそのデータに振り向けます。</p>
+<p>パフォーマンスカウンター情報を直接取得するには、<code>HKEY_PERFORMANCE_DATA</code> という特殊なキーを開いて、その配下の値を照会します。このキーはレジストリエディターには表示されず、<code>RegQueryValueEx</code> などの Windows レジストリ関数を使ってプログラムからアクセスします。パフォーマンス情報はレジストリに格納されません。パフォーマンスデータプロバイダーが、その時点のデータを返します。レジストリ関数はこのキーへのアクセスをそのデータに振り向けます。</p>
 <p><code>HKEY_PERFORMANCE_TEXT</code> も特殊なキーで、パフォーマンスカウンターの名前や説明などの情報を取得するために使います。特殊なレジストリ値 <code>Counter</code> を照会するとカウンター名を取得でき、<code>Help</code> を照会すると各カウンターの説明を取得できます。このキーが返す情報は米国英語です。<code>HKEY_PERFORMANCE_NLSTEXT</code> では、OS が使用している言語でカウンター名と説明を取得できます。</p>
 <p>Performance Data Helper API（<code>Pdh.dll</code>）が提供する PDH 関数を使って、パフォーマンスカウンター情報にアクセスすることもできます。図10-2に、パフォーマンスカウンター情報へのアクセスに関わるコンポーネントを示します。</p>
 <figure><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
