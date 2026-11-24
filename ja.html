@@ -20105,7 +20105,7 @@ lkd&gt; k
 <p><code>Runas</code> コマンドを使い、現在このマシンにログオンしていないアカウントでプロセスを起動すると、プロファイルがレジストリに読み込まれ、その後アンロードされる様子を観察できます。新しいプロセスの実行中に Regedit を開き、<code>HKEY_USERS</code> 配下に読み込まれたプロファイルのキーを確認します。プロセスを終了してから Regedit で <kbd>F5</kbd> キーを押して表示を更新すると、そのプロファイルのキーは表示されなくなるはずです。</p>
 <figure><img loading="lazy" width="648" height="374" src="assets/d4a9cd111b5630c3e911f0f8.webp" alt="レジストリエディターで HKEY_USERS 配下のキーを確認する画面"><figcaption>レジストリエディターで読み込まれたプロファイルを確認する。</figcaption></figure>
 <h4 id="HKEY_CLASSES_ROOT">HKEY_CLASSES_ROOT</h4>
-<p><code>HKCR</code> には、ファイルの拡張子の関連付け、COM クラスの登録、ユーザーアカウント制御（UAC）で仮想化されたレジストリのルートという3種類の情報が含まれます。UAC について詳しくは第1部第7章を参照してください。登録済みのファイル拡張子ごとにキーがあり、多くのキーには、その拡張子が表すファイルの種類の関連付け情報を保持する <code>HKCR</code> 内の別のキーを指す <code>REG_SZ</code> 値があります。</p>
+<p><code>HKCR</code> には、ファイルの拡張子の関連付け、COM クラスの登録、ユーザーアカウント制御（UAC）で仮想化されたレジストリのルートという3種類の情報が含まれます。UAC について詳しくは第1部第7章を参照してください。登録済みのファイル拡張子には、それぞれキーがあります。多くの場合、そのキーの <code>REG_SZ</code> 値が、ファイルの種類とアプリケーションの関連付け情報を格納する <code>HKCR</code> 内の別のキーを指します。</p>
 <p>たとえば、<code>HKCR&#92;.xls</code> は Microsoft Office Excel ファイルの情報を指します。既定値の <code>Excel.Sheet.8</code> は、Excel の COM オブジェクトのインスタンスを作成するときに使われます。ほかのキーには、システムに登録されたすべての COM オブジェクトの構成情報があります。UAC で仮想化されたレジストリは <code>VirtualStore</code> キーにあり、<code>HKCR</code> が保持するほかの種類のデータとは独立しています。</p>
 <p><code>HKEY_CLASSES_ROOT</code> 配下のデータは、次の2か所から取得されます。</p>
 <ul>

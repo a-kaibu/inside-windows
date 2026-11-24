@@ -18802,3 +18802,8 @@ full_pages_ja['p2-page-426'] = full_pages_ja['p2-page-426'].replace(
     '<td><code>HKLM&#92;SOFTWARE&#92;Classes</code> と <code>HKEY_USERS&#92;&lt;SID&gt;&#92;SOFTWARE&#92;Classes</code> を統合したビュー',
     '<td>直接のリンクではなく、<code>HKLM&#92;SOFTWARE&#92;Classes</code> と <code>HKEY_USERS&#92;&lt;SID&gt;&#92;SOFTWARE&#92;Classes</code> を統合したビュー',
 )
+
+full_pages_ja['p2-page-428'] = full_pages_ja['p2-page-428'].replace(
+    '登録済みのファイル拡張子ごとにキーがあり、多くのキーには、その拡張子が表すファイルの種類の関連付け情報を保持する <code>HKCR</code> 内の別のキーを指す <code>REG_SZ</code> 値があります。',
+    '登録済みのファイル拡張子には、それぞれキーがあります。多くの場合、そのキーの <code>REG_SZ</code> 値が、ファイルの種類とアプリケーションの関連付け情報を格納する <code>HKCR</code> 内の別のキーを指します。',
+)
