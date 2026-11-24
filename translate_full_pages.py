@@ -18475,3 +18475,9 @@ full_pages_ja['p2-page-45'] = full_pages_ja['p2-page-45'].replace(
     '<figcaption>図8-6　メモリアクセス時間の測定結果</figcaption></figure>\n'
     '<p>図8-6は、',
 )
+
+
+full_pages_ja['page-272'] = full_pages_ja['page-272'].replace(
+    '<h5>Direct Switch</h5>',
+    '<h5>同じプロセッサ上でのスレッドの直接切り替え（Direct Switch）</h5>',
+)
