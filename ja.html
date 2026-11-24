@@ -10026,8 +10026,8 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <figure><img loading="lazy" width="638" height="188" src="assets/3f18bda340d332f3a32d56e9.webp" alt="Writers グループへの拒否 ACE が先に評価されるアクセス判定の例"><figcaption>図7-9　アクセス判定の例</figcaption></figure></section><section class="page" id="page-681" aria-label="page-681"><p>プロセスがハンドルを使うたびに DACL を評価するのは非効率です。そのため、SRM がこのアクセスチェックを行うのは、ハンドルを開くときだけです。プロセスがいったんハンドルを開くと、その後でオブジェクトの DACL を変更しても、ハンドルに付与済みのアクセス権は取り消されません。また、カーネルモードのコードはポインターでオブジェクトにアクセスするため、オペレーティングシステムがこの方法でオブジェクトを使う際には、アクセスチェックが行われません。Windows エグゼクティブは、セキュリティ上、自身と読み込み済みのすべてのドライバーを信頼しています。</p>
 <p>所有者に DACL の変更が許可される通常の動作では、ユーザーが自分の所有するオブジェクトにアクセスする手段が残ります。たとえば、オブジェクトの DACL が空でアクセス権が一切付与されていなくても、所有者は DACL の変更権を要求してオブジェクトを開き、必要なアクセス許可を含む新しい DACL を設定できます。</p>
 <h4 id="GUI-のアクセス許可エディターでの注意点">GUI のアクセス許可エディターでの注意点</h4>
-<p>ファイル、レジストリキー、Active Directory のオブジェクトなど、セキュリティ保護可能なオブジェクトの設定を GUI のアクセス許可エディターで変更する際、メインのセキュリティダイアログの表示順には注意が必要です。たとえば、Everyone グループにフルコントロールを許可し、Administrator グループにフルコントロールを拒否する場合を考えます。ダイアログで Everyone の行が先に表示されていると、Everyone の許可 ACE が Administrator の拒否 ACE より前にあるように見えます。エディターは、ACL をオブジェクトに適用する際に、拒否 ACE を許可 ACE より前に配置します。</p>
-<figure><img loading="lazy" width="451" height="322" src="assets/5bd933720f3024873816ed38.webp" alt="Everyone と Administrator のアクセス許可を表示するセキュリティダイアログ"></figure>
+<p>ファイル、レジストリキー、Active Directory のオブジェクトなど、セキュリティ保護可能なオブジェクトの設定を GUI のアクセス許可エディターで変更する際、メインのセキュリティダイアログの表示順には注意が必要です。たとえば、Everyone グループにフルコントロールを許可し、Administrators グループにフルコントロールを拒否する場合を考えます。ダイアログで Everyone の行が先に表示されていると、Everyone の許可 ACE が Administrators の拒否 ACE より前にあるように見えます。エディターは、ACL をオブジェクトに適用する際に、拒否 ACE を許可 ACE より前に配置します。</p>
+<figure><img loading="lazy" width="451" height="322" src="assets/5bd933720f3024873816ed38.webp" alt="Everyone と Administrators のアクセス許可を表示するセキュリティダイアログ"></figure>
 <p>「セキュリティの詳細設定」ダイアログの「アクセス許可」タブには、DACL 内の ACE の順序が表示されます。複雑な DACL では、このダイアログでも読み取りにくい場合があります。複数のアクセス権に対する拒否 ACE の後に、別の種類のアクセス権に対する許可 ACE が続くことがあるためです。</p></section><section class="page" id="page-682" aria-label="page-682"><figure><img loading="lazy" width="479" height="332" src="assets/ee824c5e490249f009a6cdfe.webp" alt="セキュリティの詳細設定でアクセス許可エントリの順序を表示した例"></figure>
 <p>特定のユーザーやグループがオブジェクトに対して持つアクセス権を確かめるには、そのユーザーやグループのメンバーに実際にアクセスしてもらうか、「有効なアクセス」タブで確認します。オブジェクトの「プロパティ」から「詳細設定」を開くと、このタブが表示されます。確認したいユーザーやグループの名前を入力すると、そのオブジェクトに対して許可されているアクセス権を確認できます。</p>
 <figure><img loading="lazy" width="480" height="449" src="assets/269546856a60ed8deb0c9899.webp" alt="有効なアクセスのタブで指定ユーザーの権限を確認する例"></figure></section><section class="page" id="page-683" aria-label="page-683"><h3 id="動的アクセス制御">動的アクセス制御</h3>
@@ -10099,7 +10099,7 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <caption>表7-11　特権</caption>
 <thead><tr><th scope="col">特権</th><th scope="col">ユーザー権利</th><th scope="col">用途</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>SeAssignPrimaryTokenPrivilege</code></th><td>プロセスレベルトークンの置き換え</td><td><code>NtSetInformationJobObject</code> など、プロセスのトークンを設定するコンポーネントが確認します。</td></tr>
+<tr><th scope="row"><code>SeAssignPrimaryTokenPrivilege</code></th><td>プロセスのプライマリトークンの置き換え</td><td><code>NtSetInformationJobObject</code> など、プロセスのトークンを設定するコンポーネントが確認します。</td></tr>
 <tr><th scope="row"><code>SeAuditPrivilege</code></th><td>セキュリティ監査の生成</td><td><code>ReportEvent</code> API でセキュリティイベントログのイベントを生成するときに必要です。</td></tr>
 </tbody>
 </table></div></section><section class="page" id="page-688" aria-label="page-688"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
