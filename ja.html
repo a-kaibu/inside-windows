@@ -5607,7 +5607,7 @@ Image: LogonUI.exe
 PROCESS dc08e900  SessionId: 1  Cid: 037c    Peb: 00d8b000  ParentCid: 022c
 DirBase: 179c5180  ObjectTable: dc249640  HandleCount: &lt;Data Not Accessible&gt;
 Image: dwm.exe</pre>
-<p>セッションの詳細を確認するには、上の出力にある <code>_MM_SESSION_SPACE</code> のアドレスを指定し、次のように <code>dt</code> コマンドで構造体の内容を表示します。</p>
+<p>セッションの詳細を確認するには、<code>!sprocess</code> の出力でセッション番号の直後に表示される <code>_MM_SESSION_SPACE</code> のアドレスを指定し、次のように <code>dt</code> コマンドで構造体の内容を表示します。</p>
 <pre>lkd&gt; dt nt!_mm_session_space d9306000
 +0x000 ReferenceCount   : 0n4
 +0x004 u                : &lt;unnamed-tag&gt;
