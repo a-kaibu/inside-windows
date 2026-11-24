@@ -26542,7 +26542,7 @@ BCD エントリには、Bootmgr、Winload、その他の起動コンポーネ�
 </tbody>
 </table></div></section><section class="page" id="p2-page-821" aria-label="p2-page-821"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表12-2　Windows ブートマネージャー（Bootmgr）の BCD オプション（続き）</caption>
-<thead><tr><th>オプション名</th><th>値の型</th><th>BCD 要素コード<sup>1</sup></th><th>意味</th></tr></thead>
+<thead><tr><th scope="col">オプション名</th><th scope="col">値の型</th><th>BCD 要素コード<sup>1</sup></th><th scope="col">意味</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>hiberboot</code></th><td>真偽値</td><td><code>HIBERBOOT</code></td><td>今回の起動がハイブリッドブートだったかを示します。</td></tr>
 <tr><th scope="row"><code>fverecoveryurl</code></th><td>文字列</td><td><code>FVE_RECOVERY_URL</code></td><td>BitLocker の回復用 URL を指定します。</td></tr>
@@ -26553,11 +26553,11 @@ BCD エントリには、Bootmgr、Winload、その他の起動コンポーネ�
 <p><sup>1</sup> Windows ブートマネージャーの BCD 要素コードには、すべて <code>BCDE_BOOTMGR_TYPE</code> が先頭に付きます。表では紙幅の都合で省略しています。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表12-3　ブートアプリケーション用の BCD ライブラリオプション（全オブジェクト型で有効）</caption>
-<thead><tr><th>オプション名</th><th>値の型</th><th>BCD 要素コード<sup>2</sup></th><th>意味</th></tr></thead>
+<thead><tr><th scope="col">オプション名</th><th scope="col">値の型</th><th>BCD 要素コード<sup>2</sup></th><th scope="col">意味</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>advancedoptions</code></th><td>真偽値</td><td><code>DISPLAY_ADVANCED_OPTIONS</code></td><td>偽の場合、起動に失敗すると既定の動作として自動回復コマンドの起動エントリを実行します。真の場合はエラーを表示し、その起動エントリに対応する詳細ブートオプションメニューを提示します。これは F8 キーを押すのと同じです。</td></tr>
 <tr><th scope="row"><code>avoidlowmemory</code></th><td>整数</td><td><code>AVOID_LOW_PHYSICAL_MEMORY</code></td><td>ブートローダーが指定値未満の物理アドレスをできるだけ使わないようにします。ISA など、16 MB 未満のメモリだけを利用または参照できる旧式のデバイスに必要な場合があります。</td></tr>
-<tr><th scope="row"><code>badmemoryaccess</code></th><td>真偽値</td><td><code>ALLOW_BAD_MEMORY_ACCESS</code></td><td>不良ページリストのメモリページを強制的に使います。ページリストの詳細は Part 1 の第5章「メモリ管理」を参照してください。</td></tr>
+<tr><th scope="row"><code>badmemoryaccess</code></th><td>真偽値</td><td><code>ALLOW_BAD_MEMORY_ACCESS</code></td><td>不良ページリストのメモリページを強制的に使います。ページリストの詳細は 第1巻の第5章「メモリ管理」を参照してください。</td></tr>
 <tr><th scope="row"><code>badmemorylist</code></th><td>ページフレーム番号（PFN）の配列</td><td><code>BAD_MEMORY_LIST</code></td><td>RAM の故障によって不良と判明している物理ページの一覧を指定します。</td></tr>
 <tr><th scope="row"><code>baudrate</code></th><td>ボーレート（bps）</td><td><code>DEBUGGER_BAUDRATE</code></td><td>リモートのカーネルデバッガーのホストがシリアルポート経由で接続するときの、既定のボーレート（19200）を上書きします。</td></tr>
 <tr><th scope="row"><code>bootdebug</code></th><td>真偽値</td><td><code>DEBUGGER_ENABLED</code></td><td>ブートローダーのリモートデバッグを有効にします。有効にすると Kd.exe や WinDbg.exe からブートローダーに接続できます。</td></tr>
