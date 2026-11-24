@@ -18898,3 +18898,8 @@ full_pages_ja['p2-page-461'] = full_pages_ja['p2-page-461'].replace(
     '未指定の場合、I/O マネージャーは',
     'ドライバーのパスが未指定の場合、I/O マネージャーは',
 )
+
+full_pages_ja['p2-page-463'] = full_pages_ja['p2-page-463'].replace(
+    '現在ログオンしているユーザーの ID で実行されるサービスです。',
+    '現在ログオンしているユーザーとして実行されるサービスです。',
+)
