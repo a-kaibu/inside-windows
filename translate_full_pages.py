@@ -18164,3 +18164,8 @@ full_pages_ja['page-504'] = full_pages_ja['page-504'].replace(
     '呼び出し、処理に使うハンドルを取得します。',
     '呼び出し、実際に使うハンドルを取得します。このハンドルは上位 API の実装内部で管理します。',
 )
+
+full_pages_ja['page-507'] = full_pages_ja['page-507'].replace(
+    '遅延プロシージャ呼び出し（DPC）は、IRQL 2（<code>DISPATCH_LEVEL</code>）での関数呼び出しを表すオブジェクトです。',
+    '遅延プロシージャ呼び出し（DPC）は、IRQL 2（<code>DPC_LEVEL</code>。<code>DISPATCH_LEVEL</code> と同じ値）での関数呼び出しを表すオブジェクトです。',
+)
