@@ -2352,7 +2352,7 @@ kernelbase.dll by API set
 apiquery-l1-1-0.dll was redirected to C:\WINDOWS\SYSTEM32\ntdll.dll by API set</pre>
 <ol start="4">
 <li>やがて、ローダーがデバッガーの接続を確認してブレークポイントを発生させる箇所で、実行が中断します。<kbd>g</kbd> で実行を続けると、ローダーのメッセージがさらに表示され、メモ帳のウィンドウが開きます。</li>
-<li>メモ帳を操作し、どの操作がローダーを呼び出すか確認します。たとえば、保存またはファイルを開くダイアログを表示してみます。この操作から、ローダーが起動時だけでなく、スレッドからの要求に応じてモジュールを遅延ロードすることも分かります。ロードしたモジュールは、使い終わってからアンロードできます。</li>
+<li>メモ帳を操作し、どの操作がローダーを呼び出すか確認します。たとえば、「名前を付けて保存」や「開く」のダイアログを表示してみます。この操作から、ローダーが起動時だけでなく、スレッドからの要求に応じてモジュールを遅延ロードすることも分かります。ロードしたモジュールは、使い終わってからアンロードできます。</li>
 </ol>
 <h4 id="プロセス初期化の初期段階">プロセス初期化の初期段階</h4>
 <p>ローダーは特定のサブシステムに属さないネイティブ DLL、<code>Ntdll.dll</code> にあるため、細部の違いを除き、すべてのプロセスで同じように動作します。
@@ -2362,7 +2362,7 @@ apiquery-l1-1-0.dll was redirected to C:\WINDOWS\SYSTEM32\ntdll.dll by API set</
 <ol>
 <li><code>LdrpProcessInitialized</code> がすでに1か、TEB の <code>SkipLoaderInit</code> フラグが立っているかを調べます。
 いずれかに該当すれば初期化をすべて省略し、<code>LdrpProcessInitializationComplete</code> が呼び出されるのを3秒間待ちます。
-Windows エラー報告がプロセスのリフレクションを使う場合など、ローダーの初期化を必要としないプロセス複製で使う処理です。</li>
+この処理は、Windows エラー報告がプロセスのリフレクションを使うときや、それ以外のローダーの初期化が不要なプロセスのフォーク時に使われます。</li>
 <li><code>LdrInitState</code> を0に設定し、ローダーが未初期化であることを示します。PEB の <code>ProcessInitializing</code> と TEB の <code>RanProcessInit</code> も1に設定します。</li>
 </ol></section><section class="page" id="page-175" aria-label="page-175"><ol start="3">
 <li>PEB のローダーロックを初期化します。</li>
