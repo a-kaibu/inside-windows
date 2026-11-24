@@ -19253,7 +19253,7 @@ icacls C:\TestVm /grant &lt;UserName&gt;:(CI)(OI)F</code></pre>
 <p>物理デバイスとの I/O では、通常、プロセッサーがデバイスの入出力ポート（I/O ポート）からデータを読み書きします。CPU が I/O ポートにアクセスする方式には次の2つがあります。</p>
 <ul><li>物理メモリのアドレス空間とは別の I/O アドレス空間を使う方式。AMD64 では個別にアドレスを指定できる約64,000個の I/O ポートがあります。古くから使われている方式で、主に従来のデバイスに使われます。</li></ul></section><section class="page" id="p2-page-361" aria-label="p2-page-361"><ul><li>メモリマップド I/O を使う方式。メモリと同様に応答するデバイスには、プロセッサーの物理メモリアドレス空間を通じてアクセスできます。対象の物理アドレスにデバイスがマップされているので、CPU は通常のメモリアクセス命令でそのデバイスを読み書きできます。</li></ul>
 <p>図9-27は、第1世代の仮想マシンで使う仮想 IDE コントローラーを例に、エミュレートされたデバイスがメモリマップド I/O で仮想プロセッサーとデータをやり取りする仕組みを示します。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/734711e3b7be9b60f5e9f535.webp" alt="仮想 IDE コントローラーとゲスト物理アドレス空間の関係を示す図9-27を含む原本ページ"><figcaption>図9-27　エミュレートされた I/O でデータを転送する仮想 IDE コントローラー</figcaption></figure>
+<figure><img loading="lazy" width="512" height="329" src="assets/hyper-v-virtual-ide.webp" alt="仮想 IDE コントローラーとゲスト物理アドレス空間の関係"><figcaption>図9-27　エミュレートされた I/O でデータを転送する仮想 IDE コントローラー</figcaption></figure>
 <ul>
 <li>ルートパーティション（ホスト OS）側には、ホストコンピューティングサービス（HCS）、プロセス、ファイルシステム／ボリューム、ディスクドライバー、VMWP、VMMS、仮想化サービスプロバイダー（VSP）、物理デバイスドライバー、VMBus、VID、WinHV、IDE 仮想デバイス（VDEV）が示されています。</li>
 <li>仮想マシン VM1 側には IDE ストレージドライバーと、0、4 GB、64 GB、96 GB の目盛りを付けたゲスト物理アドレス空間が示されています。</li>
@@ -19264,7 +19264,7 @@ icacls C:\TestVm /grant &lt;UserName&gt;:(CI)(OI)F</code></pre>
 <aside><p><strong>注</strong>　VM ワーカープロセス内の汎用命令エミュレーターには、ほかにも用途があります。たとえば、子パーティションでインターセプトが頻発するコードの実行を高速化できます。<code>VMEXIT</code> には大きな負荷がかかりますが、命令をエミュレートすれば、インターセプトの間も実行コンテキストをワーカープロセスに置いたまま処理を続けられます。古いハードウェア仮想化拡張では、仮想マシン内でリアルモードのコードを実行できませんでした。このような環境では、仮想化スタックはエミュレーターでリアルモードのコードを実行していました。</p></aside></section><section class="page" id="p2-page-362" aria-label="p2-page-362"><h4 id="準仮想化デバイス">準仮想化デバイス</h4>
 <p>エミュレートされたデバイスでは I/O のたびに <code>VMEXIT</code> が発生するため、処理に時間がかかります。図9-28の合成ストレージアダプターは、合成デバイス、すなわち準仮想化デバイスの一例です。合成デバイスは仮想化環境で動くことを前提に設計されています。このため、実装を簡素化し、性能を高められます。合成 RDP のように、仮想環境専用で、実在するハードウェアをエミュレートしない合成デバイスもあります。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/0c797f6394edf7096ecdee10.webp" alt="ルート側の StorVSP とゲスト側の StorVSC の接続を示す図9-28を含む原本ページ">
+<img loading="lazy" width="535" height="366" src="assets/hyper-v-paravirtual-storage.webp" alt="ルート側の StorVSP とゲスト側の StorVSC を VMBus で接続する構成">
 <figcaption>図9-28　準仮想化されたストレージコントローラー</figcaption>
 </figure>
 <ul>
@@ -19365,7 +19365,7 @@ Mount-VMHostAssignableDevice -LocationPath "PCIROOT(0)#PCI(0302)#PCI(0000)"</cod
 <dt>割り込みサブシステム</dt><dd>各 VTL には、ハイパーバイザーの合成割り込みコントローラーが管理する専用の割り込みサブシステムがあります。下位の VTL で動くソフトウェアは上位の VTL の割り込みサブシステムにアクセスできません。そのため、下位の VTL が予期しない割り込みを発生させたり、割り込みをマスクしたりすることを防ぎ、各 VTL で割り込みを安全に扱えます。</dd>
 </dl>
 <p>図9-30は、ハイパーバイザーが VSM に提供するメモリ保護を示しています。ハイパーバイザーは仮想プロセッサーの各 VTL を別々の VMCS データ構造で表し、それぞれに専用の SLAT テーブルを設定します。そのため、ある VTL で動くソフトウェアがアクセスできるのは、そのレベルに割り当てられた物理メモリページだけです。SLAT による保護の対象は物理ページです。仮想ページには通常のページテーブルによる保護が適用されます。</p></section><section class="page" id="p2-page-373" aria-label="p2-page-373"><figure>
-<img loading="lazy" width="770" height="953" src="assets/f23e3f5c77337b0802026b99.webp" alt="VTL 0 と VTL 1 のメモリアクセス保護を示す図9-30を含む原本ページ">
+<img loading="lazy" width="500" height="469" src="assets/vsm-memory-protection.webp" alt="VTL 0 と VTL 1 に異なるメモリアクセス保護を適用する構成">
 <figcaption>図9-30　ハイパーバイザーが VSM に提供するメモリ保護の構成</figcaption>
 </figure>
 <ul>
