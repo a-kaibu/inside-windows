@@ -21357,7 +21357,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <pre><code>xperf -start TestSession -on Microsoft-Windows-Kernel-Process:0x7FFFFFFFFFFFDFFF -f c:&#92;process_trace.etl</code></pre></li>
 <li>メモ帳などのアプリケーションを起動し、「ETW でプロセスの活動を記録する」の手順でトレースを停止します。ETL ファイルを EVTX に変換します。デコードしたログのサイズは小さくなり、<code>ThreadWorkOnBehalfUpdate</code> は記録されていません。</li>
 </ol>
-<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="原文の図（第2巻 PDF 546ページ）"></figure></section><section class="page" id="p2-page-547" aria-label="p2-page-547"><h4 id="システムロガー">システムロガー</h4>
+<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></section><section class="page" id="p2-page-547" aria-label="p2-page-547"><h4 id="システムロガー">システムロガー</h4>
 <p>Windows XP 以降の ETW は、通常のセッションとプロバイダーに加えて、システムロガーをサポートしています。システムロガーを使うと、NT カーネルは特定のプロバイダーに属さないイベントをシステム全体で記録できます。主な用途は性能測定です。執筆時点の主なシステムロガーは NT カーネルロガーと循環カーネルコンテキストロガーです。グローバルロガーは NT カーネルロガーの一部です。NT カーネルは最大8つのシステムロガーセッションをサポートします。システムロガーのイベントを受け取るセッションはすべてシステムセッションです。</p>
 <p>アプリケーションがシステムセッションを開始するには、<code>StartTrace</code> に <code>EVENT_TRACE_SYSTEM_LOGGER_MODE</code> フラグまたはシステムロガーセッションの GUID を渡します。表10-16に各ロガーの GUID を示します。NT カーネルの <code>EtwpStartLogger</code> はこのフラグまたは GUID を認識すると、呼び出し元プロセスのアクセストークンに <code>TRACELOG_GUID_ENABLE</code> アクセス権があるかを NT カーネルロガーのセキュリティ記述子に照らして確認します。確認を通過すると、ETW はシステムロガーのインデックスを算出し、ロガーのグループマスクとシステム全体のパフォーマンスグループマスクを更新します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表10-16 システムロガー</caption><thead><tr><th>インデックス</th><th>名前</th><th>GUID</th><th>シンボル</th></tr></thead><tbody>
@@ -21433,7 +21433,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>「データ ログを作成する」を選び、「イベント トレース データ」をオンにして「次へ」をクリックします。プロバイダーの一覧で「追加」をクリックし、<code>Windows Kernel Trace</code> を選んで「OK」をクリックします。プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。</li>
 <li>プロパティのウィンドウで「自動」を選び、TCP/IP のネットワークイベントに対応する <code>net</code> だけをオンにして「OK」をクリックします。</li>
 </ol>
-<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="原文の図（第2巻 PDF 550ページ）"></figure></section><section class="page" id="p2-page-551" aria-label="p2-page-551"><ol start="6">
+<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure></section><section class="page" id="p2-page-551" aria-label="p2-page-551"><ol start="6">
 <li>「次へ」をクリックしてログファイルの保存先を指定します。データコレクターセットを <code>experiment</code> と名付けた場合、既定の保存先は <code>%SystemDrive%&#92;PerfLogs&#92;Admin&#92;experiment&#92;</code> です。「次へ」をクリックし、「実行ユーザー」に管理者アカウントの名前とパスワードを入力します。「完了」をクリックすると、図のように作成したデータコレクターセットが表示されます。</li>
 <li>作成したデータコレクターセット（例では <code>experiment</code>）を右クリックし、「開始」をクリックします。ブラウザーでウェブサイトを開き、ネットワーク通信を発生させます。</li>
 <li>データコレクターセットをもう一度右クリックし、「停止」をクリックします。</li>
@@ -21442,7 +21442,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <p>Xperf でも次のコマンドで同じ実験ができます。出力先のファイル名は必要に応じて変更してください。</p>
 <pre><code>xperf -on NETWORKTRACE -f c:&#92;network.etl</code></pre>
 <p>システムトレースセッションを停止して取得したファイルを変換すると、パフォーマンスモニターで収集したものと同様のイベントが得られます。</p>
-<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="原文の図（第2巻 PDF 551ページ）"></figure></section><section class="page" id="p2-page-552" aria-label="p2-page-552"><h4 id="グローバルロガーと自動ロガー">グローバルロガーと自動ロガー</h4>
+<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure></section><section class="page" id="p2-page-552" aria-label="p2-page-552"><h4 id="グローバルロガーと自動ロガー">グローバルロガーと自動ロガー</h4>
 <p>一部のロガーセッションはシステムの起動時に自動で開始されます。グローバルロガーセッションは、NT カーネルロガーが生成するものを含め、OS の起動初期に発生するイベントを記録します。表10-16に示したとおり、グローバルロガー自体もシステムロガーです。アプリケーションやデバイスドライバーはこのセッションで、ユーザーのログイン前にトレースを取得できます。ただし、ディスクのデバイスドライバーなど、一部のドライバーはセッション開始時点でまだ読み込まれていません。グローバルロガーが主に NT カーネルプロバイダーのトレースを取得する（表10-17）のに対し、自動ロガーは従来型の ETW プロバイダーのトレースを取得するためのものです。</p>
 <p>グローバルロガーは、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;WMI</code> 配下の <code>GlobalLogger</code> キーにレジストリ値を設定して構成します。自動ロガーは、同じ WMI キー配下の <code>Autologger</code> キーにログセッションと同じ名前のサブキーを作成して構成します。手順は Windows API リファレンスの <a href="https://learn.microsoft.com/windows/win32/etw/configuring-and-starting-an-autologger-session">自動ロガーセッションの構成と開始</a>を参照してください。</p>
 <p>「ETW の初期化」で述べたように、ETW は NT カーネルの初期化フェーズ1の早い段階で、グローバルロガーと自動ロガーをほぼ同時に開始します。内部関数 <code>EtwStartAutoLogger</code> はレジストリからロガーの構成をすべて取得して検証し、「ETW セッション」で詳しく説明した <code>EtwpStartLogger</code> でセッションを作成します。システムロガーであるグローバルロガーでは、セッションの作成後にプロバイダーを有効にする処理はありません。自動ロガーでは、<code>Autologger</code> キーからセッション名を列挙してセッションを開始し、作成後にそのセッションのサブキーから、有効にするプロバイダーを列挙します。各プロバイダーは GUID で識別されます。図10-36は <code>EventLog-System</code> セッションで有効になっている複数のプロバイダーを示しています。このセッションはイベントログサービスが収集し、イベントビューアーの「Windows ログ」に表示される主要なログの1つです。</p>
