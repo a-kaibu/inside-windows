@@ -19287,7 +19287,7 @@ icacls C:\TestVm /grant &lt;UserName&gt;:(CI)(OI)F</code></pre>
 <li>VPCI 仮想化サービスクライアント（VSC、<code>Vpci.sys</code>）は、ゲストで動く WDF バスドライバーです。VSP が公開する VMBus チャネルに接続して、仮想マシンに公開された直接アクセスデバイスとそのリソースの一覧を受け取ります。デバイスごとに物理デバイスオブジェクト（PDO）を作成すると、デバイスドライバーは物理環境の場合と同様に、その PDO にアタッチできます。</li>
 </ul>
 <p>直接アクセスデバイスを仮想マシンに割り当てるには、まず PowerShell でデバイスをルートパーティションから取り外します。詳細は次の実験を参照してください。VMMS は標準の PCI ドライバーが公開する <code>PciControl</code> デバイスに <code>PCIDRIVE_ADD_VMPROXYPATH</code> IOCTL を送り、バス、デバイス、機能の各 ID を含む記述子を渡します。PCI ドライバーは記述子を検証し、有効ならレジストリ値 <code>HKLM\System\CurrentControlSet\Control\PnP\Pci\VmProxy</code> に追加します。</p>
-<p>次に VMMS は PnP マネージャーを通じてデバイスの再列挙を開始します。PCI ドライバーは新しいプロキシデバイスを見つけ、PCI プロキシドライバー（<code>Pcip.sys</code>）を読み込みます。プロキシドライバーはデバイスを仮想化スタック用に予約済みとし、ホスト OS に表示されないようにします。</p></section><section class="page" id="p2-page-364" aria-label="p2-page-364"><figure><img loading="lazy" width="770" height="953" src="assets/5a555bc309c5520e6d9a15a4.webp" alt="ゲストから NVMe デバイスへの直接アクセスを示す図9-29を含む原本ページ"><figcaption>図9-29　ハードウェアアクセラレーション対応デバイス</figcaption></figure>
+<p>次に VMMS は PnP マネージャーを通じてデバイスの再列挙を開始します。PCI ドライバーは新しいプロキシデバイスを見つけ、PCI プロキシドライバー（<code>Pcip.sys</code>）を読み込みます。プロキシドライバーはデバイスを仮想化スタック用に予約済みとし、ホスト OS に表示されないようにします。</p></section><section class="page" id="p2-page-364" aria-label="p2-page-364"><figure><img loading="lazy" width="535" height="323" src="assets/hyper-v-direct-device.webp" alt="ゲストの NVMe ドライバーと実デバイスを IOMMU で接続する構成"><figcaption>図9-29　ハードウェアアクセラレーション対応デバイス</figcaption></figure>
 <ul>
 <li>ルートパーティション（ホスト OS）には HCS、VMWP、VMMS、VPci VDEV、VMBus、VID、Pcip、Pci、WinHV、vPCI VSP があります。</li>
 <li>ゲスト VM 1 にはプロセス、ファイルシステム／ボリューム、ディスクドライバー、NVMe ドライバー、vPCI VSC があります。ゲスト物理アドレス空間には0、4 GB、64 GB、96 GB の目盛りが付いています。</li>
@@ -19792,7 +19792,7 @@ lkd&gt; k
 <p>ユーザーモードドライバーフレームワーク（UMDF）は、ドライバーコンパニオンを導入してこの問題に対処します。コンパニオンは VTL 0 または VTL 1 のユーザーモードで動作できます。VTL 1 で動くものをセキュアコンパニオンと呼びます。ドライバーのうち分離ユーザーモード（IUM）で動かす必要があるコードを切り出し、メインの KMDF ドライバーの拡張として読み込みます。標準の WDM ドライバーもサポートされます。メインドライバーは引き続き VTL 0 のカーネルモードで動作し、デバイスのプラグアンドプレイ（PnP）と電源状態を管理します。IUM で実行する必要がある処理は、コンパニオンに依頼します。</p>
 <p>第3章で触れたセキュアドライバーフレームワーク（SDF）は非推奨です。図9-39の新しい UMDF セキュアコンパニオンモデルは、VTL 0 のユーザーモードで使うものと同じ UMDF コアフレームワーク（<code>Wudfx02000.dll</code>）を基盤とします。このフレームワークは、UMDF セキュアコンパニオンホスト（<code>WUDFCompanionHost.exe</code>）が提供するサービスを使い、DLL として配布されるドライバーコンパニオンを読み込んで管理します。ホストはセキュアコンパニオンのライフサイクルを管理し、IUM 固有の処理を行う UMDF の機能をまとめて提供します。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/69b6ca78fa4e6791901a793a.webp" alt="通常モードのドライバーとセキュアコンパニオンが ALPC で通信する図9-39を含む原本ページ">
+<img loading="lazy" width="440" height="418" src="assets/wdf-secure-companion.webp" alt="VTL 0 のドライバーと VTL 1 のセキュアコンパニオンを結ぶ ALPC の経路">
 <figcaption>図9-39　WDF ドライバーのセキュアコンパニオンの構成</figcaption>
 </figure>
 <ul>
