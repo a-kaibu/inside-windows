@@ -5630,7 +5630,7 @@ Image: dwm.exe</pre>
 +0x080 Lookaside        : [24] _GENERAL_LOOKASIDE
 +0xc80 Session          : _MMSESSION
 ...</pre></section><section class="page" id="page-372" aria-label="page-372"><h4 id="実験-セッション空間の使用状況を表示する">実験：セッション空間の使用状況を表示する</h4>
-<p>カーネルデバッガーの <code>!vm 4</code> で、セッション空間のメモリ使用状況を表示できます。次は、リモートデスクトップで接続した32ビット版 Windows クライアントでの出力例です。既定の2つのセッションにリモートセッションが加わり、合計3つになっています。表示されるアドレスは、前の実験で確認した <code>MM_SESSION_SPACE</code> オブジェクトのものです。</p>
+<p>カーネルデバッガーの <code>!vm 4</code> で、セッション空間のメモリ使用状況を表示できます。次は、リモートデスクトップ接続を受け付けた32ビット版 Windows クライアントでの出力例です。既定の2つのセッションにリモートセッションが加わり、合計3つになっています。表示されるアドレスは、前の実験で確認した <code>MM_SESSION_SPACE</code> オブジェクトのものです。</p>
 <pre>lkd&gt; !vm 4
 ...
 Terminal Server Memory Usage By Session:
