@@ -882,23 +882,23 @@ False</pre>
 <li>プラグ アンド プレイ マネージャーからの通知など、特定のカーネル通知を、ウィンドウメッセージ（<code>WM_DEVICECHANGE</code>）としてアプリケーションに転送する処理。</li>
 <li>16ビット仮想 DOS マシン（VDM）のプロセスを支える機能の一部。32ビット版 Windows のみが対象です。</li>
 <li>Side-by-Side（SxS）／Fusion とマニフェストキャッシュのサポート。</li>
-<li>自然言語サポート機能の一部で使うキャッシュ。</li>
+<li>キャッシュを提供する自然言語サポート関数の一部。</li>
 </ul>
 <blockquote><p><strong>注</strong>　マウスカーソル、キーボード入力、デスクトップウィンドウを扱う生入力スレッドとデスクトップスレッドのカーネルモードコードは、<code>Winsrv.dll</code> 内のスレッドで実行されます。対話型ユーザーセッションの <code>Csrss.exe</code> には、5つ目の DLL として Canonical Display Driver（<code>Cdd.dll</code>）も読み込まれます。CDD は垂直リフレッシュ（VSync）ごとにカーネルの DirectX 機能と連携し、従来のハードウェアアクセラレーション付き GDI を使わずに、現在のデスクトップの表示内容を描画します。</p></blockquote></li>
 <li>カーネルモードのデバイスドライバー <code>Win32k.sys</code> は、次の機能を提供します。
 <ul>
 <li>ウィンドウマネージャー。ウィンドウの表示と画面出力を管理し、キーボードやマウスなどの入力を集め、ユーザーの操作をメッセージとしてアプリケーションに渡します。</li>
-<li>Graphics Device Interface（GDI）。グラフィックス出力装置向けの関数ライブラリで、線、文字、図形の描画や画像処理を提供します。</li>
+<li>Graphics Device Interface（GDI）。グラフィックス出力装置向けの関数ライブラリで、線、文字、図形の描画や、グラフィックスを操作する関数を提供します。</li>
 <li>別のカーネルドライバー <code>Dxgkrnl.sys</code> が実装する DirectX 機能のラッパー。</li>
 </ul></li>
 <li>コンソールホストプロセス（<code>Conhost.exe</code>）は、文字セルを使うコンソールアプリケーションを支えます。</li>
 <li>デスクトップウィンドウマネージャー（<code>Dwm.exe</code>）は、CDD と DirectX を介して各ウィンドウの描画結果を単一のサーフェスに合成します。</li>
 <li><code>Kernel32.dll</code>、<code>Advapi32.dll</code>、<code>User32.dll</code>、<code>Gdi32.dll</code> などのサブシステム DLL は、文書化された Windows API の関数を、<code>Ntoskrnl.exe</code> や <code>Win32k.sys</code> の対応するカーネルモードのシステムサービス呼び出しに変換します。これらの呼び出しをユーザーモードから直接使う方法は文書化されていません。</li>
 <li>グラフィックスデバイスドライバーには、ハードウェアに固有のグラフィックス表示ドライバー、プリンタードライバー、ビデオミニポートドライバーなどがあります。</li>
-</ul></section><section class="page" id="page-83" aria-label="page-83"><blockquote><p><strong>注</strong>　Windows のアーキテクチャを再編する MinWin の取り組みにより、サブシステム DLL は通常、API セットを実装した個別のライブラリで構成されています。これらをサブシステム DLL にリンクし、専用のリダイレクト機構で参照先を解決します。詳細は第3章の「イメージローダー」を参照してください。</p></blockquote>
+</ul></section><section class="page" id="page-83" aria-label="page-83"><blockquote><p><strong>注</strong>　Windows のアーキテクチャを再編する MinWin の取り組みにより、サブシステム DLL は通常、API セットを実装した個別のライブラリで構成されています。これらをサブシステム DLL にリンクし、専用のリダイレクト機構で参照先を解決します。詳細は第3章の「<a href="#イメージローダー">イメージローダー</a>」を参照してください。</p></blockquote>
 <h4 id="Windows-10-と-Win32k-sys">Windows 10 と Win32k.sys</h4>
 <p>ウィンドウ管理の要件は、Windows 10 を実行する機器によって大きく異なります。デスクトップでは、サイズ変更、所有者ウィンドウ、子ウィンドウなど、ウィンドウマネージャーのすべての機能が必要です。電話や小型タブレットで動く Windows 10 Mobile では、フォアグラウンドのウィンドウが1つだけで、最小化やサイズ変更もできないため、これらの機能の多くは不要です。IoT 機器にも同じことが当てはまり、画面自体を持たないものもあります。</p>
-<p>このため、<code>Win32k.sys</code> の機能は複数のカーネルモジュールに分けられ、機器ごとに必要なものだけを読み込めます。コードの複雑さと従来の機能を減らすことで、ウィンドウマネージャーの攻撃対象領域を小さくします。</p>
+<p>このため、<code>Win32k.sys</code> の機能は複数のカーネルモジュールに分けられ、機器ごとに必要なものだけを読み込めます。コードを簡素化し、旧来のコードの多くを取り除くことで、ウィンドウマネージャーの攻撃対象領域を小さくします。</p>
 <ul>
 <li>Windows 10 Mobile の電話では、<code>Win32kMin.sys</code> と <code>Win32kBase.sys</code> を読み込みます。</li>
 <li>デスクトップでは、<code>Win32kBase.sys</code> と <code>Win32kFull.sys</code> を読み込みます。</li>
