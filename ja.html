@@ -1310,16 +1310,16 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 </ol></section><section class="page" id="page-111" aria-label="page-111"><ol start="29">
 <li><code>HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management</code> と <code>HKLM\System\CurrentControlSet\Control\CrashControl</code> に基づいて、ページファイルと専用ダンプファイルの情報を初期化します。</li>
 <li>NUMA システムで使うメモリ冷却技術に対応しているか確認します。</li>
-<li>以前のクラッシュ情報に基づき、必要に応じて古いページファイルを保存し、専用のクラッシュダンプファイルと新しいページファイルを作成します。</li>
+<li>以前のクラッシュ情報に基づき、古いページファイルを保存し、専用のクラッシュダンプファイルを作成します。必要に応じて新しいページファイルも作成します。</li>
 <li>レジストリの設定とカーネルに問い合わせたシステム情報を基に、<code>PROCESSOR_ARCHITECTURE</code>、<code>PROCESSOR_LEVEL</code>、<code>PROCESSOR_IDENTIFIER</code>、<code>PROCESSOR_REVISION</code> などの動的な環境変数を追加します。</li>
-<li><code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager</code> の <code>SetupExecute</code> に指定されたプログラムを実行します。実行ファイルには、手順11の <code>BootExecute</code> と同じ規則が適用されます。</li>
+<li><code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager</code> の <code>SetupExecute</code> に指定されたプログラムを実行します。実行ファイルには、手順11で読み取り、手順25で実行する <code>BootExecute</code> と同じ規則が適用されます。</li>
 <li>子プロセス（<code>Csrss.exe</code> など）と情報をやり取りするため、名前のない共有セクションオブジェクトを作成します。セクションのハンドルは継承を通じて子プロセスに渡します。ハンドルの継承については、第2部の第8章を参照してください。</li>
 <li>既知の DLL を開き、永続セクション（マップされたファイル）としてマップします。先に読み取ったレジストリの除外リストにある DLL は対象外です。既定では除外項目はありません。</li>
 <li>セッション作成要求に応答するスレッドを作成します。</li>
 <li>非対話型のセッション0を初期化する <code>Smss.exe</code> を作成します。</li>
 <li>対話型のセッション1を初期化する <code>Smss.exe</code> を作成します。レジストリで指定されていれば、将来のサインインに備えて追加の対話型セッション用にもインスタンスを作成します。作成のたびに <code>NtCreateUserProcess</code> に <code>PROCESS_CREATE_NEW_SESSION</code> フラグを渡し、新しいセッション ID の割り当てを明示的に要求します。メモリマネージャーの内部関数 <code>MiSessionCreate</code> が呼び出され、Session オブジェクトなどのカーネルモードのデータ構造と、セッション空間の仮想アドレス範囲を準備します。この範囲は Windows サブシステムのカーネルモード部分（<code>Win32k.sys</code>）や、セッション空間を使うほかのデバイスドライバーが利用します。詳しくは第5章を参照してください。</li>
 </ol>
-<p>初期化後、マスターの <code>Smss.exe</code> はセッション0の <code>Csrss.exe</code> のハンドルを無期限に待ちます。<code>Csrss.exe</code> は重要なプロセスとしてマークされた保護プロセスです。終了すればシステムがクラッシュするため、この待機が完了することはありません。保護プロセスについては第3章を参照してください。</p>
+<p>初期化後、マスターの <code>Smss.exe</code> はセッション0の <code>Csrss.exe</code> のプロセスハンドルがシグナル状態になるまで、タイムアウトを設けずに待機します。<code>Csrss.exe</code> は重要なプロセスとしてマークされた保護プロセスです。終了すればシステムがクラッシュするため、この待機が完了することはありません。保護プロセスについては第3章を参照してください。</p>
 <p>セッションを起動する側の <code>Smss.exe</code> は、次の処理を行います。</p>
 <ul>
 <li>セッションのサブシステムプロセスを作成します。既定では Windows サブシステムの <code>Csrss.exe</code> です。</li>
