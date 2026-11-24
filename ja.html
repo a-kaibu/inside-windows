@@ -5058,7 +5058,7 @@ The operation completed successfully.</pre></li>
 <p>AWE を使ったメモリの確保と利用は、次の3段階で行います。</p>
 <ol>
 <li><code>AllocateUserPhysicalPages</code> または <code>AllocateUserPhysicalPagesNuma</code> を呼び、使用する物理メモリを確保します。<code>SeLockMemoryPrivilege</code> が必要です。</li>
-<li>物理メモリの一部をマップする窓として、仮想アドレス空間に1つ以上の領域を確保します。<code>VirtualAlloc</code>、<code>VirtualAllocEx</code>、<code>VirtualAllocExNuma</code> のいずれかに <code>MEM_PHYSICAL</code> を指定します。</li>
+<li>物理メモリの一部をマップする窓として、仮想アドレス空間に1つ以上の領域を予約します。<code>VirtualAlloc</code>、<code>VirtualAllocEx</code>、<code>VirtualAllocExNuma</code> のいずれかに <code>MEM_PHYSICAL</code> を指定します。</li>
 <li>手順1と2は通常、初期化時に行います。メモリを使うときは、<code>MapUserPhysicalPages</code> または <code>MapUserPhysicalPagesScatter</code> を呼び、手順1で確保した物理領域の一部を、手順2で確保した仮想領域のいずれかにマップします。</li>
 </ol>
 <p>図5-6の例では、アプリケーションは仮想アドレス空間に256 MBの窓を作り、4 GBの物理メモリを確保しています。<code>MapUserPhysicalPages</code> または <code>MapUserPhysicalPagesScatter</code> を使うと、対応する範囲をこの窓にマップして、確保した物理メモリの任意の部分にアクセスできます。1回のマッピングでアクセスできる物理メモリの量は、仮想アドレス空間に確保した窓の大きさで決まります。別の範囲にアクセスするには、同じ窓をマップし直します。</p></section><section class="page" id="page-341" aria-label="page-341"><figure><img loading="lazy" width="323" height="297" src="assets/c5c5ff48776b6cd1fd06c80b.webp" alt="仮想アドレス空間の窓を物理メモリ内の選択した範囲にマップする"><figcaption>図5-6 AWE を使った物理メモリのマッピング</figcaption></figure>
