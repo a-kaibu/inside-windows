@@ -4293,7 +4293,7 @@ IdleSummary:
 Maximum cores per physical processor:   8
 Maximum logical processors per core:    2</pre>
 <h5 id="NUMA-システム">NUMA システム</h5>
-<p>Windows がサポートするマルチプロセッサシステムには、非均一メモリアクセス（NUMA）アーキテクチャを採るものもあります。NUMA システムでは、プロセッサをノードという小さな単位にまとめます。各ノードは固有のプロセッサとメモリを持ち、キャッシュコヒーレンシを保つ相互接続バスを通じてシステム全体につながります。各ノードに高速なローカルメモリがあるため、メモリへのアクセス時間は均一ではありません。どのノードのプロセッサもメモリ全体にアクセスできますが、自分のノードにあるメモリには、はるかに速くアクセスできます。</p>
+<p>Windows がサポートするマルチプロセッサシステムには、メモリアクセス時間が均一でないアーキテクチャ（NUMA）を採るものもあります。NUMA システムでは、プロセッサをノードという小さな単位にまとめます。各ノードは固有のプロセッサとメモリを持ち、キャッシュコヒーレンシを保つ相互接続バスを通じてシステム全体につながります。各ノードに高速なローカルメモリがあるため、メモリへのアクセス時間は均一ではありません。どのノードのプロセッサもメモリ全体にアクセスできますが、自分のノードにあるメモリには、はるかに速くアクセスできます。</p>
 <p>カーネルは、NUMA システムの各ノードの情報を <code>KNODE</code> 構造体に保持します。カーネル変数 <code>KeNodeBlock</code> は、各ノードの <code>KNODE</code> 構造体を指すポインターの配列です。カーネルデバッガーの <code>dt</code> コマンドを使うと、次のように <code>KNODE</code> 構造体の定義を確認できます。</p>
 <pre>lkd&gt; dt nt!_KNODE
 +0x000 IdleNonParkedCpuSet : Uint8B
@@ -4332,10 +4332,10 @@ Maximum logical processors per core:    2</pre>
 <figure><img loading="lazy" width="445" height="165" src="assets/6bc700494e8c56c24f049ba3.webp" alt="プロセッサ数とソケットあたりの NUMA ノード数の上限を2に設定した画面"></figure></li>
 <li>「OK」をクリックして設定を保存します。</li>
 <li>仮想マシンを起動します。</li>
-<li>カーネルデバッガーで <code>!numa</code> を実行します。次は先ほど構成した仮想マシンでの出力例です。</li>
-</ol>
+<li>カーネルデバッガーで <code>!numa</code> を実行します。次は先ほど構成した仮想マシンでの出力例です。
 <pre>2: kd&gt; !numa
-NUMA Summary:</pre></section><section class="page" id="page-288" aria-label="page-288"><pre>------------
+NUMA Summary:</pre></li>
+</ol></section><section class="page" id="page-288" aria-label="page-288"><pre>------------
 Number of NUMA nodes : 2
 Number of Processors : 4
 unable to get nt!MmAvailablePages
@@ -4365,7 +4365,7 @@ Unable to get MiNodeInformation</pre>
 <p>NUMA システムの性能を最大限に引き出したいアプリケーションは、アフィニティマスクを設定して、プロセスの実行先を特定のノード内のプロセッサに制限できます。Windows 自体も NUMA を考慮したスケジューリングにより、ほとんどすべてのスレッドの実行先を、単一の NUMA ノード内に収めています。</p>
 <p>スケジューリングアルゴリズムが NUMA をどう考慮するかは、この章の「プロセッサの選択」で説明します。ノード内のローカルメモリを活用するメモリマネージャーの最適化については、第5章を参照してください。</p>
 <h5 id="プロセッサグループへの割り当て">プロセッサグループへの割り当て</h5>
-<p>Windows はシステムの構成を調べて、論理プロセッサ、SMT セット、マルチコアパッケージ、物理ソケットの関係を把握します。同時に、各プロセッサを適切なグループに割り当て、先述の拡張アフィニティマスクでその所属を表します。この処理は <code>KePerformGroupConfiguration</code> が行います。初期化のフェーズ1で、ほかの処理より先に呼び出されます。処理手順は次のとおりです。</p>
+<p>Windows はシステムの構成を調べて、論理プロセッサ、SMT セット、マルチコアパッケージ、物理ソケットの関係を把握します。同時に、各プロセッサを適切なグループに割り当て、先述の拡張アフィニティマスクでグループ内のプロセッサへのアフィニティを表します。この処理は <code>KePerformGroupConfiguration</code> が行います。初期化のフェーズ1で、ほかの処理より先に呼び出されます。処理手順は次のとおりです。</p>
 <ol><li>検出された全ノード（<code>KeNumberNodes</code> 個）を調べ、各ノードに何個の論理プロセッサを収容できるかを算出します。この値は、システムの全 NUMA ノードを示す <code>KeNodeBlock</code> 配列から参照できる各ノードの <code>MaximumProcessors</code> に格納します。</li></ol></section><section class="page" id="page-289" aria-label="page-289"><p>システムが NUMA 近接 ID に対応していれば、各ノードの近接 ID を取得し、ノードブロックに保存します。</p>
 <ol start="2"><li>NUMA ノード間の距離を格納する配列（<code>KeNodeDistance</code>）を確保し、ノードの組み合わせごとに距離を計算します。</li></ol>
 <p>以降では、既定の NUMA 割り当てを上書きするユーザー設定を処理します。たとえば、Hyper-V をインストールし、ハイパーバイザーを自動起動するように設定したシステムを考えます。CPU が拡張ハイパーバイザーインターフェイスに対応していなければ、プロセッサグループは1つだけ有効になり、収容できる NUMA ノードはすべてグループ0に割り当てられます。この場合、Hyper-V は64個を超えるプロセッサを使えません。</p>
