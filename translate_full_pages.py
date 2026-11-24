@@ -19261,3 +19261,8 @@ full_pages_ja['p2-page-594'] = (
     .replace('DebugView の出力が変わります。</li>', 'DebugView の出力が変わります。\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"></figure></li>')
     .replace('対象ドライバーの読み込みを阻止します。</li>', '対象ドライバーの読み込みを阻止します。\n<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></li>')
 )
+
+full_pages_ja['p2-page-596'] = full_pages_ja['p2-page-596'].replace(
+    '最後に、ダイナミックディスクの後継として設計された記憶域スペース（Storage Spaces）の概要を説明します。',
+    '最後に、ダイナミックディスクの後継として設計されたストレージ機能、記憶域スペース（Storage Spaces）の概要を説明します。',
+)
