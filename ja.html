@@ -26142,7 +26142,7 @@ Windows ブートマネージャーのコードを説明する前に、UEFI の�
 <li><strong>OS の起動</strong>：ブートデバイス選択（BDS）から一時システムロード（TSL）、ランタイム（RT）へ進みます。図には、組み込みサービス、ブートマネージャー、UEFI インターフェイス、OS がない状態で動くアプリ、一時 OS ブートローダーとその環境、最終的な OS ブートローダーとその環境、OS 上で動くアプリが示されています。</li>
 <li><strong>シャットダウン</strong>：ランタイム終了後（AL）。</li>
 </ul>
-<details><summary>原図を表示</summary><img loading="lazy" width="770" height="953" src="assets/a243ade01ef777a89fe27c9e.webp" alt="図12-1を含む原本ページ"></details>
+<details><summary>原図を表示</summary><img loading="lazy" width="500" height="300" src="assets/uefi-framework.webp" alt="電源投入からシャットダウンまでの UEFI の実行段階"></details>
 </figure></section><section class="page" id="p2-page-810" aria-label="p2-page-810"><p>UEFI 全体の詳しい説明は本書の範囲外です。
 BDS フェーズが終わった後も、プラットフォームはファームウェアが制御しており、OS のブートローダーには次のサービスを提供します。</p>
 <ul>
@@ -26210,7 +26210,7 @@ Windows ブートパーティションにあるファイルは <code>\Windows\Sy
 <p>LBA 0 には保護 MBR があり、その後にプライマリ GPT、UEFI システムパーティション、Windows 回復パーティション、予約パーティション、Windows ブートパーティションが並びます。
 末尾（LBA z）側にはバックアップ GPT があります。
 図では、GPT ディスク全体を旧来のツールから保護する範囲も示しています。</p>
-<details><summary>原図を表示</summary><img loading="lazy" width="770" height="953" src="assets/be420261d51cf8f5d48f4357.webp" alt="図12-2を含む原本ページ"></details>
+<details><summary>原図を表示</summary><img loading="lazy" width="505" height="208" src="assets/uefi-disk-layout.webp" alt="保護 MBR、GPT、および UEFI と Windows の各パーティションの配置"></details>
 </figure>
 <p>セットアップには BCD を準備する役割もあります。
 UEFI システムでは、BCD はシステムボリュームのルートから見た <code>\EFI\Microsoft\Boot\BCD</code> に保存されます。
