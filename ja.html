@@ -402,16 +402,11 @@ SystemSettingsAdminFlows.exe (4608)</pre>
 <h3 id="仮想メモリ-Virtual-memory">仮想メモリ（Virtual memory）</h3>
 <p>Windowsは、フラット（線形）なアドレス空間に基づく <strong>仮想記憶（仮想メモリ）システム</strong> を実装しています。これにより、各プロセスにはまるで自分自身が巨大でプライベートな連続したメモリ空間を独占しているかのような錯覚（抽象化）が与えられます。仮想メモリが提供する論理的なメモリ配置は、背後にある物理RAMの実際の配置とは全く異なっていても構いません。プログラムの実行時、CPUのメモリ管理ユニット（MMU）とOSのメモリマネージャーが協調し、仮想アドレスを物理アドレスへと動的に変換（マッピング）します（図1-3）。</p>
 
-<figure><img loading="lazy" width="422" height="268" src="assets/d2aa3e460e2059344a6d3331.webp" alt="仮想メモリの物理マッピング"><figcaption>図1-3：仮想アドレス空間から物理メモリへのマッピング</figcaption></figure></section><section class="page" id="page-39" aria-label="page-39"><p>仮想アドレス空間の大きさは、ハードウェアアーキテクチャ（32ビットか64ビットか）によって劇的に異なります。</p>
-<ul>
-  <li><strong>32ビット x86 システム</strong>：仮想アドレス空間の理論上の最大値は 4 GB です。既定では、Windowsはこの空間を綺麗に半分に分割し、下位 2 GB（<code>0x00000000</code> 〜 <code>0x7FFFFFFF</code>）をユーザープロセス専用のプライベート空間に、上位 2 GB（<code>0x80000000</code> 〜 <code>0xFFFFFFFF</code>）をOS自身の保護されたシステム空間（カーネル空間）として割り当てます（図1-4）。下位半分のマッピングは実行中のプロセスが切り替わるたびにそのプロセスのものへと切り替わりますが、上位半分はどのプロセスの実行中であっても常に共通のOSシステムコードとデータが常駐します。※特別なブート設定（<code>/3GB</code>）と <code>IMAGE_FILE_LARGE_ADDRESS_AWARE</code> フラグを用いることで、ユーザー空間を 3 GB、カーネル空間を 1 GB に変更することも可能です。</li>
-</ul>
-
-<figure><img loading="lazy" width="452" height="267" src="assets/9e10eefcc1a1b743969e165a.webp" alt="32ビットの仮想アドレス空間レイアウト"><figcaption>図1-4：32ビット Windows における仮想アドレス空間の分割</figcaption></figure>
-
-<ul>
-  <li><strong>64ビット システム（x64 / ARM64）</strong>：64ビットCPUの理論上のアドレス空間は 16 EB（エクサバイト＝約160億GB）という途方もない広さですが、現在のハードウェアとOSの実装では、そのうち実用的な一部を使用しています。Windows 8.1 以前の64ビット版では各プロセスに 8 TB のユーザー空間と 8 TB のシステム空間（計 16 TB）が割り当てられていましたが、<strong>Windows 10 / Server 2016 ではこれが大幅に拡大され、プロセスごとに 128 TB のユーザー空間と 128 TB のシステム空間（計 256 TB）</strong> がサポートされています。これにより、大規模データベースやインメモリ処理がメモリ不足に陥る心配は事実上なくなりました。</li>
-</ul></section><section class="page" id="page-40" aria-label="page-40"><p>図1-5に64ビットWindowsにおける仮想アドレス空間の分割レイアウトを示します。</p>
+<figure><img loading="lazy" width="422" height="268" src="assets/d2aa3e460e2059344a6d3331.webp" alt="仮想メモリの物理マッピング"><figcaption>図1-3：仮想アドレス空間から物理メモリへのマッピング</figcaption></figure></section><section class="page" id="page-39" aria-label="page-39"><p>仮想アドレス空間の大きさはハードウェアプラットフォームによって異なります。32ビット x86 システムでは理論上、全体で最大 4 GB です。Windows は既定で、下位半分（<code>0x00000000</code>～<code>0x7FFFFFFF</code>）をプロセスごとのプライベート領域に、上位半分（<code>0x80000000</code>～<code>0xFFFFFFFF</code>）を OS の保護されたメモリ領域に割り当てます。下位半分のマッピングは実行するプロセスの仮想アドレス空間に合わせて切り替わりますが、上位半分のマッピングの大半は常に OS の仮想メモリを指します。</p>
+<p>Windows は、ブート構成データベースの <code>increaseuserva</code> などの起動オプションに対応しています。このオプションを使うと、実行イメージのヘッダーに <code>IMAGE_FILE_LARGE_ADDRESS_AWARE</code> フラグが設定されたプログラムで、プライベートなアドレス空間を 2 GB から最大 3 GB まで使用できます。最大値を選ぶと OS 用の領域は 1 GB になります。たとえばデータベースサーバーでは、データベースのより広い範囲をプロセスのアドレス空間に確保でき、ディスク上のデータベースの一部分をその都度マップする回数を減らせます。一方で、OS 用の領域が 1 GB 減ることにより、システム全体の性能が大きく低下する場合もあります。起動オプションについては第5章を参照してください。図1-4は、32ビット版 Windows がサポートする代表的な2つの配置を示しています。</p>
+<figure><img loading="lazy" width="452" height="267" src="assets/9e10eefcc1a1b743969e165a.webp" alt="プロセス用と OS 用の領域を 2 GB ずつ、または 3 GB と 1 GB に分ける構成"><figcaption>図1-4　32ビット版 Windows の代表的な仮想アドレス空間の配置</figcaption></figure>
+<p>3 GB でも、数 GB を超えるような大規模データベースをマップするには足りないことがあります。32ビットシステムでは、Windows の Address Windowing Extensions（AWE）を使うと、32ビットアプリケーションが最大 64 GB の物理メモリを割り当て、その一部をビュー（ウィンドウ）として 2 GB の仮想アドレス空間にマップできます。仮想メモリと物理メモリの対応を開発者が管理する必要はありますが、32ビットプロセスが一度にマップできる範囲を超えた物理メモリにも、対応を切り替えながら直接アクセスできます。</p>
+<p>64ビット版 Windows では、プロセスが使えるアドレス空間はさらに広く、Windows 8.1、Windows Server 2012 R2 以降では 128 TB です。64ビットシステムの配置を簡略化して図1-5に示します。詳しくは第5章を参照してください。これらのサイズはハードウェアアーキテクチャの理論上限とは異なります。64ビットで表現できるアドレス空間は 2 の64乗バイト、つまり 16 EB です。</p></section><section class="page" id="page-40" aria-label="page-40"><p>図1-5に64ビットWindowsにおける仮想アドレス空間の分割レイアウトを示します。</p>
 
 <figure><img loading="lazy" width="491" height="270" src="assets/10bacdc1a6d3377d64bbd49b.webp" alt="64ビットの仮想アドレス空間レイアウト"><figcaption>図1-5：64ビット Windows における広大な仮想アドレス空間</figcaption></figure>
 
