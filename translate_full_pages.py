@@ -18134,3 +18134,13 @@ full_pages_ja['page-490'] = full_pages_ja['page-490'].replace(
     'ユーザーが操作中に参照したページ。',
     'ユーザーが操作している間にアクセスされたページ。',
 )
+
+full_pages_ja['page-493'] = full_pages_ja['page-493'].replace(
+    'トレースは履歴ファイルとして <code>Sysmain.dll</code> にリソースとして同梱され、',
+    '記録したトレースは履歴ファイルに保存され、<code>Sysmain.dll</code> のリソースとして同梱されます。この履歴ファイルは、',
+)
+
+full_pages_ja['page-494'] = full_pages_ja['page-494'].replace(
+    'SuperFetch が使われないデータを先読みしても、必要なときにはそのメモリを再利用できます。',
+    'SuperFetch が使われないデータを先読みしても、必要なときにそのメモリを再利用できるため、ユーザーが使えるメモリは実質的に減りません。',
+)
