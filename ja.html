@@ -25667,7 +25667,8 @@ Minstore には、そのノードを経由して参照していたエントリ�
 そのノードに直接属していたファイルは、この方法では回復できません。</p>
 <figure><p>図の例では、<code>Foo</code> の下にある <code>Bar</code> を表すルートノードが破損しています。
 <code>Bar</code> には <code>A.txt</code>、<code>B.txt</code>、サブディレクトリ <code>Subdir1</code> があり、<code>Subdir1</code> には <code>Important file.doc</code> と <code>Important file.jpeg</code> があります。
-救済処理では <code>Subdir1</code> へのリンクを復元するため、<code>Bar</code> 直下の2ファイルだけを失い、ファイルシステムをすばやくオンラインに戻せます。</p>
+中央の zap 処理では、<code>Bar</code> からたどれる全項目を失います。
+右の救済処理では <code>Subdir1</code> へのリンクを復元するため、<code>Bar</code> 直下の2ファイルだけを失い、ファイルシステムをすばやくオンラインに戻せます。</p>
 <figcaption>図11-90 zap 処理と救済処理の比較</figcaption></figure>
 <p>救済処理の完了後、ReFS は残っている情報を使い、失われた情報を可能な限り再構築します。
 たとえば、ファイル ID とファイルテーブルを別々に並べる照合規則を利用し、他のバケットから情報を読み出して失われたファイル ID を回復できる場合があります。
