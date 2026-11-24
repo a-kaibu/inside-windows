@@ -23265,9 +23265,9 @@ Windows のファイルレプリケーションサービス（FRS）や Windows 
 <tr><td><code>USN_REASON_DATA_OVERWRITE</code></td><td>ファイルまたはディレクトリのデータが上書きされました。</td></tr>
 <tr><td><code>USN_REASON_DATA_EXTEND</code></td><td>ファイルまたはディレクトリにデータが追加されました。</td></tr>
 <tr><td><code>USN_REASON_DATA_TRUNCATION</code></td><td>ファイルまたはディレクトリのデータが切り詰められました。</td></tr>
-<tr><td><code>USN_REASON_NAMED_DATA_OVERWRITE</code></td><td>ファイルのデータストリームのデータが上書きされました。</td></tr>
-<tr><td><code>USN_REASON_NAMED_DATA_EXTEND</code></td><td>ファイルのデータストリームが拡張されました。</td></tr>
-<tr><td><code>USN_REASON_NAMED_DATA_TRUNCATION</code></td><td>ファイルのデータストリームのデータが切り詰められました。</td></tr>
+<tr><td><code>USN_REASON_NAMED_DATA_OVERWRITE</code></td><td>ファイルの名前付きデータストリームのデータが上書きされました。</td></tr>
+<tr><td><code>USN_REASON_NAMED_DATA_EXTEND</code></td><td>ファイルの名前付きデータストリームが拡張されました。</td></tr>
+<tr><td><code>USN_REASON_NAMED_DATA_TRUNCATION</code></td><td>ファイルの名前付きデータストリームのデータが切り詰められました。</td></tr>
 <tr><td><code>USN_REASON_FILE_CREATE</code></td><td>新しいファイルまたはディレクトリが作成されました。</td></tr>
 <tr><td><code>USN_REASON_FILE_DELETE</code></td><td>ファイルまたはディレクトリが削除されました。</td></tr>
 <tr><td><code>USN_REASON_EA_CHANGE</code></td><td>ファイルまたはディレクトリの拡張属性が変更されました。</td></tr>
@@ -23284,11 +23284,11 @@ Windows のファイルレプリケーションサービス（FRS）や Windows 
 <tr><td><code>USN_REASON_ENCRYPTION_CHANGE</code></td><td>ファイルまたはディレクトリの EFS 暗号化が有効または無効になりました。</td></tr>
 <tr><td><code>USN_REASON_OBJECT_ID_CHANGE</code></td><td>ファイルまたはディレクトリのオブジェクト ID が変わりました。</td></tr>
 <tr><td><code>USN_REASON_REPARSE_POINT_CHANGE</code></td><td>ファイルまたはディレクトリの再解析ポイントが変更されたか、シンボリックリンクなどの再解析ポイントが追加または削除されました。</td></tr>
-<tr><td><code>USN_REASON_STREAM_CHANGE</code></td><td>ファイルのデータストリームが追加、削除、または改名されました。</td></tr>
+<tr><td><code>USN_REASON_STREAM_CHANGE</code></td><td>ファイルの名前付きデータストリームが追加、削除、または改名されました。</td></tr>
 <tr><td><code>USN_REASON_TRANSACTED_CHANGE</code></td><td>変更理由とのビット単位の論理和により、直前にコミットした TxF トランザクションによる変更であることを示します。</td></tr>
 <tr><td><code>USN_REASON_CLOSE</code></td><td>ファイルまたはディレクトリのハンドルが閉じられ、この一連の操作での最後の変更であることを示します。</td></tr>
 <tr><td><code>USN_REASON_INTEGRITY_CHANGE</code></td><td>ファイルのエクステント（ラン）の内容が変わり、対応する整合性ストリームが新しいチェックサムで更新されました。この識別子は ReFS が生成します。</td></tr>
-<tr><td><code>USN_REASON_DESIRED_STORAGE_CLASS_CHANGE</code></td><td>ストリームが容量層とパフォーマンス層の間をどちらかの方向に移動したとき、NTFS ドライバーがこのイベントを生成します。</td></tr>
+<tr><td><code>USN_REASON_DESIRED_STORAGE_CLASS_CHANGE</code></td><td>ストリームが容量階層と性能階層の間をどちらかの方向に移動したとき、NTFS ドライバーがこのイベントを生成します。</td></tr>
 </tbody></table></div>
 <h5 id="実験-変更ジャーナルを読み取る">実験　変更ジャーナルを読み取る</h5>
 <p>Windows 標準の <code>%SystemRoot%\System32\Fsutil.exe</code> を使うと、ジャーナルを作成、削除したり、その情報を照会したりできます。
