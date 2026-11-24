@@ -18958,3 +18958,8 @@ full_pages_ja['p2-page-485'] = full_pages_ja['p2-page-485'].replace(
     '障害時の動作を指定するレジストリ値を調べて',
     '障害時の動作を指定するレジストリ値 <code>FailureActions</code>（表10-7）を調べて',
 )
+
+full_pages_ja['p2-page-486'] = full_pages_ja['p2-page-486'].replace(
+    'グループの一覧を繰り返し調べます。',
+    'そのグループに属するサービスの一覧を繰り返し調べます。',
+)
