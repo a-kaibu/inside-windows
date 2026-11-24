@@ -7403,7 +7403,7 @@ UWEV  pfn ea886     C---A--UR-V</pre>
 <p>ドライバーの一覧は、レジストリの <code>HKLM\System\CurrentControlSet\Services</code> のサブキーから取得します。このキーはドライバーとサービスの両方で使われ、どちらもサービスコントロールマネージャー（SCM）から起動できます。各サブキーがどちらを表すかは、<code>Type</code> 値で判別できます。1、2、4、8はドライバーを、16（<code>0x10</code>）と32（<code>0x20</code>）は Windows サービスを示します。<code>Services</code> キーについて詳しくは第2部の第9章を参照してください。</p>
 <p>読み込まれているカーネルモードドライバーは、Process Explorer でも確認できます。Process Explorer を起動して System プロセスを選び、「View」メニューから「Lower Pane View」、「DLLs」の順に選びます。</p>
 <figure><img loading="lazy" width="486" height="235" src="assets/a7a4b4e594bbdae992165355.webp" alt="Process Explorer で System プロセスを選び、読み込まれているドライバーを表示した画面"></figure>
-<p>Process Explorer には、読み込み済みドライバーの名前、会社名や説明を含むバージョン情報、および読み込みアドレスが表示されます。確認したい項目に対応する列をあらかじめ有効にしておきます。</p>
+<p>Process Explorer には、読み込まれているドライバーの一覧が表示されます。対応する列を有効にすると、ドライバー名、会社名や説明を含むバージョン情報、読み込みアドレスも確認できます。</p>
 <p>カーネルデバッガーでクラッシュダンプや稼働中のシステムを調べている場合は、<code>lm kv</code> コマンドで同様の一覧を表示できます。</p>
 <pre>kd&gt; lm kv
 start    end        module name
