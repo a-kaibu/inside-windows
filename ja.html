@@ -10236,7 +10236,7 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 C:\&gt; auditpol /resourceSACL /type:Key /view</code></pre></li>
 <li>同じコマンドプロンプトで次のコマンドを入力します。指定したユーザーが書き込みアクセス（<code>FW</code>）でファイルを開こうとすると、成功と失敗のどちらでも監査レコードが生成されるようになります。ユーザーには、ローカルのユーザー名、Everyone などのグループ名、<code>domainname\username</code> のようなドメイン付きのユーザー名、または SID を指定できます。
 <pre><code>C:\&gt; auditpol /resourceSACL /set /type:File /user:yourusername /success /failure /access:FW</code></pre></li>
-<li>指定したユーザーとして、エクスプローラーなどを使ってファイルを開きます。次に、イベントビューアーの「セキュリティ」ログで監査レコードを探します。</li>
+<li>指定したユーザーとして、エクスプローラーなどからファイルを開き、編集して保存するなど、書き込みアクセスを要求する操作を行います。次に、イベントビューアーの「セキュリティ」ログで監査レコードを探します。</li>
 <li>実験が終わったら、次のコマンドで手順4で作成したグローバル SACL を削除します。
 <pre><code>C:\&gt; auditpol /resourceSACL /remove /type:File /user:yourusername</code></pre></li>
 </ol></section><section class="page" id="page-700" aria-label="page-700"><p>グローバル監査ポリシーは、2つの SACL としてレジストリキー <code>HKLM\SECURITY\Policy\GlobalSaclNameFile</code> と <code>HKLM\SECURITY\Policy\GlobalSaclNameKey</code> に格納されます。原文では、System アカウントのコンテキストでレジストリエディターからこれらのキーを確認する例を挙げています。各キーは、対応するグローバル SACL を初めて設定した時点で作成されます。</p>
