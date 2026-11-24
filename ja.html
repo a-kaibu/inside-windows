@@ -10703,7 +10703,7 @@ Target String is &#x27;\Sessions\1\AppContainerNamedObjects
 \S-1-15-2-466767348-3739614953-2700836392-1801644223-4227750657
 -1087833535-2488631167&#x27;</pre>
 <p>名前付きオブジェクトを特定のディレクトリの名前空間に限定することは、名前付きオブジェクトへのアクセスをサンドボックス内に制限するうえで有効です。そこで、執筆時点で提供予定だった Windows 10 Creators Update は、BNO 分離（BNO は BaseNamedObjects の略）というトークンの機能を追加しました。この機能は、前述の <code>SEP_CACHED_HANDLES_ENTRY</code> と同じ構造体を使います。<code>TOKEN</code> には <code>BnoIsolationHandlesEntry</code> フィールドが追加され、そのエントリの型には <code>SepCachedHandlesEntryBnoIsolation</code> を指定します。LowBox の場合の型は <code>SepCachedHandlesEntryLowbox</code> です。この機能を使うには、分離用の接頭辞とハンドルの一覧を含む専用のプロセス属性を指定する必要があります（第3章参照）。分離には LowBox と同じ仕組みを使い、オブジェクトディレクトリには AppContainer SID で指定したものに代えて、属性の接頭辞で指定したものを使います。</p></section><section class="page" id="page-726" aria-label="page-726"><h4 id="ブローカー">ブローカー</h4>
-<p>AppContainer 内のプロセスには、機能（capability）によって暗黙に付与される権限以外、ほとんど権限がありません。そのため、一般的な操作でも直接実行できず、別のプロセスによる仲介が必要な場合があります。こうした操作は粒度が細かく、ストアでユーザーに提示するには分かりにくいうえに管理も難しいため、対応する機能は用意されていません。たとえば、共通の「ファイルを開く」ダイアログでファイルを選んだり、「印刷」ダイアログで印刷したりする操作が該当します。Windows は、このような操作を仲介するプロセスを提供しています。これらをブローカーと呼び、システムのブローカープロセス <code>RuntimeBroker.exe</code> が管理します。</p>
+<p>AppContainer 内のプロセスには、ケイパビリティによって暗黙に付与される権限以外、ほとんど権限がありません。そのため、一般的な操作でも直接実行できず、別のプロセスによる仲介が必要な場合があります。こうした操作は粒度が細かく、ストアでユーザーに提示するには分かりにくいうえに管理も難しいため、対応するケイパビリティは用意されていません。たとえば、共通の「ファイルを開く」ダイアログでファイルを選んだり、「印刷」ダイアログで印刷したりする操作が該当します。Windows は、このような操作を仲介するプロセスを提供しています。これらをブローカーと呼び、システムのブローカープロセス <code>RuntimeBroker.exe</code> が管理します。</p>
 <p>AppContainer 内のプロセスがこのようなサービスを必要とすると、保護された ALPC チャネルで Runtime Broker と通信します。Runtime Broker は、要求されたブローカープロセスの作成を開始します。例として、<code>%SystemRoot%\PrintDialog\PrintDialog.exe</code> と <code>%SystemRoot%\System32\PickerHost.exe</code> があります。</p>
 <h4 id="実験-ブローカー">実験：ブローカー</h4>
 <p>次の手順で、ブローカープロセスの起動と終了を確認できます。</p>
@@ -10732,7 +10732,7 @@ Target String is &#x27;\Sessions\1\AppContainerNamedObjects
 <h3 id="Winlogon-の初期化">Winlogon の初期化</h3>
 <p>システムの初期化中、ユーザーアプリケーションがまだ動作していない段階で、Winlogon は次の手順を実行します。これにより、システムがユーザー操作を受け付ける段階になったときに、Winlogon がワークステーションを制御できます。</p>
 <ol>
-<li>対話型ウィンドウステーションを作成して開きます。ウィンドウステーションは、キーボード、マウス、モニターを表します。オブジェクトマネージャーの名前空間では、たとえば <code>\Sessions\1\Windows\WindowStations\WinSta0</code> にあります。Winlogon は、System の SID を指定する ACE だけを含むセキュリティ記述子を、このステーションに設定します。この設定により、Winlogon が明示的に許可しない限り、ほかのプロセスはステーションにアクセスできません。</li>
+<li>対話型ウィンドウステーションを作成して開きます。ウィンドウステーションは、キーボード、マウス、モニターを表します。オブジェクトマネージャーの名前空間では、たとえば <code>\Sessions\1\Windows\WindowStations\WinSta0</code> にあります。Winlogon は、System の SID を指定する ACE を1つだけ含むセキュリティ記述子を、このステーションに設定します。この設定により、Winlogon が明示的に許可しない限り、ほかのプロセスはステーションにアクセスできません。</li>
 <li>アプリケーションデスクトップ（<code>\Sessions\1\Windows\WinSta0\Default</code>、対話型デスクトップとも呼ばれます）と Winlogon デスクトップ（<code>\Sessions\1\Windows\WinSta0\Winlogon</code>、セキュアデスクトップとも呼ばれます）を作成して開きます。Winlogon デスクトップには、Winlogon だけがアクセスできるようにセキュリティを設定します。</li>
 </ol></section><section class="page" id="page-729" aria-label="page-729"><p>アプリケーションデスクトップには、Winlogon とユーザーの両方がアクセスできます。一方、Winlogon デスクトップがアクティブな間は、そのデスクトップで動作するコードやデータに、ほかのプロセスはアクセスできません。Windows はこの仕組みで、パスワードの操作やデスクトップのロックとロック解除を保護します。</p>
 <ol start="3">
