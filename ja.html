@@ -1495,7 +1495,8 @@ Windows サブシステムのカーネルモード部分（<code>Win32k.sys</cod
 ...
 +0x758 SharedCommitCharge : Uint8B
 +0x760 SharedCommitLock : _EX_PUSH_LOCK
-+0x768 SharedCommitLinks : _LIST_ENTRY</pre></section><section class="page" id="page-125" aria-label="page-125"><pre>+0x778 AllowedCpuSets   : Uint8B
++0x768 SharedCommitLinks : _LIST_ENTRY</pre></section><section class="page" id="page-125" aria-label="page-125"><p><code>EPROCESS</code> の出力例の続きです。</p>
+<pre>+0x778 AllowedCpuSets   : Uint8B
 +0x780 DefaultCpuSets   : Uint8B
 +0x778 AllowedCpuSetsIndirect : Ptr64 Uint8B
 +0x780 DefaultCpuSetsIndirect : Ptr64 Uint8B</pre>
@@ -1524,8 +1525,8 @@ Windows サブシステムのカーネルモード部分（<code>Win32k.sys</cod
 たとえば <code>KPROCESS</code> を見るには、<code>dt nt!_eprocess Pcb.</code> と入力する方法もあります。
 さらに <code>KPROCESS</code> 内のフィールド名を追加して、階層を順にたどれます。
 <code>dt</code> の <code>-r</code> オプションを使うと、すべての下位構造体を再帰的に表示します。オプションの後ろに数値を指定すると、表示する深さを制限できます。</p>
-<p>先ほどの <code>dt</code> コマンドは、指定した型のレイアウトを表示します。
-実際のプロセスのデータを見るには、<code>EPROCESS</code> 構造体のアドレスを <code>dt</code> に渡します。
+<p>構造体名だけを指定したときに <code>dt</code> が表示するのは、その型のレイアウトです。個別のプロセスに格納されたフィールドの値を表示するには、対象の構造体のアドレスが必要です。
+その場合は、<code>EPROCESS</code> 構造体のアドレスを <code>dt</code> の引数に指定します。
 <code>!process 0 0</code> を実行すると、システムのアイドルプロセスを除き、ほぼすべての <code>EPROCESS</code> 構造体のアドレスを取得できます。
 <code>KPROCESS</code> は <code>EPROCESS</code> の先頭にあるため、<code>dt _kprocess</code> に同じアドレスを渡して内容を表示できます。</p></section><section class="page" id="page-126" aria-label="page-126"><h4 id="実験-カーネルデバッガーの-process-コマンドを使う">実験：カーネルデバッガーの !process コマンドを使う</h4>
 <p>カーネルデバッガーの <code>!process</code> コマンドは、プロセスオブジェクトと関連構造体の情報の一部を表示します。
