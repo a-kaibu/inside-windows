@@ -11462,7 +11462,7 @@ Other  [CFG Bitmap]</pre>
 <pre>D:(XD;;FX;;;S-1-5-21-3392373855-1129761602-2459801163-1028;((Exists APPID://FQBN)
 &amp;&amp; ((APPID://FQBN) &gt;= ({&quot;O=CONTOSO, INCORPORATED, L=REDMOND,
 S=CWASHINGTON, C=US\*\*&quot;,0}))))</pre>
-<p><strong>ディレクトリパス</strong>　特定のディレクトリツリー内のファイルに実行を許可する条件です。個別のファイルも指定できます。たとえば次の SDDL は、<code>C:\Tools</code> 内のプログラムの実行を RestrictedUser アカウントに対して拒否します。</p>
+<p><strong>ディレクトリパス</strong>　特定のディレクトリツリー内のファイルにルールを適用する条件です。個別のファイルも指定できます。たとえば次の SDDL は、<code>C:\Tools</code> 内のプログラムの実行を RestrictedUser アカウントに対して拒否します。</p>
 <pre>D:(XD;;FX;;;S-1-5-21-3392373855-1129761602-2459801163-1028;(APPID://PATH
 Contains &quot;%OSDRIVE%\TOOLS\*&quot;))</pre>
 <p><strong>ファイルハッシュ</strong>　ハッシュの照合により、変更されたファイルを検出して実行を防げます。ファイルを頻繁に変更する場合は、ハッシュを指定したルールもそのたびに更新する必要があります。署名されていないものが多いスクリプトには、ファイルハッシュがよく使われます。次の SDDL は、指定したハッシュを持つプログラムの実行を RestrictedUser アカウントに対して拒否します。</p>
@@ -11488,7 +11488,7 @@ Any_of {#7a334d2b99d48448eedd308dfca63b8a3b7b44044496ee2f8e236f5997f1b647,
 <li>AppLocker ルールの更新を検出し、AppID ドライバーに通知する。</li>
 </ul>
 <p>AppLocker の機能の大半は AppID ドライバーが実装し、AppID サービスとは <code>DeviceIoControl</code> 要求で通信します。ドライバーのデバイスオブジェクトは ACL で保護され、<code>NT SERVICE\AppIDSvc</code>、<code>LOCAL SERVICE</code>、<code>BUILTIN\Administrators</code> にだけアクセスが許可されます。これにより、権限のないプロセスからの要求を防ぎます。</p>
-<p>AppID ドライバーは、初めて読み込まれたときに、<code>PsSetCreateProcessNotifyRoutineEx</code> を呼び出してプロセス作成通知のコールバックを登録します。通知ルーチンには、作成中のプロセスを記述する <code>PS_CREATE_NOTIFY_INFO</code> 構造体へのポインターが渡されます。ルーチンは、実行イメージを識別する AppID 属性を集め、そのプロセスのアクセストークンに書き込みます。次に、非公開ルーチン <code>SeSrpAccessCheck</code> を呼び出します。このルーチンはプロセスのトークンと条件付き ACE で表された AppLocker ルールを照合し、プロセスの実行を許可するかどうかを決めます。</p></section><section class="page" id="page-779" aria-label="page-779"><p>実行が許可されない場合、ドライバーは <code>PS_CREATE_NOTIFY_INFO</code> 構造体の作成ステータスに <code>STATUS_ACCESS_DISABLED_BY_POLICY_OTHER</code> を書き込みます。これによりプロセスの作成が取り消され、この値が最終的な完了ステータスになります。</p>
+<p>AppID ドライバーは、初めて読み込まれたときに、<code>PsSetCreateProcessNotifyRoutineEx</code> を呼び出してプロセス作成通知のコールバックを登録します。通知ルーチンには、作成中のプロセスを記述する <code>PS_CREATE_NOTIFY_INFO</code> 構造体へのポインターが渡されます。ルーチンは、実行イメージを識別する AppID 属性を集め、そのプロセスのアクセストークンに書き込みます。次に、非公開ルーチン <code>SeSrpAccessCheck</code> を呼び出します。このルーチンはプロセスのトークンと条件付き ACE で表された AppLocker ルールを照合し、プロセスの実行を許可するかどうかを決めます。</p></section><section class="page" id="page-779" aria-label="page-779"><p>実行が許可されない場合、ドライバーは <code>PS_CREATE_NOTIFY_INFO</code> 構造体の <code>CreationStatus</code> メンバーに <code>STATUS_ACCESS_DISABLED_BY_POLICY_OTHER</code> を書き込みます。これによりプロセスの作成が取り消され、この値が最終的な完了ステータスになります。</p>
 <p>DLL の読み込みを制限する場合、イメージローダーはプロセスに DLL を読み込むたびに、AppID ドライバーへ <code>DeviceIoControl</code> 要求を送ります。ドライバーは実行ファイルの場合と同様に、DLL の識別情報を AppLocker の条件付き ACE と照合します。</p>
 <aside><p><strong>注</strong>　DLL を読み込むたびに検査すると時間がかかり、ユーザーが遅延に気づくこともあります。このため、DLL ルールは通常は無効です。有効にするには、ローカルセキュリティポリシーのスナップインで、AppLocker のプロパティの「詳細設定」タブから明示的に設定します。</p></aside>
 <p>スクリプトエンジンと MSI インストーラーは、ファイルを開くたびにユーザーモードの SRP API を呼び出し、ファイルを開いてよいかを確認します。SRP API は AuthZ API を呼び出し、条件付き ACE に基づいてアクセスを判定します。</p>
