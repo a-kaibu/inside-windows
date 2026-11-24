@@ -3035,7 +3035,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '<ul>\n'
                 '<li>VTL 1 の検査エンジン <code>SgrmEnclave_secure.dll</code></li>\n'
                 '<li>VTL 0 のカーネルモードエージェント <code>SgrmAgent.sys</code></li>\n'
-                '<li>VTL 0 で WinTCB によって保護され、検査エンジンをホストするブローカープロセス <code>SgrmBroker.exe</code></li>\n'
+                '<li>VTL 0 で動作し、WinTCB の保護レベルで検査エンジンをホストするブローカープロセス <code>SgrmBroker.exe</code></li>\n'
                 '<li>VTL 0 の LPAC プロセス <code>SgrmLpac.exe</code>。WinTCB '
                 'で保護されたブローカープロセスは、これを介してネットワークスタックとやり取りします。</li>\n'
                 '</ul>',
