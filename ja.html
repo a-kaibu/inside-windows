@@ -10278,10 +10278,10 @@ C:\&gt; auditpol /resourceSACL /type:Key /view</code></pre></li>
 <h3 id="AppContainer-の構造">AppContainer の構造</h3>
 <p>第3章では、プロセスを作成する手順と、UWP プロセスを作成する際の追加手順を説明しました。UWP パッケージは Launch を含む一連のプロトコルをサポートするため、プロセスの作成は DCOMLaunch サービスが開始します。作成されたプロセスは AppContainer 内で実行されます。AppContainer 内で動作するパッケージ化されたプロセスには、次の特徴があります。</p>
 <ul>
-<li>プロセストークンの整合性レベルは「低」に設定されます。本章の前半で説明したように、この設定により、多くのオブジェクトへのアクセスや、一部の API や機能の利用が自動的に制限されます。</li>
+<li>プロセストークンの整合性レベルは Low に設定されます。本章の前半で説明したように、この設定により、多くのオブジェクトへのアクセスや、一部の API や機能の利用が自動的に制限されます。</li>
 <li>UWP プロセスは、必ずジョブ内に作成されます。UWP アプリ1つにつき1つのジョブを使い、そのジョブで UWP プロセスと、入れ子のジョブを通じてアプリに代わって動くバックグラウンドプロセスを管理します。これにより、プロセス状態マネージャー（PSM）は、アプリやバックグラウンド処理を一括で中断または再開できます。</li>
 <li>UWP プロセスのトークンには、UWP パッケージ名の SHA-2 ハッシュに基づく固有の ID である AppContainer SID が含まれます。システムやほかのアプリケーションは、この SID を指定してファイルやその他のカーネルオブジェクトへのアクセスを明示的に許可できます。この SID の識別機関は、本章で主に扱ってきた NT AUTHORITY とは異なり、APPLICATION PACKAGE AUTHORITY です。文字列形式は <code>S-1-15-2</code> で始まります。15 はアプリケーションパッケージの識別機関を、2 は AppContainer のベース RID（<code>SECURITY_APP_PACKAGE_BASE_RID</code>）を表します。SHA-2 ハッシュが32バイトで、RID が4バイトの <code>ULONG</code> なので、SID の残りの部分は8個の RID で構成されます。</li>
-<li>トークンには、機能（capability）を表す SID が含まれることがあります。機能はアプリケーションマニフェストの機能セクションで宣言され、ストアのアプリページに表示されます。後述の規則に従って SID に変換されます。SID の識別機関は AppContainer SID と同じで、ベース RID には既知の <code>SECURITY_CAPABILITY_BASE_RID</code>（3）を使います。Windows Runtime、ユーザーモードのデバイスアクセス用クラス、カーネルの各コンポーネントは、機能の有無を確認して操作の可否を決められます。</li>
+<li>トークンには、ケイパビリティを表す SID が含まれることがあります。ケイパビリティはアプリケーションマニフェストの <code>Capabilities</code> セクションで宣言され、ストアのアプリページに表示されます。後述の規則に従って SID に変換されます。SID の識別機関は AppContainer SID と同じで、ベース RID には既知の <code>SECURITY_CAPABILITY_BASE_RID</code>（3）を使います。Windows Runtime、ユーザーモードのデバイスアクセス用クラス、カーネルの各コンポーネントは、必要なケイパビリティがあるか確認して操作の可否を決められます。</li>
 <li>トークンに含められる特権は <code>SeChangeNotifyPrivilege</code>、<code>SeIncreaseWorkingSetPrivilege</code>、<code>SeShutdownPrivilege</code>、<code>SeTimeZonePrivilege</code>、<code>SeUndockPrivilege</code> に限られます。これらは標準ユーザーアカウントの既定の特権です。一部のデバイスには、<code>ms-win-ntos-ksecurity</code> API セットの拡張に含まれる <code>AppContainerPrivilegesEnabledExt</code> があり、既定で有効になる特権をさらに制限できます。</li>
 </ul></section><section class="page" id="page-705" aria-label="page-705"><p>トークンには、UWP のパッケージ化アプリケーションに関連付けられていることを示すセキュリティ属性が、最大4つ含まれます。本章の属性に基づくアクセス制御の節も参照してください。これらの属性は、UWP アプリケーションをアクティブ化する DcomLaunch サービスが追加します。</p>
 <ul>
@@ -10325,7 +10325,7 @@ C:\&gt; auditpol /resourceSACL /type:Key /view</code></pre></li>
 <p>最後に、Process Explorer で「Integrity」列を表示し、その列で並べ替えます。<code>Calculator.exe</code> や <code>SearchUI.exe</code> の整合性レベルは「AppContainer」と表示されます。Explorer や Task Manager はこのグループに含まれず、UWP プロセスとは異なるルールに従います。</p>
 <figure><img loading="lazy" width="628" height="203" src="assets/3f98f081e6b0a57e59f31422.webp" alt="Process Explorer の Integrity 列に表示された AppContainer プロセス"></figure>
 <h4 id="実験-AppContainer-トークンを表示する">実験：AppContainer トークンを表示する</h4>
-<p>AppContainer 内で動くプロセスのプロパティは、複数のツールで調べられます。Process Explorer では「Security」タブに、トークンに関連付けられた機能（capability）が表示されます。次の画面は、<code>Calculator.exe</code> の「Security」タブです。</p></section><section class="page" id="page-708" aria-label="page-708"><figure><img loading="lazy" width="369" height="451" src="assets/e60ce4e6c8152b52f3c66e0d.webp" alt="電卓の AppContainer SID と機能 SID を表示した Process Explorer の Security タブ"></figure>
+<p>AppContainer 内で動くプロセスのプロパティは、複数のツールで調べられます。Process Explorer では「Security」タブに、トークンに関連付けられたケイパビリティが表示されます。次の画面は、<code>Calculator.exe</code> の「Security」タブです。</p></section><section class="page" id="page-708" aria-label="page-708"><figure><img loading="lazy" width="369" height="451" src="assets/e60ce4e6c8152b52f3c66e0d.webp" alt="電卓の AppContainer SID と機能 SID を表示した Process Explorer の Security タブ"></figure>
 <p>「Flags」列に「AppContainer」と表示された AppContainer SID と、その直下にある1つの機能（capability）に注目します。ベース RID はそれぞれ <code>SECURITY_APP_PACKAGE_BASE_RID</code> と <code>SECURITY_CAPABILITY_BASE_RID</code> ですが、残り8個の RID は一致します。どちらも、前述のようにパッケージ名の SHA-2 ハッシュを表します。つまり、パッケージ自身であることを表す暗黙の機能が常に1つあります。電卓は、それ以外の機能を必要としません。後述する機能の節では、より複雑な例を示します。</p>
 <h4 id="実験-AppContainer-トークンの属性を表示する">実験：AppContainer トークンの属性を表示する</h4>
 <p>Sysinternals の AccessChk を使うと、コマンドラインでも同様の情報を取得でき、トークンの属性をすべて表示できます。たとえば、<code>-p -f</code> オプションに続けて、Cortana をホストする <code>SearchUI.exe</code> のプロセス ID を指定すると、次のように表示されます。</p>
