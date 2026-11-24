@@ -2669,12 +2669,12 @@ SwitchBack は読み込まれたモジュールごとに動くので、同じプ
 <p>Windows 10 モードでの実行は、低断片化ヒープ（LFH）の動作にも影響します。Windows 10 の GUID がない場合は、LFH のサブセグメント全体をコミットし、各割り当てにヘッダーブロックを追加します。また、Windows 10 で無効なハンドルを閉じたときに例外を発生させる緩和策を有効にすると、<code>CloseHandle</code> と <code>RegCloseKey</code> にも適用されます。この緩和策の詳細は第7章を参照してください。以前の OS では、デバッガーが接続されていなければ、<code>NtClose</code> の呼び出し前にこの動作を無効にし、呼び出し後に有効に戻します。</p></section><section class="page" id="page-190" aria-label="page-190"><p>別の例として、スペルチェック機能は、対応するスペルチェッカーがない言語に対して <code>NULL</code> を返します。Windows 8.1 では、代わりに空のスペルチェッカーを返します。
 同様に、<code>IShellLink::Resolve</code> に相対パスを渡すと、Windows 8 の互換モードでは <code>E_INVALIDARG</code> を返しますが、Windows 7 のモードではこの検査を行いません。</p>
 <p><code>GetVersionEx</code> や、<code>Ntdll.dll</code> の <code>RtlVerifyVersionInfo</code> などの対応する関数は、指定された SwitchBack コンテキスト GUID に対応する最大のバージョン番号を返します。</p>
-<aside><p><strong>注記</strong> これらの API は非推奨です。より新しいバージョンの SwitchBack GUID を指定しなければ、Windows 8 以降で <code>GetVersionEx</code> を呼び出しても、戻り値は6.2になります。</p></aside>
+<aside><p><strong>注記</strong> これらの API は非推奨です。より新しいバージョンの SwitchBack GUID を指定しなければ、Windows 8 以降で <code>GetVersionEx</code> を呼び出しても、報告される OS バージョンは6.2です。</p></aside>
 <h5 id="SwitchBack-の動作">SwitchBack の動作</h5>
 <p>Windows API の変更が互換性に影響する場合、関数の入口のコードは <code>SbSwitchProcedure</code> を呼び出し、SwitchBack の処理を開始します。
 引数には、そのモジュールで用いる SwitchBack の情報を記録した、モジュールテーブルへのポインターを渡します。
 テーブルには、SwitchBack の切り替え箇所ごとのエントリを並べた配列へのポインターもあります。
-各エントリは分岐点を、シンボル名、詳しい説明、関連する緩和策のタグで識別します。
+各エントリは、分岐点のシンボル名、詳しい説明、関連する緩和策のタグを保持します。
 通常、1つのモジュールに複数の分岐点があり、Windows Vista の挙動、Windows 7 の挙動などに対応します。</p>
 <p>分岐点ごとに、実行時にどの経路を選ぶかを決める SwitchBack コンテキストが指定されます。
 各記述子には、その分岐で実際に実行するコードへの関数ポインターも含まれます。
