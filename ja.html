@@ -2635,8 +2635,8 @@ exe&quot;
 そこで Windows は、ローダーに SwitchBack を実装しています。開発者は、対象とする Windows バージョンを表す GUID を、実行ファイルに関連付けられたマニフェストに記述できます。</p>
 <p>たとえば、Windows 10 で追加された API の改善を利用する場合は、Windows 10 の GUID をマニフェストに指定します。
 Windows 7 固有の挙動に依存する従来のアプリケーションなら、代わりに Windows 7 の GUID を指定します。</p>
-<p>SwitchBack はマニフェストを解析し、対応する DLL のイメージセクション <code>.sb_data</code> に埋め込まれた情報と照合します。この結果に基づいて、モジュールが呼び出す API の実装を選びます。
-SwitchBack は読み込まれたモジュールごとに動くので、同じプロセス内で新旧の DLL が同じ API を呼び出しても、異なる結果が得られます。</p>
+<p>SwitchBack はマニフェストを解析し、SwitchBack 対応 DLL のイメージセクション <code>.sb_data</code> に埋め込まれた情報と照合します。この結果に基づいて、モジュールが呼び出す API の実装を選びます。
+SwitchBack は読み込まれたモジュールごとに動くので、同じプロセス内で、新旧の DLL が同じ API を同時に呼び出し、それぞれ異なる結果を受け取ることができます。</p>
 <h5 id="SwitchBack-の-GUID">SwitchBack の GUID</h5>
 <p>本書の執筆時点では、Windows Vista 以降の各バージョンに対応する互換性設定に、次の GUID が定義されています。</p>
 <ul>
