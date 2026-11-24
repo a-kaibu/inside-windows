@@ -21023,7 +21023,7 @@ windbg.exe /I</code></pre>
 g</code></pre></li>
 <li>デバッガーが中断したら、再び <code>~.</code> を実行し、スレッド ID が変わったことを確認します。</li>
 <li>タスクホストクライアントが、タスクのエントリポイントを実行するために新しいスレッドを作成したことが分かります。<code>CoCreateInstance</code> は、引数で指定された CLSID に対応するクラスの COM オブジェクトを1つ作成します。この実験では、タスクを表す COM クラスの GUID と、そのオブジェクトが実装するインターフェイスの ID の2つを確認します。</li>
-</ol></section><section class="page" id="p2-page-517" aria-label="p2-page-517"><ol start="20"><li>Windows の x64 呼び出し規約では、関数の最初の4つの整数またはポインター引数をレジスターで渡します。そのため、次のように2つの GUID を確認できます。
+</ol></section><section class="page" id="p2-page-517" aria-label="p2-page-517"><ol start="20"><li>Windows の x64 呼び出し規約では、関数の第1〜第4引数が整数またはポインターの場合、対応するレジスターで渡します。そのため、次のように2つの GUID を確認できます。
 <pre><code>0:004&gt; dt combase!CLSID @rcx
  {0358b920-0ac7-461f-98f4-58e32cd89148}
    +0x000 Data1
