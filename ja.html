@@ -1729,8 +1729,8 @@ Windows はこれらのバイナリが常に WinTcb-Light で動作するよう�
 <p>Process Explorer が、2種類の保護プロセスをどのように表示するかを確認します。Process Explorer を起動し、列の選択画面の「Process Image」タブで「Protection」にチェックを入れ、「Protection」列を表示します。</p>
 <figure><img loading="lazy" width="250" height="347" src="assets/ce11ef87f83ffbac932b6914.webp" alt="Process Explorer の Process Image タブで Protection 列を選択した画面"></figure>
 <p>「Protection」列で降順に並べ替え、一覧の先頭へスクロールします。保護されているすべてのプロセスと、それぞれの保護の種類が表示されます。続く図は、64ビット版 Windows 10 での表示例です。</p></section><section class="page" id="page-136" aria-label="page-136"><figure><img loading="lazy" width="379" height="229" src="assets/dbd9ad5a508602c2a990989b.webp" alt="Process Explorer の Protection 列に表示された各プロセスの保護レベル"></figure>
-<p>保護プロセスを選び、下部ペインを DLL 表示に切り替えても、何も表示されません。Process Explorer はユーザーモード API で読み込み済みのモジュールを照会しますが、保護プロセスに対しては、この照会に必要なアクセス権が認められないためです。例外は System プロセスです。System も保護されていますが、システムプロセスには DLL がないので、Process Explorer は読み込み済みのカーネルモジュール（主にドライバー）を一覧表示します。これには、プロセスハンドルを必要としないシステム API の <code>EnumDeviceDrivers</code> を使います。</p>
-<p>ハンドル表示に切り替えると、ハンドルの情報はすべて表示されます。Process Explorer は、個々のプロセスのハンドルを必要とせずに、システム上のすべてのハンドルを列挙する非公開 API を使います。この API が各ハンドルに対応する PID を返すため、Process Explorer は所属するプロセスを特定できます。</p>
+<p>保護プロセスを選び、下部ペインを DLL 表示に切り替えても、何も表示されません。Process Explorer はユーザーモード API で読み込み済みのモジュールを照会しますが、保護プロセスに対しては、この照会に必要なアクセス権が認められないためです。例外は System プロセスです。System も保護されていますが、System プロセスには DLL が読み込まれないため、Process Explorer は読み込み済みのカーネルモジュール（主にドライバー）を一覧表示します。これには、プロセスハンドルを必要としないシステム API の <code>EnumDeviceDrivers</code> を使います。</p>
+<p>ハンドル表示に切り替えると、ハンドルの情報はすべて表示されます。Process Explorer は、対象プロセスを指すハンドルを開かずに、システム上のすべてのハンドルを列挙する非公開 API を使います。この API が各ハンドルに対応する PID を返すため、Process Explorer は各ハンドルを所有するプロセスを特定できます。</p>
 <h3 id="サードパーティー向け-PPL-のサポート">サードパーティー向け PPL のサポート</h3>
 <p>PPL により、Microsoft が作成した実行ファイル以外のプロセスにも保護を適用できます。代表例はマルウェア対策（AM）ソフトウェアです。一般的な製品は、主に次の3つのコンポーネントで構成されます。</p>
 <ul>
