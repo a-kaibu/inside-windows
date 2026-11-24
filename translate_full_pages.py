@@ -19203,3 +19203,8 @@ full_pages_ja['p2-page-579'] = (
     .removesuffix('\n<figure><img loading="lazy" width="603" height="334" src="assets/6f81859aabfee0ca94c7e8df.webp" alt="クラッシュダンプの書き込みに使うカーネルモジュールのコピーと依存関係"></figure>')
     .replace('<p>図10-42 クラッシュダンプファイルの生成と書き込みに使うカーネルモジュールのコピー。</p>', '<figure><img loading="lazy" width="603" height="334" src="assets/6f81859aabfee0ca94c7e8df.webp" alt="クラッシュダンプの書き込みに使うカーネルモジュールのコピーと依存関係"><figcaption>図10-42\u3000クラッシュダンプファイルの生成と書き込みに使うカーネルモジュールのコピー。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-580'] = full_pages_ja['p2-page-580'].replace(
+    'セッションマネージャーは <code>HKLM',
+    'ダンプが含まれていれば、セッションマネージャーは <code>HKLM',
+)
