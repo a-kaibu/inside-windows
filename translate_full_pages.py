@@ -18822,3 +18822,13 @@ full_pages_ja['p2-page-437'] = full_pages_ja['p2-page-437'].replace(
     '各ハイブのルートキーは、通常は対応しません。',
     '各ハイブのルートキーは対応していません。',
 )
+
+full_pages_ja['p2-page-438'] = full_pages_ja['p2-page-438'].replace(
+    'システムは、揮発性ハイブを起動のたびに作成し、メモリ内だけで管理します。',
+    '揮発性ハイブはメモリ内だけで作成・管理する一時的なハイブです。システムは起動のたびに作成します。',
+)
+
+full_pages_ja['p2-page-440'] = full_pages_ja['p2-page-440'].replace(
+    'このうち <code>SYSTEM</code> と <code>ELAM</code> は、引き続きカーネルアドレスでマップされた非ページメモリに常駐します。',
+    '事前に読み込まれたこれらのハイブ（<code>SYSTEM</code> と <code>ELAM</code>）は、引き続きカーネルアドレスでマップされた非ページメモリに常駐します。',
+)
