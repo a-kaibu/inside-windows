@@ -21217,7 +21217,7 @@ PS C:&#92;&gt; Unregister-Event -SourceIdentifier "TestWmiRegistration"</code></
 <li>PRCB にあるプロセッサごとのグローバルトレース用データ構造を初期化します。</li>
 <li>リアルタイムコンシューマーのオブジェクト型 <code>EtwConsumer</code> と、登録のオブジェクト型 <code>EtwRegistration</code> を作成します。前者は、ユーザーモードのリアルタイムコンシューマープロセスを ETW のメインロガースレッドに接続するために使います。後者は、ユーザーモードアプリケーションからプロバイダーを登録するために使います。</li>
 <li>バグチェックダンプにロガーセッションのデータを含めるため、ETW のバグチェックコールバックを登録します。</li>
-<li><code>HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;WMI</code> 配下の <code>AutoLogger</code> キーと <code>GlobalLogger</code> キーに従い、グローバルロガーと自動ロガーのセッションを初期化し、開始します。</li>
+<li><code>HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;WMI</code> 配下の <code>GlobalLogger</code> キーと <code>AutoLogger</code> キーに従い、それぞれグローバルロガーと自動ロガーのセッションを初期化して開始します。</li>
 <li>カーネル API の <code>EtwRegister</code> を使い、Kernel Event Tracing、General Events、Process、Network、Disk、File Name、IO、Memory などの NT カーネルのイベントプロバイダーを登録します。</li>
 <li>ETW の初期化完了を示す WNF 状態を発行します。</li>
 <li>グローバルトレースロギングと General Events の両方のプロバイダーに <code>SystemStart</code> イベントを書き込みます。図10-32に示すように、このイベントは OS が起動したおおよその時刻を記録します。</li>

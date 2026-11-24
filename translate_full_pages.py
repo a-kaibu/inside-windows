@@ -19068,3 +19068,8 @@ full_pages_ja['p2-page-531'] = full_pages_ja['p2-page-531'].replace(
     'SCM、SDDL、LSA の検索 API をホストするライブラリです。',
     'SCM と SDDL の API、および LSA の検索 API をホストするライブラリです。',
 )
+
+full_pages_ja['p2-page-532'] = full_pages_ja['p2-page-532'].replace(
+    '<code>AutoLogger</code> キーと <code>GlobalLogger</code> キーに従い、グローバルロガーと自動ロガーのセッションを初期化し、開始します。',
+    '<code>GlobalLogger</code> キーと <code>AutoLogger</code> キーに従い、それぞれグローバルロガーと自動ロガーのセッションを初期化して開始します。',
+)
