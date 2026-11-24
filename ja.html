@@ -7153,7 +7153,7 @@ UWEV  pfn ea886     C---A--UR-V</pre>
 <li>空のエンクレーブを作ったら、<code>LoadEnclaveData</code> を呼び出し、エンクレーブ外のメモリからコードやデータをエンクレーブ内にコピーします。必要に応じて、この関数を複数回呼び出せます。</li>
 </ol></section><section class="page" id="page-486" aria-label="page-486"><ol start="4">
 <li><code>InitializeEnclave</code> を呼び出してエンクレーブを初期化します。これで、エンクレーブ内に配置したコードを実行できる状態になります。</li>
-<li>エンクレーブ内のコードを実行するには、アセンブリ命令を直接使います。<code>EENTER</code> は実行をエンクレーブに移し、<code>EEXIT</code> は呼び出し元の関数に戻します。フォールトなどが発生すると、非同期エンクレーブ終了（AEX）によってエンクレーブ内の実行が中断されることもあります。これらの命令の詳細は SGX のドキュメントを参照してください。</li>
+<li>エンクレーブ内のコードの実行は Windows API で抽象化されていないため、アセンブリ命令を直接使います。<code>EENTER</code> は実行をエンクレーブに移し、<code>EEXIT</code> は呼び出し元の関数に戻します。フォールトなどが発生すると、非同期エンクレーブ終了（AEX）によってエンクレーブ内の実行が中断されることもあります。これらの命令は Windows 固有のものではなく、本書の範囲外です。詳細は SGX のドキュメントを参照してください。</li>
 <li>エンクレーブを破棄するには、<code>CreateEnclave</code> から取得したポインターを <code>VirtualFree</code> または <code>VirtualFreeEx</code> に渡します。</li>
 </ol>
 <h3 id="メモリエンクレーブの初期化">メモリエンクレーブの初期化</h3>
