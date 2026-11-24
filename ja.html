@@ -2026,13 +2026,13 @@ Windows のクライアント側ライブラリ <code>Kernel32.dll</code>（実�
 <tr><th scope="row">Debugger 値で別のイメージが指定されている</th><td><code>PsCreateFailExeName</code></td><td>Debugger 値に指定された名前</td><td><code>CreateProcessInternalW</code> は段階1からやり直します。</td></tr>
 <tr><th scope="row">無効または破損した Windows EXE</th><td><code>PsCreateFailExeFormat</code></td><td>該当なし</td><td><code>CreateProcessInternalW</code> は失敗します。</td></tr>
 <tr><th scope="row">ファイルを開けない</th><td><code>PsCreateFailOnFileOpen</code></td><td>該当なし</td><td><code>CreateProcessInternalW</code> は失敗します。</td></tr>
-<tr><th scope="row">拡張子が .bat または .cmd のコマンド手順ファイル</th><td><code>PsCreateFailOnSectionCreate</code></td><td>Cmd.exe</td><td><code>CreateProcessInternalW</code> は段階1からやり直します。</td></tr>
+<tr><th scope="row">拡張子が .bat または .cmd のバッチファイル</th><td><code>PsCreateFailOnSectionCreate</code></td><td>Cmd.exe</td><td><code>CreateProcessInternalW</code> は段階1からやり直します。</td></tr>
 </tbody></table></div>
 <p><code>CreateProcessInternalW</code> は、イメージを実行するときに次のように分岐します。</p>
 <ul>
-<li>x86 の32ビット版 Windows で、拡張子が <code>.exe</code>、<code>.com</code>、<code>.pif</code> の MS-DOS アプリケーションを指定した場合、Windows サブシステムにメッセージを送ります。サブシステムは、そのセッションに MS-DOS サポートプロセス（<code>HKLM\SYSTEM\CurrentControlSet\Control\WOW</code> の <code>cmdline</code> 値で指定される <code>Ntvdm.exe</code>）があるかを調べます。すでにあれば、仮想 DOS マシン（VDM）プロセスにメッセージを送り、新しいイメージを実行させます。その後、<code>CreateProcessInternalW</code> は呼び出し元に戻ります。サポートプロセスがなければ、実行イメージを <code>Ntvdm.exe</code> に変更し、段階1からやり直します。</li>
+<li>x86 の32ビット版 Windows で、拡張子が <code>.exe</code>、<code>.com</code>、<code>.pif</code> の MS-DOS アプリケーションを指定した場合、Windows サブシステムにメッセージを送ります。サブシステムは、そのセッションに MS-DOS サポートプロセス（<code>HKLM\SYSTEM\CurrentControlSet\Control\WOW</code> の <code>cmdline</code> 値で指定される <code>Ntvdm.exe</code>）があるかを調べます。すでにあれば、Windows サブシステムがその仮想 DOS マシン（VDM）プロセスにメッセージを送り、新しいイメージを実行させます。その後、<code>CreateProcessInternalW</code> は呼び出し元に戻ります。サポートプロセスがなければ、実行イメージを <code>Ntvdm.exe</code> に変更し、段階1からやり直します。</li>
 <li>拡張子が <code>.bat</code> または <code>.cmd</code> の場合、実行するイメージを Windows のコマンドプロンプト <code>Cmd.exe</code> に変更し、段階1からやり直します。バッチファイル名は <code>/c</code> の後の第2引数として <code>Cmd.exe</code> に渡します。</li>
-<li>x86 版 Windows で Win16（Windows 3.1）の実行ファイルを指定した場合、<code>CreateProcessInternalW</code> は、新しい VDM プロセスを作るか、セッション共通の既定の VDM プロセスを使うかを決めます。共通の VDM プロセスがまだ作られていないこともあります。<code>CreateProcess</code> の <code>CREATE_SEPARATE_WOW_VDM</code> と <code>CREATE_SHARED_WOW_VDM</code> フラグで、この選択を指定できます。どちらもなければ、レジストリの <code>HKLM\SYSTEM\CurrentControlSet\Control\WOW</code> にある <code>DefaultSeparateVDM</code> 値が既定の動作を決めます。</li>
+<li>x86 版 Windows で Win16（Windows 3.1）の実行ファイルを指定した場合、<code>CreateProcessInternalW</code> は、新しい VDM プロセスを作るか、セッション共通の既定の VDM プロセスを使うかを決めます。共通の VDM プロセスがまだ作られていないこともあります。<code>CreateProcess</code> の <code>CREATE_SEPARATE_WOW_VDM</code> と <code>CREATE_SHARED_WOW_VDM</code> フラグで、新規と共有のどちらを使うか指定できます。どちらもなければ、レジストリの <code>HKLM\SYSTEM\CurrentControlSet\Control\WOW</code> にある <code>DefaultSeparateVDM</code> 値が既定の動作を決めます。</li>
 </ul></section><section class="page" id="page-155" aria-label="page-155"><p>アプリケーションを専用の VDM で実行する場合は、実行イメージを <code>Ntvdm.exe</code> に変更し、設定パラメーターと16ビットプロセスの名前を引数として付けます。<code>CreateProcessInternalW</code> は段階1からやり直します。
 それ以外の場合は、Windows サブシステムがメッセージを送り、共有 VDM プロセスが存在していて使えるか確認します。
 VDM が別のデスクトップで動作している場合や、呼び出し元と異なるセキュリティコンテキストで実行されている場合は、新しい VDM が必要です。
