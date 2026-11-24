@@ -739,12 +739,6 @@ p1_omit |= {f"page-{i}" for i in range(788, 802)}
 p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
 p2_omit |= {f"p2-page-{i}" for i in range(892, 913)}
 
-# The added page summaries preserve the complete source in a collapsed disclosure.
-preserve_source_pages = {f"p2-page-{i}" for i in range(236, 275)}
-preserve_source_pages |= {f"p2-page-{i}" for i in (284, 285, 292, 293, 335)}
-preserve_source_pages |= {f"p2-page-{i}" for i in range(808, 913)}
-preserve_source_pages -= full_pages_ja.keys()
-
 def render_plain_translation(text):
     if re.search(r"<(?:p|h[1-6]|ul|ol|table|pre|div|details)\b", text, re.I):
         return text
@@ -802,10 +796,6 @@ def render_pages(html, omit, prefix=''):
             raise ValueError(f'{pid}: missing Japanese translation')
         if body:
             body = render_plain_translation(body)
-            if pid in preserve_source_pages:
-                source = reader_controls.sub('', content).strip()
-                source = re.sub(r'<h([1-6])([^>]*)>(.*?)</h\1>', r'<p><strong>\3</strong></p>', source, flags=re.DOTALL)
-                body += '<details class="source-english"><summary>原文（英語）</summary>' + source + '</details>'
             yield f'<section class="page" id="{pid}" aria-label="{pid}">{body}</section>'
         else:
             # Keep the URL target for a blank source page, but don't render a page border.
@@ -839,9 +829,7 @@ for index, section in enumerate(body_sections):
         rendered_title = html_module.escape(title) if title != html_module.unescape(re.sub(r'<[^>]+>', '', title_html)).strip() else title_html
         return f'<h{level}{attrs} id="{anchor}">{rendered_title}</h{level}>'
 
-    article, source_marker, source = content.partition('<details class="source-english">')
-    article = re.sub(r'<h([2-6])([^>]*)>(.*?)</h\1>', add_heading_id, article, flags=re.DOTALL)
-    content = article + source_marker + source
+    content = re.sub(r'<h([2-6])([^>]*)>(.*?)</h\1>', add_heading_id, content, flags=re.DOTALL)
     content = re.sub(r'(<table\b.*?</table>)', r'<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます">\1</div>', content, flags=re.DOTALL)
     body_sections[index] = f'<section class="page" id="{section_id}" aria-label="{section_id}">{content}</section>'
 
@@ -889,7 +877,7 @@ head_html = head_html.replace('</style>', '''
 .table-scroll th,.table-scroll td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
 .table-scroll th{background:var(--panel)}
 .toc-group{margin:0;border-bottom:1px solid var(--line)}.toc-group summary,.toc-subgroup summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:6px}.toc-group summary::-webkit-details-marker,.toc-subgroup summary::-webkit-details-marker{display:none}.toc-group summary::after,.toc-subgroup summary::after{content:'⌄';font:12px system-ui;color:var(--muted);flex:none}.toc-group:not([open])>summary::after,.toc-subgroup:not([open])>summary::after{content:'›'}.toc-group summary>a,.toc-subgroup summary>a{display:block;flex:1}.toc-group>ul,.toc-subgroup>ul{list-style:none;padding:0 0 0 10px;margin:0}.toc-subgroup{margin:0}.toc-chapter-link{border-bottom:1px solid var(--line)}.toc-chapter-link,.toc-group>summary{font-weight:600}.toc-subgroup summary>a{font-weight:400}
-.source-english{margin-top:1em;border-top:1px solid var(--line);padding-top:.5em}.source-english>summary{cursor:pointer;color:var(--muted)}.source-english h1,.source-english h2,.source-english h3,.source-english h4,.source-english h5,.source-english h6{font-size:1em;margin:.75em 0}.toc-level-1{padding-left:14px!important}.toc-level-2{padding-left:28px!important}.toc-level-3{padding-left:42px!important}.toc-level-4{padding-left:56px!important}
+.toc-level-1{padding-left:14px!important}.toc-level-2{padding-left:28px!important}.toc-level-3{padding-left:42px!important}.toc-level-4{padding-left:56px!important}
 @media(max-width:900px){.table-scroll{max-width:calc(100vw - 40px)}.page{min-width:0}main{min-width:0;overflow-x:hidden}}
 </style>''')
 
