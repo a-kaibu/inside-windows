@@ -18198,7 +18198,7 @@ Windows Phone から Xbox まで、さまざまな Windows 製品のコンポー
 </table></div></section><section class="page" id="p2-page-264" aria-label="p2-page-264"><h4 id="WNF-の状態名と保存先">WNF の状態名と保存先</h4>
 <p>WNF の状態名は、<code>0xAC41491908517835</code> のような一見ランダムな64ビットの識別子で表します。
 コードでは <code>WNF_AUDC_CAPTURE_ACTIVE</code> のような C プリプロセッサマクロで、読みやすい名前を付けます。
-識別子には、バージョン番号（1）、存続期間（永続または一時）、スコープ（プロセス、コンテナー、ユーザー、セッション、マシンのいずれか）、データを永続化するかどうかを示すフラグが含まれます。
+識別子には、バージョン番号（1）、状態名の存続期間、スコープ（プロセス、コンテナー、ユーザー、セッション、マシンのいずれか）、データを永続化するかどうかを示すフラグが含まれます。
 既知の状態名には、所有者を表す接頭辞と、それに続く一意なシーケンス番号も含まれます。
 図8-41に形式を示します。</p>
 <figure>
@@ -18223,7 +18223,7 @@ WNF はレジストリを保存先として使い、<code>HKLM\SYSTEM\CurrentCon
 仕組みは本章の「オブジェクトマネージャー」で説明した永続オブジェクトに似ており、登録には同じく <code>SeCreatePermanentPrivilege</code> 特権が必要です。
 これらの名前もレジストリに保存されますが、保存先は <code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\VolatileNotifications</code> キーです。
 レジストリの揮発性フラグを使うため、再起動すると名前は消えます。
-WNF でいう persistent の存続期間は1回の起動セッションです。後述する一時的な状態名（temporary）は、プロセスの存続期間に従います。</p>
+WNF でいう persistent の存続期間は、起動してから次に再起動するまでです。後述する一時的な状態名（temporary）は、プロセスの存続期間に従います。</p>
 <p>再起動をまたいで残したい場合は、状態名を恒久的な名前（permanent）として登録できます。
 保存先は <code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Notifications</code> で、このキーに揮発性フラグは設定されていません。
 この登録にも <code>SeCreatePermanentPrivilege</code> 特権が必要です。

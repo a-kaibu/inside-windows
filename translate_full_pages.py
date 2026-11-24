@@ -18641,3 +18641,12 @@ full_pages_ja['p2-page-257'] = full_pages_ja['p2-page-257'].replace(
     '一時停止の対象になったプロセス（ディープフリーズ）',
     'ディープフリーズによる一時停止の対象になったプロセス',
 )
+
+
+full_pages_ja['p2-page-264'] = full_pages_ja['p2-page-264'].replace(
+    '存続期間（永続または一時）',
+    '状態名の存続期間',
+).replace(
+    'WNF でいう persistent の存続期間は1回の起動セッションです。',
+    'WNF でいう persistent の存続期間は、起動してから次に再起動するまでです。',
+)
