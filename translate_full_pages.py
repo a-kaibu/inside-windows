@@ -18702,3 +18702,8 @@ full_pages_ja['p2-page-308'] = full_pages_ja['p2-page-308'].replace(
     'ゲスト OS が <code>CPUID</code> を要求すると、パーティション内のどの仮想プロセッサーもこのデータを使います。',
     'パーティション内の各仮想プロセッサーは、ゲスト OS が <code>CPUID</code> を実行したときにこのデータを使います。',
 )
+
+full_pages_ja['p2-page-310'] = full_pages_ja['p2-page-310'].replace(
+    'ホスト状態領域には、ハイパーバイザーの VAL ディスパッチループを指すように設定します。',
+    'ホスト状態領域には、VMEXIT 後の実行先としてハイパーバイザーの VAL ディスパッチループを設定します。',
+)
