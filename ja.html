@@ -5932,7 +5932,7 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <tr><td>Copy-on-write</td><td>前述のコピーオンライトをこのページに適用します。</td></tr>
 </tbody></table></div></section><section class="page" id="page-393" aria-label="page-393"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-10　PTE の状態ビットと保護ビット（続き）</caption><thead><tr><th scope="col">ビット名</th><th scope="col">意味</th></tr></thead><tbody>
 <tr><th scope="row">Dirty</th><td>ページへの書き込みが行われました。</td></tr>
-<tr><th scope="row">Global</th><td>アドレス変換はすべてのプロセスに適用されます。たとえば、アドレス変換バッファーをフラッシュしても、この PTE には影響しません。</td></tr>
+<tr><th scope="row">Global</th><td>アドレス変換はすべてのプロセスに適用されます。たとえば、プロセスの切り替えに伴って変換ルックアサイドバッファー（TLB）をフラッシュしても、この PTE に対応する変換は TLB に残ります。</td></tr>
 <tr><th scope="row">Large page</th><td>PDE が2 MBのページをマップしていることを示します。本章の「ラージページとスモールページ」を参照してください。</td></tr>
 <tr><th scope="row">No execute</th><td>ページ内のコードを実行できません。データ専用のページとして使えます。</td></tr>
 <tr><th scope="row">Owner</th><td>ユーザーモードのコードがページにアクセスできるか、カーネルモードのみに制限されるかを示します。</td></tr>
