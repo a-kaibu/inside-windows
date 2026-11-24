@@ -791,16 +791,30 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <li>サーバー版に付属する追加のサービス。ディレクトリサービス、Host Guardian、記憶域スペース ダイレクト、シールドされた仮想マシン、クラスタリングなどがあります。</li>
 </ul>
 <p>表2-2は、Windows 10、Windows Server 2012 R2、Windows Server 2016 の一部のエディションで、サポートするメモリとプロセッサーの違いを示します。Windows Server 2012 R2 の詳細は Microsoft のエディション比較表を参照してください。Windows 10、Windows Server 2016、それ以前の OS のメモリ上限は MSDN の資料に記載されています。</p>
-<p>クライアント版とサーバー版には複数のパッケージがありますが、主要なシステムファイルは共通です。これにはカーネルイメージ <code>Ntoskrnl.exe</code> と PAE 版の <code>Ntkrnlpa.exe</code>、HAL のライブラリ、デバイスドライバー、基本的なシステムユーティリティと DLL が含まれます。</p></section><section class="page" id="page-72" aria-label="page-72"><p>同じカーネルバイナリが、どのようにして自身がクライアント版かサーバー版か、あるいはどのエディションかを判別し、振る舞いを変えているのでしょうか？</p>
-
-<p>Windows カーネルは起動時、プロダクトタイプを内部変数（<code>SharedUserData->NtProductType</code>）に読み込みます：</p>
-<ul>
-  <li><code>NtProductWinNt</code>（1）：デスクトップクライアント版（Windows 10）</li>
-  <li><code>NtProductLanManNt</code>（2）：ドメインコントローラーサーバー</li>
-  <li><code>NtProductServer</code>（3）：通常のメンバーサーバー（Windows Server）</li>
-</ul>
-
-<p>さらに現代のWindowsでは、100項目を超える詳細な機能制限が「<strong>ソフトウェアライセンスポリシー（Product Policy）</strong>」データとして暗号・デジタル署名付きでレジストリ（<code>HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions</code>）に格納されています。BitLocker、Hyper-V、リモートデスクトップ接続数、最大メモリ容量などの機能の可否は、カーネル内のライセンスマネージャーがこのポリシー値を評価することによって動的に制御されます。</p></section><section class="page" id="page-73" aria-label="page-73"><p>また、クライアントとサーバーではシステムのチューニング（最適化の方向性）も自動的に切り替わります：</p>
+<p>クライアント版とサーバー版には複数のパッケージがありますが、主要なシステムファイルは共通です。これにはカーネルイメージ <code>Ntoskrnl.exe</code> と PAE 版の <code>Ntkrnlpa.exe</code>、HAL のライブラリ、デバイスドライバー、基本的なシステムユーティリティと DLL が含まれます。</p></section><section class="page" id="page-72" aria-label="page-72"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
+<caption>表2-2　一部の Windows エディションにおけるプロセッサーとメモリの上限</caption>
+<thead><tr><th>エディション</th><th>ソケット数（32ビット版）</th><th>物理メモリ（32ビット版）</th><th>論理プロセッサー数またはソケット数（64ビット版）</th><th>物理メモリ（x64 版）</th></tr></thead>
+<tbody>
+<tr><th scope="row">Windows 10 Home</th><td>1</td><td>4 GB</td><td>1ソケット</td><td>128 GB</td></tr>
+<tr><th scope="row">Windows 10 Pro</th><td>2</td><td>4 GB</td><td>2ソケット</td><td>2 TB</td></tr>
+<tr><th scope="row">Windows 10 Enterprise</th><td>2</td><td>4 GB</td><td>2ソケット</td><td>2 TB</td></tr>
+<tr><th scope="row">Windows Server 2012 R2 Essentials</th><td>対象外</td><td>対象外</td><td>2ソケット</td><td>64 GB</td></tr>
+<tr><th scope="row">Windows Server 2016 Standard</th><td>対象外</td><td>対象外</td><td>512論理プロセッサー</td><td>24 TB</td></tr>
+<tr><th scope="row">Windows Server 2016 Datacenter</th><td>対象外</td><td>対象外</td><td>512論理プロセッサー</td><td>24 TB</td></tr>
+</tbody>
+</table></div>
+<p>各エディションが同じカーネルイメージを使うため、システムは <code>HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions</code> キーの <code>ProductType</code> と <code>ProductSuite</code> を参照し、どのエディションで起動したかを判定します。<code>ProductType</code> でクライアントかサーバーかを区別します。これらの値は、前述のライセンスポリシーファイルに基づいてレジストリに読み込まれます。<code>ProductType</code> の値を表2-3に示します。ユーザーモードでは <code>VerifyVersionInfo</code> で確認できます。デバイスドライバーは、WDK に記載されているカーネルモードの関数 <code>RtlGetVersion</code> と <code>RtlVerifyVersionInfo</code> を使えます。</p>
+<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
+<caption>表2-3　<code>ProductType</code> のレジストリ値</caption>
+<thead><tr><th>Windows の種類</th><th><code>ProductType</code> の値</th></tr></thead>
+<tbody>
+<tr><td>Windows クライアント</td><td><code>WinNT</code></td></tr>
+<tr><td>Windows サーバー（ドメインコントローラー）</td><td><code>LanmanNT</code></td></tr>
+<tr><td>Windows サーバー（ドメインコントローラー以外）</td><td><code>ServerNT</code></td></tr>
+</tbody>
+</table></div>
+<p>別のレジストリ値 <code>ProductPolicy</code> には、エディションと有効な機能を区別する <code>tokens.dat</code> のデータのコピーがキャッシュされています。</p>
+<p>同じ主要ファイルを使っていても、既定の動作は異なります。サーバー版は高性能なアプリケーションサーバーとしてシステム全体のスループットを重視します。サーバー機能を備えるクライアント版では、対話型のデスクトップ操作への応答時間を重視します。たとえば起動時には、製品の種類に応じて、OS のヒープ（プール）の数とサイズ、内部のシステムワーカースレッドの数、システムデータキャッシュのサイズが変わります。実行時にも、メモリマネージャーがシステムとプロセスのメモリ要求をどう調整するかなどの方針が異なります。</p></section><section class="page" id="page-73" aria-label="page-73"><p>また、クライアントとサーバーではシステムのチューニング（最適化の方向性）も自動的に切り替わります：</p>
 <ul>
   <li><strong>スレッドのタイムスライス（クォンタム）</strong>：クライアント版では、前景で操作しているGUIアプリの応答性を最優先にするため、短めのクォンタム（約20ミリ秒）が割り当てられ、フォアグラウンドウィンドウに優先的なブーストが与えられます。一方、サーバー版ではコンテキストスイッチのオーバーヘッドを減らしバックグラウンドのスループットを最大化するため、約6倍長いクォンタム（約120ミリ秒）が既定となります。</li>
   <li><strong>メモリ管理の配分</strong>：クライアント版ではアプリケーションのワーキングセット（プロセス物理メモリ）を優先し、サーバー版ではファイルシステムキャッシュ（スタンバイリスト）やシステムプールの拡張を優先するチューニングが行われます。</li>
