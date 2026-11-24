@@ -715,15 +715,17 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <p>ここからは Windows のアーキテクチャを構成する主なコンポーネントを見ていきます。図2-1は構成を簡略化したものです。ネットワークコンポーネントや、デバイスドライバーのさまざまな階層構成は省いています。</p>
 <figure><img loading="lazy" width="685" height="357" src="assets/1b8a5ca03c6f19766dd262c2.webp" alt="Windows のユーザーモード、カーネルモード、ハイパーバイザーの構成"><figcaption>図2-1　Windows のアーキテクチャの概要</figcaption></figure>
 <p>図2-1の上側の境界線は、Windows のユーザーモードとカーネルモードを分けています。線より上の箱はユーザーモードプロセス、下のコンポーネントはカーネルモードの OS サービスです。第1章で説明したように、ユーザーモードのスレッドはプロセス固有のアドレス空間で実行されます。カーネルモードで実行している間は、システム空間にもアクセスできます。システムプロセス、サービスプロセス、ユーザープロセス、環境サブシステムは、それぞれ固有のプロセスアドレス空間を持ちます。</p>
-<p>もう1本の境界線は、Windows のカーネルモード部分とハイパーバイザーを分けています。ハイパーバイザーも CPU の特権レベル0で動きますが、Intel の VT-x や AMD の SVM が提供する専用の CPU 命令を使うため、カーネルから分離された状態でカーネルやアプリケーションを監視できます。この分離を「リング −1」と呼ぶことがありますが、実際にその番号の CPU 特権リングがあるわけではありません。</p></section><section class="page" id="page-65" aria-label="page-65"><p>ユーザーモードで動作するプロセス群は、主に以下の4つの基本タイプに分類されます：</p>
+<p>もう1本の境界線は、Windows のカーネルモード部分とハイパーバイザーを分けています。ハイパーバイザーも CPU の特権レベル0で動きますが、Intel の VT-x や AMD の SVM が提供する専用の CPU 命令を使うため、カーネルから分離された状態でカーネルやアプリケーションを監視できます。この分離を「リング −1」と呼ぶことがありますが、実際にその番号の CPU 特権リングがあるわけではありません。</p></section><section class="page" id="page-65" aria-label="page-65"><p>ユーザーモードプロセスは、大きく次の4種類に分けられます。</p>
 <ul>
-  <li><strong>固定システムプロセス（Fixed System Processes）</strong>：OSの稼働に不可欠なシステムプロセス群です（ログオンを管理する <code>Winlogon.exe</code>、セッション管理を行う <code>Smss.exe</code>、認証を担う <code>Lsass.exe</code> など）。これらはWindowsサービスとしては構成されておらず、OSの起動シーケンスの中で直接起動されます。</li>
-  <li><strong>サービスプロセス（Service Processes）</strong>：タスクスケジューラや印刷スプーラー、Windows Update など、ユーザーのログオン状態とは無関係にバックグラウンドで常駐・実行されるWindowsサービスをホストするプロセスです。Microsoft SQL Server や Exchange Server などのサーバー製品もサービスプロセスとして稼働します。</li>
-  <li><strong>ユーザーアプリケーション（User Applications）</strong>：一般ユーザーが起動して利用する対話型プログラムです。Win32（32ビット/64ビット）、Windows Runtime（UWP）アプリなどがこれに該当します（16ビットアプリは32ビット版Windowsでのみ動作し、POSIXサブシステムはWindows 8で廃止されました）。</li>
-  <li><strong>環境サブシステムサーバープロセス（Environment Subsystem Processes）</strong>：OSのネイティブサービスを、特定のOS環境（Windows API等）の仕様に合わせたセマンティクスとしてアプリケーションに提示するサーバープロセスです（<code>Csrss.exe</code>）。</li>
+<li><strong>ユーザープロセス</strong>　32ビットまたは64ビットの Windows アプリケーション、16ビットの Windows 3.1 または MS-DOS アプリケーション、32ビットまたは64ビットの POSIX アプリケーションが該当します。Windows 8 以降で Windows ランタイム上で動く Windows アプリも、Windows アプリケーションに含まれます。16ビットアプリケーションは32ビット版 Windows でのみ実行できます。Windows 8 以降、従来の POSIX アプリケーションはサポートされません。</li>
+<li><strong>サービスプロセス</strong>　タスク スケジューラや Print Spooler などの Windows サービスをホストします。サービスは通常、ユーザーがサインインしているかどうかにかかわらず動作する必要があります。Microsoft SQL Server や Microsoft Exchange Server など、多くのサーバーアプリケーションにも、サービスとして動くコンポーネントがあります。詳細は第2部の管理機構の章を参照してください。</li>
+<li><strong>システムプロセス</strong>　サインインを処理するプロセスやセッションマネージャーなど、OS に組み込まれたプロセスです。サービス制御マネージャーが起動する Windows サービスには含まれません。</li>
+<li><strong>環境サブシステムのサーバープロセス</strong>　ユーザーや開発者に提供される OS 環境の一部を実装します。Windows NT には当初、Windows、POSIX、OS/2 の3つの環境サブシステムが同梱されていました。OS/2 サブシステムが同梱された最後の版は Windows 2000、従来の POSIX サブシステムでは Windows XP です。Windows 7 の Ultimate と Enterprise、および Windows Server 2008 R2 の全エディションは、拡張された POSIX サブシステムである Subsystem for UNIX-based Applications（SUA）に対応していました。SUA の提供は終了しており、クライアント版とサーバー版のどちらでもオプション機能として提供されていません。</li>
 </ul>
-
-<p>ユーザーアプリケーションは、システムサービスを直接呼び出すのではなく、各サブシステムに対応した <strong>サブシステムDLL</strong>（<code>Kernel32.dll</code>, <code>User32.dll</code>, <code>Gdi32.dll</code>, <code>Advapi32.dll</code> 等）を介してAPIを利用します。サブシステムDLLは、要求に応じてユーザーモードのサブシステムプロセスにメッセージを送信するか、あるいはネイティブシステムコール（<code>Ntdll.dll</code>）を発行してカーネルへと処理を橋渡しします。</p></section><section class="page" id="page-66" aria-label="page-66"><p>一方、カーネルモードのシステムコンポーネント群は以下の要素で構成されています：</p>
+<blockquote><p><strong>注</strong>　Windows 10 バージョン1607には、開発者向けベータ版の Windows Subsystem for Linux（WSL）が含まれています。WSL の仕組みは、ここで説明する環境サブシステムとは異なります。本章の後半で WSL と関連する Pico プロバイダーを説明します。Pico プロセスについては第3章「プロセスとジョブ」を参照してください。</p></blockquote>
+<p>図2-1では、サービスプロセスとユーザープロセスの下に、サブシステム DLL の箱があります。Windows のユーザーアプリケーションは、1つ以上のサブシステム DLL を介して OS のネイティブサービスを呼び出します。DLL は文書化された関数を、主に <code>Ntdll.dll</code> に実装されたネイティブシステムサービスの呼び出しに変換します。ネイティブサービスの大半は文書化されていません。変換の際には、ユーザープロセスを処理する環境サブシステムのプロセスにメッセージを送る場合もあります。</p>
+<p>Windows のカーネルモードコンポーネントには、次のようなものがあります。</p>
+<ul><li><strong>エグゼクティブ</strong>　メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク、プロセス間通信など、OS の基本サービスを備えます。</li></ul></section><section class="page" id="page-66" aria-label="page-66"><p>一方、カーネルモードのシステムコンポーネント群は以下の要素で構成されています：</p>
 <ul>
   <li><strong>Windows エグゼクティブ（Executive）</strong>：OSの上位レベルの基盤機能を提供するモジュール群です。メモリ管理、プロセスとスレッドの管理、セキュリティ、I/O、ネットワーク通信、プロセス間通信（ALPC）などが含まれます。</li>
   <li><strong>Windows カーネル（Kernel）</strong>：CPUに最も近い低レベルの制御を受け持ちます。スレッドスケジューリング、割り込みおよび例外のディスパッチ、マルチプロセッサ同期（スピンロック等）を提供し、エグゼクティブが上位構造を構築するための基礎オブジェクトを提供します。</li>
