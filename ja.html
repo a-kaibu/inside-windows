@@ -975,7 +975,7 @@ iumdll!IumCrypto:
 <p>どのサブシステムにも属さない実行イメージがあります。この種のイメージは、Windows サブシステム用の <code>Kernel32.dll</code> のような個別のサブシステム DLL を使わず、どのサブシステムでも利用する <code>Ntdll.dll</code> だけにリンクします。この DLL が公開するネイティブ API の大半は文書化されていないため、通常は Microsoft だけがこの種のイメージを作成します。</p>
 <p>一例は、本章の後半で説明するセッションマネージャー（<code>Smss.exe</code>）です。カーネルが直接作成する最初のユーザーモードプロセスなので、その時点でまだ起動していない Windows サブシステム（<code>Csrss.exe</code>）には依存できません。<code>Csrss.exe</code> を起動するのも <code>Smss.exe</code> です。起動時にディスクを検査する Autochk も一例です。起動の比較的早い段階に <code>Smss.exe</code> が実行するため、サブシステムに依存できません。</p>
 <p>次の Dependency Walker の画面では、<code>Smss.exe</code> が <code>Ntdll.dll</code> だけに依存し、サブシステム種別が <code>Native</code> と表示されています。</p>
-<figure><img loading="lazy" width="644" height="151" src="assets/7a789e31678f8e5ee4ed92e2.webp" alt="Dependency Walker で Smss.exe が Ntdll.dll のみに依存し、Native と表示される画面"></figure>
+<figure><img loading="lazy" width="644" height="151" src="assets/7a789e31678f8e5ee4ed92e2.webp" alt="Dependency Walker で Smss.exe が Ntdll.dll のみに依存し、Native と表示される画面"><figcaption>セッションマネージャーのサブシステム種別は Native</figcaption></figure>
 <h3 id="エグゼクティブ">エグゼクティブ</h3>
 <p>エグゼクティブは <code>Ntoskrnl.exe</code> の上位層です。下位層はカーネルです。エグゼクティブには、次の種類の関数が含まれています。</p>
 <ul>
@@ -989,7 +989,7 @@ iumdll!IumCrypto:
 </ul>
 <p>エグゼクティブの主要コンポーネントは次のとおりです。それぞれの詳細は、該当する章で説明します。</p>
 <ul>
-<li><strong>構成マネージャー</strong>　システムレジストリを実装し、管理します。第2部の管理機構の章で説明します。</li>
+<li><strong>構成マネージャー</strong>　システムレジストリを実装し、管理します。第2部の第10章「<a href="#レジストリ-2">レジストリ</a>」で説明します。</li>
 <li><strong>プロセスマネージャー</strong>　プロセスとスレッドを作成・終了します。基本機能は Windows カーネルが実装し、エグゼクティブはカーネルのオブジェクトに追加の動作や機能を組み込みます。第3章と第4章で説明します。</li>
 <li><strong>セキュリティ参照モニター（SRM）</strong>　ローカルコンピューターにセキュリティポリシーを適用します。実行時のオブジェクトの保護と監査を行い、OS のリソースを守ります。第7章で説明します。</li>
 <li><strong>I/O マネージャー</strong>　デバイスに依存しない I/O を実装し、処理を担当するドライバーに要求を渡します。第6章で説明します。</li>
