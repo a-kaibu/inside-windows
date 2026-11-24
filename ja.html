@@ -5460,7 +5460,7 @@ Next block         : 0x000001f72a5eb960</pre>
 <li>タスクマネージャーで2つのメモ帳のコミットサイズを比較します。どちらも何も入力していないのに、2つ目のプロセスのコミットサイズは大幅に増えています。ページヒープが追加のメモリを割り当てるためです。次のページに32ビット版 Windows 10 での画面を示します。</li>
 </ol></section><section class="page" id="page-362" aria-label="page-362"><figure><img loading="lazy" width="343" height="147" src="assets/dc56f4863eb0ce45865f545f.webp" alt="タスクマネージャーで2つのメモ帳のコミットサイズを比較した画面"></figure>
 <ol start="11">
-<li>追加で確保されたメモリの内訳を調べるには、Sysinternals の VMMap を使います。メモ帳の両方のプロセスを実行したまま <code>VMMap.exe</code> を開き、ページヒープを使っている方のメモ帳を選びます。
+<li>ページヒープを有効にしたメモ帳で、どの領域のコミットサイズが増えたかを調べるには、Sysinternals の VMMap を使います。メモ帳の両方のプロセスを実行したまま <code>VMMap.exe</code> を開き、ページヒープを使っている方のメモ帳を選びます。
 <figure><img loading="lazy" width="383" height="384" src="assets/5ddf0e8fddaa73e45160a34a.webp" alt="VMMap のプロセス選択画面でページヒープを使うメモ帳を選ぶ"></figure></li>
 <li>VMMap をもう1つ起動し、もう一方のメモ帳を選びます。両方を比較できるようにウィンドウを横に並べます。</li>
 </ol></section><section class="page" id="page-363" aria-label="page-363"><figure><img loading="lazy" width="604" height="331" src="assets/210894ec8ab8ba93f014ecd9.webp" alt="VMMap でページヒープが有効なメモ帳と無効なメモ帳の使用量を比較"></figure>
