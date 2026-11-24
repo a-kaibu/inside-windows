@@ -9513,7 +9513,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '<p>通常は、MFT '
                 'の各レコードが別々のファイルに対応します。ただし、属性が多いか、断片化が進んだ場合には、1つのファイルに複数のレコードが必要になることがあります。このとき、ほかのレコードの位置を記録する最初のレコードを、ベースファイルレコードと呼びます。</p>',
  'p2-page-688': '<table><caption>図11-32 MFT にある NTFS '
-                'メタデータファイルのレコード（0〜23は NTFS メタデータ用に予約）</caption><thead><tr><th scope="col">レコード番号</th><th scope="col">ファイル</th><th scope="col">用途</th></tr></thead><tbody>\n'
+                'メタデータファイルのレコードの例（図の0〜23は NTFS メタデータ用に予約）</caption><thead><tr><th scope="col">レコード番号</th><th scope="col">ファイル</th><th scope="col">用途</th></tr></thead><tbody>\n'
                 '<tr><th scope="row">0</th><td><code>$MFT</code></td><td>マスターファイルテーブル</td></tr>\n'
                 '<tr><th scope="row">1</th><td><code>$MFTMirr</code></td><td>MFT のミラー</td></tr>\n'
                 '<tr><th scope="row">2</th><td><code>$LogFile</code></td><td>ログファイル</td></tr>\n'
