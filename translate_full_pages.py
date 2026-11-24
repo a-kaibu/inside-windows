@@ -18194,3 +18194,8 @@ full_pages_ja['page-519'] = full_pages_ja['page-519'].replace(
     'これにより、指定した GUID に対応するインターフェイスを列挙し、デバイスを開くためのシンボリックリンク名を取得できます。列挙されたデバイスごとに <code>SetupDiGetDeviceInterfaceDetail</code> を呼び出すと、自動生成された名前などの詳細を取得できます。',
     'まず、指定した GUID に対応するインターフェイスを列挙します。列挙されたインターフェイスごとに <code>SetupDiGetDeviceInterfaceDetail</code> を呼び出すと、デバイスを開くための自動生成されたシンボリックリンク名などの詳細を取得できます。',
 )
+
+full_pages_ja['page-524'] = full_pages_ja['page-524'].replace(
+    '<code>CreateFile</code> または <code>CreateFile2</code> に渡された、ファイルオブジェクトが参照する仮想ファイルを識別します。',
+    'ファイルオブジェクトが参照する仮想ファイルを識別する名前です。<code>CreateFile</code> または <code>CreateFile2</code> に渡された名前が使われます。',
+)
