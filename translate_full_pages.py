@@ -18339,3 +18339,13 @@ full_pages_ja['page-590'] = full_pages_ja['page-590'].replace(
     '一部の値は同じ名前を持つ別のセクションを参照します。',
     '一部の項目では、等号の右側の値が、処理を続ける別のセクションの名前を指定します。',
 )
+
+full_pages_ja['page-592'] = full_pages_ja['page-592'].replace('Part 2 の', '第2部の')
+
+full_pages_ja['page-593'] = full_pages_ja['page-593'].replace('Part 2 の', '第2部の')
+
+full_pages_ja['page-593'] = (
+    full_pages_ja['page-593']
+    .replace('は、ブートローダーが読み込みます。', 'では、ブートローダーがドライバーを読み込みます。')
+    .replace('は、サービスコントロールマネージャーが読み込みます。', 'では、サービスコントロールマネージャーがドライバーを読み込みます。')
+)
