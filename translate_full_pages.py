@@ -19128,3 +19128,8 @@ full_pages_ja['p2-page-551'] = (
 )
 
 full_pages_ja['p2-page-552'] += '\n<p>プロバイダーの構成データを検証したあと、ETW は通常の ETW セッションと同様に、内部関数 <code>EtwpEnableTrace</code> を使ってセッション内でプロバイダーを有効にします。</p>'
+
+full_pages_ja['p2-page-555'] = full_pages_ja['p2-page-555'].replace(
+    'SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）、Administrators（S-1-5-32-544）に',
+    'SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）の各アカウントと、Administrators グループ（S-1-5-32-544）に',
+)

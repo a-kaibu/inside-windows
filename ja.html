@@ -21512,7 +21512,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 -&gt;Dacl    : -&gt;Ace[6]: -&gt;AceSize: 0x18
 -&gt;Dacl    : -&gt;Ace[6]: -&gt;Mask : 0x00000004
 -&gt;Dacl    : -&gt;Ace[6]: -&gt;SID: S-1-5-32-558</code></pre>
-<p>SID に対応する名前は、Sysinternals の <a href="https://learn.microsoft.com/sysinternals/downloads/psgetsid">PsGetSid</a> で確認できます。この出力では、SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）、Administrators（S-1-5-32-544）に ETW の全権限が付与されています。Performance Log Users（S-1-5-32-559）にはほぼすべての権限があり、Performance Monitor Users（S-1-5-32-558）には既定のセキュリティ記述子により <code>WMIGUID_NOTIFICATION</code> 権限だけが付与されています。</p>
+<p>SID に対応する名前は、Sysinternals の <a href="https://learn.microsoft.com/sysinternals/downloads/psgetsid">PsGetSid</a> で確認できます。この出力では、SYSTEM（S-1-5-18）、LOCAL SERVICE（S-1-5-19）、NETWORK SERVICE（S-1-5-20）の各アカウントと、Administrators グループ（S-1-5-32-544）に ETW の全権限が付与されています。Performance Log Users（S-1-5-32-559）にはほぼすべての権限があり、Performance Monitor Users（S-1-5-32-558）には既定のセキュリティ記述子により <code>WMIGUID_NOTIFICATION</code> 権限だけが付与されています。</p>
 <pre><code>C:&#92;Users&#92;andrea&gt;psgetsid64 S-1-5-32-559
 
 PsGetSid v1.45 - SID と名前を相互に変換する
