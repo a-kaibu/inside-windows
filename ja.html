@@ -2156,7 +2156,7 @@ VDM が別のデスクトップで動作している場合や、呼び出し元�
 <code>PspAllocateThread</code> はエグゼクティブのスレッドオブジェクトの作成と初期化を担当します。
 <code>PspInsertThread</code> はスレッドのハンドルとセキュリティ属性を作り、<code>KeStartThread</code> を呼び出して、スレッドをスケジューリングできるようにします。
 スレッドは中断状態で作成され、段階5で説明するプロセスの初期化が完了するまで再開されません。</p>
-<aside><p><strong>注記</strong> スレッドに渡される引数は PEB のアドレスです。<code>CreateProcess</code> ではこの引数を指定できませんが、<code>CreateThread</code> では指定できます。この値は、段階6で説明するように、新しいスレッドのコンテキストで動く初期化コードが使います。</p></aside>
+<aside><p><strong>注記</strong> プロセス作成時に最初のスレッドへ渡される引数は、PEB のアドレスです。<code>CreateProcess</code> ではこの引数を指定できませんが、<code>CreateThread</code> では指定できます。この値は、段階6で説明するように、新しいスレッドのコンテキストで動く初期化コードが使います。</p></aside>
 <p><code>PspAllocateThread</code> は、次の処理を行います。</p>
 <ol>
 <li>WoW64 プロセス内にユーザーモードスケジューリング（UMS）スレッドを作成することと、ユーザーモードの呼び出し元が System プロセスにスレッドを作成することを禁止します。</li>
@@ -2164,9 +2164,9 @@ VDM が別のデスクトップで動作している場合や、呼び出し元�
 <li>システムでエネルギー消費量の推定が有効なら、<code>ETHREAD</code> が指す <code>THREAD_ENERGY_VALUES</code> 構造体を割り当てて初期化します。Xbox ではこの推定は常に無効です。</li>
 <li>LPC、I/O マネージャー、エグゼクティブが使う各種リストを初期化します。</li>
 <li>スレッドの作成時刻を設定し、スレッド ID（TID）を作成します。</li>
-<li>実行に必要なスタックとコンテキストを用意します。最初のスレッドのスタックサイズはイメージから取得し、別の値は指定できません。WoW64 プロセスであれば、WoW64 のスレッドコンテキストも初期化します。</li>
+<li>実行に必要なスタックとコンテキストを用意します。最初のスレッドのスタックサイズは実行イメージの情報から取得し、別の値は指定できません。WoW64 プロセスであれば、WoW64 のスレッドコンテキストも初期化します。</li>
 <li>新しいスレッドのスレッド環境ブロック（TEB）を割り当てます。</li>
-<li>ユーザーモードのスレッド開始アドレスを、<code>ETHREAD</code> の <code>StartAddress</code> に保存します。これは <code>Ntdll.dll</code> のシステム提供の開始関数 <code>RtlUserThreadStart</code> のアドレスです。ユーザーが指定した Windows 側の開始アドレスは <code>Win32StartAddress</code> に保存します。Process Explorer などのデバッグツールは、この情報を表示できます。</li>
+<li>ユーザーモードのスレッド開始アドレスを、<code>ETHREAD</code> の <code>StartAddress</code> に保存します。これは <code>Ntdll.dll</code> のシステム提供の開始関数 <code>RtlUserThreadStart</code> のアドレスです。ユーザーが指定した Windows 側の開始アドレスは <code>Win32StartAddress</code> に保存します。このフィールドを分けることで、Process Explorer などのデバッグツールでユーザーが指定した開始アドレスを表示できます。</li>
 <li><code>KeInitThread</code> を呼び、<code>KTHREAD</code> 構造体を設定します。スレッドの初期基本優先度と現在の基本優先度にはプロセスの基本優先度を設定し、アフィニティとクォンタムにもプロセスの値を使います。その後、カーネルスタックを割り当て、コンテキストフレーム、トラップフレーム、例外フレームなど、マシン依存のハードウェアコンテキストを初期化します。</li>
 </ol></section><section class="page" id="page-162" aria-label="page-162"><p>スレッドのコンテキストは、カーネルモードの <code>KiThreadStartup</code> から実行を始めるように設定されます。
 最後に、<code>KeInitThread</code> はスレッドを初期化済み状態にし、<code>PspAllocateThread</code> に戻ります。</p>
