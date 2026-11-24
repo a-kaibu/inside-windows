@@ -127,15 +127,13 @@
 <p>Windows 10 の登場時、Microsoft は、従来より短い間隔で Windows を更新する方針を発表しました。原著では、今後「Windows 11」という正式版は登場せず、Windows Update や企業向けの更新管理を通じて、既存の Windows 10 が新しいバージョンになると説明しています。原著執筆時点では、2015年11月と2016年7月にそのような更新がありました。前者は提供年月を表すバージョン1511、後者は Anniversary Update と呼ばれるバージョン1607です。</p>
 <blockquote><p><strong>注</strong>　社内では、Microsoft は引き続き段階を分けて Windows を開発していました。Windows 10 の初版のコードネームは Threshold 1、2015年11月の更新は Threshold 2 でした。次の3段階には Redstone 1（バージョン1607）、Redstone 2、Redstone 3 という名前が付いていました。</p></blockquote>
 <h3 id="Windows-10-と-OneCore">Windows 10 と OneCore</h3>
-<p>Windows には長年の間にいくつもの系統が生まれました。PC 向けの Windows に加え、Xbox 360 では Windows 2000 から分岐した OS が動作し、Windows Phone 7 は Microsoft のリアルタイム OS である Windows CE をベースとしていました。複数のコードベースを保守・拡張するのは難しく、Microsoft はカーネルとプラットフォームの基礎を支えるバイナリを統合することにしました。まず Windows 8 と Windows Phone 8 がカーネルを共有し、Windows 8.1 と Windows Phone 8.1 では Windows ランタイム API が統合されました。Windows 10 で統合を終えた共通基盤は OneCore と呼ばれます。PC、電話機、Xbox One、HoloLens、Raspberry Pi 2 などの IoT 機器で動作します。</p></section><section class="page" id="page-21" aria-label="page-21"><p>これらのデバイスは形状（フォームファクタ）も性能も大きく異なります。例えば HoloLens で物理マウスやキーボードをサポートしてもあまり意味がないため、そうしたデバイス用の Windows 10 では一部の機能が省かれています。しかし、<strong>カーネル、コアデバイスドライバ、およびベースプラットフォームのバイナリ自体はすべてのデバイスで本質的に同一</strong>です（パフォーマンスやハードウェア要件に応じたレジストリやポリシー設定の差異は存在します。第3章「プロセスとジョブ」の「APIセット」節でその具体例を解説します）。</p>
-
-<p>本書では、どのデバイスで稼働しているかにかかわらず、根底にある <strong>OneCore カーネルの内部構造</strong>を解き明かします。ただし、スマートフォンやXbox One上で直接実験を行うのは困難（または公式に不可能）なため、本書で紹介する各種の「実験」は主に手元で容易に検証できるデスクトップ環境（マウス・キーボード付きPC）を対象としています。</p>
-
+<p>Windows には長年の間にいくつもの系統が生まれました。PC 向けの Windows に加え、Xbox 360 では Windows 2000 から分岐した OS が動作し、Windows Phone 7 は Microsoft のリアルタイム OS である Windows CE をベースとしていました。複数のコードベースを保守・拡張するのは難しく、Microsoft はカーネルとプラットフォームの基礎を支えるバイナリを統合することにしました。まず Windows 8 と Windows Phone 8 がカーネルを共有し、Windows 8.1 と Windows Phone 8.1 では Windows ランタイム API が統合されました。Windows 10 で統合を終えた共通基盤は OneCore と呼ばれます。PC、電話機、Xbox One、HoloLens、Raspberry Pi 2 などの IoT 機器で動作します。</p></section><section class="page" id="page-21" aria-label="page-21"><p>これらの機器は形態が大きく異なるため、一部の機能を備えていない機器もあります。たとえば、HoloLens ではマウスや物理キーボードのサポートが適さず、同機器向けの Windows 10 にその機能が含まれるとは限りません。一方、カーネル、ドライバー、プラットフォームの基盤となるバイナリは基本的に同じです。性能などの理由で必要に応じて、レジストリやポリシーで設定を変えます。ポリシーの例は、第3章「プロセスとジョブ」の「API セット」で取り上げます。</p>
+<p>本書では、機器の種類を問わず、OneCore カーネルの内部構造を調べます。一方、実験は、主に手軽さを考慮してマウスとキーボードを備えたデスクトップ機を対象とします。電話機や Xbox One などでは実験しにくく、公式にサポートされていないため実行できない場合もあります。</p>
 <h3 id="基本概念と用語">基本概念と用語</h3>
-<p>ここからは、Windowsの全体像を理解する上で不可欠となる最重要概念を紹介していきます。プロセス、スレッド、仮想メモリなどの多くは、以降の章でさらに詳しく深掘りされます。</p>
-
+<p>以降の節では、本書の後半で扱う内容を理解するために必要な、Windows の基本概念を紹介します。プロセス、スレッド、仮想メモリなど、多くの概念は後の章で詳しく説明します。</p>
 <h3 id="Windows-API">Windows API</h3>
-<p>Windows API は、Windows OS ファミリーのユーザーモード向けシステムプログラミングインターフェイスです。64ビット版が登場する前は、32ビット版のインターフェイスを Win32 API と呼び、初期の16ビット版 Windows のインターフェイスと区別していました。本書では、32ビット版と64ビット版の両方を Windows API と呼びます。Win32 API と書く場合も、両方を指します。</p>
+<p>Windows API は、Windows OS ファミリーのユーザーモード向けシステムプログラミングインターフェイスです。64ビット版が登場する前は、32ビット版のインターフェイスを Win32 API と呼び、初期の16ビット版 Windows のインターフェイスと区別していました。本書では、32ビット版と64ビット版の両方を Windows API と呼びます。</p>
+<aside><p><strong>注</strong>　本書で Windows API の代わりに Win32 API と書く場合も、32ビット版と64ビット版の両方を指します。</p></aside>
 <p>Windows API の仕様は <a href="https://developer.microsoft.com/en-us/windows/desktop/develop">Windows SDK のドキュメント</a>で無償公開されています。本章後半の「Windows ソフトウェア開発キット」も参照してください。Microsoft の開発者向け支援プログラムである MSDN では、すべての購読レベルにこの資料が含まれていました。基本 API を使ったプログラミングについては、Jeffrey Richter と Christophe Nasarre による <cite>Windows via C/C++, Fifth Edition</cite>（Microsoft Press、2007年）に詳しい解説があります。</p></section><section class="page" id="page-22" aria-label="page-22"><h4 id="Windows-API-の種類">Windows API の種類</h4>
 <p>Windows APIは当初、純粋なC言語スタイルの関数群として誕生しました。現在では開発者が利用できる関数は数千個にも及びます。Windowsの黎明期において、C言語は他の言語からも容易に呼び出せる「最大公約数」であり、OSの低レベルサービスを公開するのに最も適した選択肢でした。しかし、関数の膨大化に伴い、命名規則の一貫性の欠如や、C++の名前空間のような論理的グループ分けができないという限界が顕在化しました。この問題を克服するために導入されたのが <strong>COM（Component Object Model）</strong> です。</p>
 
