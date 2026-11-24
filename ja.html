@@ -6775,7 +6775,7 @@ Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 <li><code>MmFlushAllFilesystemPages</code> で、ファイルシステムへの書き出し対象になっているすべての変更済みページのフラッシュを要求されたときです。通常、変更済みリストにあるマップ済みページが、まとめて書き出せる最大サイズである16ページに満たない間は、バッキングストアのファイルへ書き出しません。<code>MmFlushAllFilesystemPages</code> と <code>MmFlushAllPages</code> では、このページ数を確認せずにフラッシュします。</li>
 </ul></li>
 <li>16個のマップ済みページリストに対応する16個のイベントの配列です。<code>MiSystemPartition.PageLists.MappedPageListHeadEvent</code> に格納されています。Windows 8.x と Windows Server 2012／R2 では <code>MiMappedPageListHeadEvent</code> です。マップ済みページが変更されるたびに、バケット番号に対応するリストに挿入されます。バケット番号は <code>MiSystemPartition.WorkingSetControl-&gt;CurrentMappedPageBucket</code> にあり、Windows 8.x と Windows Server 2012／R2 では <code>MiCurrentMappedPageBucket</code> にあります。マップ済みページが十分に古くなったとシステムが判断すると、ワーキングセットマネージャーはバケット番号を更新します。本書の対象実装では、この間隔は100秒で、同じ構造体の <code>WriteGapCounter</code> に保持されます。</li>
-</ul></section><section class="page" id="page-456" aria-label="page-456"><p>Windows 8.x と Windows Server 2012／R2 では、前述のカウンターは <code>MiWriteGapCounter</code> です。ワーキングセットマネージャーが実行されるたびに増えます。追加のイベントを設けているのは、変更済みリストがしきい値の800ページに達していなくても、変更済みのマップ済みページをいずれ書き出し、システムのクラッシュや停電によるデータ損失を抑えるためです。</p>
+</ul></section><section class="page" id="page-456" aria-label="page-456"><p>Windows 8.x と Windows Server 2012／R2 では、前述のカウンターは <code>MiWriteGapCounter</code> です。どちらのバージョンでも、このカウンターはワーキングセットマネージャーが実行されるたびに増えます。追加のイベントを設けているのは、変更済みリストがしきい値の800ページに達していなくても、変更済みのマップ済みページをいずれ書き出し、システムのクラッシュや停電によるデータ損失を抑えるためです。</p>
 <p>変更済みページライターは、終了イベントと、<code>MiSystemPartition.Modwriter.ModifiedPageWriterEvent</code> に格納されたイベントを待ちます。Windows 8.x と Windows Server 2012／R2 では、後者に相当する <code>MmModifiedPageWriterGate</code> のカーネルゲートを待ちます。書き戻しのイベントは、次の場合に通知されます。</p>
 <ul>
 <li>すべてのページのフラッシュが要求された。</li>
