@@ -21099,7 +21099,7 @@ uint32  OverwriteOutDated;
 &quot;SeSecurityPrivilege&quot;, &quot;SeBackupPrivilege&quot;}: ToSubClass]
       uint32 BackupEventlog([in] string ArchiveFileName);
 };</code></pre>
-<p>この定義では、<code>Win32_NTEventlogFile</code> クラスに <code>dynamic</code> 修飾子が付いています。動的なクラスのオブジェクトについて管理アプリケーションがプロパティを照会するたびに、WMI インフラストラクチャは WMI プロバイダーに値を問い合わせます。静的なクラスの場合、WMI はプロバイダーへの問い合わせを行わず、リポジトリから値を取得します。リポジトリの更新には比較的コストがかかるため、頻繁に変わるプロパティを持つオブジェクトには動的プロバイダーのほうが効率的です。</p>
+<p>この定義では、<code>Win32_NTEventlogFile</code> クラスに <code>dynamic</code> 修飾子が付いています。動的なクラスのオブジェクトについて管理アプリケーションがプロパティを照会するたびに、WMI インフラストラクチャは WMI プロバイダーに値を問い合わせます。静的なクラスは WMI リポジトリに格納されており、WMI インフラストラクチャは値をそこから取得します。リポジトリの更新には比較的コストがかかるため、頻繁に変わるプロパティを持つオブジェクトには動的プロバイダーのほうが効率的です。</p>
 <h4 id="実験-WMI-クラスの-MOF-定義を表示する">実験　WMI クラスの MOF 定義を表示する</h4>
 <p>Windows に付属する Windows Management Instrumentation Tester（WbemTest）を使うと、任意の WMI クラスの MOF 定義を表示できます。この実験では <code>Win32_NTEventLogFile</code> クラスを取り上げます。</p>
 <ol>
