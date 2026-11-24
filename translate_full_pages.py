@@ -19174,3 +19174,8 @@ full_pages_ja['p2-page-571'] = full_pages_ja['p2-page-571'].replace(
     '解決策を確認するようユーザーに求める間隔',
     '解決策の有無を確認するようユーザーに促す通知の間隔',
 )
+
+full_pages_ja['p2-page-573'] = full_pages_ja['p2-page-573'].replace(
+    '「COM でホストされるタスクを確認する」',
+    '「実験\u3000COM ホスト型タスクを観察する」',
+)
