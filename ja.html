@@ -5367,7 +5367,7 @@ address 0x00000253&#x27;1eba5000 ---&quot;
 +0x120 LfhContext       : _HEAP_LFH_CONTEXT</pre>
 <ol start="8">
 <li><code>Signature</code> フィールドに注目します。このフィールドは、2種類のヒープを区別するために使われます。</li>
-<li><code>_HEAP</code> 構造体の <code>SegmentSignature</code> も、同じオフセット（<code>0x10</code>）にあります。このため、<code>RtlAllocateHeap</code> などの関数は、ヒープのハンドル（アドレス）だけを受け取っても、どちらの実装を使うか判断できます。</li>
+<li>セグメントヒープの <code>Signature</code> と、NT ヒープを表す <code>_HEAP</code> の <code>SegmentSignature</code> は、どちらも構造体の先頭から <code>0x10</code> バイトの位置にあります。このため、<code>RtlAllocateHeap</code> などの関数は、ヒープのハンドル（アドレス）だけを受け取っても、どちらの実装を使うか判断できます。</li>
 <li><code>_SEGMENT_HEAP</code> の最後の2つのフィールドには、可変サイズ（VS）アロケーターと低断片化ヒープ（LFH）アロケーターの情報が格納されています。</li>
 <li>各ヒープの詳細を表示するには、<code>!heap -s</code> を実行します。
 <pre>0:033&gt; !heap -s
