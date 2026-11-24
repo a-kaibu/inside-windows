@@ -5096,7 +5096,7 @@ The operation completed successfully.</pre></li>
 </tbody></table></div>
 <h4 id="実験-プールの最大サイズを確認する">実験：プールの最大サイズを確認する</h4>
 <p>プールの上限は、Process Explorer または第1章で説明したライブカーネルデバッグで確認できます。Process Explorer では、「View」メニューから「System Information」を選び、「Memory」タブを開きます。次の画面のように、「Kernel Memory」にプールの上限が表示されます。</p>
-<figure><img loading="lazy" width="347" height="233" src="assets/17c2cee4ce65b658487a0658.webp" alt="Process Explorer の Kernel Memory 欄に表示されたプールの上限"></figure></section><section class="page" id="page-344" aria-label="page-344"><p><strong>注記</strong> Process Explorer がこの情報を取得するには、システムで動作中のカーネルのシンボルが必要です。シンボルの設定方法は、第1章の「実験：Process Explorer でプロセスの詳細を表示する」を参照してください。</p>
+<figure><img loading="lazy" width="347" height="233" src="assets/17c2cee4ce65b658487a0658.webp" alt="Process Explorer の Kernel Memory 欄に表示されたプールの上限"></figure></section><section class="page" id="page-344" aria-label="page-344"><p><strong>注記</strong> Process Explorer がこの情報を取得するには、システムで動作中のカーネルのシンボルが必要です。シンボルの設定方法は、第1章の「実験：Process Explorer でプロセスの詳細を確認する」を参照してください。</p>
 <p>カーネルデバッガーで同じ情報を確認するには、この章で先ほど紹介した <code>!vm</code> コマンドを使います。</p>
 <h3 id="プールの使用状況を監視する">プールの使用状況を監視する</h3>
 <p>パフォーマンスモニターの「Memory」オブジェクトには、非ページプールとページプールの使用量を個別に表示するカウンターがあります。ページプールについては仮想サイズと物理メモリに常駐するサイズの両方を確認できます。WDK の Tools ディレクトリにある Poolmon では、両プールの使用状況をさらに詳しく監視できます。Poolmon を起動すると、図5-7のように表示されます。</p>
