@@ -18968,3 +18968,8 @@ full_pages_ja['p2-page-488'] = full_pages_ja['p2-page-488'].replace(
     'でサービスプロセスを再開し、サービスが SCM のパイプに接続するまで待ちます。',
     'でサービスプロセスの初期スレッドを再開し、サービスが SCM のパイプに接続するまで待ちます。',
 )
+
+full_pages_ja['p2-page-490'] = full_pages_ja['p2-page-490'].replace(
+    'Event Aggregation が SCM を呼び戻し、SCM が対象のトリガー起動サービスを開始または停止できます。',
+    'Event Aggregation が SCM のコールバックを呼び出します。これを受けて、SCM は対象のトリガー起動サービスを開始または停止できます。',
+)
