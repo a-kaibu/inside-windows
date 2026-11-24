@@ -27221,7 +27221,7 @@ Intel の場合と同じように、ブートライブラリを再初期化し�
 +0x158 ArcWindowsSysPartName : (null)</pre>
 <p>また、<code>!loadermemorylist</code> に <code>MemoryDescriptorListHead</code> フィールドが示すアドレスを渡すと、物理メモリの範囲を表示できます。</p>
 <pre>kd&gt; !loadermemorylist 0xfffff800`22949000
-Base        Length      Type
+開始位置    長さ        種類
 0000000001  0000000005  (26) HALCachedMemory
                                                      ( 20 Kb )
 0000000006  000000009a  ( 5) FirmwareTemporary    ( 616 Kb )
@@ -27249,11 +27249,11 @@ Base        Length      Type
 000007ffef  0000000004  (32) FirmwareReserved     ( 16 Kb )
 000007fff3  000000000c  ( 6) FirmwarePermanent    ( 48 Kb )
 000007ffff  0000000001  ( 5) FirmwareTemporary    ( 4 Kb )
-NumberOfDescriptors: 90
+記述子の数: 90
 
-Summary
-Memory Type
-                     Pages
+集計
+メモリの種類
+                     ページ数
 Free
                      000007a89c   (    501916)   ( 1 Gb 936 Mb 624 Kb )
 LoadedProgram
@@ -27288,7 +27288,7 @@ FirmwareData
 FirmwareReserved    0000000044   (        68)
                                                    ( 272 Kb )
                      ==========    ==========
-Total
+合計
                      000007FFDF   (    524255) = ( ~2047 Mb )</pre>
 <p>ローダーパラメーターブロックの拡張部には、システムのハードウェア、CPU の機能、起動方式に関する情報が入っています。
 次のように <code>Extension</code> フィールドでアドレスを確認し、そのアドレスを <code>dt</code> に渡して拡張部を表示します。</p>
