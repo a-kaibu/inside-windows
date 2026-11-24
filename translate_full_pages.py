@@ -19103,3 +19103,9 @@ full_pages_ja['p2-page-545'] = full_pages_ja['p2-page-545'].replace(
     '親プロセス6924がセッション1でメモ帳のプロセス1808を起動したときの例です。',
     '親プロセス6924が起動したメモ帳のプロセス1808が、セッション1で実行されたときの例です。',
 )
+
+full_pages_ja['p2-page-546'] = (
+    full_pages_ja['p2-page-546']
+    .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure>')
+    .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></li>')
+)

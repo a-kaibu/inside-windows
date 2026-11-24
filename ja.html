@@ -21351,13 +21351,13 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>イベントビューアーを開きます。左側のツリーで「イベント ビューアー（ローカル）」を右クリックし、「保存されたログを開く」を選択します。作成した <code>process_trace.evtx</code> ファイルを選んで「開く」をクリックします。</li>
 <li>ダイアログでログに名前を付け、表示先のフォルダーを選びます。この例では、既定の名前 <code>process_trace</code> と「保存されたログ」フォルダーを使います。</li>
 </ol></section><section class="page" id="p2-page-546" aria-label="p2-page-546"><ol start="8">
-<li>イベントビューアーにログ内のイベントが表示されます。「日付と時刻」列をクリックして古い順に並べます。Ctrl+F で <code>ProcessStart</code> を検索すると、メモ帳のプロセスを作成したイベントが見つかります。</li>
+<li>イベントビューアーにログ内のイベントが表示されます。「日付と時刻」列をクリックして古い順に並べます。Ctrl+F で <code>ProcessStart</code> を検索すると、メモ帳のプロセスを作成したイベントが見つかります。
+<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></li>
 <li>説明のない <code>ThreadWorkOnBehalfUpdate</code> が多数記録されるため、収集対象から外します。このイベントを選び、「詳細」タブの「System」を展開すると、キーワードのビットマスクが <code>0x8000000000002000</code> の <code>WINEVENT_KEYWORD_WORK_ON_BEHALF</code> カテゴリであることがわかります。上位16ビットは Microsoft が定義するカテゴリ用です。この64ビット値の全ビットを反転すると <code>0x7FFFFFFFFFFFDFFF</code> になります。</li>
 <li>イベントビューアーを閉じ、次のコマンドで新しいトレースを収集します。
 <pre><code>xperf -start TestSession -on Microsoft-Windows-Kernel-Process:0x7FFFFFFFFFFFDFFF -f c:&#92;process_trace.etl</code></pre></li>
 <li>メモ帳などのアプリケーションを起動し、「ETW でプロセスの活動を記録する」の手順でトレースを停止します。ETL ファイルを EVTX に変換します。デコードしたログのサイズは小さくなり、<code>ThreadWorkOnBehalfUpdate</code> は記録されていません。</li>
-</ol>
-<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></section><section class="page" id="p2-page-547" aria-label="p2-page-547"><h4 id="システムロガー">システムロガー</h4>
+</ol></section><section class="page" id="p2-page-547" aria-label="p2-page-547"><h4 id="システムロガー">システムロガー</h4>
 <p>Windows XP 以降の ETW は、通常のセッションとプロバイダーに加えて、システムロガーをサポートしています。システムロガーを使うと、NT カーネルは特定のプロバイダーに属さないイベントをシステム全体で記録できます。主な用途は性能測定です。執筆時点の主なシステムロガーは NT カーネルロガーと循環カーネルコンテキストロガーです。グローバルロガーは NT カーネルロガーの一部です。NT カーネルは最大8つのシステムロガーセッションをサポートします。システムロガーのイベントを受け取るセッションはすべてシステムセッションです。</p>
 <p>アプリケーションがシステムセッションを開始するには、<code>StartTrace</code> に <code>EVENT_TRACE_SYSTEM_LOGGER_MODE</code> フラグまたはシステムロガーセッションの GUID を渡します。表10-16に各ロガーの GUID を示します。NT カーネルの <code>EtwpStartLogger</code> はこのフラグまたは GUID を認識すると、呼び出し元プロセスのアクセストークンに <code>TRACELOG_GUID_ENABLE</code> アクセス権があるかを NT カーネルロガーのセキュリティ記述子に照らして確認します。確認を通過すると、ETW はシステムロガーのインデックスを算出し、ロガーのグループマスクとシステム全体のパフォーマンスグループマスクを更新します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表10-16 システムロガー</caption><thead><tr><th>インデックス</th><th>名前</th><th>GUID</th><th>シンボル</th></tr></thead><tbody>
