@@ -877,6 +877,7 @@ head_html = head_html.replace('</style>', '''
 .table-scroll th,.table-scroll td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
 .table-scroll th{background:var(--panel)}
 .toc-group{margin:0;border-bottom:1px solid var(--line)}.toc-group summary,.toc-subgroup summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:6px}.toc-group summary::-webkit-details-marker,.toc-subgroup summary::-webkit-details-marker{display:none}.toc-group summary::after,.toc-subgroup summary::after{content:'⌄';font:12px system-ui;color:var(--muted);flex:none}.toc-group:not([open])>summary::after,.toc-subgroup:not([open])>summary::after{content:'›'}.toc-group summary>a,.toc-subgroup summary>a{display:block;flex:1}.toc-group>ul,.toc-subgroup>ul{list-style:none;padding:0 0 0 10px;margin:0}.toc-subgroup{margin:0}.toc-chapter-link{border-bottom:1px solid var(--line)}.toc-chapter-link,.toc-group>summary{font-weight:600}.toc-subgroup summary>a{font-weight:400}
+@media(max-width:900px){.toc-group summary,.toc-subgroup summary{min-height:44px;align-items:center;padding-right:44px;position:relative}.toc-group summary::after,.toc-subgroup summary::after{position:absolute;right:0;width:44px;text-align:center;pointer-events:none}}
 .toc-level-1{padding-left:14px!important}.toc-level-2{padding-left:28px!important}.toc-level-3{padding-left:42px!important}.toc-level-4{padding-left:56px!important}
 @media(max-width:900px){.table-scroll{max-width:calc(100vw - 40px)}.page{min-width:0}main{min-width:0;overflow-x:hidden}}
 </style>''')
