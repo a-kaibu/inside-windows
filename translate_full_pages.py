@@ -12707,7 +12707,9 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '次の例では、Windows Server 2012 に Office をインストールしています。</p>\n'
                 '<figure><img loading="lazy" width="600" height="612" '
                 'src="assets/3ed88a3ff409fe4a19e70876.webp" alt="Hyper-V '
-                'マネージャーに表示された仮想マシンのチェックポイント"></figure>',
+                'マネージャーに表示された仮想マシンのチェックポイント">\n'
+                '<figcaption>WindowsServer2012 の右クリックメニューで「チェックポイント」を選択しています。\n'
+                '左のツリーには、初回起動、Office の導入前、Office の導入後のチェックポイントと、現在の状態が順に表示されています。</figcaption></figure>',
  'p2-page-788': '<p>仮想マシンを停止し、エクスプローラーで仮想ハードディスクファイルがあるフォルダーを開きます。\n'
                 '仮想ハードディスクのほかに、現在のチェックポイントと前のチェックポイントとの差分を表すファイルがいくつかあります。</p>\n'
                 '<figure><img loading="lazy" width="648" height="319" '
