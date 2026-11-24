@@ -22244,9 +22244,9 @@ fffff800`d0527318  000009ca</code></pre>
 <p>キャッシュマネージャーはプロセスごとのカウンターに加えて、ファイルシステムがストレージスタックへ発行した I/O を追跡するグローバルディスク I/O カウンターも管理します。ファイルシステムドライバーが非キャッシュ I/O やページング I/O を発行するたびに更新します。アプリケーションは、<code>IOCTL_DISK_PERFORMANCE</code> 制御コードを使って、特定のディスクデバイスに発行された I/O の総量を取得できます。この総量からグローバルカウンターの値を差し引くと、個々のプロセスに帰属させられなかった I/O が求まります。変更済みページライターが発行したページング I/O や、ミニフィルタードライバーが内部で行った I/O などが該当します。</p>
 <p>プロセスごとのディスクカウンターは、<code>NtQuerySystemInformation</code> API に情報クラス <code>SystemProcessInformation</code> を指定して取得できます。タスクマネージャーや Process Explorer などの診断ツールは、この方法で実行中のプロセスの I/O の値を取得します。</p>
 <h4 id="実験-ディスク-I-O-を計測する">実験　ディスク I/O を計測する</h4>
-<p>パフォーマンスモニターを開き、「FileSystem Disk Activity」グループから <code>FileSystem Bytes Read</code> と <code>FileSystem Bytes Written</code> を追加します。次に、プロセス別の値を計測するため、「Process」グループの <code>IO Read Bytes/sec</code> と <code>IO Write Bytes/sec</code> を追加します。この2つのカウンターを追加するときは、「選択したオブジェクトのインスタンス」欄で <code>Explorer</code> プロセスを選びます。</p>
-<p>大きなファイルをコピーし始めると、エクスプローラーのカウンターが上昇し、ファイルシステム全体のディスク活動を示すカウンターの値に達します。</p>
-<figure><img loading="lazy" width="550" height="299" src="assets/599864e08aba0409baedd9fc.webp" alt="キャッシュマネージャーの処理（原文の図1）"></figure></section><section class="page" id="p2-page-633" aria-label="p2-page-633"><h3 id="ファイルシステム">ファイルシステム</h3>
+<p>パフォーマンスモニターのカウンターを使うと、システム全体の I/O を正確に計測できます。パフォーマンスモニターを開き、「FileSystem Disk Activity」グループから <code>FileSystem Bytes Read</code> と <code>FileSystem Bytes Written</code> を追加します。次に、プロセス別の値を計測するため、「Process」グループの <code>IO Read Bytes/sec</code> と <code>IO Write Bytes/sec</code> を追加します。この2つのカウンターを追加するときは、「選択したオブジェクトのインスタンス」欄で <code>Explorer</code> プロセスを選びます。</p>
+<figure><img loading="lazy" width="550" height="299" src="assets/599864e08aba0409baedd9fc.webp" alt="パフォーマンスモニターのカウンター追加画面"></figure>
+<p>大きなファイルをコピーし始めると、エクスプローラーのカウンターが上昇し、ファイルシステム全体のディスク活動を示すカウンターの値に達します。</p></section><section class="page" id="p2-page-633" aria-label="p2-page-633"><h3 id="ファイルシステム">ファイルシステム</h3>
 <p>この節では、Windows がサポートするファイルシステム形式の概要を示します。続いて、ファイルシステムドライバーの種類と基本動作を説明します。メモリマネージャーやキャッシュマネージャーなど、他のシステムコンポーネントとの連携も扱います。その後、主要な2つのファイルシステムである NTFS と ReFS の機能とデータ構造を詳しく見ていきます。まず内部アーキテクチャを取り上げ、次にディスク上のデータ配置と、圧縮、回復、暗号化、階層化、ファイルのスナップショットなどの高度な機能を説明します。</p>
 <h4 id="Windows-のファイルシステム形式">Windows のファイルシステム形式</h4>
 <p>Windows は次のファイルシステム形式に対応しています。</p>
