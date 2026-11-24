@@ -21936,11 +21936,11 @@ Module: &quot;(null)&quot;, Status: 0xc0000135
 <pre><code>sc stop shimdriver
 reg add "HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Driver&#92;ShimDriver64.sys" /v Shims /t REG_MULTI_SZ /d KmWin81VersionLie /f /reg:64</code></pre></li>
 <li>最後のコマンドは、OS のバージョンとして Windows 8.1 を返すシムを追加します。別のバージョンを返すシムも選べます。</li>
-<li>ドライバーを起動し直すと、図のように DebugView の出力が変わります。</li>
-<li>この変化は、OS のバージョン情報を取得する NT API にシムエンジンがフックを適用した結果です。ドライバー自身もシムの適用を検知できます。別のシムでも実験を繰り返せます。たとえば、<code>SkipDriverUnload</code> はドライバーのアンロードルーチンを無効化し、<code>KernelPadSectionsOverride</code> は図に示すように対象ドライバーの読み込みを阻止します。</li>
-</ol>
-<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">
-<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
+<li>ドライバーを起動し直すと、図のように DebugView の出力が変わります。
+<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"></figure></li>
+<li>この変化は、OS のバージョン情報を取得する NT API にシムエンジンがフックを適用した結果です。ドライバー自身もシムの適用を検知できます。別のシムでも実験を繰り返せます。たとえば、<code>SkipDriverUnload</code> はドライバーのアンロードルーチンを無効化し、<code>KernelPadSectionsOverride</code> は図に示すように対象ドライバーの読み込みを阻止します。
+<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></li>
+</ol></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
 <p>デバイスオブジェクト用のシムは、ドライバー用シムとは異なり、要求に応じて読み込まれ、適用されます。ドライバーは、NT カーネルが公開する <code>KseQueryDeviceData</code> で、デバイスオブジェクトにシムを適用する必要があるかを調べられます。公開関数 <code>KseQueryDeviceFlags</code> では、その機能のうちフラグの照会だけを行えます。ユーザーモードアプリケーションからの照会には、<code>SystemDeviceDataInformation</code> 情報クラスを指定して <code>NtQuerySystemInformation</code> を呼び出します。システムは次の3か所を順に調べます。</p>
 <ol>
 <li><code>HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Device</code> 配下のレジストリキー。キー名にはデバイスの PnP ハードウェア ID を使います。区切り文字と混同されないよう、ID 内の <code>&#92;</code> は <code>!</code> に置き換えます。キーの値には、照会対象となるデバイスのシムデータが格納されます。通常は、特定のデバイスクラスに対するフラグです。</li>

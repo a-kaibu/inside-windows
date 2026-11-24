@@ -19254,3 +19254,10 @@ full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].replace(
     'Insider リリースを使っています。</li>',
     'Insider リリースを使っています。\n<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></li>',
 )
+
+full_pages_ja['p2-page-594'] = (
+    full_pages_ja['p2-page-594']
+    .removesuffix('\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">\n<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure>')
+    .replace('DebugView の出力が変わります。</li>', 'DebugView の出力が変わります。\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"></figure></li>')
+    .replace('対象ドライバーの読み込みを阻止します。</li>', '対象ドライバーの読み込みを阻止します。\n<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></li>')
+)
