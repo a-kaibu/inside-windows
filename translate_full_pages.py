@@ -18189,3 +18189,8 @@ full_pages_ja['page-517'] = full_pages_ja['page-517'].replace(
     'I/O マネージャーは IRP に登録されたキャンセルルーチンを実行します。',
     'IRP にキャンセルルーチンが登録されていれば、I/O マネージャーはそのルーチンを実行します。',
 )
+
+full_pages_ja['page-519'] = full_pages_ja['page-519'].replace(
+    'これにより、指定した GUID に対応するインターフェイスを列挙し、デバイスを開くためのシンボリックリンク名を取得できます。列挙されたデバイスごとに <code>SetupDiGetDeviceInterfaceDetail</code> を呼び出すと、自動生成された名前などの詳細を取得できます。',
+    'まず、指定した GUID に対応するインターフェイスを列挙します。列挙されたインターフェイスごとに <code>SetupDiGetDeviceInterfaceDetail</code> を呼び出すと、デバイスを開くための自動生成されたシンボリックリンク名などの詳細を取得できます。',
+)
