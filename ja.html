@@ -3610,7 +3610,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <tr><th scope="row">最低（−2）</th><td>22</td><td>11</td><td>8</td><td>6</td><td>4</td><td>2</td></tr>
 <tr><th scope="row">アイドル（負の飽和）</th><td>16</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
 </tbody></table></div>
-<p>スレッドの相対優先度が「時間優先」または「アイドル」の場合、プロセスの優先度クラスが「リアルタイム」でない限り、表の値はどのクラスでも同じです。Windows API が、要求する相対優先度として +16 または −16 を渡し、カーネルに優先度を上限または下限へ設定するよう求めるためです。<code>HIGH_PRIORITY</code> は31で、渡す値は次の式で求めます。</p>
+<p>スレッドの相対優先度が「時間優先」または「アイドル」の場合、プロセスの優先度クラスが「リアルタイム」でない限り、表の値はどのクラスでも同じです。アプリケーションが Windows API に +15 または −15 を指定すると、API はカーネルに +16 または −16 を渡し、それぞれ優先度を上限または下限に設定するよう要求します。<code>HIGH_PRIORITY</code> は31で、渡す値は次の式で求めます。</p>
 <ul>
 <li>時間優先の場合は <code>(HIGH_PRIORITY + 1) / 2</code>。</li>
 <li>アイドルの場合は <code>-((HIGH_PRIORITY + 1) / 2)</code>。</li>
