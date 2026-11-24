@@ -129,15 +129,13 @@ Akila Srinivasan, Alessandro Pilotti, Andrea Allievi, Andy Luhrs, Arun Kishan, B
 
 <figure><img loading="lazy" width="282" height="249" src="assets/1c09474e9a9d5381921685df.webp" alt="winverの実行画面"><figcaption>図：winver によるバージョン情報の表示</figcaption></figure>
 
-<p>画面にはWindowsのビルド番号（この例では <code>10586.218</code>）も表示されています。これは先行プレビューを受け取る Windows Insider にとって有用であるだけでなく、どのセキュリティ修正パッチレベルが適用されているかを把握する上でも極めて重要です。</p>
+<p>画面にはWindowsのビルド番号（この例では <code>10586.218</code>）も表示されています。これは先行プレビューを受け取る Windows Insider にとって役立ちます。また、適用済みの更新レベルが分かるため、セキュリティ更新の管理にも使えます。</p>
 
 <h3 id="Windows-10-と将来のバージョン">Windows 10 と将来のバージョン</h3>
-<p>Windows 10 の登場にあたり、マイクロソフトはこれまでよりも速い頻度でOSを継続アップデートしていく方針を打ち出しました。旧来のように「Windows 11」のような大きな別売パッケージを出すのではなく、Windows Update（または企業のサービシングモデル）を通じて稼働中の Windows 10 が最新のバージョンへと順次アップデートされていきます。本書の執筆時点までに、2015年11月（サービス提供年月を示す「バージョン1511」）と、2016年7月（「バージョン1607」、通称 Anniversary Update）の2つのメジャーアップデートが提供されています。</p>
-
-<blockquote><p><strong>注意：</strong> マイクロソフト社内では、Windowsのビルドは依然として「波（Wave）」として管理されています。例えば、Windows 10 の初期リリースはコードネーム「Threshold 1」、2015年11月の更新は「Threshold 2」と呼ばれました。続くアップデート群は「Redstone 1」（RS1＝バージョン1607）、Redstone 2（RS2＝バージョン1703、Creators Update）、Redstone 3（RS3＝Fall Creators Update）と呼ばれています。</p></blockquote>
-
+<p>Windows 10 の登場時、Microsoft は、従来より短い間隔で Windows を更新する方針を発表しました。原著では、今後「Windows 11」という正式版は登場せず、Windows Update や企業向けの更新管理を通じて、既存の Windows 10 が新しいバージョンになると説明しています。原著執筆時点では、2015年11月と2016年7月にそのような更新がありました。前者は提供年月を表すバージョン1511、後者は Anniversary Update と呼ばれるバージョン1607です。</p>
+<blockquote><p><strong>注</strong>　社内では、Microsoft は引き続き段階を分けて Windows を開発していました。Windows 10 の初版のコードネームは Threshold 1、2015年11月の更新は Threshold 2 でした。次の3段階には Redstone 1（バージョン1607）、Redstone 2、Redstone 3 という名前が付いていました。</p></blockquote>
 <h3 id="Windows-10-と-OneCore">Windows 10 と OneCore</h3>
-<p>Windows 10 の技術的到達点の中で最も象徴的なのが <strong>OneCore</strong> の完成です。今日のWindowsは、従来のデスクトップPCやノートPCだけでなく、サーバー、スマートフォン（Windows 10 Mobile）、Xbox One、ウェアラブルホログラフィックPCである HoloLens、そしてRaspberry Piなどの小型IoTデバイスに至るまで、極めて広範な機器で動作しています。</p></section><section class="page" id="page-21" aria-label="page-21"><p>これらのデバイスは形状（フォームファクタ）も性能も大きく異なります。例えば HoloLens で物理マウスやキーボードをサポートしてもあまり意味がないため、そうしたデバイス用の Windows 10 では一部の機能が省かれています。しかし、<strong>カーネル、コアデバイスドライバ、およびベースプラットフォームのバイナリ自体はすべてのデバイスで本質的に同一</strong>です（パフォーマンスやハードウェア要件に応じたレジストリやポリシー設定の差異は存在します。第3章「プロセスとジョブ」の「APIセット」節でその具体例を解説します）。</p>
+<p>Windows には長年の間にいくつもの系統が生まれました。PC 向けの Windows に加え、Xbox 360 では Windows 2000 から分岐した OS が動作し、Windows Phone 7 は Microsoft のリアルタイム OS である Windows CE をベースとしていました。複数のコードベースを保守・拡張するのは難しく、Microsoft はカーネルとプラットフォームの基礎を支えるバイナリを統合することにしました。まず Windows 8 と Windows Phone 8 がカーネルを共有し、Windows 8.1 と Windows Phone 8.1 では Windows ランタイム API が統合されました。Windows 10 で統合を終えた共通基盤は OneCore と呼ばれます。PC、電話機、Xbox One、HoloLens、Raspberry Pi 2 などの IoT 機器で動作します。</p></section><section class="page" id="page-21" aria-label="page-21"><p>これらのデバイスは形状（フォームファクタ）も性能も大きく異なります。例えば HoloLens で物理マウスやキーボードをサポートしてもあまり意味がないため、そうしたデバイス用の Windows 10 では一部の機能が省かれています。しかし、<strong>カーネル、コアデバイスドライバ、およびベースプラットフォームのバイナリ自体はすべてのデバイスで本質的に同一</strong>です（パフォーマンスやハードウェア要件に応じたレジストリやポリシー設定の差異は存在します。第3章「プロセスとジョブ」の「APIセット」節でその具体例を解説します）。</p>
 
 <p>本書では、どのデバイスで稼働しているかにかかわらず、根底にある <strong>OneCore カーネルの内部構造</strong>を解き明かします。ただし、スマートフォンやXbox One上で直接実験を行うのは困難（または公式に不可能）なため、本書で紹介する各種の「実験」は主に手元で容易に検証できるデスクトップ環境（マウス・キーボード付きPC）を対象としています。</p>
 
