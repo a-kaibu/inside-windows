@@ -18088,3 +18088,8 @@ full_pages_ja['page-461'] = full_pages_ja['page-461'].replace(
     'そのページは使えないため、その時点のページを予約範囲の下限とします。',
     'その隣のページは使えないため、そこへ進む直前のページが予約範囲の下限になります。',
 )
+
+full_pages_ja['page-466'] = full_pages_ja['page-466'].replace(
+    '<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の128 MBを占めています。',
+    '<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の64 MBを占めています（原文は128 MBと記載していますが、図のアドレス範囲から計算すると64 MBです）。',
+)

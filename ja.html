@@ -6899,7 +6899,7 @@ MmHighestPhysicalPage: 1015792</pre>
 <ol>
 <li><code>Devmgmt.msc</code> を実行します。</li>
 <li>「表示」メニューから「リソース（接続別）」を選びます。</li>
-<li>「メモリ」ノードを展開します。図5-43の例では、デバイス用にマップされたメモリの主な利用元はビデオカード（Hyper-V S3 Cap）で、<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の128 MBを占めています。</li>
+<li>「メモリ」ノードを展開します。図5-43の例では、デバイス用にマップされたメモリの主な利用元はビデオカード（Hyper-V S3 Cap）で、<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の64 MBを占めています（原文は128 MBと記載していますが、図のアドレス範囲から計算すると64 MBです）。</li>
 </ol>
 <figure><img loading="lazy" width="355" height="184" src="assets/5e53675668f48eb18e8e7aab.webp" alt="32ビット Windows のデバイスマネージャーでデバイスごとの物理メモリ範囲を表示した画面"><figcaption>図5-43　32ビット Windows でハードウェア用に予約されたメモリ範囲</figcaption></figure>
 <p>残りの大半は、ほかのデバイスが使っています。さらに、ファームウェアは起動時に必要な範囲を余裕を持って見積もるため、PCI バスもデバイス向けの追加領域を予約します。</p>
