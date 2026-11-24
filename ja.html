@@ -21200,7 +21200,7 @@ PS C:&#92;&gt; Unregister-Event -SourceIdentifier "TestWmiRegistration"</code></
 </ul></section><section class="page" id="p2-page-531" aria-label="p2-page-531"><p>Windows にはインストール直後から数十のプロバイダーがあり、OS の各コンポーネントが診断イベントやパフォーマンストレースを記録するために使います。たとえば Hyper-V には、ハイパーバイザー、動的メモリ、VID ドライバー、仮想化スタックのイベントを生成する複数のプロバイダーがあります。図10-31に示すように、ETW は複数のコンポーネントに実装されています。</p>
 <ul>
 <li>グローバルセッションの作成、プロバイダーの登録と有効化、メインのロガースレッドなど、ETW の大部分は NT カーネルにあります。</li>
-<li><code>Sechost.dll</code> は、SCM、SDDL、LSA の検索 API をホストするライブラリです。ETW セッションの作成、プロバイダーの有効化、イベントの受け取りに使う主なユーザーモード API を提供し、<code>Ntdll.dll</code> のサービスを介して NT カーネルの ETW を呼び出します。プロバイダーの登録やイベントの生成など、一部のユーザーモード API は <code>Ntdll.dll</code> が直接提供します。</li>
+<li><code>Sechost.dll</code> は、SCM と SDDL の API、および LSA の検索 API をホストするライブラリです。ETW セッションの作成、プロバイダーの有効化、イベントの受け取りに使う主なユーザーモード API を提供し、<code>Ntdll.dll</code> のサービスを介して NT カーネルの ETW を呼び出します。プロバイダーの登録やイベントの生成など、一部のユーザーモード API は <code>Ntdll.dll</code> が直接提供します。</li>
 <li>Event Trace Decode Helper ライブラリ（<code>TDH.dll</code>）は、コンシューマーが ETW イベントをデコードするための機能を提供します。</li>
 <li>イベントの受け取りと構成を担うライブラリ（<code>WevtApi.dll</code>）は、Windows イベントログ API（Evt API）を実装します。コンシューマーは、この API でローカルまたはリモートのマシン上のプロバイダーとイベントを管理できます。ETW セッションが生成したイベントを解析するために、XPath 1.0 または構造化 XML のクエリを使えます。</li>
 <li>セキュアカーネルは、VTL 0 の NT カーネルにある ETW とやり取りするための基本的なセキュアサービスを実装しています。これにより、トラストレットとセキュアカーネルは、保護された環境で発生したイベントも ETW に記録できます。</li>

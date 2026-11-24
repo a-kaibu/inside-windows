@@ -19063,3 +19063,8 @@ full_pages_ja['p2-page-527'] = full_pages_ja['p2-page-527'].replace(
     '仮想メモリ量を制限します。',
     '仮想メモリ量を制限します。ジョブオブジェクトについては第1部第3章「プロセスとジョブ」を参照してください。',
 )
+
+full_pages_ja['p2-page-531'] = full_pages_ja['p2-page-531'].replace(
+    'SCM、SDDL、LSA の検索 API をホストするライブラリです。',
+    'SCM と SDDL の API、および LSA の検索 API をホストするライブラリです。',
+)
