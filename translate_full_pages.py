@@ -15422,7 +15422,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'のブートドライバーはそのプランを読み取ってキャッシュにデータを読み込み、起動全体の所要時間を短縮します。</p>\n'
                 '<figure><img loading="lazy" width="682" height="396" '
                 'src="assets/30df20d42357bb5faf01e316.webp" alt="レジストリに保存された ReadyBoot '
-                'の構成と統計"><figcaption>図12-12 ReadyBoot の構成と統計</figcaption></figure>',
+                'の構成と統計"><figcaption>図12-12 ReadyBoot の構成と統計</figcaption><p>ReadyBoost ドライバーの <code>Parameters</code> キーには、次回起動用の <code>BootPlan</code>、最後にブートプランを使った日時を示す <code>LastBootPlanUserTime</code>、プランの経過を示す <code>ReadyBootPlanAge</code>、ブートボリュームの ID を保持する <code>ReadyBootVolumeUniqueId</code> が表示されています。ブートプランとボリューム ID はバイナリ値です。</p></figure>',
  'p2-page-868': '<h3>自動起動する実行可能イメージ</h3>\n'
                 '<p>Winlogon のキーにある Userinit と Shell '
                 'のレジストリ値に加え、ブート時やログオン時にシステムの標準コンポーネントがプロセスを自動起動するために調べるレジストリやディレクトリの場所は数多くあります。Msconfig '
