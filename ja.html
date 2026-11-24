@@ -10129,7 +10129,7 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <tr><th scope="row"><code>SeMachineAccountPrivilege</code></th><td>ドメインへのワークステーションの追加</td><td>ドメインにコンピューターアカウントを作成するとき、ドメインコントローラーのセキュリティアカウントマネージャーが確認します。</td></tr>
 <tr><th scope="row"><code>SeManageVolumePrivilege</code></th><td>ボリュームの保守</td><td>ディスクの検査やデフラグに必要なボリュームのオープン操作で、ファイルシステムドライバーが確認します。</td></tr>
 <tr><th scope="row"><code>SeProfileSingleProcessPrivilege</code></th><td>個々のプロセスのプロファイリング</td><td>Superfetch とプリフェッチャーが、<code>NtQuerySystemInformation</code> API で個々のプロセスの情報を取得する際に確認します。</td></tr>
-<tr><th scope="row"><code>SeRelabelPrivilege</code></th><td>オブジェクトのラベルの変更</td><td>別のユーザーが所有するオブジェクトの整合性レベルを上げるときや、オブジェクトの整合性レベルを呼び出し元のトークンより高くしようとするときに、SRM が確認します。</td></tr>
+<tr><th scope="row"><code>SeRelabelPrivilege</code></th><td>オブジェクトのラベルの変更</td><td>別のユーザーが所有するオブジェクトの整合性レベルを上げるときや、オブジェクトの整合性レベルを呼び出し元のトークンの整合性レベルより高くしようとするときに、SRM が確認します。</td></tr>
 <tr><th scope="row"><code>SeRemoteShutdownPrivilege</code></th><td>リモートコンピューターからの強制シャットダウン</td><td>リモートからの <code>InitiateSystemShutdown</code> の呼び出し元がこの特権を持つか、Winlogon が確認します。</td></tr>
 <tr><th scope="row"><code>SeRestorePrivilege</code></th><td>ファイルとディレクトリの復元</td><td>NTFS はセキュリティ記述子にかかわらず、ファイルやディレクトリに対する <code>WRITE_DAC</code>、<code>WRITE_OWNER</code>、<code>ACCESS_SYSTEM_SECURITY</code>、<code>FILE_GENERIC_WRITE</code>、<code>FILE_ADD_FILE</code>、<code>FILE_ADD_SUBDIRECTORY</code>、<code>DELETE</code> を許可します。復元用にファイルを開くには <code>FILE_FLAG_BACKUP_SEMANTICS</code> を指定します。原文では <code>RegSaveKey</code> でレジストリキーにも対応するアクセスが許可されると説明しています。</td></tr>
 <tr><th scope="row"><code>SeSecurityPrivilege</code></th><td>監査とセキュリティログの管理</td><td>セキュリティ記述子の SACL へのアクセスや、セキュリティイベントログの読み取りと消去に必要です。</td></tr>
@@ -10143,7 +10143,7 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <caption>表7-11　特権（続き）</caption>
 <thead><tr><th scope="col">特権</th><th scope="col">ユーザー権利</th><th scope="col">用途</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>SeTakeOwnershipPrivilege</code></th><td>ファイルやその他のオブジェクトの所有権の取得</td><td>随意アクセス制御で許可されていないオブジェクトの所有権を取得するために必要です。</td></tr>
+<tr><th scope="row"><code>SeTakeOwnershipPrivilege</code></th><td>ファイルやその他のオブジェクトの所有権の取得</td><td>オブジェクトの所有権を取得するアクセス権が随意アクセス制御で付与されていない場合に、その所有権を取得するために必要です。</td></tr>
 <tr><th scope="row"><code>SeTcbPrivilege</code></th><td>オペレーティングシステムの一部として動作</td><td>トークンのセッション ID を設定するときに SRM が確認し、プラグアンドプレイのイベントを作成または管理するときにプラグアンドプレイマネージャーが確認します。<code>BSM_ALLDESKTOPS</code> 付きの <code>BroadcastSystemMessageEx</code>、<code>LsaRegisterLogonProcess</code>、および <code>NtSetInformationProcess</code> でアプリケーションを VDM として指定する場合にも確認されます。</td></tr>
 <tr><th scope="row"><code>SeTimeZonePrivilege</code></th><td>タイムゾーンの変更</td><td>タイムゾーンを変更するために必要です。</td></tr>
 <tr><th scope="row"><code>SeTrustedCredManAccessPrivilege</code></th><td>信頼された呼び出し元として資格情報マネージャーにアクセス</td><td>平文で照会できる資格情報を呼び出し元に開示してよいかを、資格情報マネージャーが確認します。既定では Winlogon のみに割り当てられます。</td></tr>
