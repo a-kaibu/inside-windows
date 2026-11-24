@@ -25092,8 +25092,9 @@ TestPmVm   0
 仮想マシンで「ディスクの管理」MMC スナップイン（<code>diskmgmt.msc</code>）を開き、ディスクを GPT で初期化します。
 次にシンプルボリュームを作成してドライブ文字を割り当てます。
 この時点ではフォーマットしません。</p></section><section class="page" id="p2-page-769" aria-label="p2-page-769"><figure>
-<img loading="lazy" width="591" height="550" src="assets/eb8b4c11da62709f175e3f14.webp" alt="仮想永続メモリディスクの初期化後の画面">
+<img loading="lazy" width="591" height="550" src="assets/eb8b4c11da62709f175e3f14.webp" alt="ディスクの管理の「ディスクの初期化」ダイアログ">
 <img loading="lazy" width="59" height="550" src="assets/33e4c73b721e87434db41d01.webp" alt="">
+<figcaption>256 GB の未割り当てディスク（ディスク1）を選択し、パーティション形式に GPT（GUID パーティションテーブル）を指定します。もう一方の選択肢は MBR（マスターブートレコード）です。ダイアログには、以前のバージョンの Windows には GPT を認識できないものがあると表示されています。</figcaption>
 </figure>
 <p>次に仮想永続メモリディスクを DAX モードでフォーマットします。
 仮想マシンで管理者としてコマンドプロンプトを開きます。
