@@ -19232,3 +19232,8 @@ full_pages_ja['p2-page-587'] = (
     .removesuffix('\n<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="GFlags のイメージファイルタブで notepad.exe を指定した状態"></figure>')
     .replace('<p>図10-47 GFlags でイメージごとのグローバルフラグを設定する。</p>', '<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="GFlags のイメージファイルタブで notepad.exe を指定した状態"><figcaption>図10-47\u3000GFlags でイメージごとのグローバルフラグを設定する。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-588'] = full_pages_ja['p2-page-588'].replace(
+    'MSCTF.dll&quot;142c:133c',
+    'MSCTF.dll&quot;\n142c:133c',
+)

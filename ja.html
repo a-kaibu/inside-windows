@@ -21857,7 +21857,8 @@ icacls msftedit.dll /grant Administrators:F
 ren msftedit.dll msftedit.disabled</code></pre>
 <p>「イメージローダーを観察する」の手順に従って、GFlags でローダースナップを有効にします。WinDbg で <code>mspaint.exe</code> を起動すると、不足した DLL がローダーの出力からすぐにわかります。</p>
 <pre><code>142c:1e18 @ 00056578 - LdrpInitializeNode - INFO: Calling init routine 00007FFC79258820 for
-DLL &quot;C:&#92;Windows&#92;System32&#92;MSCTF.dll&quot;142c:133c @ 00229625 - LdrpResolveDllName - ENTER: DLL
+DLL &quot;C:&#92;Windows&#92;System32&#92;MSCTF.dll&quot;
+142c:133c @ 00229625 - LdrpResolveDllName - ENTER: DLL
 name: .&#92;MSFTEDIT.DLL
 142c:133c @ 00229625 - LdrpResolveDllName - RETURN: Status: 0xc0000135
 142c:133c @ 00229625 - LdrpResolveDllName - ENTER: DLL name: C:&#92;Program Files&#92;Debugging Tools
