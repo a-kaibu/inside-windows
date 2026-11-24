@@ -136,7 +136,7 @@
 
 <h3 id="Windows-API">Windows API</h3>
 <p>Windows API は、Windows OS ファミリーのユーザーモード向けシステムプログラミングインターフェイスです。64ビット版が登場する前は、32ビット版のインターフェイスを Win32 API と呼び、初期の16ビット版 Windows のインターフェイスと区別していました。本書では、32ビット版と64ビット版の両方を Windows API と呼びます。Win32 API と書く場合も、両方を指します。</p>
-<p>Windows API の仕様は Windows SDK のドキュメントで無償公開されています。本章後半の「Windows ソフトウェア開発キット」も参照してください。Microsoft の開発者向け支援プログラムである MSDN では、すべての購読レベルにこの資料が含まれていました。基本 API を使ったプログラミングについては、Jeffrey Richter と Christophe Nasarre による <cite>Windows via C/C++, Fifth Edition</cite>（Microsoft Press、2007年）に詳しい解説があります。</p></section><section class="page" id="page-22" aria-label="page-22"><h4 id="Windows-API-の種類">Windows API の種類</h4>
+<p>Windows API の仕様は <a href="https://developer.microsoft.com/en-us/windows/desktop/develop">Windows SDK のドキュメント</a>で無償公開されています。本章後半の「Windows ソフトウェア開発キット」も参照してください。Microsoft の開発者向け支援プログラムである MSDN では、すべての購読レベルにこの資料が含まれていました。基本 API を使ったプログラミングについては、Jeffrey Richter と Christophe Nasarre による <cite>Windows via C/C++, Fifth Edition</cite>（Microsoft Press、2007年）に詳しい解説があります。</p></section><section class="page" id="page-22" aria-label="page-22"><h4 id="Windows-API-の種類">Windows API の種類</h4>
 <p>Windows APIは当初、純粋なC言語スタイルの関数群として誕生しました。現在では開発者が利用できる関数は数千個にも及びます。Windowsの黎明期において、C言語は他の言語からも容易に呼び出せる「最大公約数」であり、OSの低レベルサービスを公開するのに最も適した選択肢でした。しかし、関数の膨大化に伴い、命名規則の一貫性の欠如や、C++の名前空間のような論理的グループ分けができないという限界が顕在化しました。この問題を克服するために導入されたのが <strong>COM（Component Object Model）</strong> です。</p>
 
 <p>COMはもともと、Word文書の中にExcelの表やグラフを埋め込むような、Officeアプリ間でのデータ交換・複合文書連携を実現する技術「OLE（Object Linking and Embedding）」のために考案されました。初期のOLEはDDE（Dynamic Data Exchange）という古いWindowsメッセージング機能を利用していましたが、その制約が厳しかったため、新たな通信基盤としてCOM（1993年頃に「OLE 2」として登場）が開発されたのです。</p>
@@ -328,7 +328,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>初回起動時にシンボルを設定します。設定していないと、プロセスをダブルクリックして「Threads」タブを開いたときに警告が表示されます。設定すると、スレッドの開始関数や呼び出しスタック上の関数が名前で表示され、プロセス内で各スレッドが何をしているか調べやすくなります。</p>
 <p>シンボルを参照するには、本章の後半で説明する Windows 用デバッグツールが必要です。Process Explorer の「Options」メニューで「Configure Symbols」を選び、デバッグツールのフォルダーにある <code>Dbghelp.dll</code> のパスと、有効なシンボルパスを入力します。次の画面は、64ビットシステムに WDK の一部としてデバッグツールを既定の場所にインストールした場合の設定例です。</p>
 <figure><img loading="lazy" width="269" height="147" src="assets/bc299bfa7a6177bfa3b308a1.webp" alt="Process Explorer のシンボル設定に Dbghelp.dll とシンボルサーバーを指定した画面"></figure>
-<p>この例では、必要に応じてシンボルサーバーからファイルを取得し、ローカルの <code>C:\symbols</code> にコピーを保存します。空き容量に余裕がなければ、別のドライブなどのフォルダーを指定できます。詳細は MSDN のシンボルサーバーの設定資料を参照してください。</p>
+<p>この例では、必要に応じてシンボルサーバーからファイルを取得し、ローカルの <code>C:\symbols</code> にコピーを保存します。空き容量に余裕がなければ、別のドライブなどのフォルダーを指定できます。詳細は <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee416588.aspx">MSDN のシンボルサーバーの設定資料</a>を参照してください。</p>
 <blockquote><p><strong>ヒント</strong>　環境変数 <code>_NT_SYMBOL_PATH</code> に画面例のシンボルパスを設定できます。Process Explorer、Windows 用デバッグツールの各デバッガー、Visual Studio などが自動的にこの変数を参照するため、ツールごとに設定する手間を省けます。</p></blockquote>
 <p>Process Explorer は起動すると、既定でプロセスツリーを表示します。下ペインを開くと、開いているハンドルや、マップ済みの DLL とメモリマップトファイルを確認できます。これらについては第5章「メモリ管理」と、第2部の第8章を参照してください。プロセスにマウスポインターを重ねると、コマンドラインとパスがツールチップに表示されます。</p></section><section class="page" id="page-34" aria-label="page-34"><p>プロセスの種類によっては、名前にマウスポインターを重ねたときのツールチップに、次の情報も表示されます。</p>
 <ul>
@@ -452,7 +452,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 </ul>
 <p>Hyper-V は、脆弱性の悪用を防ぐためのカーネルの緩和策も支えます。これらの機能は、署名の有無を問わず、悪意のあるドライバーや不具合のあるドライバーから保護されます。この分離は、仮想信頼レベル（VTL）によって成り立っています。通常の OS とそのコンポーネントは VTL 0 で実行され、VBS の機能はより高い特権を持つ VTL 1 で実行されます。VTL 0 のコードはカーネルモードで動いても VTL 1 に影響を及ぼせません。各 VTL にユーザーモードとカーネルモードがあり、VTL 間の特権はハイパーバイザーが管理します。ハイパーバイザーを使うアーキテクチャは第2章で、VBS の仕組みは第7章で詳しく説明します。</p></section><section class="page" id="page-46" aria-label="page-46"><h3 id="ファームウェア">ファームウェア</h3>
 <p>Windows のコンポーネントは OS とカーネルのセキュリティに依存し、カーネルはハイパーバイザーによる保護に依存します。各コンポーネントを安全に読み込み、その内容が正当であることを検証する役割は通常、ブートローダーが担います。ブートローダー自体の正当性も確認する必要があるため、信頼関係は階層になります。</p>
-<p>Windows 8 以降では、その起点となるのがシステムファームウェアです。認定済みシステムには UEFI ベースのファームウェアが必要です。Windows が要件とする UEFI 2.3.1b では、起動に関わるソフトウェアの署名を厳格に検証するセキュアブートの実装が求められます。この検証により、起動の最初から Windows のコンポーネントを安全に読み込めます。Trusted Platform Module（TPM）などの技術は起動過程を測定し、ローカルとリモートの両方で証明できるようにします。Microsoft は業界各社と協力し、起動用ソフトウェアの不具合や侵害に備えて、UEFI セキュアブートの許可リストと拒否リストを管理します。Windows Update でもファームウェアの更新を配信します。起動とシャットダウンを扱う第2部の章で、ファームウェアを改めて説明します。</p>
+<p>Windows 8 以降では、その起点となるのがシステムファームウェアです。認定済みシステムには UEFI ベースのファームウェアが必要です。Windows が要件とする <a href="https://www.uefi.org/">UEFI 2.3.1b</a> では、起動に関わるソフトウェアの署名を厳格に検証するセキュアブートの実装が求められます。この検証により、起動の最初から Windows のコンポーネントを安全に読み込めます。Trusted Platform Module（TPM）などの技術は起動過程を測定し、ローカルとリモートの両方で証明できるようにします。Microsoft は業界各社と協力し、起動用ソフトウェアの不具合や侵害に備えて、UEFI セキュアブートの許可リストと拒否リストを管理します。Windows Update でもファームウェアの更新を配信します。第2部の「<a href="#第12章-起動とシャットダウン">第12章 起動とシャットダウン</a>」で、ファームウェアを改めて説明します。</p>
 <h3 id="ターミナル-サービスと複数のセッション">ターミナル サービスと複数のセッション</h3>
 <p>ターミナル サービスは、1台の Windows システムで複数の対話型セッションを扱う機能です。リモートユーザーは別のコンピューターにセッションを開いてサインインし、サーバー上でアプリケーションを実行できます。サーバーは GUI をクライアントに転送し、設定に応じて音声やクリップボードも転送します。クライアントはユーザーの入力をサーバーに返します。X Window System と同様に、デスクトップ全体に加え、サーバー上で実行する個別のアプリケーションの画面だけをクライアントに表示することもできます。</p>
 <p>最初のセッションはサービスセッション、またはセッション0と呼ばれ、システムサービスをホストするプロセスが動作します。詳しくは第2部の管理機構の章を参照してください。実機のコンソールで最初にサインインするとセッション1になります。追加のセッションは、リモート デスクトップ接続（<code>Mstsc.exe</code>）やユーザーの簡易切り替えで作成できます。</p>
@@ -764,7 +764,7 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <li>BitLocker、VHD からの起動、AppLocker、Hyper-V などの機能と、100を超える設定可能なライセンスポリシー値への対応。</li>
 <li>サーバー版に付属する追加のサービス。ディレクトリサービス、Host Guardian、記憶域スペース ダイレクト、シールドされた仮想マシン、クラスタリングなどがあります。</li>
 </ul>
-<p>表2-2は、Windows 10、Windows Server 2012 R2、Windows Server 2016 の一部のエディションで、サポートするメモリとプロセッサーの違いを示します。Windows Server 2012 R2 の詳細は Microsoft のエディション比較表を参照してください。Windows 10、Windows Server 2016、それ以前の OS のメモリ上限は MSDN の資料に記載されています。</p>
+<p>表2-2は、Windows 10、Windows Server 2012 R2、Windows Server 2016 の一部のエディションで、サポートするメモリとプロセッサーの違いを示します。Windows Server 2012 R2 の詳細は <a href="https://www.microsoft.com/en-us/download/details.aspx?id=41703">Microsoft のエディション比較表</a>を参照してください。Windows 10、Windows Server 2016、それ以前の OS のメモリ上限は <a href="https://learn.microsoft.com/en-us/windows/win32/memory/memory-limits-for-windows-releases">Windows のメモリ上限資料</a>に記載されています。</p>
 <p>クライアント版とサーバー版には複数のパッケージがありますが、主要なシステムファイルは共通です。これにはカーネルイメージ <code>Ntoskrnl.exe</code> と PAE 版の <code>Ntkrnlpa.exe</code>、HAL のライブラリ、デバイスドライバー、基本的なシステムユーティリティと DLL が含まれます。</p></section><section class="page" id="page-72" aria-label="page-72"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表2-2　一部の Windows エディションにおけるプロセッサーとメモリの上限</caption>
 <thead><tr><th>エディション</th><th>ソケット数（32ビット版）</th><th>物理メモリ（32ビット版）</th><th>論理プロセッサー数またはソケット数（64ビット版）</th><th>物理メモリ（x64 版）</th></tr></thead>
