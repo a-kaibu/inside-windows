@@ -19226,3 +19226,9 @@ full_pages_ja['p2-page-585'] = (
     .removesuffix('\n<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="GFlags でシステムのデバッグオプションを設定する画面"></figure>')
     .replace('<p>図10-46 GFlags でシステムのデバッグオプションを設定する。</p>', '<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="GFlags でシステムのデバッグオプションを設定する画面"><figcaption>図10-46\u3000GFlags でシステムのデバッグオプションを設定する。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-587'] = (
+    full_pages_ja['p2-page-587']
+    .removesuffix('\n<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="GFlags のイメージファイルタブで notepad.exe を指定した状態"></figure>')
+    .replace('<p>図10-47 GFlags でイメージごとのグローバルフラグを設定する。</p>', '<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="GFlags のイメージファイルタブで notepad.exe を指定した状態"><figcaption>図10-47\u3000GFlags でイメージごとのグローバルフラグを設定する。</figcaption></figure>', 1)
+)
