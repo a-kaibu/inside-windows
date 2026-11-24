@@ -18580,3 +18580,12 @@ for _page, _asset, _description in (
         f'src="assets/{_asset}.webp" alt="原文の図（第2巻 PDF {_page}ページ）"',
         f'src="assets/{_asset}.webp" alt="{_description}"',
     )
+
+
+full_pages_ja['p2-page-243'] = full_pages_ja['p2-page-243'].replace(
+    '<details><summary>原図を表示</summary><img loading="lazy" width="770" height="953" '
+    'src="assets/19b8f5ce4ed3e804900e6fe6.webp" alt="図8-40の原本ページ"></details>',
+    '<p>クライアントはクライアント通信ポートへのハンドルを持ちます。'
+    'サーバーは接続ポートとサーバー通信ポートへのハンドルを持ちます。'
+    'カーネルでは、2つの通信ポートが互いに関連付けられ、どちらもメッセージキューを持つ接続ポートにひも付きます。</p>',
+)
