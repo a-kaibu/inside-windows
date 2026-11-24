@@ -6082,7 +6082,7 @@ pfn 56238     ---DA--UWEV  pfn 5de61     ---DA--UW-V</pre>
 <li><strong>使用履歴</strong>（<code>SmpDesiredPfSizeBasedOnHistory</code>）　使用履歴に基づく推奨ページファイルサイズです。<code>Smss.exe</code> は1時間ごとに作動するタイマーを使い、ページファイルの使用量を記録します。</li>
 </ul></section><section class="page" id="page-407" aria-label="page-407"><p>4つ目の要因は、Windows アプリ用の推奨サイズ（<code>SmpDesiredPfSizeForApps</code>）です。4つの推奨値の計算方法を表5-12に示します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-12　ページファイルの推奨サイズの計算</caption><thead><tr><th scope="col">計算の根拠</th><th scope="col">推奨ページファイルサイズ</th></tr></thead><tbody>
-<tr><td>RAM</td><td>RAM が1 GB以下なら1 GBです。1 GBを超える場合は、超過分1 GBにつき1/8 GBを加えます。上限は32 GBです。</td></tr>
+<tr><td>RAM</td><td>RAM が1 GB以下なら1 GBです。RAM が1 GBを超える場合は、基準の1 GBに、RAM の超過分1 GBにつき1/8 GBを加えます。上限は32 GBです。</td></tr>
 <tr><td>クラッシュダンプ</td><td><p>専用ダンプファイルが構成済みなら、ダンプの保存にページファイルは不要なので0です。専用ダンプファイルは、レジストリキー <code>HKLM\System\CurrentControlSet\Control\CrashControl</code> に <code>DedicatedDumpFile</code> 値を追加して構成できます。</p><p>ダンプの種類が既定の「自動」の場合、RAM が4 GB未満なら RAM の1/6です。それ以外は2/3 GBを基準に、RAM の4 GBを超える分1 GBにつき1/8 GBを加えます。上限は32 GBです。直近のクラッシュでページファイルの容量が不足していた場合は、RAM の容量と32 GBのうち、小さいほうまで推奨サイズを引き上げます。</p><p>完全メモリダンプの場合は、RAM の容量にダンプファイル内の追加情報のサイズを加えます。カーネルメモリダンプの場合は、RAM の容量と同じです。</p></td></tr>
 <tr><td>使用履歴</td><td>十分な数のサンプルが記録されていれば、使用量の90パーセンタイルを推奨値とします。サンプルが足りなければ、上記の RAM を基準に計算します。</td></tr>
 <tr><td>アプリ</td><td>サーバーなら0です。それ以外では、プロセスライフサイクルマネージャー（PLM）がアプリの終了時期を判断するときの係数を使います。本書の対象バージョンで使う基準は RAM の2.3倍で、モバイル端末のおおよその最小構成にあたる RAM 1 GBを想定しています。この係数から算出する推奨値は約2.5 GBです。この値が実際の RAM の容量を上回れば、推奨値から RAM の容量を引きます。それ以外は0です。</td></tr>
