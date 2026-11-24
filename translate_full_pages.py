@@ -19191,3 +19191,9 @@ full_pages_ja['p2-page-574'] = (
     .removesuffix('\n<figure><img loading="lazy" width="398" height="465" src="assets/d33c84c5620202473489db77.webp" alt="起動と回復の設定画面。デバッグ情報の種類に自動メモリダンプが選ばれている"></figure>')
     .replace('<p>図10-40 クラッシュダンプの設定。</p>', '<figure><img loading="lazy" width="398" height="465" src="assets/d33c84c5620202473489db77.webp" alt="起動と回復の設定画面。デバッグ情報の種類に自動メモリダンプが選ばれている"><figcaption>図10-40\u3000クラッシュダンプの設定。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-577'] = (
+    full_pages_ja['p2-page-577']
+    .removesuffix('\n<figure><img loading="lazy" width="533" height="374" src="assets/58ae7c8235cfc2fbd2eb7028.webp" alt="空き容量不足でダンプファイルを削除したことを示すシステムイベントログ"></figure>')
+    .replace('<p>図10-41 ダンプファイルの削除を記録したイベントログ。</p>', '<figure><img loading="lazy" width="533" height="374" src="assets/58ae7c8235cfc2fbd2eb7028.webp" alt="空き容量不足でダンプファイルを削除したことを示すシステムイベントログ"><figcaption>図10-41\u3000ダンプファイルの削除を記録したイベントログ。</figcaption></figure>', 1)
+)
