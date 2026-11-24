@@ -777,24 +777,21 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <li>第6章で扱う I/O 完了ポートなどを使うと、複数プロセッサーで性能を伸ばせるマルチスレッドのサーバープロセスを効率よく実装できます。</li>
 </ul>
 <p>Windows カーネルのスケーラビリティは世代を追って改善されてきました。Windows Server 2003 では CPU ごとにスケジューリングキューを設け、細かい単位でロックすることで、複数のプロセッサーが並行してスレッドの割り当てを決められるようになりました。Windows 7 と Windows Server 2008 R2 では、待機のディスパッチ処理でスケジューラー全体のロックが不要になりました。ロック範囲の細分化は、メモリマネージャー、キャッシュマネージャー、オブジェクトマネージャーなどでも進められました。</p></section><section class="page" id="page-71" aria-label="page-71"><h3 id="クライアント版とサーバー版の違い">クライアント版とサーバー版の違い</h3>
-<p>Windows は、単一の統一されたソースコードベースからクライアント版（Windows 10）とサーバー版（Windows Server 2016）の双方のバイナリをビルドしています。実際、両者のカーネルイメージ（<code>Ntoskrnl.exe</code>）や主要コンポーネントは本質的に同一です。</p>
-
-<p>デスクトップPC向けの Windows 10 には、Home、Pro、Enterprise、Education などのエディションが存在します。サーバー向けには、Essentials、Standard、Datacenter などのエディションが提供されています。これらは単一のコードから生成されているにもかかわらず、サポートするCPU数や最大物理メモリ容量、提供される機能が大きく異なります。</p>
-
-<p>表2-2に、主要な Windows エディションにおけるプロセッサおよびメモリの仕様制限を示します。</p>
-
-<p><strong>表2-2：主要エディションのプロセッサ・メモリ制限の比較</strong></p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;">
-<thead><tr style="border-bottom:2px solid var(--line);text-align:left;">
-<th style="padding:6px;">エディション</th><th style="padding:6px;">最大ソケット数 (x64)</th><th style="padding:6px;">最大論理プロセッサ数</th><th style="padding:6px;">最大物理メモリ (x64)</th>
-</tr></thead>
-<tbody>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Home</td><td style="padding:6px;">1 ソケット</td><td style="padding:6px;">64</td><td style="padding:6px;">128 GB</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Pro</td><td style="padding:6px;">2 ソケット</td><td style="padding:6px;">128</td><td style="padding:6px;">2 TB</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 Enterprise</td><td style="padding:6px;">2 ソケット</td><td style="padding:6px;">128</td><td style="padding:6px;">2 TB</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows Server 2016 Standard</td><td style="padding:6px;">64 ソケット</td><td style="padding:6px;">512</td><td style="padding:6px;">24 TB</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows Server 2016 Datacenter</td><td style="padding:6px;">64 ソケット</td><td style="padding:6px;">512</td><td style="padding:6px;">24 TB</td></tr>
-</tbody></table></div></section><section class="page" id="page-72" aria-label="page-72"><p>同じカーネルバイナリが、どのようにして自身がクライアント版かサーバー版か、あるいはどのエディションかを判別し、振る舞いを変えているのでしょうか？</p>
+<p>Windows にはクライアント版とサーバー版があります。デスクトップ向け Windows 10 には、Home、Pro、Education、Pro Education、Enterprise、Enterprise Long Term Servicing Branch（LTSB）の6つのエディションがあります。デスクトップ向け以外には、Windows 10 Mobile、Mobile Enterprise、IoT Core、IoT Core Enterprise、IoT Mobile Enterprise があります。特定の地域の要件に合わせた N シリーズなどの派生版もあります。</p>
+<p>Windows Server 2016 の系列には、Datacenter、Standard、Essentials、MultiPoint Premium Server、Windows Storage Server 2016、Microsoft Hyper-V Server 2016 の6種類があります。</p>
+<p>主な違いは次のとおりです。</p>
+<ul>
+<li>Windows Server 2016 の Datacenter と Standard では、ソケット数に代わりコア数を基準に価格が決まります。</li>
+<li>サポートする論理プロセッサーの総数。</li>
+<li>サーバー版で実行できる Hyper-V コンテナーの数。原著では、クライアント版は名前空間ベースの Windows コンテナーに対応すると説明しています。</li>
+<li>使用できる物理メモリの量。厳密には、RAM に使える物理アドレスの上限です。詳細は第5章「メモリ管理」を参照してください。</li>
+<li>同時に受け付けられるネットワーク接続数。たとえば原著が扱うクライアント版では、ファイル・印刷サービスへの同時接続は最大10です。</li>
+<li>マルチタッチとデスクトップコンポジションへの対応。</li>
+<li>BitLocker、VHD からの起動、AppLocker、Hyper-V などの機能と、100を超える設定可能なライセンスポリシー値への対応。</li>
+<li>サーバー版に付属する追加のサービス。ディレクトリサービス、Host Guardian、記憶域スペース ダイレクト、シールドされた仮想マシン、クラスタリングなどがあります。</li>
+</ul>
+<p>表2-2は、Windows 10、Windows Server 2012 R2、Windows Server 2016 の一部のエディションで、サポートするメモリとプロセッサーの違いを示します。Windows Server 2012 R2 の詳細は Microsoft のエディション比較表を参照してください。Windows 10、Windows Server 2016、それ以前の OS のメモリ上限は MSDN の資料に記載されています。</p>
+<p>クライアント版とサーバー版には複数のパッケージがありますが、主要なシステムファイルは共通です。これにはカーネルイメージ <code>Ntoskrnl.exe</code> と PAE 版の <code>Ntkrnlpa.exe</code>、HAL のライブラリ、デバイスドライバー、基本的なシステムユーティリティと DLL が含まれます。</p></section><section class="page" id="page-72" aria-label="page-72"><p>同じカーネルバイナリが、どのようにして自身がクライアント版かサーバー版か、あるいはどのエディションかを判別し、振る舞いを変えているのでしょうか？</p>
 
 <p>Windows カーネルは起動時、プロダクトタイプを内部変数（<code>SharedUserData->NtProductType</code>）に読み込みます：</p>
 <ul>
