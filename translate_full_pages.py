@@ -18488,3 +18488,11 @@ full_pages_ja['p2-page-4'] = """<h2>第2部の献辞</h2>
 <p>アンドレア・アリエヴィ</p>
 <p>いつも私を見放さず、愛とぬくもりを与えてくれる妻と娘へ。夢を追うよう励まし、自らの犠牲をいとわず私に機会を与えてくれた両親へ。</p>
 <p>アレックス・イオネスク</p>"""
+
+
+full_pages_ja['page-2'] = """<h2>Windows Internals 第7版 第1部</h2>
+<p>システムアーキテクチャ、プロセス、スレッド、メモリ管理ほか</p>
+<p>Pavel Yosifovich、Alex Ionescu、Mark E. Russinovich、David A. Solomon</p>"""
+
+full_pages_ja['p2-page-2'] = """<h2>Windows Internals 第7版 第2部</h2>
+<p>Andrea Allievi、Alex Ionescu、Mark E. Russinovich、David A. Solomon</p>"""
