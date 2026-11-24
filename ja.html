@@ -668,7 +668,7 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 +0x0f0 RedirectObject   : Ptr64 Void
 +0x0f8 Padding          : [8] UChar</pre>
 
-<p>なお、既定では <code>dt</code> コマンドは内部に含まれるサブ構造体（入れ子の構造体）の中身までは展開しません。サブ構造体のフィールドまで再帰的に展開して表示するには、<code>-r</code> スイッチまたは <code>-b</code> スイッチを使用します。例えば、カーネル割り込みオブジェクトを表示する際にこのスイッチを指定すると、<code>InterruptListEntry</code> フィールドに格納されている <code>_LIST_ENTRY</code> 構造体の内部フォーマット（<code>Flink</code>, <code>Blink</code>）まで詳細に展開されます：</p>
+<p>なお、既定では <code>dt</code> コマンドは内部に含まれるサブ構造体（入れ子の構造体）の中身までは展開しません。サブ構造体のフィールドまで再帰的に展開して表示するには、<code>-r</code> スイッチまたは <code>-b</code> スイッチを使用します。例えば、カーネル割り込みオブジェクトを表示する際にこのスイッチを指定すると、<code>InterruptListEntry</code> フィールドに格納されている <code>_LIST_ENTRY</code> 構造体の内部フォーマット（<code>Flink</code>, <code>Blink</code>）まで展開されます。<code>-r</code> と <code>-b</code> の違いは、デバッガーのドキュメントを参照してください。</p>
 <pre>lkd> dt nt!_KINTERRUPT -r
 +0x000 Type             : Int2B
 +0x002 Size             : Int2B
@@ -681,7 +681,8 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 +0x008 Blink            : Ptr64 _LIST_ENTRY
 +0x018 ServiceRoutine   : Ptr64     unsigned char</pre>
 
-<p><code>-r</code> スイッチの後ろに数値を付けることで、再帰展開の深さを指定することも可能です。例えば <code>dt nt!_KINTERRUPT -r1</code> と指定すると、1階層分だけサブ構造体を展開します。</p>
+<p><code>-r</code> スイッチの後ろに数値を付けることで、再帰展開の深さを指定することも可能です。次の例では、入れ子の構造体を1階層だけ展開します。</p>
+<pre>lkd&gt; dt nt!_KINTERRUPT -r1</pre>
 <p>デバッガーのセットアップや詳しいコマンド体系については、Debugging Tools for Windows のヘルプファイル（<code>Debugger.chm</code>）に網羅されています。さらにデバイスドライバ開発者を主眼に置いたデバッグ手法の詳細については、WDK の公式ドキュメントを参照してください。</p></section><section class="page" id="page-60" aria-label="page-60"><h4 id="LiveKd-ツール">LiveKd ツール</h4>
 <p>Sysinternals の <strong>LiveKd</strong> は、OSをデバッグモードで起動していなくても、稼働中のWindows上で即座に WinDbg や kd によるカーネルデバッグを可能にする画期的な無償ツールです。</p>
 <p>デバッグモードを有効にしていない実稼働マシン上で急遽カーネルレベルの障害調査が必要になった場合や、再起動すると再現しなくなってしまうトラブルを調査する際に極めて大きな威力を発揮します。</p>
