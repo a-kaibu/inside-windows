@@ -860,13 +860,17 @@ Persist defective memory list: Yes</pre>
 <p>チェックビルドは主にデバイスドライバーの開発を支援するもので、ドライバーやほかのシステムコードが呼び出すカーネルモード関数で、より厳密にエラーを検査します。たとえば、誤った割り込み要求レベルでスピンロックを取得するなど、引数を検証するシステム関数をカーネルモードコードが誤って呼び出すと、その場でシステムの実行が停止します。データ構造が破損し、後になってクラッシュするのを防ぐためです。</p>
 <p>完全なチェックビルドは不安定なことが多く、大半の環境で実行が困難でした。そのため Windows 10 以降では、Microsoft はカーネルと HAL のチェック版だけを提供します。ドライバー開発者は、完全版に伴う問題を避けながら、自分のコードがやり取りするカーネルと HAL で同様の検査を利用できます。この組み合わせは WDK で無償提供され、インストール先のルートにある <code>\Debug</code> ディレクトリに入っています。手順は WDK の「Installing Just the Checked Operating System and HAL」を参照してください。</p>
 <h4 id="実験-チェックビルドで動作しているか確認する">実験：チェックビルドで動作しているか確認する</h4>
-<p>カーネルがチェックビルドか、市販版のフリービルドかを表示する専用ツールは、Windows に付属していません。この情報は Windows Management Instrumentation（WMI）の <code>Win32_OperatingSystem</code> クラスにある <code>Debug</code> プロパティから取得できます。</p></section><section class="page" id="page-75" aria-label="page-75"><p>システムがチェックドビルドで稼働しているかどうかは、PowerShell から WMI を照会することで簡単に判定できます：</p>
-<pre>PS C:\> (Get-CimInstance Win32_OperatingSystem).Debug
+<p>カーネルがチェックビルドか、市販版のフリービルドかを表示する専用ツールは、Windows に付属していません。この情報は Windows Management Instrumentation（WMI）の <code>Win32_OperatingSystem</code> クラスにある <code>Debug</code> プロパティから取得できます。</p></section><section class="page" id="page-75" aria-label="page-75"><p>次の PowerShell コマンドで <code>Debug</code> プロパティを表示できます。PowerShell を開いて実行してください。</p>
+<pre>PS C:\Users\pavely&gt; Get-WmiObject win32_operatingsystem | select debug
+debug
+-----
 False</pre>
-
-<p>通常の製品環境では <code>False</code> と表示されます。</p>
-
-<p>チェックドビルド内部の追加コードの多くは、WDKヘッダーで定義されている <code>ASSERT</code> や <code>NT_ASSERT</code> マクロによるものです。これらは関数の入力値やポインタの妥当性を常に監視しており、万一不正な値（論理エラー）を検知すると、即座にカーネルデバッガーにブレークして開発者に問題の発生箇所を通報します。デバイスドライバの開発やカーネルモジュールの厳密なテストにおいて、潜在的なバグを早期発見するための極めて強力な武器となります。</p></section><section class="page" id="page-76" aria-label="page-76"><h3 id="仮想化ベースのセキュリティ-VBS-アーキテクチャ概要">仮想化ベースのセキュリティ（VBS）アーキテクチャ概要</h3>
+<p>この例では <code>Debug</code> が <code>False</code> なので、システムはチェックビルドで動いていません。</p>
+<p>チェックビルドのバイナリに追加されるコードの多くは、WDK のヘッダーファイル <code>Wdm.h</code> に定義される <code>ASSERT</code> や <code>NT_ASSERT</code> マクロに由来します。これらのマクロは、データ構造や引数が妥当かどうかなどの条件を検査します。式の評価結果が <code>FALSE</code> の場合、マクロはカーネルモード関数 <code>RtlAssert</code> を呼ぶか、アサーション割り込みを発生させます。<code>RtlAssert</code> は <code>DbgPrintEx</code> を呼び、デバッグメッセージをバッファーに書き込みます。x64 と x86 では、アサーション割り込みの番号は <code>0x2B</code> です。</p>
+<p>カーネルデバッガーが接続され、適切なシンボルが読み込まれていれば、メッセージが自動表示されます。その後、ブレークポイントで停止するか、失敗を無視するか、プロセスまたはスレッドを終了するかを選べます。ブート構成データベースのデバッグオプションを有効にせずに起動し、カーネルデバッガーも接続していない場合は、アサーションが失敗するとバグチェックが発生し、システムがクラッシュします。一部のカーネルサポートルーチンが行う検査は、WDK の「Checked Build ASSERTs」に掲載されています。この一覧の更新は停止しています。</p>
+<p>チェックビルドでは、一部のコンポーネントで詳細なトレースを有効にできるため、システム管理者にも役立ちます。手順は Microsoft サポート技術情報314743「HOWTO: Enable Verbose Debug Tracing in Various Drivers and Subsystems」を参照してください。出力は <code>DbgPrintEx</code> によって内部のデバッグメッセージバッファーに送られます。表示するには、デバッグモードで起動した対象システムにカーネルデバッガーを接続するか、ローカルカーネルデバッグで <code>!dbgprint</code> を実行するか、Sysinternals の <code>Dbgview.exe</code> を使います。</p>
+<p>その後の Windows では、この方式から、Windows ソフトウェアトレースプリプロセッサ（WPP）や TraceLogging へ移行しています。どちらも Event Tracing for Windows（ETW）を基盤にしており、チェック版のコンポーネントに限らず使えます。これは完全なチェックビルドが提供されなくなった現在、特に役立ちます。出力を見るには、Windows Performance Analyzer（WPA。原著は XPerf や Windows Performance Toolkit にも言及）、WDK の TraceView、カーネルデバッガーの拡張コマンド <code>!wmiprint</code> などを使えます。</p>
+<p>チェックビルドはユーザーモードのコードのテストにも役立ちます。カーネルが追加の検査を行い、コンポーネントのコンパイル時の最適化も省かれるため、システム全体のタイミングが変わるからです。マルチスレッドの同期の不具合は特定のタイミングでだけ起きることが多く、チェックビルドやカーネルと HAL のチェック版でテストすると、市販版では表面化しない不具合を発見できる場合があります。</p></section><section class="page" id="page-76" aria-label="page-76"><h3 id="仮想化ベースのセキュリティ-VBS-アーキテクチャ概要">仮想化ベースのセキュリティ（VBS）アーキテクチャ概要</h3>
 <p>第1章で触れたように、通常のユーザーモードとカーネルモードの二元分離は、悪意ある（またはバグのある）ユーザープログラムからOSを保護する上で不可欠な境界です。しかし、いったん不正なコードがカーネルモードに入り込んでしまうと（パッチ未適用の脆弱性の悪用や、悪意あるドライバのロードなど）、カーネルコードはシステム全体の全メモリに完全な権限を持つため、システムは完全に陥落してしまいます。</p>
 
 <p>この根本的なリスクを封じ込めるため、Windows 10 / Server 2016 で導入されたのが <strong>仮想化ベースのセキュリティ（VBS: Virtualization-Based Security）</strong> です。VBSは、プロセッサの仮想化支援機能（Intel VT-x / AMD-V）と Hyper-V ハイパーバイザーを利用して、CPUのハードウェア特権レベルを拡張し、2つの独立した「仮想信頼レベル（VTL: Virtual Trust Level）」を創出します（図2-3）。</p>
