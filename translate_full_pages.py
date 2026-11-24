@@ -18852,3 +18852,13 @@ full_pages_ja['p2-page-446'] = full_pages_ja['p2-page-446'].replace(
     'ハイブ内の断片化していた領域が 10 MB 削減されました。',
     '断片化していた空き領域が整理され、ハイブのサイズが 10 MB 縮小しました。',
 )
+
+full_pages_ja['p2-page-447'] = full_pages_ja['p2-page-447'].replace(
+    '十分な空きセルがなければ',
+    '新しいキーセルが収まる空きセルがなければ',
+)
+
+full_pages_ja['p2-page-449'] = full_pages_ja['p2-page-449'].replace(
+    'ハイブログ',
+    'ハイブのログファイル',
+)
