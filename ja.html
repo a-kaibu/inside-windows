@@ -533,7 +533,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>Windows のさまざまなバージョンのシンボルをダウンロードしてインストールできますが、修正プログラムに対応したシンボルは個別に入手できないことがあります。対応するシンボルを入手するには、デバッガーのシンボルパスに所定の書式で Microsoft のシンボルサーバーを指定するのが簡単です。たとえば次の指定では、必要なシンボルをインターネット上のサーバーから取得し、<code>C:\symbols</code> にコピーを保存します。</p>
 <pre>srv*c:\symbols*http://msdl.microsoft.com/download/symbols</pre>
 <h4 id="Windows-用デバッグツール">Windows 用デバッグツール</h4>
-<p>Windows 用デバッグツール（Debugging Tools for Windows）には、本書で Windows の内部動作を調べるために使う高度なデバッグツールが含まれています。新版は Windows SDK に同梱されています。インストール方法の違いについては、MSDN の Windows 用デバッグツールの資料を参照してください。これらのツールはユーザーモードのプロセスとカーネルの両方をデバッグできます。</p></section><section class="page" id="page-56" aria-label="page-56"><p>Windows 用デバッグツールには <code>cdb</code>、<code>ntsd</code>、<code>kd</code>、WinDbg の4つのデバッガーが含まれます。どれも <code>DbgEng.dll</code> に実装された同じデバッグエンジンを使います。エンジンの詳細はツールのヘルプに記載されています。</p>
+<p>Windows 用デバッグツール（Debugging Tools for Windows）には、本書で Windows の内部動作を調べるために使う高度なデバッグツールが含まれています。新版は Windows SDK に同梱されています。インストール方法の違いについては、<a href="https://msdn.microsoft.com/en-us/library/windows/hardware/ff551063.aspx">MSDN の Windows 用デバッグツールの資料</a>を参照してください。これらのツールはユーザーモードのプロセスとカーネルの両方をデバッグできます。</p></section><section class="page" id="page-56" aria-label="page-56"><p>Windows 用デバッグツールには <code>cdb</code>、<code>ntsd</code>、<code>kd</code>、WinDbg の4つのデバッガーが含まれます。どれも <code>DbgEng.dll</code> に実装された同じデバッグエンジンを使います。エンジンの詳細はツールのヘルプに記載されています。</p>
 <ul>
 <li><code>cdb</code> と <code>ntsd</code> はコンソールで操作するユーザーモードデバッガーです。既存のコンソールから起動した場合、<code>ntsd</code> は新しいコンソールウィンドウを開き、<code>cdb</code> は元のウィンドウを使います。</li>
 <li><code>kd</code> はコンソールで操作するカーネルモードデバッガーです。</li>
@@ -1085,7 +1085,7 @@ Processor Index 0 Number (0, 0) GroupSetMember 1
 Interrupt Count -- 0010d637
 Times -- Dpc    000000f4 Interrupt 00000119
 Kernel 0000d952 User      0000425d</pre>
-<p><code>!prcb</code> の出力には構造体のアドレスが表示されるため、<code>dt</code> で <code>_KPRCB</code> の内容を直接表示できます。たとえば、起動時に検出されたプロセッサーの速度を確認するには、次のように <code>MHz</code> フィールドを表示します。</p>
+<p><code>!prcb</code> の出力には構造体のアドレス（この例では <code>fffff803c3b23180</code>）が表示されるため、<code>dt</code> で <code>_KPRCB</code> の内容を直接表示できます。たとえば、起動時に検出されたプロセッサーの速度を確認するには、次のように <code>MHz</code> フィールドを表示します。</p>
 <pre>lkd&gt; dt nt!_KPRCB fffff803c3b23180 MHz
 +0x5f4 MHz : 0x893
 lkd&gt; ? 0x893
