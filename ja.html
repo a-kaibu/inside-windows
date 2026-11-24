@@ -3495,7 +3495,7 @@ Win32Thread: 0000000000000000 WAIT: (Suspended) KernelMode Non-Alertable
 SuspendCount 1
 ffffe0019b6b2ae0  NotificationEvent
 ...</pre></li>
-<li>プロセス内の最初のスレッドにコンテキストを切り替えます。別のスレッドを選ぶこともできます。
+<li><code>.thread /p /r</code> に一覧の先頭にあるスレッドのアドレスを渡し、そのスレッドのコンテキストに切り替えます。別のスレッドを選ぶこともできます。
 <pre>lkd&gt; .thread /p /r ffffe0019758f080
 Implicit thread is now ffffe001&#x27;9758f080
 Implicit process is now ffffe001&#x27;96039080
