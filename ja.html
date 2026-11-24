@@ -27089,7 +27089,7 @@ Windows ローダーは起動時にこの変数を検出すると、<code>VbsPol
 スタートメニューの検索ボックスに「グループ ポリシーの編集」または <code>gpedit.msc</code> と入力し、ローカルグループポリシーエディターを起動します。
 「コンピューターの構成」→「管理用テンプレート」→「システム」→「Device Guard」と進み、「仮想化ベースのセキュリティを有効にする」（Turn On Virtualization Based Security）をダブルクリックします。
 ポリシーが「有効」になっていることを確認し、オプションを次の図のように設定します。</p>
-<figure><img loading="lazy" width="648" height="491" src="assets/083a697d4b2942f42b486bfb.webp" alt="ローカルグループポリシーエディターで仮想化ベースのセキュリティと UEFI ロックを設定する画面"><figcaption>グループポリシーで仮想化ベースのセキュリティを有効にする</figcaption></figure></section><section class="page" id="p2-page-846" aria-label="p2-page-846"><p>「システム情報」または BIOS の設定画面でセキュアブートが有効であることを確認し、再起動します。
+<figure><img loading="lazy" width="648" height="491" src="assets/083a697d4b2942f42b486bfb.webp" alt="ローカルグループポリシーエディターで仮想化ベースのセキュリティと UEFI ロックを設定する画面"><figcaption>グループポリシーで仮想化ベースのセキュリティを有効にする</figcaption><p>画面では、プラットフォームのセキュリティレベルに「セキュアブートと DMA 保護」を選んでいます。仮想化ベースのコード整合性保護と Credential Guard は、どちらも「UEFI ロックで有効」に設定し、「UEFI メモリ属性テーブルを必須とする」は選択していません。</p></figure></section><section class="page" id="p2-page-846" aria-label="p2-page-846"><p>「システム情報」または BIOS の設定画面でセキュアブートが有効であることを確認し、再起動します。
 「UEFI ロックで有効にする」を選ぶと、管理者権限での設定変更に対しても保護されます。
 再起動後、同じグループポリシーエディターを使って、VBS の設定をすべて無効にします。
 さらにレジストリエディターで、<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard</code> 配下のキーと値を削除します。値を0に設定しても同じ結果になります。</p>
