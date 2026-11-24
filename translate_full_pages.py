@@ -18330,3 +18330,12 @@ full_pages_ja['page-582'] = full_pages_ja['page-582'].replace(
 full_pages_ja['page-586'] = full_pages_ja['page-586'].replace('ファンクションドライバー', '機能ドライバー')
 
 full_pages_ja['page-587'] = full_pages_ja['page-587'].replace('ファンクションドライバー', '機能ドライバー')
+
+full_pages_ja['page-588'] = full_pages_ja['page-588'].replace('ファンクションドライバー', '機能ドライバー')
+
+full_pages_ja['page-589'] = full_pages_ja['page-589'].replace('ファンクションドライバー', '機能ドライバー')
+
+full_pages_ja['page-590'] = full_pages_ja['page-590'].replace(
+    '一部の値は同じ名前を持つ別のセクションを参照します。',
+    '一部の項目では、等号の右側の値が、処理を続ける別のセクションの名前を指定します。',
+)
