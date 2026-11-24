@@ -5933,15 +5933,6 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <tr><td>Accessed</td><td>ページがアクセスされたことを示します。</td></tr>
 <tr><td>Cache disabled</td><td>そのページに対する CPU のキャッシュを無効にします。</td></tr>
 <tr><td>Copy-on-write</td><td>前述のコピーオンライトをこのページに適用します。</td></tr>
-<tr><td>Dirty</td><td>ページに書き込みがあったことを示します。</td></tr>
-<tr><td>Global</td><td>変換はすべてのプロセスに適用されます。たとえば、変換バッファーをフラッシュしても、この PTE による変換は影響を受けません。</td></tr>
-<tr><td>Large page</td><td>PDE が2 MBの大ページをマップすることを示します。前述の「大ページと小ページ」を参照してください。</td></tr>
-<tr><td>No execute</td><td>ページはデータ専用で、内部のコードを実行できません。</td></tr>
-<tr><td>Owner</td><td>ユーザーモードのコードからアクセスできるか、カーネルモードのみに制限されるかを示します。</td></tr>
-<tr><td>Prototype</td><td>セクションオブジェクトに関連付けられた共有メモリを記述するひな型として使う、プロトタイプ PTE であることを示します。</td></tr>
-<tr><td>Valid</td><td>変換先が物理メモリ内のページかどうかを示します。</td></tr>
-<tr><td>Write through</td><td>ページをライトスルーとして、または CPU がページ属性テーブルをサポートする場合はライトコンバイニングとして設定します。通常、ビデオフレームバッファーのマッピングに使われます。</td></tr>
-<tr><td>Write</td><td>ページへの書き込みが可能かどうかを MMU に示します。</td></tr>
 </tbody></table></div></section><section class="page" id="page-393" aria-label="page-393"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-10　PTE の状態ビットと保護ビット（続き）</caption><thead><tr><th scope="col">ビット名</th><th scope="col">意味</th></tr></thead><tbody>
 <tr><th scope="row">Dirty</th><td>ページへの書き込みが行われました。</td></tr>
 <tr><th scope="row">Global</th><td>アドレス変換はすべてのプロセスに適用されます。たとえば、アドレス変換バッファーをフラッシュしても、この PTE には影響しません。</td></tr>
