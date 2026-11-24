@@ -1564,11 +1564,11 @@ Job                               ffffe0011b853690</pre>
 次の実験で使う <code>!peb</code> にこのアドレスを渡すと、対象のプロセスの PEB を読みやすい形式で表示できます。通常の <code>dt</code> コマンドで <code>_PEB</code> 構造体を表示することもできます。
 ただし PEB はユーザーモードのアドレス空間にあるため、そのプロセスのコンテキストでのみ有効です。
 別のプロセスの PEB を見るには、先に WinDbg のプロセスコンテキストを切り替えます。
-<code>.process /P</code> に対象の <code>EPROCESS</code> へのポインターを続けて指定します。</p></section><section class="page" id="page-127" aria-label="page-127"><p>本書の執筆時点で最新の Windows 10 SDK に含まれる WinDbg では、表示された PEB アドレスがリンクになっています。クリックすると、<code>.process</code> と <code>!peb</code> の両方のコマンドが自動で実行されます。</p>
-<p>PEB（プロセス環境ブロック）は、その PEB が表すプロセスのユーザーモードアドレス空間にあります。イメージローダー、ヒープマネージャーなど、ユーザーモードからアクセスする Windows コンポーネントが必要とする情報を保持します。この情報をすべてシステムコール経由で公開すると、処理の負荷が大きくなります。<code>EPROCESS</code> と <code>KPROCESS</code> 構造体には、カーネルモードからだけアクセスできます。PEB の主なフィールドを図3-4に示します。各フィールドの詳細は本章の後半で説明します。</p>
+<code>.process /P</code> に対象の <code>EPROCESS</code> へのポインターを続けて指定します。</p></section><section class="page" id="page-127" aria-label="page-127"><p>本書の執筆時点で最新の Windows 10 SDK に含まれる WinDbg では、PEB アドレスの下にリンクが表示されます。クリックすると、<code>.process</code> と <code>!peb</code> の両方のコマンドが自動で実行されます。</p>
+<p>PEB（プロセス環境ブロック）は、その PEB が表すプロセスのユーザーモードアドレス空間にあります。イメージローダー、ヒープマネージャー、そのほかの Windows コンポーネントがユーザーモードから参照する必要のある情報を保持します。この情報をすべてシステムコール経由で公開すると、処理の負荷が大きくなります。<code>EPROCESS</code> と <code>KPROCESS</code> 構造体には、カーネルモードからだけアクセスできます。PEB の主なフィールドを図3-4に示します。各フィールドの詳細は本章の後半で説明します。</p>
 <figure><img loading="lazy" width="564" height="514" src="assets/6f7cf47181041c7f91f5a9f7.webp" alt="プロセス環境ブロックに格納される主なフィールド"><figcaption>図3-4 プロセス環境ブロックの主なフィールド</figcaption></figure>
 <h4 id="実験-PEB-の内容を確認する">実験：PEB の内容を確認する</h4>
-<p>カーネルデバッガーで <code>!peb</code> コマンドを使うと、CPU 0 で現在実行されているスレッドが属するプロセスの PEB 構造体を表示できます。前の実験で確認した PEB のポインターを、このコマンドの引数として指定することもできます。</p></section><section class="page" id="page-128" aria-label="page-128"><pre>lkd&gt; .process /P ffffe0011c3243c0 ; !peb 5f2f1de000
+<p>カーネルデバッガーで <code>!peb</code> コマンドを使うと、CPU 0 で現在実行されているスレッドが属するプロセスの PEB 構造体を表示できます。直前の <code>!process</code> の実験で確認した PEB のポインターを、このコマンドの引数として指定することもできます。</p></section><section class="page" id="page-128" aria-label="page-128"><pre>lkd&gt; .process /P ffffe0011c3243c0 ; !peb 5f2f1de000
 PEB at 0000003561545000
 InheritedAddressSpace:    No
 ReadImageFileExecOptions: No
