@@ -25822,7 +25822,10 @@ SMR を認識するアプリケーションが SMR の容量層にデータを�
 管理者としてコマンドプロンプトを開きます。
 原文の例では Cortana の検索ボックスで <code>cmd</code> を検索し、「コマンド プロンプト」を右クリックして「管理者として実行」を選びます。
 次のコマンドの <code>&lt;VolumeDrive&gt;</code> を SMR ディスクのドライブ文字に置き換えて実行します。</p>
-<pre><code>fsutil volume smrInfo &lt;VolumeDrive&gt;</code></pre></section><section class="page" id="p2-page-797" aria-label="p2-page-797"><figure><img loading="lazy" width="649" height="276" src="assets/1cb47d895bd4f7fc32255b7d.webp" alt="Fsutil で照会した SMR ボリュームの階層情報"></figure>
+<pre><code>fsutil volume smrInfo &lt;VolumeDrive&gt;</code></pre></section><section class="page" id="p2-page-797" aria-label="p2-page-797"><figure><img loading="lazy" width="649" height="276" src="assets/1cb47d895bd4f7fc32255b7d.webp" alt="Fsutil で照会した SMR ボリュームの階層情報">
+<figcaption>ドライブ D: のランダム書き込み層は 130.75 GB（空き 122.22 GB、93%）、SMR 層は 12.61 TB（空き・使用可能な空きともに 12.58 TB、99%）です。
+回収可能と表示された領域は 154.50 MB、空き領域の効率は 99% で、ガベージコレクションは停止中です。
+出力末尾には、回収可能と表示されたクラスターのうち最大 512 MB（SMR バンド2つ分）は回収できない場合があると記載されています。</figcaption></figure>
 <p>次のコマンドで、不要になった領域を回収するガベージコレクションを開始することもできます。仕組みは次節で説明します。</p>
 <pre><code>fsutil volume smrGc &lt;VolumeDrive&gt; Action=startfullspeed</code></pre>
 <p><code>Action</code> に対応する値を指定すると、ガベージコレクションを停止または一時停止できます。
