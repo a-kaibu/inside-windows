@@ -1265,7 +1265,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'で仮想マシンを作成する</a></p>',
  'p2-page-352': '<p>Process Explorer を管理者として開き、<code>vmwp.exe</code> '
                 'を探します。右クリックして「Properties」を選ぶと、親プロセスがホストコンピューティングサービス（<code>vmcompute.exe</code>）であることを確認できます。「Security」タブを開くと、仮想マシンの '
-                'SID がプロセスの所有者に設定され、トークンが Virtual Machines グループに属していることが分かります。</p>\n'
+                'SID がプロセスの所有者に設定され、トークンのグループ一覧に Virtual Machines が含まれていることが分かります。</p>\n'
                 '<figure><img loading="lazy" width="381" height="489" '
                 'src="assets/d1bbaa571266d4460b9004cd.webp" alt="Process Explorer に表示された VM '
                 'ワーカープロセスの所有者とグループ"><figcaption>VM ワーカープロセスのセキュリティトークン</figcaption></figure>\n'
