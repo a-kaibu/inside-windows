@@ -18767,3 +18767,8 @@ full_pages_ja['p2-page-374'] = full_pages_ja['p2-page-374'].replace(
     'OS の重要なコンポーネントが悪意のあるコードによって変更されるのを防ぎ、VTL 0 のカーネルを保護します。',
     'OS の重要なコンポーネントに対する悪意のある変更を阻止し、VTL 0 のカーネルに追加の保護を提供します。',
 )
+
+full_pages_ja['p2-page-375'] = full_pages_ja['p2-page-375'].replace(
+    '次の図では VBS が有効で、ハイパーバイザーによって適用されるコード整合性（HVCI）、UEFI ランタイムの仮想化（<span lang="en">UEFI Readonly</span>）、モードベース実行制御（MBEC）を確認できます。',
+    '次の図では VBS が有効です。システム情報には、コード整合性（HVCI）が <code>Hypervisor Enforced Code Integrity</code>、UEFI ランタイムの仮想化が <code>UEFI Readonly</code>、モードベース実行制御（MBEC）が <code>Mode Based Execution Control</code> と表示されています。',
+)
