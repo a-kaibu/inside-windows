@@ -19237,3 +19237,8 @@ full_pages_ja['p2-page-588'] = full_pages_ja['p2-page-588'].replace(
     'MSCTF.dll&quot;142c:133c',
     'MSCTF.dll&quot;\n142c:133c',
 )
+
+full_pages_ja['p2-page-590'] = full_pages_ja['p2-page-590'].replace(
+    'この形式ではタグを使って XML 形式のデータベースを表現します。',
+    'SDB はタグを使い、XML に似た階層構造をバイナリ形式で表現します。',
+)
