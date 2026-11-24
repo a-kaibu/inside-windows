@@ -20486,7 +20486,7 @@ KeyLock          : 0xe1034d40</pre>
 </tbody><tbody>
 <tr><th scope="row"><code>Group</code></th><td>グループ名</td><td>ドライバーやサービスは、所属グループの初期化時に初期化されます。</td></tr>
 <tr><th scope="row"><code>Tag</code></th><td>タグ番号</td><td>グループ内での初期化順序を指定します。サービスには適用されません。</td></tr>
-<tr><th scope="row"><code>ImagePath</code></th><td>実行ファイルのパス</td><td>未指定の場合、I/O マネージャーは <code>%SystemRoot%&#92;System32&#92;Drivers</code> でドライバーを探します。Windows サービスでは必須です。</td></tr>
+<tr><th scope="row"><code>ImagePath</code></th><td>実行ファイルのパス</td><td>ドライバーのパスが未指定の場合、I/O マネージャーは <code>%SystemRoot%&#92;System32&#92;Drivers</code> でドライバーを探します。Windows サービスでは必須です。</td></tr>
 <tr><th scope="row"><code>DependOnGroup</code></th><td>グループ名</td><td>指定したグループのドライバーまたはサービスのいずれかが読み込まれるまで、対象を読み込みません。</td></tr>
 <tr><th scope="row"><code>DependOnService</code></th><td>サービス名</td><td>指定したサービスの読み込み後に、対象サービスを読み込みます。デバイスドライバー、および起動の種類が <code>SERVICE_AUTO_START</code> と <code>SERVICE_DEMAND_START</code> のいずれでもないサービスには適用されません。</td></tr>
 <tr><th scope="row"><code>ObjectName</code></th><td>通常は <code>LocalSystem</code>。<code>.&#92;Administrator</code> などのアカウント名も指定できます。</td><td>サービスを実行するアカウントを指定します。未指定の場合は <code>LocalSystem</code> を使います。デバイスドライバーには適用されません。</td></tr>

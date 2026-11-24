@@ -18893,3 +18893,8 @@ full_pages_ja['p2-page-459'] = full_pages_ja['p2-page-459'].replace(
     'サービス固有の構成データの読み取りなどの初期化',
     'レジストリからのサービス固有の構成データの読み取りなどの初期化',
 )
+
+full_pages_ja['p2-page-461'] = full_pages_ja['p2-page-461'].replace(
+    '未指定の場合、I/O マネージャーは',
+    'ドライバーのパスが未指定の場合、I/O マネージャーは',
+)
