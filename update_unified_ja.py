@@ -736,7 +736,7 @@ p1_omit = {f"page-{i}" for i in range(1, 12)} | {"page-117", "page-209"}
 p1_omit |= {f"page-{i}" for i in range(788, 802)}
 
 # Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
-p2_omit = {f"p2-page-{i}" for i in range(1, 19)}
+p2_omit = {f"p2-page-{i}" for i in range(1, 19) if i != 4}
 p2_omit |= {f"p2-page-{i}" for i in range(892, 913)}
 
 def render_plain_translation(text):
