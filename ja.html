@@ -7751,7 +7751,7 @@ NTFS!NtfsReleaseFileForCcFlush</pre></section><section class="page" id="page-530
 <p>I/O 要求パケット（IRP）には、I/O システムが要求の処理に必要とする情報が格納されます。スレッドが I/O API を呼ぶと、I/O マネージャーは、I/O システム内を進む操作を表す IRP を作成します。可能であれば、各プロセッサーにある非ページプールの IRP 用ルックアサイドリスト3種類のいずれかから IRP を割り当てます。</p></section><section class="page" id="page-531" aria-label="page-531"><ul>
 <li><strong>小型 IRP 用ルックアサイドリスト</strong>　スタックロケーションが1つの IRP を格納します。IRP のスタックロケーションについては次節で説明します。</li>
 <li><strong>中型 IRP 用ルックアサイドリスト</strong>　スタックロケーションが4つの IRP を格納します。2つまたは3つだけ必要な場合にも使えます。</li>
-<li><strong>大型 IRP 用ルックアサイドリスト</strong>　スタックロケーションが5つ以上の IRP を格納します。既定では14個のスタックロケーションを持つ IRP が格納されます。システムは1分に1回、直近に必要だった数に応じて割り当て数を調整し、最大20個まで増やせます。</li>
+<li><strong>大型 IRP 用ルックアサイドリスト</strong>　スタックロケーションが5つ以上の IRP を格納します。既定では14個のスタックロケーションを持つ IRP が格納されます。システムは1分に1回、直近に必要だった数に応じて、IRP 1個あたりのスタックロケーション数を調整します。この数は最大20個まで増やせます。</li>
 </ul>
 <p>これらのリストをグローバルなルックアサイドリストでも補い、CPU 間で IRP を効率よく融通できるようにしています。大型リストの IRP が持つ数を超えるスタックロケーションが必要な場合、I/O マネージャーは非ページプールから IRP を割り当てます。割り当てには <code>IoAllocateIrp</code> を使います。デバイスドライバーの開発者もこの関数を利用できます。ドライバーが IRP を直接作成し、初期化して I/O 要求を発行する場合があるためです。IRP を割り当てて初期化したあと、I/O マネージャーは呼び出し元のファイルオブジェクトへのポインターを IRP に格納します。</p>
 <blockquote><p><strong>注</strong>　レジストリキー <code>HKLM\System\CurrentControlSet\Session Manager\I/O System</code> に DWORD 値 <code>LargeIrpStackLocations</code> が定義されている場合、その値は大型 IRP 用ルックアサイドリストに格納される IRP のスタックロケーション数を指定します。同じキーの <code>MediumIrpStackLocations</code> で、中型 IRP 用ルックアサイドリストの IRP のスタックロケーション数も変更できます。</p></blockquote>
