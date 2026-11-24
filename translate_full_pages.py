@@ -18908,3 +18908,8 @@ full_pages_ja['p2-page-465'] = full_pages_ja['p2-page-465'].replace(
     'ローカルシステムアカウントには、そのコンピューターのマシン SID が含まれます。',
     'ローカルシステムアカウントには、サービスプロセスが動作するコンピューターのセキュリティ識別子（マシン SID）が含まれます。',
 )
+
+full_pages_ja['p2-page-466'] = full_pages_ja['p2-page-466'].replace(
+    '（クライアントのみ）',
+    '（クライアント版 Windows のみ）',
+)
