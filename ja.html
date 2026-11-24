@@ -2576,28 +2576,28 @@ exe&quot;
 カーネルとユーザーモードのローダーはいずれもこの種の構造体を使いますが、フラグの意味は必ずしも一致しません。
 表に示すのはユーザーモードのフラグです。一部はカーネルの構造体にも存在します。</p></section><section class="page" id="page-185" aria-label="page-185"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表3-10 ローダーデータテーブルエントリのフラグ</caption>
 <thead><tr><th scope="col">フラグ</th><th scope="col">意味</th></tr></thead><tbody>
-<tr><th scope="row">Packaged Binary（<code>0x1</code>）</th><td>パッケージ化されたアプリの一部です。AppX パッケージのメインモジュールにだけ設定できます。</td></tr>
-<tr><th scope="row">Marked for Removal（<code>0x2</code>）</th><td>実行中のワーカースレッドなどからの参照がすべてなくなった時点でアンロードします。</td></tr>
-<tr><th scope="row">Image DLL（<code>0x4</code>）</th><td>モジュールはイメージ DLL です。データ DLL や実行ファイルとは区別されます。</td></tr>
-<tr><th scope="row">Load Notifications Sent（<code>0x8</code>）</th><td>登録済みの DLL 通知コールバックに、このイメージを通知済みです。</td></tr>
-<tr><th scope="row">Telemetry Entry Processed（<code>0x10</code>）</th><td>このイメージのテレメトリデータを処理済みです。</td></tr>
-<tr><th scope="row">Process Static Import（<code>0x20</code>）</th><td>メインのアプリケーションバイナリが静的にインポートするモジュールです。</td></tr>
-<tr><th scope="row">In Legacy Lists（<code>0x40</code>）</th><td>イメージのエントリがローダーの双方向連結リストにあります。</td></tr>
-<tr><th scope="row">In Indexes（<code>0x80</code>）</th><td>イメージのエントリがローダーの赤黒木にあります。</td></tr>
-<tr><th scope="row">Shim DLL（<code>0x100</code>）</th><td>シムエンジンまたはアプリケーション互換性データベースの一部である DLL を表します。</td></tr>
-<tr><th scope="row">In Exception Table（<code>0x200</code>）</th><td>モジュールの .pdata の例外ハンドラーを、ローダーの逆引き関数テーブルに記録済みです。</td></tr>
-<tr><th scope="row">Load In Progress（<code>0x800</code>）</th><td>モジュールをロード中です。</td></tr>
-<tr><th scope="row">Load Config Processed（<code>0x1000</code>）</th><td>イメージのロード構成ディレクトリを検出し、処理済みです。</td></tr>
-<tr><th scope="row">Entry Processed（<code>0x2000</code>）</th><td>ローダーがモジュールの処理を完了しました。</td></tr>
-<tr><th scope="row">Protect Delay Load（<code>0x4000</code>）</th><td>このバイナリの制御フローガードが、遅延ロード用の IAT の保護を要求しています。詳細は第7章を参照してください。</td></tr>
-<tr><th scope="row">Process Attach Called（<code>0x20000</code>）</th><td>DLL_PROCESS_ATTACH 通知を DLL に送信済みです。</td></tr>
-<tr><th scope="row">Process Attach Failed（<code>0x40000</code>）</th><td>DLL の DllMain における DLL_PROCESS_ATTACH 通知の処理が失敗しました。</td></tr>
-<tr><th scope="row">Don’t Call for Threads（<code>0x80000</code>）</th><td>DLL_THREAD_ATTACH と DLL_THREAD_DETACH の通知をこの DLL に送りません。DisableThreadLibraryCalls で設定できます。</td></tr>
-<tr><th scope="row">COR Deferred Validate（<code>0x100000</code>）</th><td>Common Object Runtime（COR）が、この .NET イメージを後で検証します。</td></tr>
-<tr><th scope="row">COR Image（<code>0x200000</code>）</th><td>モジュールは .NET アプリケーションです。</td></tr>
-<tr><th scope="row">Don’t Relocate（<code>0x400000</code>）</th><td>イメージの再配置やランダム化を行いません。</td></tr>
-<tr><th scope="row">COR IL Only（<code>0x800000</code>）</th><td>.NET の中間言語（IL）だけで構成されたライブラリで、ネイティブの機械語コードは含まれません。</td></tr>
-<tr><th scope="row">Compat Database Processed（<code>0x40000000</code>）</th><td>シムエンジンがこの DLL を処理済みです。</td></tr>
+<tr><th scope="row">パッケージのバイナリ<br><code>Packaged Binary</code>（<code>0x1</code>）</th><td>パッケージ化されたアプリの一部です。AppX パッケージのメインモジュールにだけ設定できます。</td></tr>
+<tr><th scope="row">アンロード予定<br><code>Marked for Removal</code>（<code>0x2</code>）</th><td>実行中のワーカースレッドなどからの参照がすべてなくなった時点でアンロードします。</td></tr>
+<tr><th scope="row">イメージ DLL<br><code>Image DLL</code>（<code>0x4</code>）</th><td>モジュールはイメージ DLL です。データ DLL や実行ファイルとは区別されます。</td></tr>
+<tr><th scope="row">ロード通知済み<br><code>Load Notifications Sent</code>（<code>0x8</code>）</th><td>登録済みの DLL 通知コールバックに、このイメージを通知済みです。</td></tr>
+<tr><th scope="row">テレメトリ処理済み<br><code>Telemetry Entry Processed</code>（<code>0x10</code>）</th><td>このイメージのテレメトリデータを処理済みです。</td></tr>
+<tr><th scope="row">プロセスの静的インポート<br><code>Process Static Import</code>（<code>0x20</code>）</th><td>メインのアプリケーションバイナリが静的にインポートするモジュールです。</td></tr>
+<tr><th scope="row">従来のリストに登録済み<br><code>In Legacy Lists</code>（<code>0x40</code>）</th><td>イメージのエントリがローダーの双方向連結リストにあります。</td></tr>
+<tr><th scope="row">インデックスに登録済み<br><code>In Indexes</code>（<code>0x80</code>）</th><td>イメージのエントリがローダーの赤黒木にあります。</td></tr>
+<tr><th scope="row">シム DLL<br><code>Shim DLL</code>（<code>0x100</code>）</th><td>シムエンジンまたはアプリケーション互換性データベースの一部である DLL を表します。</td></tr>
+<tr><th scope="row">例外テーブルに登録済み<br><code>In Exception Table</code>（<code>0x200</code>）</th><td>モジュールの .pdata の例外ハンドラーを、ローダーの逆引き関数テーブルに記録済みです。</td></tr>
+<tr><th scope="row">ロード中<br><code>Load In Progress</code>（<code>0x800</code>）</th><td>モジュールをロード中です。</td></tr>
+<tr><th scope="row">ロード構成を処理済み<br><code>Load Config Processed</code>（<code>0x1000</code>）</th><td>イメージのロード構成ディレクトリを検出し、処理済みです。</td></tr>
+<tr><th scope="row">エントリ処理済み<br><code>Entry Processed</code>（<code>0x2000</code>）</th><td>ローダーがモジュールの処理を完了しました。</td></tr>
+<tr><th scope="row">遅延ロードを保護<br><code>Protect Delay Load</code>（<code>0x4000</code>）</th><td>このバイナリの制御フローガードが、遅延ロード用の IAT の保護を要求しています。詳細は第7章を参照してください。</td></tr>
+<tr><th scope="row">プロセス接続通知済み<br><code>Process Attach Called</code>（<code>0x20000</code>）</th><td>DLL_PROCESS_ATTACH 通知を DLL に送信済みです。</td></tr>
+<tr><th scope="row">プロセス接続に失敗<br><code>Process Attach Failed</code>（<code>0x40000</code>）</th><td>DLL の DllMain における DLL_PROCESS_ATTACH 通知の処理が失敗しました。</td></tr>
+<tr><th scope="row">スレッドの通知を省略<br><code>Don’t Call for Threads</code>（<code>0x80000</code>）</th><td>DLL_THREAD_ATTACH と DLL_THREAD_DETACH の通知をこの DLL に送りません。DisableThreadLibraryCalls で設定できます。</td></tr>
+<tr><th scope="row">COR の検証を延期<br><code>COR Deferred Validate</code>（<code>0x100000</code>）</th><td>Common Object Runtime（COR）が、この .NET イメージを後で検証します。</td></tr>
+<tr><th scope="row">COR イメージ<br><code>COR Image</code>（<code>0x200000</code>）</th><td>モジュールは .NET アプリケーションです。</td></tr>
+<tr><th scope="row">再配置しない<br><code>Don’t Relocate</code>（<code>0x400000</code>）</th><td>イメージの再配置やランダム化を行いません。</td></tr>
+<tr><th scope="row">COR の IL 専用イメージ<br><code>COR IL Only</code>（<code>0x800000</code>）</th><td>.NET の中間言語（IL）だけで構成されたライブラリで、ネイティブの機械語コードは含まれません。</td></tr>
+<tr><th scope="row">互換性データベースの処理済み<br><code>Compat Database Processed</code>（<code>0x40000000</code>）</th><td>シムエンジンがこの DLL を処理済みです。</td></tr>
 </tbody></table></div>
 <h4 id="インポートの解析">インポートの解析</h4>
 <p>ここまでは、ローダーがプロセスにロードしたモジュールを追跡する仕組みを説明しました。
