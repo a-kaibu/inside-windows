@@ -2375,7 +2375,7 @@ apiquery-l1-1-0.dll was redirected to C:\WINDOWS\SYSTEM32\ntdll.dll by API set</
 <li>ローダーが使う重要な5つの関数、<code>NtCreateSection</code>、<code>NtOpenFile</code>、<code>NtQueryAttributesFile</code>、<code>NtOpenSection</code>、<code>NtMapViewOfSection</code> のシステムコール用サンクを取得します。</li>
 <li>アプリケーションに適用する緩和策の設定を読みます。カーネルは、エクスポートされた変数 <code>LdrSystemDllInitBlock</code> を通じて設定を渡します。詳細は第7章を参照してください。</li>
 <li>アプリケーションの Image File Execution Options（IFEO）レジストリキーを照会します。このキーには、グローバルフラグ（<code>GlobalFlags</code>）、ヒープのデバッグ設定（<code>DisableHeapLookaside</code>、<code>ShutdownFlags</code>、<code>FrontEndHeapDebugOptions</code>）、ローダー設定（<code>UnloadEventTraceDepth</code>、<code>MaxLoaderThreads</code>、<code>UseImpersonatedDeviceMap</code>）、ETW 設定（<code>TracingFlags</code>）などが含まれます。ほかに <code>MinimumStackCommitInBytes</code> と <code>MaxDeadActivationContexts</code> があります。この処理の一環として Application Verifier と関連する Verifier DLL を初期化し、<code>CFGOptions</code> から制御フローガード（CFG）の設定を読み込みます。</li>
-<li>実行ファイルのヘッダーに .NET 固有のイメージディレクトリがあるかを調べ、.NET アプリケーションかどうか、また32ビットイメージかどうかを判定します。プロセスが WoW64 で動作するかどうかもカーネルに照会します。必要に応じて、WoW64 を必要としない32ビットの IL 専用イメージを処理します。</li>
+<li>実行ファイルのヘッダーを調べ、.NET 専用のイメージディレクトリの有無から .NET アプリケーションかどうかを判定します。また、イメージが32ビットかどうかもヘッダーで確認します。プロセスが WoW64 で動作するかどうかもカーネルに照会します。必要に応じて、WoW64 を必要としない中間言語（IL）のコードだけを含む32ビットイメージを処理します。</li>
 <li>実行ファイルのイメージロード構成ディレクトリで指定された設定を読み込みます。開発者はコンパイル時に設定を指定でき、コンパイラーやリンカーも CFG などのセキュリティ機能や緩和策の実装に使います。これらの設定は実行ファイルの動作を制御します。</li>
 <li>FLS と TLS を最低限初期化します。</li>
 <li>クリティカルセクションのデバッグ設定を構成します。該当するグローバルフラグが有効なら、ユーザーモードのスタックトレースデータベースを作成します。IFEO からデータベースのサイズ設定（原文表記は <code>StrackTraceDatabaseSizeInMb</code>）を読みます。</li>
