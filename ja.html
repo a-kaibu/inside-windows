@@ -24809,7 +24809,7 @@ MDL については第1巻の第5章を参照してください。
 <tbody>
 <tr><td>従来のボリューム</td><td>アプリケーション → NTFS → Volsnap → Volmgr／Partmgr → Disk／ClassPnP → StorPort → ミニポート → SSD または HDD</td></tr>
 <tr><td>永続メモリのブロックモードボリューム</td><td>アプリケーション → NTFS → Volsnap → Volmgr／Partmgr → 永続メモリディスクドライバー → 永続メモリ</td></tr>
-<tr><td>DAX ボリューム</td><td>メモリマップされたデータにはアプリケーションから直接アクセスします。図にはキャッシュ I/O と、NTFS、Volmgr／Partmgr、永続メモリディスクドライバーからなるカーネルモードのスタックも示されています。</td></tr>
+<tr><td>DAX ボリューム</td><td>メモリマップ I/O はアプリケーションから永続メモリへ直接アクセスします。キャッシュ I/O の経路には、カーネルモードの NTFS、Volmgr／Partmgr、永続メモリディスクドライバーが含まれます。記憶媒体はいずれも永続メモリです。</td></tr>
 </tbody></table></div>
 <figcaption>図11-76 従来のボリューム、ブロックモードのボリューム、DAX ボリュームのデバイス I/O スタックの比較</figcaption></figure>
 <h5 id="ファイルシステムフィルタードライバーと-DAX">ファイルシステムフィルタードライバーと DAX</h5>
