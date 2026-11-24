@@ -2513,7 +2513,7 @@ Fusion で DLL 名のリダイレクトを調べるとき、システムはス�
 <tr><th scope="row"><code>MappingInfoIndexNode</code></th><td>モジュール名のハッシュ順の赤黒木に、このエントリをノードとしてつなぎます。</td></tr>
 <tr><th scope="row"><code>OriginalBase</code></th><td>ASLR や再配置の前にリンカーが指定した、モジュールの元のベースアドレスです。再配置したインポートエントリをすばやく処理できます。</td></tr></tbody></table></div></section><section class="page" id="page-183" aria-label="page-183"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表3-9 ローダーデータテーブルエントリのフィールド（続き）</caption>
 <thead><tr><th scope="col">フィールド</th><th scope="col">意味</th></tr></thead><tbody>
-<tr><th scope="row"><code>ParentDllBase</code></th><td>静的な依存関係、エクスポートの転送、遅延ロードによる依存関係の場合、この DLL に依存する DLL のアドレスを保持します。</td></tr>
+<tr><th scope="row"><code>ParentDllBase</code></th><td>静的な依存関係、エクスポートの転送、遅延ロードによる依存関係の場合、この DLL に依存する側の DLL のベースアドレスを保持します。</td></tr>
 <tr><th scope="row"><code>SigningLevel</code></th><td>このイメージの署名レベルです。コード整合性の仕組みについては第2部の第8章を参照してください。</td></tr>
 <tr><th scope="row"><code>SizeOfImage</code></th><td>メモリ内のモジュールのサイズです。</td></tr>
 <tr><th scope="row"><code>SwitchBackContext</code></th><td>後述する SwitchBack が、このモジュールに関連付けられた現在の Windows コンテキストの GUID とその他のデータを保持するために使います。</td></tr>
