@@ -3170,7 +3170,7 @@ ffffd000&#x27;271d4b00)
 00000000&#x27;00000000 00000000&#x27;00000000 : 0x00007ffe&#x27;f42b5c24</pre>
 <p>出力には、スレッドの優先度、スタックの詳細、ユーザーモードとカーネルモードでの実行時間など、多くの情報が含まれます。これらの項目の多くは、本章のほか、第5章「メモリ管理」と第6章「I/O システム」で取り上げます。</p>
 <h4 id="実験-tlist-でスレッド情報を表示する">実験：tlist でスレッド情報を表示する</h4>
-<p>次に示すのは、Debugging Tools for Windows に含まれる <code>tlist</code> で、プロセスの詳細を表示した出力です。対象プロセスと同じビット数の <code>tlist</code> を使ってください。スレッドの一覧には <code>Win32StartAddr</code> が表示されます。これは、アプリケーションが <code>CreateThread</code> に渡したアドレスです。スレッドの開始アドレスを表示するほかのユーティリティでは、Process Explorer を除き、実際の開始アドレスである Ntdll.dll 内の関数のアドレスが表示されます。</p>
+<p>次に示すのは、Debugging Tools for Windows に含まれる <code>tlist</code> で、プロセスの詳細を表示した出力です。対象プロセスが32ビットなら32ビット版、64ビットなら64ビット版の <code>tlist</code> を使ってください。スレッドの一覧には <code>Win32StartAddr</code> が表示されます。これは、アプリケーションが <code>CreateThread</code> に渡したアドレスです。スレッドの開始アドレスを表示するほかのユーティリティでは、Process Explorer を除き、スレッドが最初に実行する <code>Ntdll.dll</code> 内の関数のアドレスが表示されます。</p>
 <p>次は、Word 2016 を対象に <code>tlist</code> を実行したときの出力の抜粋です。</p>
 <pre>C:\Dbg\x86&gt;tlist winword
 120 WINWORD.EXE       Chapter04.docm - Word
