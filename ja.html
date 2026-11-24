@@ -11303,7 +11303,7 @@ Other  [CFG Bitmap]</pre>
 <thead><tr><th scope="col">フラグ</th><th scope="col">値</th><th scope="col">意味</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>IMAGE_GUARD_CF_INSTRUMENTED</code></th><td><code>0x100</code></td><td>モジュールが CFG に対応しています。</td></tr>
-<tr><th scope="row"><code>IMAGE_GUARD_CFW_INSTRUMENTED</code></th><td><code>0x200</code></td><td>モジュールは CFG と書き込みの整合性を検証します。</td></tr>
+<tr><th scope="row"><code>IMAGE_GUARD_CFW_INSTRUMENTED</code></th><td><code>0x200</code></td><td>モジュールは CFG による分岐先の検証と、書き込みの整合性チェックを行います。</td></tr>
 <tr><th scope="row"><code>IMAGE_GUARD_CF_FUNCTION_TABLE_PRESENT</code></th><td><code>0x400</code></td><td>モジュールに CFG 対応の関数一覧が含まれます。</td></tr>
 <tr><th scope="row"><code>IMAGE_GUARD_SECURITY_COOKIE_UNUSED</code></th><td><code>0x800</code></td><td>コンパイラーの <code>/GS</code> オプションで生成されるセキュリティクッキーを使いません。</td></tr>
 <tr><th scope="row"><code>IMAGE_GUARD_PROTECT_DELAYLOAD_IAT</code></th><td><code>0x1000</code></td><td>読み取り専用の遅延読み込みインポートアドレステーブル（IAT）をサポートします。</td></tr>
@@ -11314,7 +11314,7 @@ Other  [CFG Bitmap]</pre>
 </tbody>
 </table></div></section><section class="page" id="page-767" aria-label="page-767"><h4 id="ローダーと-CFG-の連携">ローダーと CFG の連携</h4>
 <p>CFG ビットマップはメモリマネージャーが構築します。ユーザーモードローダー（第3章参照）には2つの役割があります。第一に、設定に応じて CFG を有効にします。たとえば、呼び出し元が子プロセスの CFG を無効にするよう指定していたり、プロセス自体が CFG に対応していなかったりする場合があります。ローダーは、読み込んだモジュールごとに <code>LdrpCfgProcessLoadConfig</code> を呼び出して CFG を初期化します。PE のオプションヘッダーの <code>DllCharacteristics</code> に <code>IMAGE_DLLCHARACTERISTICS_GUARD_CF</code> がない場合、<code>IMAGE_LOAD_CONFIG_DIRECTORY</code> の <code>GuardFlags</code> に <code>IMAGE_GUARD_CF_INSTRUMENTED</code> がない場合、またはカーネルがそのモジュールの CFG を強制的に無効にした場合は、初期化を行いません。</p>
-<p>第二に、モジュールで CFG を使う場合、<code>LdrpCfgProcessLoadConfig</code> は、イメージの <code>IMAGE_LOAD_CONFIG_DIRECTORY</code> にある <code>GuardCFCheckFunctionPointer</code> を参照します。ポインターの格納場所がモジュールの範囲外を指すように改変されていないことを確認したうえで、エクスポート抑制の有無に応じて、Ntdll の <code>LdrpValidateUserCallTarget</code> または <code>LdrpValidateUserCallTargetES</code> を設定します。</p>
+<p>第二に、モジュールで CFG を使う場合、<code>LdrpCfgProcessLoadConfig</code> は、イメージの <code>IMAGE_LOAD_CONFIG_DIRECTORY</code> にある <code>GuardCFCheckFunctionPointer</code> を参照します。そのポインターを書き込む先がモジュールの範囲内にあることを確認したうえで、エクスポート抑制の有無に応じて、Ntdll の <code>LdrpValidateUserCallTarget</code> または <code>LdrpValidateUserCallTargetES</code> を設定します。</p>
 <p>強化された CFG でコンパイルしたバイナリでは、先に説明した実行の流れを実装するために、CFG ディスパッチルーチンも使います。イメージの <code>GuardCFDispatchFunctionPointer</code> に対応するポインターがある場合、ローダーは <code>LdrpDispatchUserCallTarget</code> を設定します。エクスポート抑制が有効なら <code>LdrpDispatchUserCallTargetES</code> を設定します。</p>
 <aside><p><strong>注</strong>　カーネルがユーザーモードに代わって間接ジャンプや間接呼び出しをエミュレートまたは実行する場合があります。その際、カーネルは <code>MmValidateUserCallTarget</code> を使い、<code>LdrpValidateUserCallTarget</code> と同じ検証を行います。</p></aside>
 <p>CFG を有効にしたコンパイラーが生成するコードでは、間接呼び出しは Ntdll の検証ルーチンまたはディスパッチルーチンを通ります。ルーチンは分岐先アドレスに対応するビットの状態を確認します。</p>
