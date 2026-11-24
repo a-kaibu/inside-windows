@@ -27018,7 +27018,7 @@ Winload はこのテーブルから、リモートディスクの場所、パス
 この仕組みと Microsoft iSCSI イニシエーターを組み合わせれば、Windows を iSCSI から起動できます。</p>
 <figure>
 <figcaption>図12-9　iSCSI 起動の構成</figcaption>
-<p>起動前には、EFI、起動パラメータードライバー、iBFT、UNDI、ネットワークインターフェイスカード（NIC）が関与します。
+<p>起動前の側には EFI、UNDI、ネットワークインターフェイスカード（NIC）、iBFT があります。起動情報は iBFT から Windows 側の起動パラメータードライバーを経て、iSCSI イニシエーターへ渡ります。
 Windows 側では、iSCSI イニシエーター、TCP/IP、NDIS、NDIS ミニポート、NIC が通信経路を構成します。
 原図は各コンポーネントが Microsoft iSCSI、Microsoft Windows、機器ベンダーのどれに属するかを示しています。</p>
 <img loading="lazy" width="390" height="200" src="assets/iscsi-boot-architecture.webp" alt="起動前のファームウェアから iBFT を介して Windows の iSCSI イニシエーターへ起動情報を渡す構成図">
