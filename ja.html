@@ -2821,7 +2821,7 @@ Image: notepad.exe
 BasePriority                      8
 CommitCharge                      671
 Job                               ffffe00189aec460</pre></li>
-<li><code>Job</code> のポインターが0ではないことを確認します。ジョブの概要を表示するには、デバッガーで <code>!job</code> コマンドを実行します。
+<li><code>Job</code> のポインターが0ではないことを確認します。ジョブの概要を表示するには、デバッガーで <code>!job</code> に、直前の出力にある <code>Job</code> のアドレスを渡します。
 <pre>lkd&gt; !job ffffe00189aec460
 Job at ffffe00189aec460
 Basic Accounting Information
