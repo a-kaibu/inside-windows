@@ -22725,7 +22725,7 @@ FileSizeOnPerformanceTierClass : 0
 FileSizeOnCapacityTierClass    : 4556566528
 PlacementStatus                : Not on tier
 State                          : Pending</code></pre>
-<p>ファイルの固定先には性能階層が設定されましたが、データはまだ容量階層にあります。階層化エンジンのスケジュールタスクが実行されると、ファイルのエクステントを容量階層から性能階層へ移します。すぐに階層を最適化するには、Windows に組み込まれた <code>defrag.exe</code> を <code>/g</code> オプション付きで実行します。</p>
+<p>出力の <code>DesiredStorageTierClass</code> は <code>Performance</code>（性能階層）ですが、配置状況は <code>Not on tier</code>（指定階層に未配置）、状態は <code>Pending</code>（処理待ち）です。性能階層上のファイルサイズは0バイトで、ファイルの全4,556,566,528バイトはまだ容量階層にあります。階層化エンジンのスケジュールタスクが実行されると、ファイルのエクステントを容量階層から性能階層へ移します。すぐに階層を最適化するには、Windows に組み込まれた <code>defrag.exe</code> を <code>/g</code> オプション付きで実行します。</p>
 <pre><code>PS E:&gt; defrag /g /h e:
 Microsoft Drive Optimizer
 Copyright (c) Microsoft Corp.
