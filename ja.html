@@ -19034,7 +19034,7 @@ bcdedit /set hypervisordebug on</code></pre>
 <p><a href="https://docs.microsoft.com/en-us/virtualization/api/">Windows ハイパーバイザープラットフォーム API</a> の主な目的は、サードパーティーの仮想化製品を Windows ハイパーバイザー上で動作させることです。具体的には、製品が独自のファームウェア、エミュレートするデバイス、ストレージコントローラーなどを指定し、仮想マシンを作成、削除、起動、停止できるようにします。</p></section><section class="page" id="p2-page-336" aria-label="p2-page-336"><p>仮想マシンの構成は、サードパーティー製品独自の仮想化スタックが定義します。このスタックとその管理インターフェイスは引き続き、ルートパーティションの Windows 上で動きます。利用者は、それまでと同じ方法で仮想マシンを使えます。</p>
 <p>図9-19に示すように、Windows ハイパーバイザープラットフォームの API はすべてユーザーモードで動きます。VID ドライバーと WinHvr ドライバーの上に構築された、<code>WinHvPlatform.dll</code> と <code>WinHvEmulation.dll</code> の2つのライブラリに実装されています。後者は、メモリマップド I/O（MMIO）の命令エミュレーターを実装します。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/bef26963bb86f73f08c4d7e7.webp" alt="図9-19を含む原本ページ。ルート側の API とドライバーがゲスト VP と物理アドレス空間を管理する構成図">
+<img loading="lazy" width="518" height="309" src="assets/windows-hypervisor-platform.webp" alt="ルートパーティションの API とドライバーがゲスト VP と物理アドレス空間を管理する構成">
 <figcaption>図9-19　Windows ハイパーバイザープラットフォーム API のアーキテクチャ</figcaption>
 </figure>
 <ul>
@@ -19530,7 +19530,7 @@ Mount-VMHostAssignableDevice -LocationPath "PCIROOT(0)#PCI(0302)#PCI(0000)"</cod
 <p>VTL 0 に切り替わる前、セキュアカーネルは通常呼び出しのディスパッチループ（<code>SkCallNormalMode</code>）を実行していました。通常のカーネルがハイパーコールを発行すると、同じループ内で実行が再開します。VTL 1 のループは新しいスレッドの再開要求を認識し、実行コンテキストをそのセキュアスレッドに切り替え、対象のアドレス空間にアタッチして、スレッドを実行可能にします。コンテキスト切り替えの一環として、「スレッドの作成」セキュア呼び出しで初期化したスタックを選びます。このスタックには、セキュアスレッドで最初に実行するシステム関数 <code>SkpUserThreadStartup</code> のアドレスが入っています。この関数は、通常の NT スレッドと同様に、イメージローダーの初期化ルーチン（<code>Ntdll.dll</code> の <code>LdrInitializeThunk</code>）を実行するための初期サンクコンテキストを設定します。</p></section><section class="page" id="p2-page-388" aria-label="p2-page-388"><p>新しいセキュアスレッドが起動したあと、通常モードに戻る主な理由は2つあります。VTL 0 で処理する必要がある通常呼び出しを発行するか、VINA 割り込みによって実行がプリエンプトされるかです。処理の細部は異なりますが、どちらの場合も通常呼び出しのディスパッチループ（<code>SkCallNormalMode</code>）に入ります。</p>
 <p>第1部の第4章「スレッド」で述べたように、NT スケジューラーはプロセッサーのクロック割り込みを使います。システムクロックが刻むたびに、通常は15.6ミリ秒ごとに、割り込みが発生します。クロック割り込みサービスルーチンはプロセッサーの実行時間を更新し、スレッドのクォンタムが尽きたかどうかを判定します。この割り込みの宛先は VTL 0 です。そのため、仮想プロセッサーが VTL 1 のコードを実行中であれば、ハイパーバイザーはセキュアカーネルに VINA 割り込みを注入します（図9-36）。VINA 割り込みは実行中のコードをプリエンプトします。ハンドラーは IRQL を中断前の値まで下げ、VINA の通常呼び出しを発行して VTL 0 に入ります。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/78e7bef3e8d3d723f221329d.webp" alt="スレッド80が VP 0 で中断し VP 3 で再開する図9-36を含む原本ページ">
+<img loading="lazy" width="534" height="538" src="assets/secure-thread-scheduling.webp" alt="セキュアスレッドが VP 0 で中断され、VP 3 で再開する流れ">
 <figcaption>図9-36　セキュアスレッドのスケジューリング</figcaption>
 </figure>
 <ol>
