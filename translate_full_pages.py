@@ -19197,3 +19197,9 @@ full_pages_ja['p2-page-577'] = (
     .removesuffix('\n<figure><img loading="lazy" width="533" height="374" src="assets/58ae7c8235cfc2fbd2eb7028.webp" alt="空き容量不足でダンプファイルを削除したことを示すシステムイベントログ"></figure>')
     .replace('<p>図10-41 ダンプファイルの削除を記録したイベントログ。</p>', '<figure><img loading="lazy" width="533" height="374" src="assets/58ae7c8235cfc2fbd2eb7028.webp" alt="空き容量不足でダンプファイルを削除したことを示すシステムイベントログ"><figcaption>図10-41\u3000ダンプファイルの削除を記録したイベントログ。</figcaption></figure>', 1)
 )
+
+full_pages_ja['p2-page-579'] = (
+    full_pages_ja['p2-page-579']
+    .removesuffix('\n<figure><img loading="lazy" width="603" height="334" src="assets/6f81859aabfee0ca94c7e8df.webp" alt="クラッシュダンプの書き込みに使うカーネルモジュールのコピーと依存関係"></figure>')
+    .replace('<p>図10-42 クラッシュダンプファイルの生成と書き込みに使うカーネルモジュールのコピー。</p>', '<figure><img loading="lazy" width="603" height="334" src="assets/6f81859aabfee0ca94c7e8df.webp" alt="クラッシュダンプの書き込みに使うカーネルモジュールのコピーと依存関係"><figcaption>図10-42\u3000クラッシュダンプファイルの生成と書き込みに使うカーネルモジュールのコピー。</figcaption></figure>', 1)
+)
