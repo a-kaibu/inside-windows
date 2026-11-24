@@ -7779,7 +7779,7 @@ NTFS!NtfsReleaseFileForCcFlush</pre></section><section class="page" id="page-530
 <li><strong>完了ルーチン</strong>　ドライバーが DDI の <code>IoSetCompletionRoutine</code> または <code>IoSetCompletionRoutineEx</code> で任意に登録できる関数です。下位層のドライバーが IRP を完了すると呼び出されます。この時点で、ドライバーは IRP の完了ステータスを調べ、必要な後処理を行えます。完了ルーチンから <code>STATUS_MORE_PROCESSING_REQUIRED</code> を返して完了処理を中断し、必要に応じてパラメーターを変更して、同じデバイスノードや別のデバイスノードへ IRP を送り直すこともできます。</li>
 <li><strong><code>Context</code></strong>　<code>IoSetCompletionRoutine</code> または <code>IoSetCompletionRoutineEx</code> の呼び出しで指定した任意の値です。指定した値がそのまま完了ルーチンに渡されます。</li>
 </ul>
-<figure><img loading="lazy" width="325" height="251" src="assets/92e667bcbed0a94843180267.webp" alt="IO_STACK_LOCATION 構造体の主なメンバー"><figcaption>図6-12　IO_STACK_LOCATION 構造体の主なメンバー</figcaption></figure></section><section class="page" id="page-534" aria-label="page-534"><p>情報を IRP 本体と I/O スタックロケーションに分けておくと、元の要求のパラメーターを保持したまま、デバイススタック内の次のデバイスに渡すパラメーターを変更できます。たとえば、USB デバイス宛ての読み取り IRP は、ファンクションドライバーによってデバイス I/O 制御 IRP に変換されることがあります。この場合、デバイス制御の入力バッファー引数は、下位層の USB バスドライバーが解釈できる USB 要求ブロック（URB）を指します。完了ルーチンは、最下位を除くどの層でも登録できます。各層の完了ルーチンの格納先は、それぞれの1つ下にある I/O スタックロケーションです。</p>
+<figure><img loading="lazy" width="325" height="251" src="assets/92e667bcbed0a94843180267.webp" alt="IO_STACK_LOCATION 構造体の主なメンバー"><figcaption>図6-12　IO_STACK_LOCATION 構造体の主なメンバー</figcaption></figure></section><section class="page" id="page-534" aria-label="page-534"><p>情報を IRP 本体と I/O スタックロケーションに分けておくと、元の要求のパラメーターを保持したまま、デバイススタック内の次のデバイスに渡すパラメーターを変更できます。たとえば、USB デバイス宛ての読み取り IRP は、機能ドライバーによってデバイス I/O 制御 IRP に変換されることがよくあります。この場合、デバイス制御の入力バッファー引数は、下位層の USB バスドライバーが解釈できる USB 要求ブロック（URB）を指します。完了ルーチンは、最下位を除くどの層でも登録できます。各層の完了ルーチンの格納先は、それぞれの1つ下にある I/O スタックロケーションです。</p>
 <h4 id="実験-ドライバーのディスパッチルーチンを調べる">実験：ドライバーのディスパッチルーチンを調べる</h4>
 <p>カーネルデバッガーの <code>!drvobj</code> コマンドでフラグのビット1（値は2）を指定すると、ドライバーがディスパッチルーチンとして定義した関数を一覧表示できます。次の出力は、NTFS ドライバーが扱うメジャー機能コードを示しています。高速 I/O で行った実験と同じコマンドです。</p>
 <pre>lkd&gt; !drvobj \filesystem\ntfs 2
@@ -7889,7 +7889,7 @@ Args: 00000000 00000000 00110008 00000000
 5  0 ffffc404b3cdca00 ffffc404b5685620 00000000-00000000
 \FileSystem\FltMgr
 Args: 00000000 00000000 00110008 00000000</pre>
-<p>この IRP には2つのスタックロケーションがあり、名前付きパイプファイルシステム（NPFS）ドライバーのデバイスが宛先です。NPFS については、Part 2 の第10章「ネットワーク」で説明します。</p>
+<p>この IRP には2つのスタックロケーションがあり、名前付きパイプファイルシステム（NPFS）ドライバーのデバイスが宛先です。NPFS については、第2部の第10章「ネットワーク」で説明します。</p>
 <h4 id="IRP-の処理の流れ">IRP の処理の流れ</h4>
 <p>通常、I/O マネージャーが IRP を作成し、対象のデバイスノードの先頭にあるデバイスに送ります。図6-13に、ハードウェアデバイス用のドライバーを IRP が通るときの典型的な流れを示します。</p>
 <figure><img loading="lazy" width="472" height="320" src="assets/1b1b6043eefb0b151284dad0.webp" alt="ハードウェアデバイス用のドライバーを通る IRP の処理の流れ"><figcaption>図6-13　IRP の処理の流れ</figcaption></figure></section><section class="page" id="page-537" aria-label="page-537"><p>IRP を作成するのは I/O マネージャーだけではありません。プラグアンドプレイマネージャーはメジャー機能コードが <code>IRP_MJ_PNP</code> の IRP を、電源マネージャーは <code>IRP_MJ_POWER</code> の IRP を作成します。</p>
