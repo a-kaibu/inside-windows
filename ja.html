@@ -19357,7 +19357,7 @@ icacls C:\TestVm /grant &lt;UserName&gt;:(CI)(OI)F</code></pre>
 Express Endpoint -- more secure.
 And its interrupts are message-based, assignment can work.
 PCIROOT(0)#PCI(0302)#PCI(0000)</code></pre>
-<p>この例では、標準 NVM Express コントローラーが PCI Express のエンドポイントで、メッセージベースの割り込みを使っているため、割り当て可能と判定されています。</p></section><section class="page" id="p2-page-366" aria-label="p2-page-366"><p>デバイスの場所のパスを控えます。この例では <code>PCIROOT(0)#PCI(0302)#PCI(0000)</code> です。DDA の要件に従い、対象の仮想マシンの自動停止時の動作を「電源を切る」に設定してから、ホストからデバイスを取り外します。次の PowerShell コマンドでは、仮想マシン名の <code>Vibranium</code> とデバイスの場所のパスを実際の値に置き換えます。</p>
+<p>この例では、スクリプトは標準 NVM Express コントローラーが PCI Express のエンドポイントであるため、より安全と表示しています。さらに、メッセージベースの割り込みを使うことを確認し、割り当て可能と判定しています。</p></section><section class="page" id="p2-page-366" aria-label="p2-page-366"><p>デバイスの場所のパスを控えます。この例では <code>PCIROOT(0)#PCI(0302)#PCI(0000)</code> です。DDA の要件に従い、対象の仮想マシンの自動停止時の動作を「電源を切る」に設定してから、ホストからデバイスを取り外します。次の PowerShell コマンドでは、仮想マシン名の <code>Vibranium</code> とデバイスの場所のパスを実際の値に置き換えます。</p>
 <pre><code>Set-VM -Name "Vibranium" -AutomaticStopAction TurnOff
 Dismount-VMHostAssignableDevice -LocationPath "PCIROOT(0)#PCI(0302)#PCI(0000)"</code></pre>
 <p>最後のコマンドが失敗した場合、デバイスがまだ無効になっていない可能性があります。ホストのデバイスマネージャーを開き、NVMe コントローラー（この例では「Standard NVMe Express Controller」）を右クリックして「デバイスを無効にする」を選びます。その後、取り外しのコマンドを再実行します。取り外しが成功したら、次のコマンドでデバイスを仮想マシンに割り当てます。</p>
