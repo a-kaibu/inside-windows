@@ -20788,7 +20788,7 @@ sc start AppXSvc</code></pre>
 <tr><th scope="row"><code>NetworkServiceNetworkRestricted</code></th><td>IPsec Policy Agent</td><td>ネットワークサービスアカウントで実行し、ネットワークで使うポートは固定されています。</td></tr>
 </tbody></table></div></section><section class="page" id="p2-page-498" aria-label="p2-page-498"><h4 id="Svchost-によるサービス分離">Svchost によるサービス分離</h4>
 <p>前節で説明したように、共有ホストプロセスでサービスを実行すると、システムリソースを節約できます。その一方で、1つのサービスで未処理のエラーが起きてプロセスが終了すると、同じプロセスのほかのサービスもすべて終了します。この問題に対処するため、Windows 10 Creators Update（RS2）で Svchost によるサービス分離が導入されました。</p>
-<p>SCM は起動時に、サービス全体のコミット上限を表す3つの値（低、中、厳格な上限）をレジストリから読み取ります。システムのメモリが不足したときに、リソース不足のメッセージを送るために使う値です。続いて、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;SvcHostSplitThresholdInKB</code> から、サービス分離を有効にするために必要な物理メモリ量のしきい値を KB 単位で読み取ります。既定値は、クライアントでは 3.5 GB、サーバーでは約 3.7 GB です。SCM は <code>GlobalMemoryStatusEx</code> API で搭載物理メモリの総量を取得し、しきい値と比較します。総量がしきい値を超えていれば、内部のグローバル変数を設定し、サービス分離を有効にします。</p>
+<p>SCM は起動時に、サービス全体のコミット上限を表す3つの値（低、中、厳格な上限）をレジストリから読み取ります。システムのメモリが不足したときに、リソース不足のメッセージを送るために使う値です。続いて、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;SvcHostSplitThresholdInKB</code> から、サービス分離を有効にするために必要な物理メモリ量のしきい値を KB 単位で読み取ります。既定のしきい値は、クライアント版 Windows では 3.5 GB、サーバー版 Windows では約 3.7 GB です。SCM は <code>GlobalMemoryStatusEx</code> API で搭載物理メモリの総量を取得し、しきい値と比較します。総量がしきい値を超えていれば、内部のグローバル変数を設定し、サービス分離を有効にします。</p>
 <p>サービス分離が有効になると、共有サービス用に SCM が Svchost プロセスを起動する方法が変わります。「サービスの開始」で説明したとおり、分離が許可されたサービスについて、SCM は既存のイメージレコードを検索しません。共有可能と設定されていても専用のホストプロセスで起動し、種類を <code>SERVICE_WIN32_OWN_PROCESS</code> に変更します。分離が許可されるのは、次の条件をすべて満たす場合です。</p>
 <ul>
 <li>システム全体で Svchost によるサービス分離が有効になっている。</li>

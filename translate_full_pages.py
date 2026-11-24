@@ -18988,3 +18988,8 @@ full_pages_ja['p2-page-497'] = full_pages_ja['p2-page-497'].replace(
     '共有サービスの <code>ImagePath</code> が SCM のイメージデータベースにあるエントリと一致すると、SCM は、その値に対応する起動済みの SvcHost プロセスにサービスの開始コマンドを送ります。',
     'サービスの種類を確認した結果、共有サービスであり、<code>ImagePath</code> がイメージデータベースの既存エントリと一致する場合、SCM は新しいプロセスを起動せず、対応する起動済みの SvcHost プロセスにサービスの開始コマンドを送ります。',
 )
+
+full_pages_ja['p2-page-498'] = full_pages_ja['p2-page-498'].replace(
+    '既定値は、クライアントでは 3.5 GB、サーバーでは約 3.7 GB です。',
+    '既定のしきい値は、クライアント版 Windows では 3.5 GB、サーバー版 Windows では約 3.7 GB です。',
+)
