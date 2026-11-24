@@ -2792,9 +2792,9 @@ api-ms-win-core-job-l1-1-0
 <figure><img loading="lazy" width="365" height="225" src="assets/8871530398bc8ffb12b6294c.webp" alt="4つのプロセスを管理するジョブの階層"><figcaption>図3-15　ジョブの階層</figcaption></figure></section><section class="page" id="page-197" aria-label="page-197"><p>この階層を作るには、ルートジョブから順にプロセスを追加します。手順は次のとおりです。</p>
 <ol>
 <li>プロセス P1 をジョブ1に追加します。</li>
-<li>プロセス P1 をジョブ2に追加します。これで最初の入れ子ができます。</li>
+<li>プロセス P1 をジョブ2に追加します。ジョブ2がジョブ1の子になります。</li>
 <li>プロセス P2 をジョブ1に追加します。</li>
-<li>プロセス P2 をジョブ3に追加します。これで2つ目の入れ子ができます。</li>
+<li>プロセス P2 をジョブ3に追加します。ジョブ3もジョブ1の子になります。</li>
 <li>プロセス P3 をジョブ2に追加します。</li>
 <li>プロセス P4 をジョブ1に追加します。</li>
 </ol>
@@ -2803,7 +2803,7 @@ api-ms-win-core-job-l1-1-0
 <p>プロセスがジョブに属しているかどうかは、カーネルデバッガーの <code>!process</code> コマンドか、Process Explorer で確認できます。次の手順で名前のないジョブオブジェクトを作成して表示します。</p>
 <ol>
 <li>コマンドプロンプトから <code>runas</code> を使って、新しいコマンドプロンプト（Cmd.exe）を起動します。たとえば <code>runas /user:&lt;ドメイン&gt;\&lt;ユーザー名&gt; cmd</code> と入力します。</li>
-<li>パスワードを入力すると、新しいコマンドプロンプトウィンドウが開きます。<code>runas</code> の要求を実行する Windows サービスは、すべての関連プロセスを収める名前のないジョブを作成します。これにより、ログオフ時にそれらのプロセスを終了できます。</li>
+<li>パスワードの入力を求められます。指定したユーザーのパスワードを入力すると、新しいコマンドプロンプトウィンドウが開きます。<code>runas</code> の要求を実行する Windows サービスは、すべての関連プロセスを収める名前のないジョブを作成します。これにより、ログオフ時にそれらのプロセスを終了できます。</li>
 <li>Process Explorer を起動します。「Options」メニューで「Configure Colors」を選び、「Jobs」にチェックを入れます。次の画面のように、Cmd.exe と、その子である ConHost.exe が、ジョブに属するプロセスとして強調表示されます。
 <figure><img loading="lazy" width="595" height="143" src="assets/d0a66140e51a378c6780a493.webp" alt="ジョブに属する Cmd.exe と ConHost.exe を強調表示した Process Explorer"></figure></li>
 <li>Cmd.exe または ConHost.exe をダブルクリックし、プロパティのダイアログを開きます。「Job」タブを開くと、プロセスが属するジョブの情報が表示されます。</li>
