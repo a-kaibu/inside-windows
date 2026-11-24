@@ -14441,7 +14441,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '原書の執筆時点で、UEFI のコアファームウェアに対する攻撃はすでに何度も実証されていました。\n'
                 'Trusted Execution Technology（TXT）は、<strong>Secure Launch</strong> という別の機能に対応するように拡張されました。\n'
                 'Intel が Trusted Boot と呼ぶこの機能は、CPU メーカーが署名した認証済みコードモジュール（ACM）を実行します。</p>',
- 'p2-page-837': '<p>ACM を実行するのはチップセットです。\n'
+ 'p2-page-837': '<p>ACM の実行はチップセットが担い、ファームウェアのコード実行には依存しません。\n'
                 'Secure Launch は、プラットフォームをリセットせずに初期化できる PCR を使った動的測定をサポートします。\n'
                 'この場合、OS は専用の Trusted Boot（TBOOT）モジュールを用意します。\n'
                 'このモジュールは、プラットフォームをセキュアモードで動作できる状態に初期化し、Secure Launch を開始します。</p>\n'
