@@ -1808,8 +1808,8 @@ IUM は特権を持たないリング3で動作しますが、仮想信頼レベ
 <h4 id="トラストレットの構造">トラストレットの構造</h4>
 <p>トラストレットは通常の Windows Portable Executable（PE）ファイルですが、IUM 固有の特徴があります。</p>
 <ul>
-<li>使用できるシステムコールが限られるため、インポートできる Windows システム DLL は、C/C++ ランタイム、KernelBase、Advapi、RPC ランタイム、CNG Base Crypto、NTDLL などに限られます。NTLM や ASN.1 など、データ構造だけを処理し、システムコールを発行しない DLL も使えます。</li>
-<li>IUM 専用のシステム DLL <code>Iumbase</code> からもインポートできます。この DLL はメールスロット、ストレージボックス、暗号処理などを提供する基盤 API を備えています。内部では、VTL 1 版の <code>Ntdll.dll</code> に当たる <code>Iumdll.dll</code> を呼び出します。ここにはセキュアカーネルが実装するセキュアシステムコールがあり、通常の VTL 0 のカーネルには転送されません。</li>
+<li>使用できるシステムコールが限られるため、インポートできる Windows システム DLL は、C/C++ ランタイム、KernelBase、Advapi、RPC ランタイム、CNG Base Crypto、NTDLL に限られます。NTLM や ASN.1 など、データ構造に対する計算や変換だけを行う DLL も、システムコールを発行しないため利用できます。</li>
+<li>IUM 専用のシステム DLL <code>Iumbase</code> からもインポートできます。この DLL は IUM の基本システム API を提供し、メールスロット、ストレージボックス、暗号処理などをサポートします。内部では、VTL 1 版の <code>Ntdll.dll</code> に当たる <code>Iumdll.dll</code> を呼び出します。ここにはセキュアカーネルが実装するセキュアシステムコールがあり、通常の VTL 0 のカーネルには転送されません。</li>
 <li>PE セクション <code>.tPolicy</code> には、エクスポートされたグローバル変数 <code>s_IumPolicyMetadata</code> が入ります。セキュアカーネルはこのメタデータを使い、VTL 0 からトラストレットへのアクセスをどこまで許可するかを決めます。たとえば、デバッグやクラッシュダンプを許可するかを設定できます。</li>
 <li>IUM の拡張キー使用法（原文表記の OID は <code>1.3.6.1.4.311.10.3.37</code>）を含む証明書で署名されています。図3-9は、その EKU を含む <code>LsaIso.exe</code> の証明書を示しています。</li>
 </ul>
