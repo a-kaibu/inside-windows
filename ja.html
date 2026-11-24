@@ -747,7 +747,7 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <ul>
 <li>Windows Server 2016 の Datacenter と Standard では、ソケット数に代わりコア数を基準に価格が決まります。</li>
 <li>サポートする論理プロセッサーの総数。</li>
-<li>サーバー版で実行できる Hyper-V コンテナーの数。原著では、クライアント版は名前空間ベースの Windows コンテナーに対応すると説明しています。</li>
+<li>サーバー版で実行できる Hyper-V コンテナーの数。原著では、クライアント版が対応するのは名前空間ベースの Windows コンテナーだけだと説明しています。</li>
 <li>使用できる物理メモリの量。厳密には、RAM に使える物理アドレスの上限です。詳細は第5章「メモリ管理」を参照してください。</li>
 <li>同時に受け付けられるネットワーク接続数。たとえば原著が扱うクライアント版では、ファイル・印刷サービスへの同時接続は最大10です。</li>
 <li>マルチタッチとデスクトップコンポジションへの対応。</li>
@@ -757,7 +757,7 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <p>表2-2は、Windows 10、Windows Server 2012 R2、Windows Server 2016 の一部のエディションで、サポートするメモリとプロセッサーの違いを示します。Windows Server 2012 R2 の詳細は <a href="https://www.microsoft.com/en-us/download/details.aspx?id=41703">Microsoft のエディション比較表</a>を参照してください。Windows 10、Windows Server 2016、それ以前の OS のメモリ上限は <a href="https://learn.microsoft.com/en-us/windows/win32/memory/memory-limits-for-windows-releases">Windows のメモリ上限資料</a>に記載されています。</p>
 <p>クライアント版とサーバー版には複数のパッケージがありますが、主要なシステムファイルは共通です。これにはカーネルイメージ <code>Ntoskrnl.exe</code> と PAE 版の <code>Ntkrnlpa.exe</code>、HAL のライブラリ、デバイスドライバー、基本的なシステムユーティリティと DLL が含まれます。</p></section><section class="page" id="page-72" aria-label="page-72"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表2-2　一部の Windows エディションにおけるプロセッサーとメモリの上限</caption>
-<thead><tr><th>エディション</th><th>ソケット数（32ビット版）</th><th>物理メモリ（32ビット版）</th><th>論理プロセッサー数またはソケット数（64ビット版）</th><th>物理メモリ（x64 版）</th></tr></thead>
+<thead><tr><th scope="col">エディション</th><th scope="col">ソケット数（32ビット版）</th><th scope="col">物理メモリ（32ビット版）</th><th scope="col">論理プロセッサー数またはソケット数（64ビット版）</th><th scope="col">物理メモリ（x64 版）</th></tr></thead>
 <tbody>
 <tr><th scope="row">Windows 10 Home</th><td>1</td><td>4 GB</td><td>1ソケット</td><td>128 GB</td></tr>
 <tr><th scope="row">Windows 10 Pro</th><td>2</td><td>4 GB</td><td>2ソケット</td><td>2 TB</td></tr>
@@ -770,11 +770,11 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <p>各エディションが同じカーネルイメージを使うため、システムは <code>HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions</code> キーの <code>ProductType</code> と <code>ProductSuite</code> を参照し、どのエディションで起動したかを判定します。<code>ProductType</code> でクライアントかサーバーかを区別します。これらの値は、前述のライセンスポリシーファイルに基づいてレジストリに読み込まれます。<code>ProductType</code> の値を表2-3に示します。ユーザーモードでは <code>VerifyVersionInfo</code> で確認できます。デバイスドライバーは、WDK に記載されているカーネルモードの関数 <code>RtlGetVersion</code> と <code>RtlVerifyVersionInfo</code> を使えます。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表2-3　<code>ProductType</code> のレジストリ値</caption>
-<thead><tr><th>Windows の種類</th><th><code>ProductType</code> の値</th></tr></thead>
+<thead><tr><th scope="col">Windows の種類</th><th scope="col"><code>ProductType</code> の値</th></tr></thead>
 <tbody>
-<tr><td>Windows クライアント</td><td><code>WinNT</code></td></tr>
-<tr><td>Windows サーバー（ドメインコントローラー）</td><td><code>LanmanNT</code></td></tr>
-<tr><td>Windows サーバー（ドメインコントローラー以外）</td><td><code>ServerNT</code></td></tr>
+<tr><th scope="row">Windows クライアント</th><td><code>WinNT</code></td></tr>
+<tr><th scope="row">Windows サーバー（ドメインコントローラー）</th><td><code>LanmanNT</code></td></tr>
+<tr><th scope="row">Windows サーバー（ドメインコントローラー以外）</th><td><code>ServerNT</code></td></tr>
 </tbody>
 </table></div>
 <p>別のレジストリ値 <code>ProductPolicy</code> には、エディションと有効な機能を区別する <code>tokens.dat</code> のデータのコピーがキャッシュされています。</p>
