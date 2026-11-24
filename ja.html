@@ -1473,11 +1473,11 @@ Windows サブシステムのカーネルモード部分（<code>Win32k.sys</cod
 図3-2のように、エグゼクティブプロセス構造体の最初のメンバーは <code>Pcb</code>（Process Control Block、プロセス制御ブロック）です。
 このメンバーは、カーネルプロセスを表す <code>KPROCESS</code> 型の構造体です。
 エグゼクティブのルーチンは情報を <code>EPROCESS</code> に格納します。一方、OS カーネルの一部であるディスパッチャー、スケジューラー、割り込みや実行時間を集計するコードは <code>KPROCESS</code> を使います。
-こうして、エグゼクティブが提供する上位の機能と、その一部を支える下位の実装の間に抽象化の境界を設け、層の間に不要な依存関係が生じるのを防ぎます。
+こうして、エグゼクティブが提供する上位の機能と、その一部を支える下位の実装の間に抽象化の境界を設け、層の間に不要な依存関係が生じにくくなります。
 図3-3に <code>KPROCESS</code> 構造体の主要なフィールドを示します。</p></section><section class="page" id="page-124" aria-label="page-124"><figure><img loading="lazy" src="assets/f62de3ed02f135a6f4754d6c.webp" alt="カーネルプロセス構造体 KPROCESS の主要なフィールド"><figcaption>図3-3 カーネルプロセス構造体の主要なフィールド</figcaption></figure>
 <h4 id="実験-EPROCESS-構造体のレイアウトを表示する">実験：EPROCESS 構造体のレイアウトを表示する</h4>
 <p><code>EPROCESS</code> を構成するフィールドと、それぞれの16進オフセットを表示するには、カーネルデバッガーで <code>dt nt!_eprocess</code> と入力します。
-カーネルデバッガーとローカルシステムでのカーネルデバッグについては、第1章を参照してください。
+カーネルデバッガーの詳細と、ローカルシステムでのデバッグ手順については、第1章の「<a href="#カーネルデバッグ">カーネルデバッグ</a>」を参照してください。
 64ビット版 Windows 10 では、次のように表示されます。出力の一部は省略しています。</p>
 <pre>lkd&gt; dt nt!_eprocess
 +0x000 Pcb              : _KPROCESS
