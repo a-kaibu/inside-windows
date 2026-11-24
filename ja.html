@@ -18409,9 +18409,9 @@ TEB の詳細は Part 1 の第4章を参照してください。</p>
 </ol>
 <p>次に Process Explorer を起動し、下部ペインを表示して、開いているハンドルが表示されるようにします。「View」から「Lower Pane View」、続いて「Handles」を選びます。
 名前のないハンドルも調べるため、「View」の「Show Unnamed Handles And Mappings」を有効にします。</p></section><section class="page" id="p2-page-273" aria-label="p2-page-273"><p>次に Process Explorer で <code>Windbg.exe</code>（WinDbg Preview の場合は <code>EngHost.exe</code>）を選び、ハンドルテーブルを確認します。
-デバッグオブジェクトを参照する、名前のない開いたハンドルが見つかります。
+名前の付いていないデバッグオブジェクトを参照する、開いているハンドルが見つかります。
 「Type」で並べ替えると探しやすくなります。次の図は表示例です。</p>
-<figure><img loading="lazy" width="538" height="260" src="assets/edc294d39bde13e3c276d918.webp" alt="Process Explorer で WinDbg のデバッグオブジェクトのハンドルを表示した画面"><figcaption>WinDbg が開いている、名前のないデバッグオブジェクトのハンドル</figcaption></figure>
+<figure><img loading="lazy" width="538" height="260" src="assets/edc294d39bde13e3c276d918.webp" alt="Process Explorer で WinDbg のデバッグオブジェクトのハンドルを表示した画面"><figcaption>WinDbg が開いている、無名のデバッグオブジェクトへのハンドル</figcaption></figure>
 <p>ハンドルを右クリックして閉じてみます。
 メモ帳が終了し、WinDbg に次のメッセージが表示されます。</p>
 <pre>ERROR: WaitForEvent failed, NTSTATUS 0xC0000354
