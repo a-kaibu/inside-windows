@@ -8919,6 +8919,7 @@ Hibernation is not available.
 The hypervisor does not support this standby state.
 Fast Startup
 Hibernation is not available.</pre>
+<p>この出力例で利用できるスリープ状態は、スタンバイ（S3）だけです。S1、S2、S0 低電力アイドルはファームウェアが対応していません。休止状態は有効になっていません。ハイブリッドスリープは、休止状態が利用できず、ハイパーバイザーも対応していないため使えません。高速スタートアップも休止状態が利用できないため使えません。</p>
 <p>ACPI は、デバイスの電源状態を D0 から D3 までの4段階で定義します。D0 は完全に稼働した状態、D3 は電源が切れた状態です。D1 と D2 の具体的な動作はドライバーとデバイスに委ねられています。消費電力については、D1 は D0 以下、D2 は D1 以下という条件があります。</p>
 <p>Windows 8 以降では、D3 を D3-hot と D3-cold の2つに分けます。D3-hot ではデバイスの大部分が停止していますが、主電源には接続されたままで、親のバスコントローラーはバス上でデバイスの存在を検出できます。D3-cold ではデバイスへの主電源の供給が止まり、バスコントローラーはデバイスを検出できません。この状態ではさらに電力を節約できます。図6-50に、デバイスの電源状態と可能な遷移を示します。</p>
 <figure><img loading="lazy" width="245" height="218" src="assets/d46faee94f9d90d4f2d4d4fd.webp" alt="デバイスの電源状態と可能な遷移"><figcaption>図6-50　デバイスの電源状態の遷移</figcaption></figure></section><section class="page" id="page-611" aria-label="page-611"><p>Windows 8 より前は、システムが稼働中（S0）の間、デバイスは D3-hot までしか移行できませんでした。D3-cold への移行は、システムがスリープに入るときに暗黙に行われました。Windows 8 以降では、システムが稼働したままデバイスを D3-cold に移行できます。デバイスを制御するドライバーが直接指定できるのは D3-hot までです。同じバスにあるほかのデバイスも D3-hot に入ると、その状況に応じてバスドライバーとファームウェアが、すべてのデバイスを D3-cold に移行させる場合があります。移行には、バスドライバーとファームウェアが対応していることに加え、デバイスのドライバーがインストール用 INF ファイルで指定するか、実行時に <code>SetD3ColdSupport</code> を呼び出して、D3-cold への移行を有効にしていることが必要です。</p>
@@ -18519,7 +18520,7 @@ UWP アプリケーションは、開発対象の OS バージョンをマニフ
 </ul>
 <p>モダンスタートメニューも、状態リポジトリの変更とイベントの追跡を使います。<code>ShellExperienceHost</code> プロセスは起動するたびに、タイルが変更、作成、削除されたらコントローラー（<code>NotificationController.dll</code>）に通知するよう、状態リポジトリに要求します。ユーザーがストアからモダンアプリケーションをインストールしたり削除したりすると、アプリケーション配置サーバーは、タイルを追加または削除するデータベーストランザクションを実行します。その終了時に、状態リポジトリはイベントをシグナル状態にしてコントローラーを起こします。こうして、スタートメニューの表示はほぼリアルタイムに更新されます。</p>
 <aside><p><strong>注</strong>　モダンスタートメニューは、通常の Win32 アプリケーションのインストールに応じて、項目を自動で追加または削除することもできます。セットアッププログラムは通常、従来のスタートメニューフォルダーにショートカットを作ります。システム共通のフォルダーは <code>C:\ProgramData\Microsoft\Windows\Start Menu</code>、ユーザー別のフォルダーは <code>C:\Users\&lt;UserName&gt;\AppData\Roaming\Microsoft\Windows\Start Menu</code> です。モダンスタートメニューは AppResolver ライブラリを使い、<code>ReadDirectoryChangesW</code> Win32 API でこれらすべてのフォルダーの変更通知を登録します。監視中のフォルダーにショートカットが作成されると、ライブラリがコールバックを受け取り、スタートメニューに再描画を通知します。</p></aside></section><section class="page" id="p2-page-284" aria-label="p2-page-284"><h4 id="実験-状態リポジトリの中身を確認する">実験：状態リポジトリの中身を確認する</h4>
-<p>状態リポジトリの各パーティションは、SQLite 用の閲覧ツールで開けます。この実験では、オープンソースの DB Browser for SQLite などをインストールして使います。標準ユーザーは状態リポジトリのフォルダーにアクセスできません。また、参照しようとした時点でパーティションのファイルが使用中のこともあります。閲覧ツールで開く前に、データベースファイルを別のフォルダーにコピーします。Cortana の検索ボックスに <code>cmd</code> と入力し、検索結果の「コマンド プロンプト」を右クリックして「管理者として実行」を選びます。次のコマンドを入力します。</p>
+<p>状態リポジトリの各パーティションは、SQLite 用の閲覧ツールで開けます。この実験では、オープンソースの <a href="https://sqlitebrowser.org/">DB Browser for SQLite</a> などをインストールして使います。標準ユーザーは状態リポジトリのフォルダーにアクセスできません。また、参照しようとした時点でパーティションのファイルが使用中のこともあります。閲覧ツールで開く前に、データベースファイルを別のフォルダーにコピーします。Cortana の検索ボックスに <code>cmd</code> と入力し、検索結果の「コマンド プロンプト」を右クリックして「管理者として実行」を選びます。次のコマンドを入力します。</p>
 <pre><code>C:\WINDOWS\system32&gt;cd "C:\ProgramData\Microsoft\Windows\AppRepository"
 C:\ProgramData\Microsoft\Windows\AppRepository&gt;copy StateRepository-Machine.srd "%USERPROFILE%\Documents"</code></pre>
 <figure><img loading="lazy" width="532" height="448" src="assets/bf353fca2ea9e69c5db09599.webp" alt="状態リポジトリの実験の画面例"></figure>
