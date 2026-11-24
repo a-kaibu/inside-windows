@@ -8315,7 +8315,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'では <code>0xFFFF</code>、FAT12 では <code>0xFFF</code> という予約値を記録します。未使用クラスターに対応する FAT '
                 'エントリの値は0です。図11-15では、FILE1 がクラスター2、3、4を使用しています。FILE2 は断片化されており、クラスター5、6、8を使います。FILE3 '
                 'はクラスター7だけを使います。FAT ボリュームからファイルを読むときは、割り当てチェーンをたどるため、ファイル割り当てテーブルの広い範囲を読み取ることがあります。</p>\n'
-                '<p>図11-15 FAT のファイル割り当てチェーンの例。</p>',
+                '<table><caption>図11-15 FAT のファイル割り当てチェーンの例</caption><thead><tr><th scope="col">ファイル</th><th scope="col">先頭クラスター</th><th scope="col">割り当てチェーン</th></tr></thead><tbody><tr><th scope="row">FILE1</th><td>2</td><td>2 → 3 → 4 → <code>FFFF</code></td></tr><tr><th scope="row">FILE2</th><td>5</td><td>5 → 6 → 8 → <code>FFFF</code></td></tr><tr><th scope="row">FILE3</th><td>7</td><td>7 → <code>FFFF</code></td></tr></tbody></table><p>未使用のクラスター9のエントリは <code>0000</code> です。</p>',
  'p2-page-636': '<p>FAT12 と FAT16 '
                 'では、ボリュームの先頭側に、ルートディレクトリのエントリ256件分の領域があらかじめ確保されます。このため、ルートディレクトリに格納できるファイルとディレクトリの数に上限があります。FAT32 '
                 'のルートディレクトリには、このような領域の事前割り当てや固定のサイズ上限はありません。FAT '
