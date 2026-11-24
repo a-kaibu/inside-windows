@@ -19114,3 +19114,15 @@ full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
     'PMC のサンプリングイベント',
     'パフォーマンスモニタリングカウンター（PMC）のサンプリングイベント',
 )
+
+full_pages_ja['p2-page-550'] = (
+    full_pages_ja['p2-page-550']
+    .removesuffix('<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure>')
+    .replace('プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。</li>', 'プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。\n<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure></li>')
+)
+
+full_pages_ja['p2-page-551'] = (
+    full_pages_ja['p2-page-551']
+    .removesuffix('<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure>')
+    .replace('図のように作成したデータコレクターセットが表示されます。</li>', '図のように作成したデータコレクターセットが表示されます。\n<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure></li>')
+)
