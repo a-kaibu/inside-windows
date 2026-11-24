@@ -21396,7 +21396,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <p>一部のロガーセッションはシステムの起動時に自動で開始されます。グローバルロガーセッションは、NT カーネルロガーが生成するものを含め、OS の起動初期に発生するイベントを記録します。表10-16に示したとおり、グローバルロガー自体もシステムロガーです。アプリケーションやデバイスドライバーはこのセッションで、ユーザーのログイン前にトレースを取得できます。ただし、ディスクのデバイスドライバーなど、一部のドライバーはセッション開始時点でまだ読み込まれていません。グローバルロガーが主に NT カーネルプロバイダーのトレースを取得する（表10-17）のに対し、自動ロガーは従来型の ETW プロバイダーのトレースを取得するためのものです。</p>
 <p>グローバルロガーは、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;WMI</code> 配下の <code>GlobalLogger</code> キーにレジストリ値を設定して構成します。自動ロガーは、同じ WMI キー配下の <code>Autologger</code> キーにログセッションと同じ名前のサブキーを作成して構成します。手順は Windows API リファレンスの <a href="https://learn.microsoft.com/windows/win32/etw/configuring-and-starting-an-autologger-session">自動ロガーセッションの構成と開始</a>を参照してください。</p>
 <p>「ETW の初期化」で述べたように、ETW は NT カーネルの初期化フェーズ1の早い段階で、グローバルロガーと自動ロガーをほぼ同時に開始します。内部関数 <code>EtwStartAutoLogger</code> はレジストリからロガーの構成をすべて取得して検証し、「ETW セッション」で詳しく説明した <code>EtwpStartLogger</code> でセッションを作成します。システムロガーであるグローバルロガーでは、セッションの作成後にプロバイダーを有効にする処理はありません。自動ロガーでは、<code>Autologger</code> キーからセッション名を列挙してセッションを開始し、作成後にそのセッションのサブキーから、有効にするプロバイダーを列挙します。各プロバイダーは GUID で識別されます。図10-36は <code>EventLog-System</code> セッションで有効になっている複数のプロバイダーを示しています。このセッションはイベントログサービスが収集し、イベントビューアーの「Windows ログ」に表示される主要なログの1つです。</p>
-<figure><img loading="lazy" width="690" height="258" src="assets/40fd6af183a8cdacc676957a.webp" alt="原文の図（第2巻 PDF 552ページ）"></figure></section><section class="page" id="p2-page-553" aria-label="p2-page-553"><h4 id="ETW-のセキュリティ">ETW のセキュリティ</h4>
+<figure><img loading="lazy" width="690" height="258" src="assets/40fd6af183a8cdacc676957a.webp" alt="EventLog-System セッションで有効になっているプロバイダーの一覧"><figcaption>図10-36　EventLog-System 自動ロガーで有効になっているプロバイダー</figcaption></figure></section><section class="page" id="p2-page-553" aria-label="p2-page-553"><h4 id="ETW-のセキュリティ">ETW のセキュリティ</h4>
 <p>ETW セッションの開始と停止には高い権限が必要です。イベントにシステムの整合性を脅かすために悪用できる情報が含まれる場合があるためです。特にシステムロガーが該当します。Windows のセキュリティモデルは ETW にも適用されます。ETW の操作ごとに必要なアクセス権が決まっており、操作の種類に応じてセッション、プロバイダー、またはプロバイダーグループを保護するセキュリティ記述子でその権限が付与されている必要があります。表10-18に ETW のアクセス権と用途を示します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表10-18 ETW のアクセス権と用途</caption><thead><tr><th>値</th><th>説明</th><th>対象</th></tr></thead><tbody>
 <tr><td><code>WMIGUID_QUERY</code></td><td>トレースセッションの情報を照会する</td><td>セッション</td></tr>
@@ -21523,6 +21523,13 @@ dtrace -l &gt; providers.txt</code></pre>
 <dt><code>DTrace.dll</code></dt><dd>ユーザーモードの DTrace エンジンである LibDTrace を内包します。D スクリプトのコンパイラーを実装し、ドライバーに IOCTL を送り、ドライバーがリングバッファーに保存したアクションの結果を読み取ります。</dd>
 <dt><code>DTrace.exe</code></dt><dd>コマンドラインで指定されたコマンドを LibDTrace に渡す実行ファイルです。</dd>
 </dl>
+<figure>
+<figcaption>図10-37　DTrace の内部アーキテクチャ</figcaption>
+<ul>
+<li>ユーザーモードでは、<code>DTrace.exe</code> が D スクリプト（<code>.d</code>）を入力として受け取り、<code>DTrace.dll</code> に含まれる LibDTrace に渡します。図には、シンボルを扱う <code>Dbghelp.dll</code> とシンボルストアも示されています。</li>
+<li>カーネルモードでは、<code>DTrace.sys</code> がプローブを扱います。図には Windows ローダー、NT カーネル、および FBT、PID、SYSCALL、ETW の各プロバイダーが示されています。</li>
+</ul>
+</figure>
 <p>Windows カーネル、ドライバー、ユーザーモードアプリケーションの動的トレースを開始するには、<code>DTrace.exe</code> を起動し、コマンドまたは外部の D スクリプトを指定します。どちらも1つ以上のプローブと、D 言語で記述したアクションを含みます。<code>DTrace.exe</code> はコマンドラインを解析し、対応する要求を転送します。</p></section><section class="page" id="p2-page-560" aria-label="p2-page-560"><p>転送先は <code>DTrace.dll</code> に実装された LibDTrace です。たとえばプローブを有効にする場合、DTrace の実行ファイルは LibDTrace の内部関数 <code>dtrace_program_fcompile</code> を呼び出します。この関数は D スクリプトをコンパイルし、DTrace 中間形式（DIF）のバイトコードを出力バッファーに格納します。</p>
 <aside><p>DIF バイトコードの詳細と D スクリプトや D コマンドのコンパイル方法は、本書の範囲外です。詳細はケンブリッジ大学が公開した <a href="https://www.cl.cam.ac.uk/techreports/UCAM-CL-TR-924.pdf">OpenDTrace 仕様書</a>を参照してください。</p></aside>
 <p>D コンパイラーは LibDTrace 内のユーザーモードで動作します。コンパイル済みの DIF バイトコードを実行するには、LibDTrace が DTrace ドライバーに <code>DTRACEIOC_ENABLE</code> IOCTL を送信します。ドライバーに実装された DIF 仮想マシンは、バイトコードで表された各 D 節を評価し、アクションが指定されていれば実行します。一部のアクションは仮想マシンで解釈せず、ネイティブコードで実行します。</p>
