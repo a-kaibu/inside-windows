@@ -19242,3 +19242,15 @@ full_pages_ja['p2-page-590'] = full_pages_ja['p2-page-590'].replace(
     'この形式ではタグを使って XML 形式のデータベースを表現します。',
     'SDB はタグを使い、XML に似た階層構造をバイナリ形式で表現します。',
 )
+
+full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].removesuffix('\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面">\n<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure>')
+
+full_pages_ja['p2-page-592'] = full_pages_ja['p2-page-592'].replace(
+    'の一覧が表示されます。</li>',
+    'の一覧が表示されます。\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面"></figure></li>',
+)
+
+full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].replace(
+    'Insider リリースを使っています。</li>',
+    'Insider リリースを使っています。\n<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></li>',
+)
