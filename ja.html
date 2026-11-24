@@ -12865,7 +12865,7 @@ IDT には最大256個のエントリがあるため、優先度は16段階で�
 その場合は、そこで追加の処理を行ってから、実際のドライバーを呼び出します。
 ドライバーフレームワークについては、第1部の第6章「I/O システム」を参照してください。</p>
 <p>図8-15に、割り込みオブジェクトに関連付けられた割り込みの一般的な制御の流れを示します。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/46f163769527633b0d6a7bc5.webp" alt="デバイスコントローラー、I/O APIC、CPU のローカル APIC、割り込みディスパッチテーブル、割り込みオブジェクト、ドライバーの ISR の関係"><figcaption>図8-15 割り込み処理の一般的な流れ</figcaption></figure>
+<figure><img loading="lazy" width="450" height="479" src="assets/interrupt-control-flow.webp" alt="デバイスコントローラー、I/O APIC、CPU のローカル APIC、割り込みディスパッチテーブル、割り込みオブジェクト、ドライバーの ISR の関係"><figcaption>図8-15 割り込み処理の一般的な流れ</figcaption></figure>
 <p>図には、割り込みオブジェクトの ISR アドレス、スピンロック、ディスパッチャー、ディスパッチコードと、CPU の KPRCB を示しています。
 <code>KiInterruptDispatch</code> は IRQL を引き上げ、スピンロックを取得します。
 ドライバーの ISR はデバイスから読み取り、割り込みに応答し、DPC を要求します。
