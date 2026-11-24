@@ -27101,7 +27101,7 @@ Windows ローダーは起動時にこの変数を検出すると、<code>VbsPol
 UEFI の認証付き変数 <code>VbsPolicy</code> に元のポリシーが残っているため、悪意のあるプログラムやユーザーがこの保護を簡単には解除できません。</p>
 <p>実際に適用された起動ポリシーを確認するには、<code>eventvwr</code> を実行してイベントビューアーを開き、「Windows ログ」→「システム」と進みます。
 イベントの一覧をスクロールすると、VBS がどのように有効になったかを示すイベントが見つかります。ソースは <code>Kernel-Boot</code> です。</p>
-<figure><img loading="lazy" width="635" height="348" src="assets/391bfd399ac67eb89012a6de.webp" alt="イベントビューアーに表示された VBS の有効化を示す Kernel-Boot イベント"><figcaption>システムログで VBS の有効化を確認する</figcaption></figure></section><section class="page" id="p2-page-847" aria-label="p2-page-847"><p><code>VbsPolicy</code> はブートサービスで参照できる認証付き UEFI 変数です。
+<figure><img loading="lazy" width="635" height="348" src="assets/391bfd399ac67eb89012a6de.webp" alt="イベントビューアーに表示された VBS の有効化を示す Kernel-Boot イベント"><figcaption>システムログで VBS の有効化を確認する</figcaption><p><code>Kernel-Boot</code> のイベント ID 153 は、ロックされた構成により VBS が有効になったことを示しています。適用されたポリシーとして、VSM 必須、セキュアブート、MMIO の実行禁止、強力な MSR フィルタリング、HVCI、ブートチェーン署名者のソフト強制が列挙されています。</p></figure></section><section class="page" id="p2-page-847" aria-label="p2-page-847"><p><code>VbsPolicy</code> はブートサービスで参照できる認証付き UEFI 変数です。
 OS がランタイムモードに切り替わると参照できなくなるため、前の実験で使った UefiTool では表示できません。
 内容を確認するには、コンピューターを再起動し、セキュアブートを無効にした状態で EFI シェルを使います。
 EFI シェルは本書のダウンロード資料、または <a href="https://github.com/tianocore/edk2/tree/UDK2018/ShellBinPkg/UefiShell/X64">TianoCore のリポジトリ</a>から入手できます。

@@ -14738,7 +14738,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'イベントの一覧をスクロールすると、VBS がどのように有効になったかを示すイベントが見つかります。ソースは <code>Kernel-Boot</code> です。</p>\n'
                 '<figure><img loading="lazy" width="635" height="348" '
                 'src="assets/391bfd399ac67eb89012a6de.webp" alt="イベントビューアーに表示された VBS の有効化を示す Kernel-Boot '
-                'イベント"><figcaption>システムログで VBS の有効化を確認する</figcaption></figure>',
+                'イベント"><figcaption>システムログで VBS の有効化を確認する</figcaption><p><code>Kernel-Boot</code> のイベント ID 153 は、ロックされた構成により VBS が有効になったことを示しています。適用されたポリシーとして、VSM 必須、セキュアブート、MMIO の実行禁止、強力な MSR フィルタリング、HVCI、ブートチェーン署名者のソフト強制が列挙されています。</p></figure>',
  'p2-page-847': '<p><code>VbsPolicy</code> はブートサービスで参照できる認証付き UEFI 変数です。\n'
                 'OS がランタイムモードに切り替わると参照できなくなるため、前の実験で使った UefiTool では表示できません。\n'
                 '内容を確認するには、コンピューターを再起動し、セキュアブートを無効にした状態で EFI シェルを使います。\n'
