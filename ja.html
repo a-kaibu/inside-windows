@@ -171,22 +171,22 @@ Akila Srinivasan, Alessandro Pilotti, Andrea Allievi, Andy Luhrs, Arun Kishan, B
 <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 (初期版)</td><td style="padding:6px;">4.6</td></tr>
 <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 バージョン 1511</td><td style="padding:6px;">4.6.1</td></tr>
 <tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Windows 10 バージョン 1607</td><td style="padding:6px;">4.6.2</td></tr>
-</tbody></table></div></section><section class="page" id="page-24" aria-label="page-24"><p>.NET Framework は主に以下の2つの巨大な構成要素から成り立っています：</p>
+</tbody></table></div></section><section class="page" id="page-24" aria-label="page-24"><p>.NET Framework は主に次の2つの構成要素から成ります。</p>
 <ul>
-  <li><strong>共通言語ランタイム（CLR: Common Language Runtime）</strong>：.NETの実行時エンジンです。CIL（共通中間言語）コードを実行時にCPUの機械語へと変換する JIT（Just-In-Time）コンパイラ、自動メモリ管理を行うガベージコレクター（GC）、型検証、コードアクセスセキュリティなどの高度なランタイムサービスを提供します。CLR自体はインプロセスCOMサーバー（DLL）として実装されており、Windows APIを内部でフル活用しています。</li>
-  <li><strong>.NET Framework クラスライブラリ（FCL: Framework Class Library）</strong>：UI、ネットワーク通信、データベースアクセス、ファイルI/O、暗号化など、クライアントやサーバーアプリが必要とするあらゆる機能を網羅した膨大な型（クラス・インターフェース）のライブラリです。</li>
+  <li><strong>共通言語ランタイム（CLR: Common Language Runtime）</strong>：.NETの実行時エンジンです。CIL（共通中間言語）コードを実行時にCPUの機械語へと変換する JIT（Just-In-Time）コンパイラ、自動メモリ管理を行うガベージコレクター（GC）、型検証、コードアクセスセキュリティなどのランタイムサービスを提供します。CLR自体はインプロセスCOMサーバー（DLL）として実装されており、Windows API が提供する機能を利用します。</li>
+  <li><strong>.NET Framework クラスライブラリ（FCL: Framework Class Library）</strong>：ユーザーインターフェイス、ネットワーク、データベースアクセスなど、クライアントやサーバーアプリケーションでよく使う機能を実装した型のライブラリです。</li>
 </ul>
 
-<p>これらの機構と高水準言語（C#, Visual Basic, F#）により、開発者の生産性とアプリケーションの安全性・信頼性が飛躍的に向上します。図1-1に .NET Framework と Windows OS の階層関係を示します。</p>
+<p>これらの機能に加え、C#、Visual Basic、F# などの高水準言語や開発ツールを提供することで、.NET Framework は開発者の生産性と、それを対象に作られたアプリケーションの安全性、信頼性を高めます。図1-1に .NET Framework と Windows OS の階層関係を示します。</p>
 
 <figure><img loading="lazy" width="358" height="223" src="assets/d7a7e4fe0af9260b76f81a00.webp" alt=".NET Framework と Windows OS の関係"><figcaption>図1-1：.NET Framework と Windows OS の階層構造</figcaption></figure>
 
 <h3 id="サービス-関数-ルーチン">サービス、関数、ルーチン</h3>
-<p>Windowsのドキュメントや技術解説では、文脈によって意味が異なる用語がいくつかあります。例えば「サービス」という言葉は、OSの呼び出し可能なルーチンを指すこともあれば、デバイスドライバを指すことも、バックグラウンドのサーバープロセスを指すこともあります。本書では混乱を避けるため、以下の定義に統一しています：</p>
+<p>Windowsのドキュメントや技術解説では、文脈によって意味が異なる用語がいくつかあります。例えば「サービス」という言葉は、OSの呼び出し可能なルーチンを指すこともあれば、デバイスドライバを指すことも、バックグラウンドのサーバープロセスを指すこともあります。本書では混乱を避けるため、次の意味で使います。</p>
 <ul>
   <li><strong>Windows API 関数</strong>：Windows APIとして公式に文書化され、外部から呼び出し可能なサブルーチン（例: <code>CreateProcess</code>, <code>CreateFile</code>, <code>GetMessage</code>）。</li>
-  <li><strong>ネイティブシステムサービス（システムコール）</strong>：ユーザーモードから呼び出し可能な、OS内部の文書化されていない基盤サービス（例: <code>NtCreateUserProcess</code>。Windows APIの <code>CreateProcess</code> が内部で呼び出す真のシステムサービス）。</li>
-  <li><strong>カーネルサポート関数（カーネルルーチン）</strong>：カーネルモードでのみ呼び出し可能な、OS内部のサブルーチン（例: デバイスドライバがシステムヒープからメモリを確保する際に呼ぶ <code>ExAllocatePoolWithTag</code>）。</li>
+  <li><strong>ネイティブシステムサービス（システムコール）</strong>：ユーザーモードから呼び出し可能な、OS内部の文書化されていない基盤サービス（例: <code>NtCreateUserProcess</code>。Windows APIの <code>CreateProcess</code> が内部で呼び出すシステムサービス）。</li>
+  <li><strong>カーネルサポート関数（カーネルルーチン）</strong>：カーネルモードでのみ呼び出し可能な、OS内部のサブルーチン（例: デバイスドライバがシステムヒープ（プール）からメモリを確保する際に呼ぶ <code>ExAllocatePoolWithTag</code>）。</li>
 </ul></section><section class="page" id="page-25" aria-label="page-25"><ul>
   <li><strong>Windows サービス</strong>：Windowsのサービスコントロールマネージャー（SCM）によって管理・起動されるバックグラウンドプロセス（例: UNIXの cron や at に相当する <code>schtasks</code> を支えるタスクスケジューラサービス）。※レジストリ上はデバイスドライバも「サービス」として定義されますが、本書ではそれらは単にドライバと呼び、サービスとは呼びません。</li>
   <li><strong>ダイナミックリンクライブラリ（DLL）</strong>：複数のアプリケーションから実行時に動的にロード・共有できるサブルーチンのバイナリライブラリ（例: Cランタイムの <code>Msvcrt.dll</code>、Windowsサブシステムの中核である <code>Kernel32.dll</code>）。WindowsはDLLのコードセクションを物理メモリ上で1箇所のみに展開し、それを参照する全プロセス間で共有させるため、メモリを大幅に節約できます。なお、.NETアセンブリもDLL形式で配布されますが、機械語のエクスポート関数ではなく、CLRが解析するコンパイル済みメタデータを含んでいます。</li>
