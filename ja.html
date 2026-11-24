@@ -26992,7 +26992,7 @@ Winload は次の手順で処理を進めます。</p>
 </ol></section><section class="page" id="p2-page-841" aria-label="p2-page-841"><ol start="9">
 <li>この段階では、Winload は物理メモリの割り当てに EFI ファームウェアのブートサービス <code>AllocatePages</code> を引き続き使います。仮想アドレスの変換は、アプリケーションコンテキストで動作するブートライブラリが管理します。</li>
 </ol>
-<figure><img loading="lazy" width="638" height="217" src="assets/c2d0dcf13f0e360aae65822b.webp" alt="レジストリエディターに表示された ReadyBoost ドライバーのサービス設定"><figcaption>図12-8　ReadyBoost ドライバーのサービス設定</figcaption></figure>
+<figure><img loading="lazy" width="638" height="217" src="assets/c2d0dcf13f0e360aae65822b.webp" alt="レジストリエディターに表示された ReadyBoost ドライバーのサービス設定"><figcaption>図12-8　ReadyBoost ドライバーのサービス設定</figcaption><p>レジストリエディターで <code>Services</code> 配下の <code>rdyboost</code> キーを開いています。<code>Start</code> は <code>0</code>（ブート開始）、<code>Type</code> は <code>1</code>（カーネルドライバー）です。<code>ImagePath</code> は <code>System32&#92;drivers&#92;rdyboost.sys</code> を指し、グループは「PnP Filter」です。</p></figure>
 <ol start="10">
 <li>国際化に使う NLS ファイルを読み込みます。既定では <code>l_intl.nls</code>、<code>C_1252.nls</code>、<code>C_437.nls</code> です。</li>
 <li>ポリシーを評価した結果、VSM を起動する必要があれば、セキュアカーネルのセットアップのフェーズ0を実行します。ここでは <code>Hvloader.dll</code> がエクスポートする VSM ローダーの補助ルーチンのアドレスを解決し、セキュアカーネル（<code>Securekernel.exe</code>）とその依存モジュールをすべて読み込みます。</li>
