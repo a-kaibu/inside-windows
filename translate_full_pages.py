@@ -18403,3 +18403,8 @@ full_pages_ja['page-618'] = full_pages_ja['page-618'].replace(
 )
 
 full_pages_ja['page-622'] = full_pages_ja['page-622'].replace('意図しない閲覧や変更から保護', '許可していない閲覧や変更から保護')
+
+full_pages_ja['page-626'] = full_pages_ja['page-626'].replace(
+    'ドメインは、コンピューターと関連するセキュリティグループを1つの単位として管理する仕組みです。',
+    'ドメインは、1つの単位として管理されるコンピューターと、それらに関連するセキュリティグループの集合です。',
+)
