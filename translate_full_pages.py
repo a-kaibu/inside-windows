@@ -18169,3 +18169,13 @@ full_pages_ja['page-507'] = full_pages_ja['page-507'].replace(
     '遅延プロシージャ呼び出し（DPC）は、IRQL 2（<code>DISPATCH_LEVEL</code>）での関数呼び出しを表すオブジェクトです。',
     '遅延プロシージャ呼び出し（DPC）は、IRQL 2（<code>DPC_LEVEL</code>。<code>DISPATCH_LEVEL</code> と同じ値）での関数呼び出しを表すオブジェクトです。',
 )
+
+full_pages_ja['page-510'] = full_pages_ja['page-510'].replace(
+    'Windows の電源マネージャーと PnP マネージャーに連携します。',
+    'Windows の電源マネージャーと PnP マネージャーの両方と連携します。',
+)
+
+full_pages_ja['page-511'] = full_pages_ja['page-511'].replace(
+    'PDO と FDO の前後に下位フィルターと上位フィルターを配置したデバイススタック',
+    '下から PDO、下位フィルター、FDO、上位フィルターの順に並ぶデバイススタック',
+)
