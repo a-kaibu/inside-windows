@@ -19138,3 +19138,8 @@ full_pages_ja['p2-page-556'] = full_pages_ja['p2-page-556'].replace(
     '収集できるのは、OS やサードパーティのフレームワーク（.NET CLR など）、アプリケーションの既定のコンポーネントが生成するイベントです。',
     'ETW のトレースは静的で、OS、フレームワーク（.NET CLR など）、アプリケーションのコンポーネントにあらかじめ組み込まれたイベントだけを収集できます。',
 )
+
+full_pages_ja['p2-page-558'] = full_pages_ja['p2-page-558'].replace(
+    '<code>NtQuerySystemInformation</code> の関数に入る時点で発火します。',
+    '<code>NtQuerySystemInformation</code> の入口で発火します。',
+)

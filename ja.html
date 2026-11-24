@@ -21557,7 +21557,7 @@ dtrace -l &gt; providers.txt</code></pre>
 <dt>関数</dt><dd>プローブがプログラム内の位置に対応する場合、その位置を含む関数の名前です。</dd>
 <dt>名前</dt><dd><code>BEGIN</code> や <code>END</code> のように、プローブが何を表しているかを示す最後の要素です。</dd>
 </dl>
-<p>プローブ名を完全な形で書くときは、各要素をコロンで区切ります。たとえば次のプローブは、syscall プロバイダーが提供する <code>NtQuerySystemInformation</code> の関数に入る時点で発火します。すべてのシステムコールは NT カーネルが提供するため、syscall プロバイダーではモジュール名を空欄にします。</p>
+<p>プローブ名を完全な形で書くときは、各要素をコロンで区切ります。たとえば次のプローブは、syscall プロバイダーが提供する <code>NtQuerySystemInformation</code> の入口で発火します。すべてのシステムコールは NT カーネルが提供するため、syscall プロバイダーではモジュール名を空欄にします。</p>
 <pre><code>syscall::NtQuerySystemInformation:entry</code></pre>
 <p>PID と FBT のプロバイダーは、対象のプロセスやカーネルイメージと、利用できるシンボルを基にプローブを動的に生成します。プロセスの PID プローブを列挙するには、まずタスクマネージャーの「詳細」タブでプロセス ID（PID）を確認します。検証環境でメモ帳の PID が8020だった場合は、次のコマンドを実行します。</p>
 <pre><code>dtrace -ln pid8020:::entry &gt; pid_notepad.txt</code></pre>
