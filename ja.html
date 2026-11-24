@@ -1584,7 +1584,7 @@ Base TimeStamp                     Module
 7ffdf51b0000 56cbf9dd Feb 23 08:19:09 2016 C:\WINDOWS\SYSTEM32\ntdll.dll
 7ffdf2c10000 5632d5aa Oct 30 04:27:54 2015 C:\WINDOWS\system32\KERNEL32.DLL
 ...</pre>
-<p><code>CSR_PROCESS</code> 構造体には、Windows サブシステム（Csrss）に固有のプロセス情報が格納されます。そのため、この構造体が関連付けられるのは Windows アプリケーションだけです。たとえば Smss にはありません。また、各セッションには独立した Windows サブシステムのインスタンスがあるため、<code>CSR_PROCESS</code> 構造体はセッションごとに、そのセッションの Csrss プロセスが管理します。<code>CSR_PROCESS</code> の基本構造を図3-5に示します。詳細は本章の後半で説明します。</p>
+<p><code>CSR_PROCESS</code> 構造体には、Windows サブシステム（Csrss）に固有のプロセス情報が格納されます。そのため、この構造体が関連付けられるのは Windows アプリケーションだけです。たとえば、ネイティブプロセスの <code>Smss</code> には関連付けられません。また、各セッションには独立した Windows サブシステムのインスタンスがあるため、<code>CSR_PROCESS</code> 構造体はセッションごとに、そのセッション内で動作する <code>Csrss</code> プロセスが管理します。<code>CSR_PROCESS</code> の基本構造を図3-5に示します。詳細は本章の後半で説明します。</p>
 <figure><img loading="lazy" width="644" height="382" src="assets/0067285cdb80325aebf15079.webp" alt="CSR_PROCESS 構造体のフィールド"><figcaption>図3-5 CSR プロセス構造体のフィールド</figcaption></figure></section><section class="page" id="page-129" aria-label="page-129"><h4 id="実験-CSR_PROCESS-を調べる">実験：CSR_PROCESS を調べる</h4>
 <p><code>Csrss</code> は保護されたプロセスです。保護されたプロセスについては本章の後半で説明します。
 管理者権限で実行していても、非侵入モードでも、ユーザーモードデバッガーを <code>Csrss</code> にアタッチすることはできません。
