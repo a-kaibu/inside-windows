@@ -18307,3 +18307,8 @@ full_pages_ja['page-575'] = full_pages_ja['page-575'].replace(
     'Driver Verifier のその他の検査には、プール内でまだ使用中のシステム構造体が解放されたことを検出するものがあります。',
     'Driver Verifier のその他の検査には、まだ使用中のシステム構造体を含むプール領域が解放されたことを検出するものがあります。',
 )
+
+full_pages_ja['page-577'] = full_pages_ja['page-577'].replace(
+    'PnP マネージャーは適切なドライバーも読み込みます。',
+    '適切なドライバーを読み込ませることも、PnP マネージャーの役割です。',
+)
