@@ -3047,7 +3047,7 @@ clonesd=&quot;\REGISTRY\Machine\SYSTEM\ControlSet001\Control&quot;
 <p>OS 内部では、Windows のスレッドをエグゼクティブのスレッドオブジェクトで表します。このオブジェクトは <code>ETHREAD</code> 構造体を内包します。<code>ETHREAD</code> の先頭メンバーが <code>KTHREAD</code> 構造体です。図4-1に <code>ETHREAD</code>、図4-2に <code>KTHREAD</code> を示します。<code>ETHREAD</code> と、それが指すほかの構造体はシステムアドレス空間にあります。例外はスレッド環境ブロック（TEB）です。PEB と同様、ユーザーモードコンポーネントから参照する必要があるため、プロセスのアドレス空間に置かれます。</p></section><section class="page" id="page-212" aria-label="page-212"><figure><img loading="lazy" width="646" height="351" src="assets/06a53f405b8e12c90b2ac163.webp" alt="ETHREAD の主要フィールドと各フィールドが参照する構造体"><figcaption>図4-1 エグゼクティブのスレッド構造体（ETHREAD）の主なフィールド</figcaption></figure>
 <figure><img loading="lazy" width="649" height="409" src="assets/6a440b3d2f53ee0b38c0db76.webp" alt="KTHREAD の主要フィールドと各フィールドが参照する構造体"><figcaption>図4-2 カーネルのスレッド構造体（KTHREAD）の主なフィールド</figcaption></figure>
 <p>Windows サブシステムプロセス（Csrss）は、Windows サブシステムのアプリケーション内で作成されたスレッドごとに、対応する構造体 <code>CSR_THREAD</code> を管理します。Windows サブシステムの USER または GDI 関数を呼び出したスレッドについては、サブシステムのカーネルモード部分（Win32k.sys）もスレッドごとのデータ構造体 <code>W32THREAD</code> を管理します。<code>KTHREAD</code> はこの構造体を指します。</p></section><section class="page" id="page-213" aria-label="page-213"><p><strong>注</strong>　上位層のグラフィックス処理に関わる Win32k のスレッド構造体を、エグゼクティブの <code>ETHREAD</code> ではなく <code>KTHREAD</code> が指しているのは、カーネルの通常の抽象化レイヤーをまたぐ設計に見えます。スケジューラーなどの低レベルのコンポーネントは、このフィールドを使いません。</p>
-<p>図4-1のフィールドの大半は、名前が役割を表しています。<code>ETHREAD</code> の最初のメンバー <code>Tcb</code> は、スレッド制御ブロック（thread control block）の略で、型は <code>KTHREAD</code> です。その後に、スレッドとプロセスの識別情報、アクセストークンへのポインターや偽装などのセキュリティ情報、ALPC メッセージ、保留中の I/O 要求（IRP）に関係するフィールドが続きます。プロセスの識別情報には、環境情報を参照するための所有プロセスへのポインターも含まれます。Windows 10 固有のフィールドには、第6章「I/O システム」で説明する電源管理と、本章後半で扱う CPU セットに関するものがあります。主なフィールドの一部は本書の別の箇所で詳しく説明します。<code>ETHREAD</code> の形式は、カーネルデバッガーの <code>dt</code> コマンドで確認できます。</p>
+<p>図4-1のフィールドの大半は、名前が役割を表しています。<code>ETHREAD</code> の最初のメンバー <code>Tcb</code> の名前は、スレッド制御ブロック（thread control block）の略です。このメンバーの型は <code>KTHREAD</code> です。その後に、スレッドとプロセスの識別情報、アクセストークンへのポインターや偽装などのセキュリティ情報、ALPC メッセージ、保留中の I/O 要求（IRP）に関係するフィールドが続きます。プロセスの識別情報には、環境情報を参照するための所有プロセスへのポインターも含まれます。Windows 10 固有のフィールドには、第6章「I/O システム」で説明する電源管理と、本章後半で扱う CPU セットに関するものがあります。主なフィールドの一部は本書の別の箇所で詳しく説明します。<code>ETHREAD</code> の形式は、カーネルデバッガーの <code>dt</code> コマンドで確認できます。</p>
 <p>ここでは、スレッドを表す主要なデータ構造体である <code>ETHREAD</code> と <code>KTHREAD</code> を詳しく見ます。<code>ETHREAD</code> の <code>Tcb</code> メンバーである <code>KTHREAD</code> には、カーネルがスケジューリング、同期、時間の計測に使う情報が格納されています。</p>
 <h4 id="実験-ETHREAD-と-KTHREAD-を表示する">実験：ETHREAD と KTHREAD を表示する</h4>
 <p>カーネルデバッガーの <code>dt</code> コマンドを使うと、<code>ETHREAD</code> と <code>KTHREAD</code> の構造を表示できます。次は64ビット版 Windows 10 での <code>ETHREAD</code> の出力例です。</p>
@@ -3061,7 +3061,7 @@ clonesd=&quot;\REGISTRY\Machine\SYSTEM\ControlSet001\Control&quot;
 +0x7b0 SelectedCpuSets  : Uint8B
 +0x7b0 SelectedCpuSetsIndirect : Ptr64 Uint8B
 +0x7b8 Silo             : Ptr64 _EJOB</pre>
-<p><code>KTHREAD</code> も同様のコマンドで表示できます。また、第3章「プロセスとジョブ」の実験「EPROCESS 構造体の形式を表示する」と同様に、<code>dt nt!_ETHREAD Tcb</code> と入力して表示することもできます。</p>
+<p><code>KTHREAD</code> も同様のコマンドで表示できます。また、第3章「プロセスとジョブ」の実験「<a href="#実験-EPROCESS-構造体のレイアウトを表示する">EPROCESS 構造体のレイアウトを表示する</a>」と同様に、<code>dt nt!_ETHREAD Tcb</code> と入力して表示することもできます。</p>
 <pre>lkd&gt; dt nt!_kthread
 +0x000 Header           : _DISPATCHER_HEADER
 +0x018 SListFaultAddress : Ptr64 Void
