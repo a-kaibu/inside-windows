@@ -21838,12 +21838,12 @@ fffff800`5c32f180 ffff8701`9f703180 ffff8701`9f3a0180</code></pre>
 <p>ハング報告はクラッシュ報告と似ています。WerFault はまず、システム全体の <code>Hangs</code> キーにある <code>Debugger</code> の値を調べます。有効なデバッガーがあれば起動し、元のハングしたプロセスに接続します。<code>Disable</code> が1なら処理を打ち切り、報告を生成せずに終了します。それ以外の場合、共有メモリセクションを開いて検証し、WER サービスが保存した情報を取得します。報告はクラッシュ時と同じく、<code>Wer.dll</code> の公開関数 <code>WerReportCreate</code> で初期化します。ハング時のダイアログ（図10-44）は WER の設定にかかわらず表示されます。最後に、<code>Wer.dll</code> の公開関数 <code>WerReportSubmit</code> で、ミニダンプを含む報告用のファイルを生成します。クラッシュ時の処理は本章の「クラッシュ報告の生成」を参照してください。生成した報告はオンラインクラッシュ解析サーバーに送信します。</p></section><section class="page" id="p2-page-584" aria-label="p2-page-584"><p>図10-44 アプリケーションがハングしたときの Windows エラー報告ダイアログ。</p>
 <p>報告の生成が始まり、DWM に <code>WERSVC_HANG_REPORTING_STARTED</code> メッセージが返ると、WER は <code>TerminateProcess</code> API でハングしたプロセスを終了させます。所定の時間内に終了しなければ、WER サービスは完全な SYSTEM トークンで別の WerFault インスタンスを起動し、さらに長い時間待機します。最初の待機は通常10秒で <code>TerminationTimeout</code>、次の待機は通常60秒で <code>LongTerminationTimeout</code> によって変更できます。2度目の待機が終わってもプロセスが終了しない場合、WER は終了できなかったことをアプリケーションイベントログに ETW イベントとして記録します。図10-45のイベントの説明は紛らわしいものの、実際には WER はハングしたアプリケーションを終了できていません。</p>
 <p>図10-45 ハングしたアプリケーションを終了できなかったときに、アプリケーションログへ書き込まれた ETW エラーイベント。</p>
-<figure><img loading="lazy" width="375" height="212" src="assets/85f1ea5f13a436351878526a.webp" alt="原文の図（第2巻 PDF 584ページ）">
-<img loading="lazy" width="690" height="354" src="assets/8cf79b97b67b180948f67579.webp" alt="原文の図（第2巻 PDF 584ページ）"></figure></section><section class="page" id="p2-page-585" aria-label="p2-page-585"><h4 id="グローバルフラグ">グローバルフラグ</h4>
+<figure><img loading="lazy" width="375" height="212" src="assets/85f1ea5f13a436351878526a.webp" alt="応答していない HangWindow.exe を閉じるか待機するかを選ぶダイアログ">
+<img loading="lazy" width="690" height="354" src="assets/8cf79b97b67b180948f67579.webp" alt="HangWindow.exe のハングを記録したアプリケーションログのイベント ID 1002"></figure></section><section class="page" id="p2-page-585" aria-label="p2-page-585"><h4 id="グローバルフラグ">グローバルフラグ</h4>
 <p>Windows はシステム全体のグローバル変数 <code>NtGlobalFlag</code> と <code>NtGlobalFlag2</code> にフラグを保持しています。これらのフラグを設定すると、OS 内部のデバッグ、トレース、検証機能が有効になります。システム起動時（NT カーネルの初期化フェーズ0）に、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;Session Manager</code> の <code>GlobalFlag</code> と <code>GlobalFlag2</code> から初期化されます。既定では両方とも0なので、通常はグローバルフラグが設定されていません。各実行イメージにも内部のトレースや検証を有効にするグローバルフラグがあり、ビットの割り当てはシステム全体のフラグと少し異なります。</p>
 <p>デバッグツールに含まれる <code>Gflags.exe</code> では、レジストリまたは稼働中のシステムのグローバルフラグに加え、実行イメージごとのフラグも表示・変更できます。GFlags にはコマンドラインとグラフィカルな画面があります。コマンドラインオプションを確認するには <code>gflags /?</code> を実行します。オプションを付けずに起動すると、図10-46のダイアログが表示されます。</p>
 <p>図10-46 GFlags でシステムのデバッグオプションを設定する。</p>
-<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="原文の図（第2巻 PDF 585ページ）"></figure></section><section class="page" id="p2-page-586" aria-label="p2-page-586"><p>Windows のグローバルフラグは、処理される場所とタイミングで次のように分類できます。</p>
+<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="GFlags でシステムのデバッグオプションを設定する画面"></figure></section><section class="page" id="p2-page-586" aria-label="p2-page-586"><p>Windows のグローバルフラグは、処理される場所とタイミングで次のように分類できます。</p>
 <ul>
 <li>カーネルフラグは、ヒープマネージャーや例外・割り込みハンドラーなど、NT カーネルの各コンポーネントが直接処理します。</li>
 <li>ユーザーフラグは、ユーザーモードアプリケーション内で動作するコンポーネント（通常は <code>Ntdll</code>）が処理します。</li>
@@ -21858,7 +21858,7 @@ fffff800`5c32f180 ffff8701`9f703180 ffff8701`9f3a0180</code></pre>
 <p>利用できるフラグの大半は、Microsoft の <a href="https://learn.microsoft.com/windows-hardware/drivers/debugger/gflags-flag-table">GFlags フラグ一覧</a>に記載されています。</p>
 <h4 id="実験-Windows-ローダーの問題を調べる">実験　Windows ローダーの問題を調べる</h4>
 <p>第1部第3章の「イメージローダーを観察する」では、GFlags を使って Windows ローダーの実行時情報を表示しました。この情報は、有用なエラー情報が得られず、アプリケーションがまったく起動しない場合の原因調査に役立ちます。検証環境で <code>%SystemRoot%&#92;system32</code> にあるリッチテキスト編集コントロールのライブラリ <code>Msftedit.dll</code> の名前を変更すると、<code>mspaint.exe</code> で同じ実験を再現できます。ペイントはこの DLL に間接的に依存しており、<code>MSCTF.dll</code> が <code>Msftedit.dll</code> を動的に読み込みます。</p>
-<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="原文の図（第2巻 PDF 587ページ）"></figure></section><section class="page" id="p2-page-588" aria-label="p2-page-588"><p><code>Msftedit.dll</code> はペイントの実行ファイルに静的にリンクされていません。この実験は検証用の仮想マシンで行います。管理者のコマンドプロンプトで次を実行し、DLL の名前を変更します。</p>
+<figure><img loading="lazy" width="453" height="453" src="assets/fcb65e4ac0a6deba729862cc.webp" alt="GFlags のイメージファイルタブで notepad.exe を指定した状態"></figure></section><section class="page" id="p2-page-588" aria-label="p2-page-588"><p><code>Msftedit.dll</code> はペイントの実行ファイルに静的にリンクされていません。この実験は検証用の仮想マシンで行います。管理者のコマンドプロンプトで次を実行し、DLL の名前を変更します。</p>
 <pre><code>cd /d c:&#92;windows&#92;system32
 takeown /f msftedit.dll
 icacls msftedit.dll /grant Administrators:F
@@ -21937,8 +21937,8 @@ Module: &quot;(null)&quot;, Status: 0xc0000135
 <pre><code>sc start shimdriver</code></pre></li>
 <li>DebugView の出力を確認します。図のようなメッセージが表示されます。内容は、ドライバーを実行した Windows のバージョンによって異なります。この例では Windows Server 2022 の Insider リリースを使っています。</li>
 </ol>
-<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="原文の図（第2巻 PDF 593ページ）">
-<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="原文の図（第2巻 PDF 593ページ）"></figure></section><section class="page" id="p2-page-594" aria-label="p2-page-594"><ol start="8">
+<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面">
+<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></section><section class="page" id="p2-page-594" aria-label="p2-page-594"><ol start="8">
 <li>テストドライバーを停止し、SDB データベースに含まれるシムを1つ有効にします。ここでは Version Lie シムを使います。次のコマンドで対象ドライバーを停止し、シムを設定します。<code>ShimDriver64.sys</code> は先ほど登録したドライバーのファイル名です。
 <pre><code>sc stop shimdriver
 reg add "HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Driver&#92;ShimDriver64.sys" /v Shims /t REG_MULTI_SZ /d KmWin81VersionLie /f /reg:64</code></pre></li>
@@ -21946,8 +21946,8 @@ reg add "HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92
 <li>ドライバーを起動し直すと、図のように DebugView の出力が変わります。</li>
 <li>この変化は、OS のバージョン情報を取得する NT API にシムエンジンがフックを適用した結果です。ドライバー自身もシムの適用を検知できます。別のシムでも実験を繰り返せます。たとえば、<code>SkipDriverUnload</code> はドライバーのアンロードルーチンを無効化し、<code>KernelPadSectionsOverride</code> は図に示すように対象ドライバーの読み込みを阻止します。</li>
 </ol>
-<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="原文の図（第2巻 PDF 594ページ）">
-<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="原文の図（第2巻 PDF 594ページ）"></figure></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
+<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">
+<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
 <p>デバイスオブジェクト用のシムは、ドライバー用シムとは異なり、要求に応じて読み込まれ、適用されます。ドライバーは、NT カーネルが公開する <code>KseQueryDeviceData</code> で、デバイスオブジェクトにシムを適用する必要があるかを調べられます。公開関数 <code>KseQueryDeviceFlags</code> では、その機能のうちフラグの照会だけを行えます。ユーザーモードアプリケーションからの照会には、<code>SystemDeviceDataInformation</code> 情報クラスを指定して <code>NtQuerySystemInformation</code> を呼び出します。システムは次の3か所を順に調べます。</p>
 <ol>
 <li><code>HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Device</code> 配下のレジストリキー。キー名にはデバイスの PnP ハードウェア ID を使います。区切り文字と混同されないよう、ID 内の <code>&#92;</code> は <code>!</code> に置き換えます。キーの値には、照会対象となるデバイスのシムデータが格納されます。通常は、特定のデバイスクラスに対するフラグです。</li>

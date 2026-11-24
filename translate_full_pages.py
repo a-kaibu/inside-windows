@@ -18563,3 +18563,20 @@ for _page, _description in (
         f'alt="原文の図（第2巻 PDF {_page}ページ）"',
         f'alt="{_description}"',
     )
+
+
+for _page, _asset, _description in (
+    (584, '85f1ea5f13a436351878526a', '応答していない HangWindow.exe を閉じるか待機するかを選ぶダイアログ'),
+    (584, '8cf79b97b67b180948f67579', 'HangWindow.exe のハングを記録したアプリケーションログのイベント ID 1002'),
+    (585, '993796e7182ed0584a0461b9', 'GFlags でシステムのデバッグオプションを設定する画面'),
+    (587, 'fcb65e4ac0a6deba729862cc', 'GFlags のイメージファイルタブで notepad.exe を指定した状態'),
+    (593, 'c785317a5e5d9b193f541433', 'SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面'),
+    (593, '5057013336b11da3a868e0de', 'シムを適用する前のテストドライバーの起動メッセージを表示した DebugView'),
+    (594, 'fd2ae53bd8cf2ff1cf7c5e5c', 'シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている'),
+    (594, 'a695e278071284a79327bf82', 'テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト'),
+):
+    _key = f'p2-page-{_page}'
+    full_pages_ja[_key] = full_pages_ja[_key].replace(
+        f'src="assets/{_asset}.webp" alt="原文の図（第2巻 PDF {_page}ページ）"',
+        f'src="assets/{_asset}.webp" alt="{_description}"',
+    )
