@@ -18349,3 +18349,9 @@ full_pages_ja['page-593'] = (
     .replace('は、ブートローダーが読み込みます。', 'では、ブートローダーがドライバーを読み込みます。')
     .replace('は、サービスコントロールマネージャーが読み込みます。', 'では、サービスコントロールマネージャーがドライバーを読み込みます。')
 )
+
+full_pages_ja['page-594'] = (
+    full_pages_ja['page-594']
+    .replace('Multiple UNC Provider（MUP）ドライバーは、', 'Multiple UNC Provider（MUP）ドライバーは、UNC（Universal Naming Convention）形式のパスを扱います。たとえば、')
+    .replace('のような UNC パスでリモートリソースにアクセスできるようにします。', 'のようなパスでリモートリソースにアクセスできます。')
+)
