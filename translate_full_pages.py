@@ -18093,3 +18093,8 @@ full_pages_ja['page-466'] = full_pages_ja['page-466'].replace(
     '<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の128 MBを占めています。',
     '<code>0xF8000000</code>～<code>0xFBFFFFFF</code> の64 MBを占めています（原文は128 MBと記載していますが、図のアドレス範囲から計算すると64 MBです）。',
 )
+
+full_pages_ja['page-467'] = full_pages_ja['page-467'].replace(
+    '空きリストのページには以前のデータが残っています。',
+    '空きリストのページには以前のデータが残っています（原文では対応が逆ですが、表5-19の定義に合わせています）。',
+)
