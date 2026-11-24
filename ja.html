@@ -6545,11 +6545,11 @@ The operation completed successfully.</pre>
 <li>「View」メニューの「Select Columns」を選び、「Process Memory」タブを開きます。</li>
 <li>「Private Bytes」、「Virtual Size」、「Working Set Size」、「WS Shareable Bytes」、「WS Private Bytes」の各列を有効にします。</li>
 <li>次の画面例のように、TestLimit の3つのインスタンスを探します。</li>
-</ol></section><section class="page" id="page-437" aria-label="page-437"><figure><img loading="lazy" width="546" height="189" src="assets/3c7053f08a0df0cc0b137a71.webp" alt="Process Explorer で3つの TestLimit プロセスの仮想サイズとワーキングセットを比較する画面"></figure>
+</ol></section><section class="page" id="page-437" aria-label="page-437"><figure><img loading="lazy" width="546" height="189" src="assets/3c7053f08a0df0cc0b137a71.webp" alt="Process Explorer で3つの TestLimit プロセスの仮想サイズとワーキングセットを比較する画面"><figcaption>TestLimit の3プロセスで仮想サイズとワーキングセットを比較した結果</figcaption></figure>
 <p>今回追加した TestLimit プロセスは、一覧の3番目にある PID 13008です。3つのプロセスの中で、実際に割り当てたメモリを参照したのはこのプロセスだけです。そのため、このプロセスのワーキングセットにだけ、実験で割り当てたメモリの大きさが反映されています。</p>
 <p>この結果は、プロセスのワーキングセットをここまで増やせるだけの RAM がある場合に得られます。このシステムでも、「Private Bytes」の821,888 KBすべてが、ワーキングセットのプライベート部分（「WS Private」）に含まれているわけではありません。少数のプライベートページが置換によってワーキングセットから外れたか、まだページインされていません。</p>
 <h4 id="実験-デバッガーでワーキングセットリストを確認する">実験：デバッガーでワーキングセットリストを確認する</h4>
-<p>カーネルデバッガーの <code>!wsle</code> コマンドを使うと、ワーキングセットの個々のエントリを確認できます。次は、32ビットシステム上の WinDbg のワーキングセットリストを表示した例の抜粋です。</p>
+<p>カーネルデバッガーの <code>!wsle</code> コマンドを使うと、ワーキングセットの個々のエントリを確認できます。次は、32ビットシステム上の WinDbg でワーキングセットリストを表示した例の抜粋です。</p>
 <pre>lkd&gt; !wsle 7
 Working Set Instance @ c0802d50
 Working Set Shared @ c0802e30
@@ -6761,10 +6761,10 @@ Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 <figure><img loading="lazy" width="311" height="400" src="assets/0529b55f07fe0ae31adb1af3.webp" alt="Winlogon のメインスレッドの実行優先度とメモリ優先度を確認する画面"><figcaption>図5-38　Process Explorer の Threads タブ</figcaption></figure>
 <p>ページの優先度を十分に活用するには、アプリケーションの利用状況などからページ間の相対的な重要度を判断する必要があります。この役割を担う SuperFetch は、この章の最後で説明します。</p></section><section class="page" id="page-454" aria-label="page-454"><h4 id="実験-優先度別のスタンバイリストを確認する">実験：優先度別のスタンバイリストを確認する</h4>
 <p>Process Explorer で「System Information」ダイアログボックスを開き、「Memory」タブを選ぶと、優先度別のスタンバイページリストのサイズを確認できます。</p>
-<figure><img loading="lazy" width="464" height="312" src="assets/0a0aa9ef7a87bafffe68ad4f.webp" alt="起動直後の優先度別スタンバイリストを表示した Process Explorer の Memory タブ"></figure>
+<figure><img loading="lazy" width="464" height="312" src="assets/0a0aa9ef7a87bafffe68ad4f.webp" alt="起動直後の優先度別スタンバイリストを表示した Process Explorer の Memory タブ"><figcaption>起動直後の優先度別スタンバイリスト</figcaption></figure>
 <p>この実験に使った起動直後の x86 システムでは、優先度0のキャッシュに約9 MB、優先度1に約47 MB、優先度2に約68 MBのデータがあります。次に、Sysinternals の TestLimit で、可能な限り多くのメモリをコミットし、そのメモリにアクセスします。</p>
 <pre>C:\Tools\Sysinternals&gt;Testlimit.exe -d</pre>
-<figure><img loading="lazy" width="464" height="312" src="assets/299d0aff787ea1da7b4fa7ce.webp" alt="TestLimit 実行後、優先度の低いスタンバイリストが縮小した状態"></figure>
+<figure><img loading="lazy" width="464" height="312" src="assets/299d0aff787ea1da7b4fa7ce.webp" alt="TestLimit 実行後、優先度の低いスタンバイリストが縮小した状態"><figcaption>TestLimit 実行後の優先度別スタンバイリスト</figcaption></figure>
 <p>用途を変更したページの数（「Repurposed」）を見ると、優先度の低いスタンバイリストのページから先に再利用されたことが分かります。優先度の低いリストは大幅に縮小し、優先度の高いリストには、引き続き再利用価値の高いキャッシュデータが残っています。</p></section><section class="page" id="page-455" aria-label="page-455"><h3 id="変更済みページライターとマップ済みページライター">変更済みページライターとマップ済みページライター</h3>
 <p>メモリマネージャーは2つのシステムスレッドを使ってページをディスクに書き戻し、優先度に応じたスタンバイリストに移します。変更済みページライター（<code>MiModifiedPageWriter</code>）は変更済みページをページファイルに書き出し、マップ済みページライター（<code>MiMappedPageWriter</code>）は変更済みページをマップされたファイルに書き出します。スレッドを分けるのは、デッドロックを防ぐためです。マップされたファイルへの書き戻しでページフォールトが起き、空きページが必要になった時点で空きがなければ、変更済みページライターに空きページを作ってもらう必要があります。マップされたファイルへのページング I/O を別のシステムスレッドで処理すれば、そのスレッドが待機しても、通常のページファイル I/O は継続できます。</p>
 <p>どちらのスレッドも優先度18で動きます。初期化後はそれぞれ別のイベントオブジェクトを待ち、通知を受けて処理を始めます。マップ済みページライターは、次の18個のイベントオブジェクトを待ちます。</p>
