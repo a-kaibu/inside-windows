@@ -21502,13 +21502,13 @@ dtrace -l &gt; providers.txt</code></pre>
 <dt>関数</dt><dd>プローブがプログラム内の位置に対応する場合、その位置を含む関数の名前です。</dd>
 <dt>名前</dt><dd><code>BEGIN</code> や <code>END</code> のように、プローブが何を表しているかを示す最後の要素です。</dd>
 </dl>
-<p>プローブ名を完全な形で書くときは、各要素をコロンで区切ります。たとえば次のプローブは、syscall プロバイダーが提供する <code>NtQuerySystemInformation</code> の関数入口に対応します。すべてのシステムコールは NT カーネルが提供するため、syscall プロバイダーではモジュール名を空欄にします。</p>
+<p>プローブ名を完全な形で書くときは、各要素をコロンで区切ります。たとえば次のプローブは、syscall プロバイダーが提供する <code>NtQuerySystemInformation</code> の関数に入る時点で発火します。すべてのシステムコールは NT カーネルが提供するため、syscall プロバイダーではモジュール名を空欄にします。</p>
 <pre><code>syscall::NtQuerySystemInformation:entry</code></pre>
 <p>PID と FBT のプロバイダーは、対象のプロセスやカーネルイメージと、利用できるシンボルを基にプローブを動的に生成します。プロセスの PID プローブを列挙するには、まずタスクマネージャーの「詳細」タブでプロセス ID（PID）を確認します。検証環境でメモ帳の PID が8020だった場合は、次のコマンドを実行します。</p>
 <pre><code>dtrace -ln pid8020:::entry &gt; pid_notepad.txt</code></pre>
 <p>PID プロバイダーがメモ帳の関数入口に生成したプローブがすべて列挙されます。出力には多数の項目が含まれます。シンボルストアのパスを設定していない場合、非公開関数のプローブは出力されません。モジュール名を指定すると、メモ帳にマップされた <code>kernelbase.dll</code> の関数入口に絞り込めます。</p>
 <pre><code>dtrace.exe -ln pid8020:kernelbase::entry &gt;pid_kernelbase_notepad.txt</code></pre>
-<p>次のコマンドでシンボルストアのパスを指定してから先ほどの2つのコマンドを実行し直すと、非公開関数のプローブも出力されます。</p>
+<p>次のコマンドでシンボルストアのパスを指定してから先ほどの2つのコマンドを実行し直すと、列挙結果が変わり、非公開関数のプローブも出力されます。</p>
 <pre><code>set _NT_SYMBOL_PATH=srv*C:&#92;symbols*http://msdl.microsoft.com/download/symbols</code></pre>
 <p>後述の「関数境界トレース（FBT）とプロセス（PID）のプロバイダー」で説明するように、PID と FBT のプローブは関数内の命令境界に設定できます。次のコマンドは、PID プロバイダーが <code>Kernelbase.dll</code> の <code>SetComputerNameW</code> にプローブを生成できるオフセットをすべて列挙します。</p>
 <pre><code>dtrace.exe -ln pid8020:kernelbase:SetComputerNameW:</code></pre></section><section class="page" id="p2-page-559" aria-label="p2-page-559"><h4 id="内部アーキテクチャ">内部アーキテクチャ</h4>
