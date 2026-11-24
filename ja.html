@@ -3099,7 +3099,7 @@ PROCESS ffffe00018c817c0
 SessionId: 1  Cid: 23b0    Peb: 00256000  ParentCid: 03f0
 DirBase: 2d4010000  ObjectTable: ffffc0001aef0480  HandleCount: 2208.
 Image: explorer.exe</pre>
-<p>次に、そのうち1つのインスタンスを選び、所属するスレッドを表示します。</p>
+<p>次に、出力にある <code>PROCESS</code> アドレスのうち1つを選びます。このアドレスをフラグ <code>2</code> とともに <code>!process</code> に渡し、所属するスレッドを表示します。</p>
 <pre>lkd&gt; !process ffffe00018c817c0 2
 PROCESS ffffe00018c817c0
 SessionId: 1  Cid: 23b0    Peb: 00256000  ParentCid: 03f0
