@@ -4409,7 +4409,7 @@ Unable to get MiNodeInformation</pre>
 <li>第3章で説明した <code>SetInformationJobObject</code> でジョブ全体のアフィニティマスクを設定し、そのジョブにプロセスを所属させます。</li>
 <li>アプリケーションをビルドするときに、イメージヘッダーでアフィニティマスクを指定します。</li>
 </ul>
-<p><strong>ヒント</strong> Windows のイメージ形式の詳細は、Microsoft の「Portable Executable and Common Object File Format Specification」を参照してください。</p>
+<p><strong>ヒント</strong> Windows のイメージ形式の詳細は、Microsoft の「<a href="https://learn.microsoft.com/en-us/windows/win32/debug/pe-format">Portable Executable and Common Object File Format Specification</a>」を参照してください。</p>
 <p>リンク時にイメージに単一プロセッサフラグを設定することもできます。このフラグがあると、システムはプロセス作成時にプロセッサを1つ選び（<code>MmRotatingProcessorNumber</code>）、そのプロセッサだけを含むアフィニティマスクを割り当てます。グループの先頭から順に選び、最後まで達すると先頭に戻ります。たとえば、2プロセッサのシステムでは、このフラグを持つイメージを起動するたびに CPU 0、CPU 1、CPU 0、CPU 1 の順に割り当てます。マルチスレッドプログラムの同期に不具合があり、単一プロセッサでは発生せず、マルチプロセッサで競合が起きたときだけ現れる場合に、一時的な回避策として使えます。こうした症状を示すイメージが未署名なら、PE（Portable Executable）イメージ編集ツールでヘッダーにフラグを追加できます。署名済みの実行ファイルにも対応する方法は、Microsoft Application Compatibility Toolkit で互換性シムを追加し、起動時に互換性データベースの設定に従って、イメージを単一プロセッサ専用として扱わせることです。</p>
 <h5 id="実験-プロセスのアフィニティを表示-変更する">実験：プロセスのアフィニティを表示・変更する</h5>
 <p>この実験では、プロセスのアフィニティ設定を変更し、新しく起動したプロセスにその設定が継承されることを確認します。</p></section><section class="page" id="page-293" aria-label="page-293"><ol>
@@ -10518,7 +10518,7 @@ wchar_t * 0xffff950a&#x27;ac2f8fea
 <p>この一覧には、複数の種類のエントリがあります。たとえば、<code>Capability</code> エントリは、Windows 8 で実装された当初の機能セットに対応する既知の SID を表します。これらの定数は <code>SECURITY_CAPABILITY_</code> で始まります。たとえば <code>SECURITY_CAPABILITY_INTERNET_CLIENT</code> は、APPLICATION PACKAGE AUTHORITY の下で機能の RID を使い、文字列形式で <code>S-1-15-3-1</code> となります。</p></section><section class="page" id="page-717" aria-label="page-717"><p>ほかのエントリには <code>uap</code>、<code>rescap</code>、<code>wincap</code> の接頭辞が付きます。<code>rescap</code> は制限付き機能を表し、ストアで公開するには Microsoft の所定の手続きと個別の承認が必要です。Cortana の場合は、SMS メッセージ、メール、連絡先、位置情報、ユーザーデータへのアクセスなどが該当します。<code>wincap</code> は Windows とシステムアプリケーション専用の機能で、ストアアプリからは使えません。<code>uap</code> はストアで誰でも要求できる標準機能を表します。UAP は UWP の旧称です。</p>
 <p>最初に取り上げた機能は固定の RID に対応していましたが、これらの機能は別の方法で実装されます。既知の RID の一覧を更新し続ける必要がなく、独自の機能を定義し、必要に応じて追加や更新ができます。機能名をすべて大文字に変換し、その文字列の SHA-2 ハッシュを求めます。これは、パッケージモニカーの SHA-2 ハッシュから AppContainer のパッケージ SID を作る方法と同様です。ハッシュ値は32バイトなので、既知の <code>SECURITY_CAPABILITY_BASE_RID</code>（3）に続く8個の RID になります。</p>
 <p><code>DeviceCapability</code> エントリは、UWP アプリケーションがアクセスするデバイスクラスを表します。上の例にあるような既知の文字列か、デバイスクラスを識別する GUID で直接指定できます。SID の生成には、これまでに説明した2つとは別の方法を使います。GUID をバイナリ形式に変換し、その16バイトを4個の RID に割り当てます。既知の名前を指定した場合は、まず GUID への変換が必要です。レジストリキー <code>HKLM\Software\Microsoft\Windows\CurrentVersion\DeviceAccess\CapabilityMappings</code> には、デバイス機能に関連付けられたキーと、それらの機能に対応する GUID が記録されています。ここで引いた GUID から、前述の方法で SID を作ります。</p>
-<aside><p><strong>注</strong>　サポートされている機能は、Microsoft の「アプリ機能の宣言」の一覧を参照してください。</p></aside>
+<aside><p><strong>注</strong>　サポートされている機能は、Microsoft の「<a href="https://learn.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations">アプリ機能の宣言</a>」の一覧を参照してください。</p></aside>
 <p>これらの機能をトークンに格納するときは、次の2つの規則も適用します。</p>
 <ul>
 <li>先ほどの実験で確認したように、各 AppContainer トークンには、自身のパッケージ SID を機能として符号化したものが入ります。パッケージ SID を個別に取得して検証する代わりに、共通のセキュリティチェックでアクセス先を特定のアプリに限定できます。</li>
@@ -10756,7 +10756,7 @@ Target String is &#x27;\Sessions\1\AppContainerNamedObjects
 <p>Windows は、ユーザー名とパスワードによる対話型ログオンに、2つの標準の認証パッケージを使います。</p>
 <ul>
 <li><strong>MSV1_0</strong>　スタンドアロンの Windows で既定の認証パッケージです。<code>Msv1_0.dll</code> は LAN Manager 2 プロトコルを実装します。ドメインに参加しているコンピューターでも、Windows 2000 より前のドメインで認証する場合や、ネットワークから切断されている場合など、認証に使うドメインコントローラーを見つけられない場合に、Lsass は MSV1_0 を使います。</li>
-<li><strong>Kerberos</strong>　Windows ドメインに参加しているコンピューターでは、<code>Kerberos.dll</code> を使います。Windows の Kerberos パッケージは、ドメインコントローラーで動く Kerberos サービスと連携し、RFC 1510 に基づく Kerberos プロトコルをサポートします。仕様の詳細は IETF の文書を参照してください。</li>
+<li><strong>Kerberos</strong>　Windows ドメインに参加しているコンピューターでは、<code>Kerberos.dll</code> を使います。Windows の Kerberos パッケージは、ドメインコントローラーで動く Kerberos サービスと連携し、<a href="https://www.rfc-editor.org/rfc/rfc1510">RFC 1510</a> に基づく Kerberos プロトコルをサポートします。仕様の詳細は <a href="https://www.ietf.org/">IETF</a> の文書を参照してください。</li>
 </ul>
 <h4 id="MSV1_0">MSV1_0</h4>
 <p>MSV1_0 認証パッケージはユーザー名とパスワードのハッシュを受け取り、ローカルの SAM にアカウント情報を要求します。アカウント情報には、パスワードのハッシュ、ユーザーが所属するグループ、アカウントの制限が含まれます。MSV1_0 はまず、利用できる時間帯やアクセスの種類など、アカウントの制限を確認します。SAM データベースの制限によってログオンできない場合は、ログオンの呼び出しが失敗し、MSV1_0 は LSA に失敗ステータスを返します。</p>
