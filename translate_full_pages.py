@@ -19083,3 +19083,8 @@ full_pages_ja['p2-page-537'] = full_pages_ja['p2-page-537'].replace(
     'コントローラーがイベントを受け取るには、プロバイダーを有効にし、ETW セッションに関連付けます。',
     'セッションでイベントを受け取れるように、コントローラーはプロバイダーを有効にし、その ETW セッションに関連付けます。',
 )
+
+full_pages_ja['p2-page-538'] = full_pages_ja['p2-page-538'].replace(
+    '<code>EnableTrace</code> API で要求したセッションでプロバイダーを有効にできるようになります。',
+    'コントローラーは <code>EnableTrace</code> API を使って、対象セッションでプロバイダーを有効にできます。',
+)
