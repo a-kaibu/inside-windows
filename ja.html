@@ -806,6 +806,7 @@ Dynamic Partitioning supported: No
 Virtual Dynamic Partitioning supported: No
 Memory Mirroring supported: No
 Persist defective memory list: No</pre>
+<p>この出力では、プロセッサーのソケット数は最大2、メモリの上限は x86 で4,096 MB、x64 と ARM64 で2,097,152 MBです。ネイティブ VHD からの起動には対応しますが、動的パーティション分割やメモリミラーリングなどの項目は無効です。</p>
 <p>次は、Windows Server 2012 R2 Datacenter で同じ <code>Kernel</code> の設定を調べた例です。</p></section><section class="page" id="page-74" aria-label="page-74"><pre>Kernel
 ------
 Maximum allowed processor sockets: 64
@@ -819,6 +820,7 @@ Dynamic Partitioning supported: Yes
 Virtual Dynamic Partitioning supported: Yes
 Memory Mirroring supported: Yes
 Persist defective memory list: Yes</pre>
+<p>Datacenter の出力例では、最大64ソケット、x64 で最大4,194,304 MBと表示されます。物理メモリの追加、VM への物理メモリの追加、動的パーティション分割、メモリミラーリングなどのポリシーも有効です。</p>
 <h3 id="チェックビルド">チェックビルド</h3>
 <p>Windows には、チェックビルドと呼ばれる内部デバッグ用のビルドがあります。外部向けの提供は Windows 8.1 以前に限られ、利用には MSDN の Operating Systems サブスクリプションが必要でした。Windows のソースコードを、コンパイル時に <code>DBG</code> フラグを定義して再コンパイルします。このフラグにより、デバッグとトレース用のコードが条件付きで組み込まれます。また、機械語を読みやすくするため、実行速度を上げる目的でバイナリ内のコード配置を最適化する後処理は行いません。Windows 用デバッグツールのヘルプにある「Debugging performance-optimized code」を参照してください。</p>
 <p>チェックビルドは主にデバイスドライバーの開発を支援するもので、ドライバーやほかのシステムコードが呼び出すカーネルモード関数で、より厳密にエラーを検査します。たとえば、誤った割り込み要求レベルでスピンロックを取得するなど、引数を検証するシステム関数をカーネルモードコードが誤って呼び出すと、その場でシステムの実行が停止します。データ構造が破損し、後になってクラッシュするのを防ぐためです。</p>
