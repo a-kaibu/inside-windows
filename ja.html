@@ -25595,7 +25595,8 @@ Hyper-V マネージャーで仮想マシンを作成し、任意の OS をイ�
 <figcaption>WindowsServer2012 の右クリックメニューで「チェックポイント」を選択しています。
 左のツリーには、初回起動、Office の導入前、Office の導入後のチェックポイントと、現在の状態が順に表示されています。</figcaption></figure></section><section class="page" id="p2-page-788" aria-label="p2-page-788"><p>仮想マシンを停止し、エクスプローラーで仮想ハードディスクファイルがあるフォルダーを開きます。
 仮想ハードディスクのほかに、現在のチェックポイントと前のチェックポイントとの差分を表すファイルがいくつかあります。</p>
-<figure><img loading="lazy" width="648" height="319" src="assets/4acf21f0defdc42a0a96ee85.webp" alt="エクスプローラーに表示された仮想ハードディスクとチェックポイントの差分ファイル"></figure>
+<figure><img loading="lazy" width="648" height="319" src="assets/4acf21f0defdc42a0a96ee85.webp" alt="エクスプローラーに表示された仮想ハードディスクとチェックポイントの差分ファイル">
+<figcaption>階層化ボリューム E: の「Virtual Hard Disks」フォルダーに、基底の VHDX ファイル1個と、チェックポイントの差分を保存する AVHDX ファイル3個が表示されています。</figcaption></figure>
 <p>Hyper-V マネージャーを開き直し、最初のチェックポイントを右クリックして「チェックポイント サブツリーの削除」を選び、チェックポイントのツリー全体を削除します。
 マージは数秒で完了します。
 Hyper-V は <code>FSCTL_DUPLICATE_EXTENTS_TO_FILE</code> 制御コードで ReFS のブロッククローンを利用し、チェックポイントの内容を基底の仮想ハードディスクファイルにマージします。
