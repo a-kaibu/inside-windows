@@ -18297,3 +18297,8 @@ full_pages_ja['page-568'] = full_pages_ja['page-568'].replace(
     'Process Monitor に表示された低優先度のファイル書き込み',
     'Process Monitor に表示された低優先度のファイル読み取り',
 )
+
+full_pages_ja['page-570'] = full_pages_ja['page-570'].replace(
+    'クラッシュ解析での使い方は Part 2 の第15章を参照してください。',
+    'クラッシュの原因を切り分ける際に Driver Verifier が果たす役割は、第2部の第15章で説明します。',
+)
