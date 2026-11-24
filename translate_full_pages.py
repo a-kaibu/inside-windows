@@ -19143,3 +19143,8 @@ full_pages_ja['p2-page-558'] = full_pages_ja['p2-page-558'].replace(
     '<code>NtQuerySystemInformation</code> の関数に入る時点で発火します。',
     '<code>NtQuerySystemInformation</code> の入口で発火します。',
 )
+
+full_pages_ja['p2-page-560'] = full_pages_ja['p2-page-560'].replace(
+    '一部のアクションは仮想マシンで解釈せず、ネイティブコードで実行します。',
+    '利用できるアクションの種類は限られており、アクションの実行にはネイティブコードを使います。',
+)
