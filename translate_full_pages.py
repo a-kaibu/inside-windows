@@ -19073,3 +19073,8 @@ full_pages_ja['p2-page-532'] = full_pages_ja['p2-page-532'].replace(
     '<code>AutoLogger</code> キーと <code>GlobalLogger</code> キーに従い、グローバルロガーと自動ロガーのセッションを初期化し、開始します。',
     '<code>GlobalLogger</code> キーと <code>AutoLogger</code> キーに従い、それぞれグローバルロガーと自動ロガーのセッションを初期化して開始します。',
 )
+
+full_pages_ja['p2-page-535'] = full_pages_ja['p2-page-535'].replace(
+    'は、先に計算した個数、またはユーザーが指定した個数のバッファーをセッションに割り当てます。',
+    'は、セッション用のバッファーを1つずつ割り当てます。バッファーの総数は先に計算した値か、ユーザーが指定した値です。',
+)
