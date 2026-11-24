@@ -842,7 +842,9 @@ for index, section in enumerate(body_sections):
         rendered_title = html_module.escape(title) if title != html_module.unescape(re.sub(r'<[^>]+>', '', title_html)).strip() else title_html
         return f'<h{level}{attrs} id="{anchor}">{rendered_title}</h{level}>'
 
-    content = re.sub(r'<h([2-6])([^>]*)>(.*?)</h\1>', add_heading_id, content, flags=re.DOTALL)
+    article, source_marker, source = content.partition('<details class="source-english">')
+    article = re.sub(r'<h([2-6])([^>]*)>(.*?)</h\1>', add_heading_id, article, flags=re.DOTALL)
+    content = article + source_marker + source
     content = re.sub(r'(<table\b.*?</table>)', r'<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます">\1</div>', content, flags=re.DOTALL)
     body_sections[index] = f'<section class="page" id="{section_id}" aria-label="{section_id}">{content}</section>'
 
