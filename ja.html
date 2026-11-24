@@ -5754,7 +5754,7 @@ Not enough storage is available to process this command.</pre></section><section
 +0x7f4 SystemVaTypeCountLimit : [15] 0
 +0x830 SystemVaTypeCountPeak : [15] 0
 +0x86c SystemAvailableVa : 0x38800000</pre></li>
-<li>末尾付近にある、15要素の配列に注目します。各要素は、表5-8にあるシステム仮想アドレスの種類に対応します。以下は <code>SystemVaTypeCount</code> と <code>SystemVaTypeCountPeak</code> の出力例です。
+<li>構造体の末尾付近には、要素数がそれぞれ15の配列があります。各配列の15個の要素は、表5-8にあるシステム仮想アドレスの15種類に対応します。以下は <code>SystemVaTypeCount</code> と <code>SystemVaTypeCountPeak</code> の出力例です。
 <pre>lkd&gt; dt nt!_mi_visible_state poi(nt!mivisiblestate) -a SystemVaTypeCount
 +0x37c SystemVaTypeCount :
 [00] 0
