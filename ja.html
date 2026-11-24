@@ -21524,7 +21524,7 @@ dtrace -l &gt; providers.txt</code></pre>
 <dt><code>DTrace.exe</code></dt><dd>コマンドラインで指定されたコマンドを LibDTrace に渡す実行ファイルです。</dd>
 </dl>
 <figure>
-<figcaption>図10-37　DTrace の内部アーキテクチャ</figcaption>
+<img loading="lazy" width="478" height="308" src="assets/dtrace-internal-architecture.webp" alt="DTrace.exe、LibDTrace、シンボルストア、DTrace.sys の接続"><figcaption>図10-37　DTrace の内部アーキテクチャ</figcaption>
 <ul>
 <li>ユーザーモードでは、<code>DTrace.exe</code> が D スクリプト（<code>.d</code>）を入力として受け取り、<code>DTrace.dll</code> に含まれる LibDTrace に渡します。図には、シンボルを扱う <code>Dbghelp.dll</code> とシンボルストアも示されています。</li>
 <li>カーネルモードでは、<code>DTrace.sys</code> がプローブを扱います。図には Windows ローダー、NT カーネル、および FBT、PID、SYSCALL、ETW の各プロバイダーが示されています。</li>
