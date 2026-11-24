@@ -1426,17 +1426,17 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 たとえば Windows API の COM インターフェイス <code>IApplicationActivationManager</code> は、<code>CLSID_ApplicationActivationManager</code> で識別される COM クラスに実装されています。
 ストアアプリの完全なパッケージ名を <code>GetPackageApplicationIds</code> に渡してアプリケーションユーザーモデル ID（AppUserModelId）を取得すれば、インターフェイスの <code>ActivateApplication</code> メソッドで起動できます。
 これらの API の詳細は Windows SDK を参照してください。</p>
-<p>パッケージ名と、ユーザーがモダンアプリのタイルを選んでから <code>CreateProcess</code> に至るまでの流れは、第2部のパッケージ化されたアプリケーションの節で説明します。</p>
+<p>パッケージ名と、ユーザーがモダンアプリのタイルを選んでから <code>CreateProcess</code> に至るまでの流れは、第10章の「<a href="#パッケージ化されたアプリケーション">パッケージ化されたアプリケーション</a>」で説明します。</p>
 <h4 id="その他の種類のプロセスを作成する">その他の種類のプロセスを作成する</h4>
 <p>Windows アプリケーションから起動するのは、通常のデスクトップアプリケーションかモダンアプリケーションです。
 エグゼクティブはこのほかに、ネイティブプロセス、最小プロセス、Pico プロセスなど、Windows API を経由せずに起動する種類のプロセスにも対応します。
 たとえば、第2章で説明したセッションマネージャー <code>Smss</code> はネイティブイメージの一例です。
-カーネルが直接作成するため、<code>CreateProcess</code> API ではなく <code>NtCreateUserProcess</code> を直接呼び出します。
+<code>Smss</code> を作成する際、カーネルは <code>CreateProcess</code> API を介さず、<code>NtCreateUserProcess</code> を直接呼び出します。
 <code>Smss</code> がディスク検査ユーティリティの <code>Autochk</code> や、Windows サブシステムプロセスの <code>Csrss</code> を作成する場合も、Windows API は使えず、<code>NtCreateUserProcess</code> を使います。
 一方、<code>CreateProcessInternal</code> はネイティブサブシステム向けのイメージを拒否するため、通常の Windows アプリケーションからネイティブプロセスを作成することはできません。
 この処理を簡単にするため、ネイティブライブラリ <code>Ntdll.dll</code> は <code>NtCreateUserProcess</code> を包む簡潔なヘルパー関数 <code>RtlCreateUserProcess</code> をエクスポートしています。</p>
 <p><code>NtCreateUserProcess</code> は名前のとおり、ユーザーモードのプロセスを作成します。
-一方、第2章で説明したように、Windows には System プロセスや、最小プロセスの一種であるメモリ圧縮プロセスなど、カーネルモードのプロセスもあります。
+一方、第2章で説明したように、Windows には 最小プロセスにあたる System プロセスやメモリ圧縮プロセスなど、カーネルモードのプロセスもあります。
 Windows Subsystem for Linux などのプロバイダーが管理する Pico プロセスもあります。
 これらの作成には <code>NtCreateProcessEx</code> システムコールを使います。
 最小プロセスの作成など、一部の機能はカーネルモードの呼び出し元だけが使用できます。</p>
