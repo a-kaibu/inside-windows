@@ -780,7 +780,7 @@ def render_plain_translation(text):
     flush_paragraph(); close_list()
     return "\n".join(out)
 
-# 5–6. Use the original text whenever a translation is missing or empty.
+# Render Japanese content and preserve blank source targets.
 original_pre_marker = '<!-- original-pre -->'
 reader_controls = re.compile(r'<details>.*?</details>|<div class="pagebar">.*?</div>', re.DOTALL)
 
@@ -792,24 +792,21 @@ def render_pages(html, omit, prefix=''):
         if pid in omit:
             continue
         body = translated_dict.get(pid, '').strip()
-        lang = ''
         if original_pre_marker in body:
             blocks = re.findall(r'<pre>.*?</pre>', reader_controls.sub('', content), flags=re.DOTALL)
             if body.count(original_pre_marker) != len(blocks):
                 raise ValueError(f'{pid}: original-pre marker count does not match the source')
             original_blocks = iter(blocks)
             body = re.sub(original_pre_marker, lambda _: next(original_blocks), body)
-        elif not body:
-            body = reader_controls.sub('', content).strip()
-            lang = ' lang="en"'
+        elif not body and reader_controls.sub('', content).strip():
+            raise ValueError(f'{pid}: missing Japanese translation')
         if body:
-            if lang == '':
-                body = render_plain_translation(body)
+            body = render_plain_translation(body)
             if pid in preserve_source_pages:
                 source = reader_controls.sub('', content).strip()
                 source = re.sub(r'<h([1-6])([^>]*)>(.*?)</h\1>', r'<p><strong>\3</strong></p>', source, flags=re.DOTALL)
                 body += '<details class="source-english"><summary>原文（英語）</summary>' + source + '</details>'
-            yield f'<section class="page" id="{pid}" aria-label="{pid}"{lang}>{body}</section>'
+            yield f'<section class="page" id="{pid}" aria-label="{pid}">{body}</section>'
         else:
             # Keep the URL target for a blank source page, but don't render a page border.
             yield f'<div id="{pid}" aria-hidden="true"></div>'
