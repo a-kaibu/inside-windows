@@ -23569,16 +23569,21 @@ symbolic link created for test_link.txt &lt;&lt;===&gt;&gt; d:\Test.txt</code></
 再解析タグ値 : 0xa000000c
 タグ値: Microsoft
 タグ値: 名前の代理
-タグ値: シンボリックリンク</code></pre>
-<p>内容は Microsoft のドキュメントに記載されている <code>REPARSE_DATA_BUFFER</code> 構造体で、リンク先と表示用ファイル名が入ります。
-<code>fsutil reparsePoint delete</code> で再解析ポイント自体を削除することもできます。</p>
-<pre><code>再解析データ長: 0x00000040
+タグ値: シンボリックリンク
+再解析データ長: 0x00000040
 再解析データ:
 0000:  16 00 1e 00 00 00 16 00  00 00 00 00 64 00 3a 00  ............d.:.
 0010:  5c 00 54 00 65 00 73 00  74 00 2e 00 74 00 78 00  \.T.e.s.t...t.x.
 0020:  74 00 5c 00 3f 00 3f 00  5c 00 64 00 3a 00 5c 00  t.\.?.?.\.d.:.\.
-0030:  54 00 65 00 73 00 74 00  2e 00 74 00 78 00 74 00  T.e.s.t...t.x.t.</code></pre><pre><code>C:\&gt;more test_link.txt
-This is a test file!</code></pre></section><section class="page" id="p2-page-716" aria-label="p2-page-716"><p>再解析ポイントを削除すると、ファイルは0バイトになります。
+0030:  54 00 65 00 73 00 74 00  2e 00 74 00 78 00 74 00  T.e.s.t...t.x.t.</code></pre>
+<p>内容は Microsoft のドキュメントに記載されている <code>REPARSE_DATA_BUFFER</code> 構造体で、リンク先と表示用ファイル名が入ります。
+<code>fsutil reparsePoint delete</code> で再解析ポイント自体を削除することもできます。</p>
+<pre><code>C:\&gt;more test_link.txt
+This is a test file!
+
+C:\&gt;fsutil reparsePoint delete test_link.txt
+
+C:\&gt;more test_link.txt</code></pre></section><section class="page" id="p2-page-716" aria-label="p2-page-716"><p>再解析ポイントを削除すると、ファイルは0バイトになります。
 リンクファイルの名前なしデータストリーム（<code>$DATA</code>）が空であるためです。
 インストール済みのモダンアプリの <code>AppExecutionAlias</code> でも同じ実験を行えます。
 この例では Spotify を使います。</p>
