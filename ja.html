@@ -17136,7 +17136,8 @@ Resource @ 0xffff898f032a82d0    Available</code></pre>
 KD: Scanning for held locks.....
 Resource @ 0xffffde07a33d6a28    Shared 1 owning threads
 Contention Count = 28
-Threads: ffffde07a9374080-01&lt;*&gt;</code></pre></section><section class="page" id="p2-page-230" aria-label="p2-page-230"><pre><code>Resource @ 0xffffde07a2bfb350    Shared 1 owning threads
+Threads: ffffde07a9374080-01&lt;*&gt;</code></pre></section><section class="page" id="p2-page-230" aria-label="p2-page-230"><pre><code>KD: Scanning for held locks....
+Resource @ 0xffffde07a2bfb350    Shared 1 owning threads
 Contention Count = 2
 Threads: ffffde07a9374080-01&lt;*&gt;
 KD: Scanning for held locks...........................................................
@@ -17150,7 +17151,8 @@ KD: Scanning for held locks.....................................................
 <p>取得済みのリソースを見つけたら、<code>!locks</code> に <code>-v</code> とリソースのアドレスを指定し、そのリソースオブジェクトの詳細を調べられます。
 リソースを所有するスレッドと、待機中のスレッドを確認できます。
 次の例では、あるスレッドがファイルシステムからデータを読み取ろうとしているときに、NTFS に関連するとみられるリソースが共有モードで取得されています。</p>
-<pre><code>Resource @ 0xffffde07a33d6a28    Shared 1 owning threads
+<pre><code>2: kd&gt; !locks -v 0xffffde07a33d6a28
+Resource @ 0xffffde07a33d6a28    Shared 1 owning threads
 Contention Count = 28
 Threads: ffffde07a9374080-01&lt;*&gt;
 THREAD ffffde07a9374080  Cid 0544.1494  Teb: 000000ed8de12000
