@@ -19179,3 +19179,15 @@ full_pages_ja['p2-page-573'] = full_pages_ja['p2-page-573'].replace(
     '「COM でホストされるタスクを確認する」',
     '「実験\u3000COM ホスト型タスクを観察する」',
 )
+
+full_pages_ja['p2-page-572'] = (
+    full_pages_ja['p2-page-572']
+    .removesuffix('\n<figure><img loading="lazy" width="300" height="153" src="assets/c15702d988b396f54433295a.webp" alt="Windows エラー報告がアプリケーションの重大なエラーを通知するダイアログ"></figure>')
+    .replace('<p>図10-39 Windows エラー報告のダイアログ。</p>', '<figure><img loading="lazy" width="300" height="153" src="assets/c15702d988b396f54433295a.webp" alt="Windows エラー報告がアプリケーションの重大なエラーを通知するダイアログ"><figcaption>図10-39\u3000Windows エラー報告のダイアログ。</figcaption></figure>', 1)
+)
+
+full_pages_ja['p2-page-574'] = (
+    full_pages_ja['p2-page-574']
+    .removesuffix('\n<figure><img loading="lazy" width="398" height="465" src="assets/d33c84c5620202473489db77.webp" alt="起動と回復の設定画面。デバッグ情報の種類に自動メモリダンプが選ばれている"></figure>')
+    .replace('<p>図10-40 クラッシュダンプの設定。</p>', '<figure><img loading="lazy" width="398" height="465" src="assets/d33c84c5620202473489db77.webp" alt="起動と回復の設定画面。デバッグ情報の種類に自動メモリダンプが選ばれている"><figcaption>図10-40\u3000クラッシュダンプの設定。</figcaption></figure>', 1)
+)
