@@ -13106,7 +13106,7 @@ CPU セットは第1部の第4章「スレッドのスケジューリング」�
 さらに、IRQL の選択によって割り込みに優先度を付ける基本的な仕組みもあります。
 アフィニティポリシーは表8-5のとおりで、レジストリのデバイスインスタンスキーの下にある <code>Interrupt Management\Affinity Policy</code> キーの <code>InterruptPolicyValue</code> 値で設定できます。
 管理者が対象ドライバーのキーにこの値を追加すれば、コードを書かずに動作を調整できます。
-詳細は Microsoft のドライバー文書「割り込みのアフィニティと優先度」を参照してください。</p></section><section class="page" id="p2-page-84" aria-label="p2-page-84"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
+詳細は Microsoft のドライバー文書「<a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/kernel/interrupt-affinity-and-priority">割り込みのアフィニティと優先度</a>」を参照してください。</p></section><section class="page" id="p2-page-84" aria-label="p2-page-84"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表8-5 IRQ アフィニティポリシー</caption>
 <thead><tr><th>ポリシー</th><th>意味</th></tr></thead>
 <tbody>
@@ -20953,7 +20953,7 @@ windbg.exe /I</code></pre>
 <li>レジストリエディターを閉じ、タスクスケジューラに戻ります。</li>
 <li><code>CacheTask</code> を右クリックし、「実行」を選びます。</li>
 <li>設定が正しければ、新しい WinDbg ウィンドウが開きます。</li>
-<li>WinDbg の <span lang="en">File</span> メニューから <span lang="en">Symbol File Path</span> を選び、Windows シンボルサーバーの有効なパスを指定します。</li>
+<li>WinDbg の <span lang="en">File</span> メニューから <span lang="en">Symbol File Path</span> を選び、<a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/microsoft-public-symbols">Windows シンボルサーバー</a>の有効なパスを指定します。</li>
 <li><code>k</code> コマンドで、中断時点の <code>Taskhostw.exe</code> のコールスタックを確認します。
 <pre>0:000&gt; k
 # Child-SP
@@ -21137,7 +21137,7 @@ PS C:&#92;&gt; Unregister-Event -SourceIdentifier "TestWmiRegistration"</code></
 <figure><img loading="lazy" width="689" height="471" src="assets/7f618cfed209626e632dcafd.webp" alt="WMI コントロールのプロパティで root の仮想化名前空間のアクセス許可を設定する画面"><figcaption>図10-30　「WMI コントロールのプロパティ」と <code>root&#92;virtualization&#92;v2</code> のセキュリティ設定。</figcaption></figure></section><section class="page" id="p2-page-530" aria-label="p2-page-530"><h3 id="Windows-イベントトレーシング-ETW">Windows イベントトレーシング（ETW）</h3>
 <p>Windows イベントトレーシング（ETW）は、アプリケーションやカーネルモードドライバーがログイベントとトレースイベントを生成し、受け取り、管理するための基盤です。イベントはログファイルやリングバッファーに保存でき、リアルタイムで受け取ることもできます。ドライバー、.NET CLR などのフレームワーク、アプリケーションのデバッグや、性能上の問題の調査に使われます。ETW の主要部分は NT カーネルに実装されています。アプリケーションによっては、カーネルモードに移行せずに動作するプライベートロガーも使えます。ETW を使うアプリケーションは、次の役割を担います。</p>
 <ul>
-<li><strong>コントローラー</strong>　トレースセッションを開始・停止し、バッファープールのサイズを管理します。また、プロバイダーを有効にして、セッションにイベントを記録できるようにします。例として、信頼性とパフォーマンスモニターや、Windows Assessment and Deployment Kit（ADK）に含まれる Windows Performance Toolkit の XPerf があります。</li>
+<li><strong>コントローラー</strong>　トレースセッションを開始・停止し、バッファープールのサイズを管理します。また、プロバイダーを有効にして、セッションにイベントを記録できるようにします。例として、信頼性とパフォーマンスモニターや、<a href="https://learn.microsoft.com/en-us/windows-hardware/get-started/adk-install">Windows Assessment and Deployment Kit（ADK）</a>に含まれる Windows Performance Toolkit の XPerf があります。</li>
 <li><strong>プロバイダー</strong>　イベントを記録するコードを含むアプリケーションやドライバーです。生成できるイベントを識別するため、プロバイダーの GUID（グローバル一意識別子）を ETW に登録します。登録後はイベントを生成できます。コントローラーは、関連するトレースセッションを通じてイベントの記録を有効または無効にできます。</li>
 <li><strong>コンシューマー</strong>　読み取りたいトレースセッションを1つ以上選ぶアプリケーションです。ログファイルやリングバッファーに保存されたイベントのほか、セッションがリアルタイムに配信するイベントも受け取れます。</li>
 </ul>
