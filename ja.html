@@ -26142,7 +26142,7 @@ Windows ブートマネージャーのコードを説明する前に、UEFI の�
 <li><strong>OS の起動</strong>：ブートデバイス選択（BDS）から一時システムロード（TSL）、ランタイム（RT）へ進みます。図には、組み込みサービス、ブートマネージャー、UEFI インターフェイス、OS がない状態で動くアプリ、一時 OS ブートローダーとその環境、最終的な OS ブートローダーとその環境、OS 上で動くアプリが示されています。</li>
 <li><strong>シャットダウン</strong>：ランタイム終了後（AL）。</li>
 </ul>
-<details><summary>原図を表示</summary><img loading="lazy" width="500" height="300" src="assets/uefi-framework.webp" alt="電源投入からシャットダウンまでの UEFI の実行段階"></details>
+<img loading="lazy" width="500" height="300" src="assets/uefi-framework.webp" alt="電源投入からシャットダウンまでの UEFI の実行段階">
 </figure></section><section class="page" id="p2-page-810" aria-label="p2-page-810"><p>UEFI 全体の詳しい説明は本書の範囲外です。
 BDS フェーズが終わった後も、プラットフォームはファームウェアが制御しており、OS のブートローダーには次のサービスを提供します。</p>
 <ul>
@@ -26210,7 +26210,7 @@ Windows ブートパーティションにあるファイルは <code>\Windows\Sy
 <p>LBA 0 には保護 MBR があり、その後にプライマリ GPT、UEFI システムパーティション、Windows 回復パーティション、予約パーティション、Windows ブートパーティションが並びます。
 末尾（LBA z）側にはバックアップ GPT があります。
 図では、GPT ディスク全体を旧来のツールから保護する範囲も示しています。</p>
-<details><summary>原図を表示</summary><img loading="lazy" width="505" height="208" src="assets/uefi-disk-layout.webp" alt="保護 MBR、GPT、および UEFI と Windows の各パーティションの配置"></details>
+<img loading="lazy" width="505" height="208" src="assets/uefi-disk-layout.webp" alt="保護 MBR、GPT、および UEFI と Windows の各パーティションの配置">
 </figure>
 <p>セットアップには BCD を準備する役割もあります。
 UEFI システムでは、BCD はシステムボリュームのルートから見た <code>\EFI\Microsoft\Boot\BCD</code> に保存されます。
@@ -26264,7 +26264,7 @@ PC メーカーまたはユーザーが信頼したソフトウェアだけで�
 <li><strong>中間証明書</strong>：所有者である CA の名前と公開鍵、および発行元であるルート CA の名前と署名を含みます。エンドエンティティ証明書に署名し、ルート証明書を参照します。</li>
 <li><strong>ルート証明書</strong>：ルート CA の名前、公開鍵、署名を含みます。中間証明書に署名し、自身の証明書には自己署名します。</li>
 </ul>
-<details><summary>原図を表示</summary><img loading="lazy" width="491" height="312" src="assets/certificate-chain-of-trust.webp" alt="エンドエンティティ証明書、中間証明書、ルート証明書の署名と参照の関係"></details>
+<img loading="lazy" width="491" height="312" src="assets/certificate-chain-of-trust.webp" alt="エンドエンティティ証明書、中間証明書、ルート証明書の署名と参照の関係">
 </figure>
 <p>UEFI で許可または失効の対象となる証明書とハッシュは、図12-4に示す要素によって信頼の階層を構成します。
 これらの要素は UEFI 変数に格納されます。</p>
@@ -26283,7 +26283,7 @@ PC メーカーまたはユーザーが信頼したソフトウェアだけで�
 <figcaption>図12-4　UEFI セキュアブートの信頼の連鎖</figcaption>
 <p>プラットフォーム鍵（PK）が鍵交換鍵データベース（KEK）を保護します。
 KEK は、許可署名データベース（DB）、失効署名データベース（DBX）、タイムスタンプ用データベース（DBT）への変更を認証します。</p>
-<details><summary>原図を表示</summary><img loading="lazy" width="367" height="336" src="assets/uefi-secure-boot-keys.webp" alt="プラットフォームキー、鍵交換キー、許可・失効・タイムスタンプ用のデータベースの関係"></details>
+<img loading="lazy" width="367" height="336" src="assets/uefi-secure-boot-keys.webp" alt="プラットフォームキー、鍵交換キー、許可・失効・タイムスタンプ用のデータベースの関係">
 </figure>
 <p>セキュアブートの鍵を適切に保護するため、ファームウェアは、更新を要求する側が変数の作成に使われた鍵の秘密部分を持つと証明できた場合に限り、更新を許可します。
 その証明には、認証記述子と呼ばれる所定のデータに対するデジタル署名を使います。
@@ -26886,7 +26886,7 @@ Windows での信頼できる実行の実装は、本章後半の「Secure Launc
 <li>BIOS ACM と SINIT ACM があり、BIOS は認証済みコードモジュールとプラットフォームの初期化を扱います。</li>
 <li>ツールと、測定済み起動環境（MLE）、ホストされる OS、アプリケーションなどのサードパーティー製ソフトウェアも含まれます。</li>
 </ul>
-<details><summary>原図を表示</summary><img loading="lazy" width="479" height="245" src="assets/intel-txt-components.webp" alt="Intel TXT を構成する CPU、チップセット、BIOS、TPM と外部モジュール"></details>
+<img loading="lazy" width="479" height="245" src="assets/intel-txt-components.webp" alt="Intel TXT を構成する CPU、チップセット、BIOS、TPM と外部モジュール">
 </figure></section><section class="page" id="p2-page-839" aria-label="p2-page-839"><h3 id="Windows-OS-ローダー">Windows OS ローダー</h3>
 <p>Windows OS ローダー（Winload）は、Windows カーネルを読み込んで実行するために、ブートマネージャーが起動するブートアプリケーションです。
 主な処理は次のとおりです。</p>
@@ -26961,7 +26961,7 @@ Winload はこのテーブルから、リモートディスクの場所、パス
 <p>起動前には、EFI、起動パラメータードライバー、iBFT、UNDI、ネットワークインターフェイスカード（NIC）が関与します。
 Windows 側では、iSCSI イニシエーター、TCP/IP、NDIS、NDIS ミニポート、NIC が通信経路を構成します。
 原図は各コンポーネントが Microsoft iSCSI、Microsoft Windows、機器ベンダーのどれに属するかを示しています。</p>
-<details><summary>原図を表示</summary><img loading="lazy" width="390" height="200" src="assets/iscsi-boot-architecture.webp" alt="起動前のファームウェアから iBFT を介して Windows の iSCSI イニシエーターへ起動情報を渡す構成図"></details>
+<img loading="lazy" width="390" height="200" src="assets/iscsi-boot-architecture.webp" alt="起動前のファームウェアから iBFT を介して Windows の iSCSI イニシエーターへ起動情報を渡す構成図">
 </figure>
 <h3 id="ハイパーバイザーローダー">ハイパーバイザーローダー</h3>
 <p>ハイパーバイザーローダー（<code>Hvloader.dll</code>）は、Hyper-V ハイパーバイザーとセキュアカーネルを読み込んで起動するブートモジュールです。
@@ -27086,7 +27086,7 @@ Secure Launch は、ローカルグループポリシーエディターで「コ
 <li>MLE を準備して SINIT ACM を読み込みます。起動段階では <code>GETSEC(SENTER)</code> により SINIT ACM が TcbLaunch を測定します。</li>
 <li>TcbLaunch 側でハイパーバイザーとセキュアカーネルを検証し、続いて Winload と NT カーネルを検証します。その後、NT カーネルやブートドライバーの読み込みなど、標準のシステム初期化が続きます。</li>
 </ol>
-<details><summary>原図を表示</summary><img loading="lazy" width="502" height="272" src="assets/secure-launch-flow.webp" alt="RAM ディスクからハイパーバイザーとセキュアカーネルを起動する Secure Launch の流れ"></details>
+<img loading="lazy" width="502" height="272" src="assets/secure-launch-flow.webp" alt="RAM ディスクからハイパーバイザーとセキュアカーネルを起動する Secure Launch の流れ">
 </figure></section><section class="page" id="p2-page-849" aria-label="p2-page-849"><p><strong>注：</strong>Trusted Boot の ACM は Intel が提供し、チップセットによって異なります。
 TXT インターフェイスの大部分は物理メモリにマップされているため、ハイパーバイザーローダーは SINIT 領域にもアクセスし、SINIT ACM のバージョンを調べ、必要なら更新できます。
 Windows は、各チップセット向けの既知の SINIT ACM をすべて収録した、圧縮 WIM ファイル <code>Tcbres.wim</code> を使います。
