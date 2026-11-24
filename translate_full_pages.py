@@ -18797,3 +18797,8 @@ full_pages_ja['p2-page-424'] = full_pages_ja['p2-page-424'].replace(
     'Regedit ではこの値を「(既定)」と表示します。',
     'Regedit ではこの値を「(既定)」と表示します。英語版の表示は「(Default)」です。',
 )
+
+full_pages_ja['p2-page-426'] = full_pages_ja['p2-page-426'].replace(
+    '<td><code>HKLM&#92;SOFTWARE&#92;Classes</code> と <code>HKEY_USERS&#92;&lt;SID&gt;&#92;SOFTWARE&#92;Classes</code> を統合したビュー',
+    '<td>直接のリンクではなく、<code>HKLM&#92;SOFTWARE&#92;Classes</code> と <code>HKEY_USERS&#92;&lt;SID&gt;&#92;SOFTWARE&#92;Classes</code> を統合したビュー',
+)
