@@ -1932,7 +1932,7 @@ lkd&gt; dt nt!_ETHREAD ffff9b09e2ba2080 Tcb.SecureThreadCookie
 この節では、データ構造がいつどのように作られ、値が設定されるかを確認し、プロセスの作成と終了の全体像を説明します。
 公開されているプロセス作成関数はすべて、最終的に <code>CreateProcessInternalW</code> を呼ぶので、そこから始めます。</p>
 <p>Windows のプロセス作成はいくつかの段階に分かれ、OS の3つの部分が処理を分担します。
-Windows のクライアント側ライブラリ <code>Kernel32.dll</code>（実際の処理は <code>CreateProcessInternalW</code> から始まります）、Windows エグゼクティブ、Windows サブシステムプロセス（Csrss）です。</p></section><section class="page" id="page-147" aria-label="page-147"><p>エグゼクティブのプロセスオブジェクトを作成する処理と、Windows サブシステムのプロセスを作成する処理は分かれています。以下で説明する Windows の <code>CreateProcess</code> の処理は複雑ですが、エグゼクティブのオブジェクトを作成する中核処理に加え、Windows サブシステム固有の処理も含まれます。</p>
+Windows のクライアント側ライブラリ <code>Kernel32.dll</code>（実際の処理は <code>CreateProcessInternalW</code> から始まります）、Windows エグゼクティブ、Windows サブシステムプロセス（Csrss）です。</p></section><section class="page" id="page-147" aria-label="page-147"><p>Windows は複数の環境サブシステムに対応しています。そのため、ほかのサブシステムでも使えるエグゼクティブのプロセスオブジェクトを作成する処理と、Windows サブシステム固有のプロセス作成処理は分かれています。以下で説明する Windows の <code>CreateProcess</code> の処理は複雑ですが、エグゼクティブのオブジェクトを作成する中核処理に加え、Windows サブシステム固有の処理も含まれます。</p>
 <p>Windows の <code>CreateProcess*</code> 関数でプロセスを作成する主な段階は次のとおりです。各段階の処理は以降の節で詳しく説明します。</p>
 <p><strong>注</strong>　<code>CreateProcess</code> の手順の多くは、プロセスの仮想アドレス空間の設定に関わります。ここで使うメモリ管理の用語や構造体は第5章で説明します。</p>
 <ol>
