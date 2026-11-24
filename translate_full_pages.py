@@ -18928,3 +18928,8 @@ full_pages_ja['p2-page-472'] = full_pages_ja['p2-page-472'].replace(
     'Process Explorer で確認した SID と一致します。',
     'Process Explorer で確認した SID と一致します。この結果から、システムがこの手順でサービス SID を生成することを確認できます。',
 )
+
+full_pages_ja['p2-page-475'] = full_pages_ja['p2-page-475'].replace(
+    '同時に表示され、ユーザーのマウスやキーボードからの入力を受け取れるウィンドウステーションは1つだけです。',
+    '一度に表示できるウィンドウステーションは1つだけで、そのステーションがユーザーのマウスやキーボードからの入力を受け取ります。',
+)
