@@ -19003,3 +19003,8 @@ full_pages_ja['p2-page-502'] = full_pages_ja['p2-page-502'].replace(
     'セキュリティ属性 <code>WIN://ScmUserService</code> があれば',
     'セキュリティ属性 <code>WIN://SCMUserService</code> が表示されていれば',
 )
+
+full_pages_ja['p2-page-505'] = full_pages_ja['p2-page-505'].replace(
+    'ただし SCM には、保護されたサービスのホストを管理するためのアクセスが必要です。',
+    '一方で SCM には、保護されたサービスのホストプロセスへの完全なアクセスが必要です。',
+)
