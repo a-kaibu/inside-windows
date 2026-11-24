@@ -15600,7 +15600,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'オブジェクトがわかります。この GUID を持つオブジェクトの <code>filepath</code> 要素（キー名は '
                 '<code>22000002</code>）に、休止状態ファイルのパスが入っています。</p>\n'
                 '<figure><img loading="lazy" width="647" height="313" '
-                'src="assets/a66f30dc7a360e8fa00fc9fb.webp" alt="レジストリエディターで開いた BCD ストア"></figure>',
+                'src="assets/a66f30dc7a360e8fa00fc9fb.webp" alt="レジストリエディターで開いた BCD ストア"><figcaption>左のツリーの赤枠は、ハイブリッドシャットダウンを確認するための <code>resume</code>（<code>26000005</code>）と <code>hiberboot</code>（<code>26000025</code>）です。右側には、選択中の <code>resumeobject</code>（<code>23000006</code>）の <code>Element</code> 値として、復帰用アプリケーションの GUID が表示されています。</figcaption></figure>',
  'p2-page-876': '<h3>Windows 回復環境（WinRE）</h3>\n'
                 '<p>Windows 回復環境には、よくある起動障害に対処するためのツールと自動修復機能が用意されています。主なツールは次の6つです。</p>\n'
                 '<dl>\n'
