@@ -19153,3 +19153,8 @@ full_pages_ja['p2-page-562'] = full_pages_ja['p2-page-562'].replace(
     'NT カーネルと一部の重要なドライバーのコード変更を防ぎます。',
     'NT カーネルと一部の重要なドライバーのコード変更を防ぎます。 VBS が無効でカーネルデバッガーも接続されていない場合、エラーが返り、プローブを設定できません。',
 )
+
+full_pages_ja['p2-page-564'] = full_pages_ja['p2-page-564'].replace(
+    '「Windows イベントトレース（ETW）」を参照してください。',
+    '「Windows イベントトレーシング（ETW）」を参照してください。',
+)
