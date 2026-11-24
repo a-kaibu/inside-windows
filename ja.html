@@ -1320,7 +1320,24 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <li><code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager</code> の <code>ProtectionMode</code> に従い、システムの各種リソースで使うセキュリティ記述子を作成します。</li>
 <li>同じキーの <code>ObjectDirectories</code> に従い、<code>\RPC Control</code> や <code>\Windows</code> などのオブジェクトマネージャーのディレクトリを作成します。<code>BootExecute</code>、<code>BootExecuteNoPnpSync</code>、<code>SetupExecute</code> に列挙されたプログラムも記録します。</li>
 <li>同じキーの <code>S0InitialCommand</code> に指定されたプログラムのパスを記録します。</li>
-</ol></section><section class="page" id="page-110" aria-label="page-110"><p><code>Smss.exe</code> の起動シーケンスにおける細かな初期化手順は、第11章「起動とシャットダウン」でより詳細に紐解かれます。</p></section><section class="page" id="page-111" aria-label="page-111"><p>クラッシュダンプの設定やメモリダンプファイルの準備、NUMAアーキテクチャに応じたメモリ最適化など、OSが本格的なユーザー空間を受け入れるための基盤整備はすべてこの <code>Smss.exe</code> によって完了されます。</p></section><section class="page" id="page-112" aria-label="page-112"><h4 id="Windows-初期化プロセス-Wininit-exe">Windows 初期化プロセス（Wininit.exe）</h4>
+</ol></section><section class="page" id="page-110" aria-label="page-110"><ol start="13">
+<li><code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager</code> の <code>NumberOfInitialSessions</code> を読み取ります。システムが製造モードにある場合は、この値を無視します。</li>
+<li>同じキーの <code>PendingFileRenameOperations</code> と <code>PendingFileRenameOperations2</code> に列挙された、保留中のファイル名変更操作を読み取ります。</li>
+<li>同じキーの <code>AllowProtectedRenames</code>、<code>ClearTempFiles</code>、<code>TempFileDirectory</code>、<code>DisableWpbtExecution</code> を読み取ります。</li>
+<li>同じキーの <code>ExcludeFromKnownDllList</code> に指定された DLL の一覧を読み取ります。</li>
+<li><code>Session Manager\Memory Management</code> にあるページファイルの情報を読み取ります。<code>PagingFiles</code> と <code>ExistingPageFiles</code> の一覧や、<code>PagefileOnOsVolume</code> と <code>WaitForPagingFiles</code> の構成値が含まれます。</li>
+<li><code>Session Manager\DOS Devices</code> にある値を読み取り、保存します。</li>
+<li><code>Session Manager</code> にある <code>KnownDlls</code> の一覧を読み取り、保存します。</li>
+<li><code>Session Manager\Environment</code> の定義に従い、システム全体の環境変数を作成します。</li>
+<li>オブジェクトマネージャーの名前空間に <code>\KnownDlls</code> ディレクトリを作成します。WOW64 を備えた64ビットシステムでは、<code>\KnownDlls32</code> も作成します。</li>
+<li><code>Session Manager\DOS Devices</code> に定義されたデバイスへのシンボリックリンクを、オブジェクトマネージャーの <code>\Global??</code> ディレクトリに作成します。</li>
+<li>オブジェクトマネージャーの名前空間のルートに <code>\Sessions</code> ディレクトリを作成します。</li>
+<li>保護されたメールスロットと名前付きパイプの接頭辞を作成します。悪意のあるユーザーモードのアプリケーションがサービスより先に起動した場合でも、サービスになりすますことを防ぎます。</li>
+<li>先ほど読み取った <code>BootExecute</code> と <code>BootExecuteNoPnpSync</code> の一覧にあるプログラムを実行します。既定では、ディスクを検査する <code>Autochk.exe</code> を実行します。</li>
+<li>レジストリの残りの部分、つまり <code>HKLM</code> のソフトウェア、SAM、セキュリティの各ハイブを初期化します。</li>
+<li>レジストリで無効になっていなければ、ACPI の Windows Platform Binary Table（WPBT）に登録されたバイナリを実行します。盗難対策製品などでは、この仕組みによって Windows を新規インストールした環境でも、起動の早い段階でネイティブバイナリを動かし、外部に通知したり、別のサービスを設定したりできます。対象のバイナリはネイティブサブシステムに属し、<code>Ntdll.dll</code> だけにリンクする必要があります。</li>
+<li>Windows 回復環境からの起動を除き、先ほど読み取ったレジストリの指定に従って、保留中のファイル名変更を処理します。</li>
+</ol></section><section class="page" id="page-111" aria-label="page-111"><p>クラッシュダンプの設定やメモリダンプファイルの準備、NUMAアーキテクチャに応じたメモリ最適化など、OSが本格的なユーザー空間を受け入れるための基盤整備はすべてこの <code>Smss.exe</code> によって完了されます。</p></section><section class="page" id="page-112" aria-label="page-112"><h4 id="Windows-初期化プロセス-Wininit-exe">Windows 初期化プロセス（Wininit.exe）</h4>
 <p><strong><code>Wininit.exe</code></strong> は、セッション 0 におけるコアシステムサービスの初期化を統括するプロセスです。</p>
 <p><code>Wininit.exe</code> は以下の重要処理を順次実行します：</p>
 <ol>
