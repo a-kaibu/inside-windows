@@ -9760,10 +9760,10 @@ Process Token TrustLevelSid: (null)</pre>
 <tr><th scope="row"><code>SE_DACL_UNTRUSTED</code></th><td>記述子の DACL が指す ACL の提供元が信頼されていないことを示します。設定されている状態で複合 ACE が見つかると、システムは、その ACE のサーバー SID を有効と確認済みの SID に置き換えます。</td></tr>
 <tr><th scope="row"><code>SE_SERVER_SECURITY</code></th><td>入力 ACL が明示的な指定でも既定値でも、それをもとに保護対象のオブジェクトにサーバー ACL を使うよう要求します。すべての許可 ACE を、現在のサーバーにアクセスを許可する複合 ACE に置き換えます。アクセス主体が偽装中の場合にのみ意味があります。</td></tr>
 <tr><th scope="row"><code>SE_DACL_AUTO_INHERIT_REQ</code></th><td>既存の子オブジェクトに DACL を自動的に伝播するよう要求します。オブジェクトのプロバイダーが自動継承に対応する場合は伝播が行われ、親と子の記述子に <code>SE_DACL_AUTO_INHERITED</code> が設定されます。</td></tr>
-<tr><th scope="row"><code>SE_DACL_AUTO_INHERITED</code></th><td>DACL で既存の子オブジェクトへの継承可能な ACE の自動伝播が有効であることを示します。システムは、オブジェクトと既存の子に自動継承を適用する際に、このビットを設定します。</td></tr>
-<tr><th scope="row"><code>SE_DACL_PROTECTED</code></th><td>継承可能な ACE による DACL の変更を防ぎます。</td></tr>
 <tr><th scope="row"><code>SE_SACL_AUTO_INHERIT_REQ</code></th><td>既存の子オブジェクトに SACL を自動的に伝播するよう要求します。オブジェクトのプロバイダーが自動継承に対応する場合は伝播が行われ、親と子の記述子に <code>SE_SACL_AUTO_INHERITED</code> が設定されます。</td></tr>
+<tr><th scope="row"><code>SE_DACL_AUTO_INHERITED</code></th><td>DACL で既存の子オブジェクトへの継承可能な ACE の自動伝播が有効であることを示します。システムは、オブジェクトと既存の子に自動継承を適用する際に、このビットを設定します。</td></tr>
 <tr><th scope="row"><code>SE_SACL_AUTO_INHERITED</code></th><td>SACL で既存の子オブジェクトへの継承可能な ACE の自動伝播が有効であることを示します。システムは、オブジェクトと既存の子に自動継承を適用する際に、このビットを設定します。</td></tr>
+<tr><th scope="row"><code>SE_DACL_PROTECTED</code></th><td>継承可能な ACE による DACL の変更を防ぎます。</td></tr>
 <tr><th scope="row"><code>SE_SACL_PROTECTED</code></th><td>継承可能な ACE による SACL の変更を防ぎます。</td></tr>
 </tbody>
 </table></div></section><section class="page" id="page-669" aria-label="page-669"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
