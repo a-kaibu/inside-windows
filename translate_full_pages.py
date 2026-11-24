@@ -18993,3 +18993,8 @@ full_pages_ja['p2-page-498'] = full_pages_ja['p2-page-498'].replace(
     '既定値は、クライアントでは 3.5 GB、サーバーでは約 3.7 GB です。',
     '既定のしきい値は、クライアント版 Windows では 3.5 GB、サーバー版 Windows では約 3.7 GB です。',
 )
+
+full_pages_ja['p2-page-500'] = full_pages_ja['p2-page-500'].replace(
+    'この関数は User Manager を呼び戻して、現在ログオンしているユーザーのトークンを取得します。',
+    'この関数は User Manager に問い合わせ、現在ログオンしているユーザーのトークンを取得します。',
+)
