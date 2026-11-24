@@ -706,12 +706,12 @@ ntkrnlmp!_INTERRUPT_REMAPPING_INFO</pre>
 <tr><td><code>Win32k.sys</code></td><td>Windows サブシステム（GUI）のカーネルモード部分</td></tr>
 <tr><td><code>Hvix64.exe</code>（Intel）、<code>Hvax64.exe</code>（AMD）</td><td>ハイパーバイザー</td></tr>
 <tr><td><code>\SystemRoot\System32\Drivers</code> 内の <code>.sys</code> ファイル</td><td>DirectX、ボリュームマネージャー、TCP/IP、TPM、ACPI サポートなどの主要ドライバー</td></tr>
-<tr><td><code>Ntdll.dll</code></td><td>内部サポート関数と、エグゼクティブの関数へシステムサービスを渡すディスパッチスタブ</td></tr>
+<tr><td><code>Ntdll.dll</code></td><td>内部サポート関数と、エグゼクティブの関数を呼び出すためのシステムサービスディスパッチスタブ</td></tr>
 <tr><td><code>Kernel32.dll</code>、<code>Advapi32.dll</code>、<code>User32.dll</code>、<code>Gdi32.dll</code></td><td>Windows サブシステムの主要 DLL</td></tr>
 </tbody>
 </table></div>
 <p>各コンポーネントの詳細に入る前に、Windows カーネルの設計の基本を確認します。まず、複数のハードウェアアーキテクチャへの移植性をどのように確保しているかを見ていきます。</p></section><section class="page" id="page-67" aria-label="page-67"><h3 id="移植性">移植性</h3>
-<p>Windows はさまざまなハードウェアアーキテクチャで動作するよう設計されました。初版の Windows NT は x86 と MIPS に対応し、その後まもなく Digital Equipment Corporation の Alpha AXP にも対応しました。同社は Compaq に買収され、Compaq は後に Hewlett-Packard と合併しました。Alpha AXP は64ビットプロセッサーでしたが、Windows NT は32ビットモードで動作しました。Windows 2000 の開発中には Alpha AXP 向けのネイティブ64ビット版が稼働していましたが、リリースされませんでした。Windows NT 3.51 は4つ目のアーキテクチャとして Motorola の PowerPC に対応しました。市場の需要が変わり、Windows 2000 の開発前に MIPS と PowerPC のサポートが終了しました。その後 Compaq が Alpha AXP のサポートを打ち切り、Windows 2000 の対応アーキテクチャは x86 だけになりました。Windows XP と Windows Server 2003 は、Intel Itanium（IA-64）と、AMD64 および互換の Intel EM64T に対応しました。本書では AMD64 と EM64T をまとめて x64 と呼びます。64ビット版 Windows で32ビットアプリケーションを実行する仕組みは第2部の第8章で説明します。IA-64 のサポートは Windows Server 2008 R2 を最後に終了しました。</p>
+<p>Windows はさまざまなハードウェアアーキテクチャで動作するよう設計されました。初版の Windows NT は x86 と MIPS に対応し、その後まもなく Digital Equipment Corporation の Alpha AXP にも対応しました。同社は Compaq に買収され、Compaq は後に Hewlett-Packard と合併しました。Alpha AXP は64ビットプロセッサーでしたが、Windows NT は32ビットモードで動作しました。Windows 2000 の開発中には Alpha AXP 向けのネイティブ64ビット版が稼働していましたが、リリースされませんでした。Windows NT 3.51 は4つ目のアーキテクチャとして Motorola の PowerPC に対応しました。市場の需要が変わり、Windows 2000 の開発前に MIPS と PowerPC のサポートが終了しました。その後 Compaq が Alpha AXP のサポートを打ち切り、Windows 2000 の対応アーキテクチャは x86 だけになりました。Windows XP と Windows Server 2003 は、Intel Itanium（IA-64）と、AMD64 および互換の Intel EM64T に対応しました。本書では AMD64 と EM64T をまとめて x64 と呼びます。64ビット版 Windows で32ビットアプリケーションを実行する仕組みは、第2部の第8章「<a href="#WOW64-Windows-on-Windows">WOW64（Windows-on-Windows）</a>」で説明します。IA-64 のサポートは Windows Server 2008 R2 を最後に終了しました。</p>
 <p>その後の Windows は ARM にも対応しました。たとえば、提供が終了した Windows RT は ARM 向けの Windows 8 でした。Windows Phone 8.x の後継である Windows 10 Mobile は Qualcomm Snapdragon などの ARM ベースのプロセッサーで動作します。Windows 10 IoT は x86 機器と ARM 機器の両方で動作します。ARM 機器には、ARM Cortex-A7 を使う Raspberry Pi 2 や、ARM Cortex-A53 を使う Raspberry Pi 3 などがあります。原著執筆時点では、64ビット ARM を採用する機器の増加に伴い、AArch64（ARM64）への対応も見込まれていました。</p>
 <p>Windows が複数のハードウェアアーキテクチャやプラットフォームに対応できる主な理由は2つあります。</p>
 <ul>
