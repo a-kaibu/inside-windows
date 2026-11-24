@@ -1388,16 +1388,16 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <p>Secondary Logon サービスは内部関数 <code>SlrCreateProcessWithLogon</code> で要求を処理し、問題がなければ最終的に <code>CreateProcessAsUser</code> を呼び出します。
 既定の起動設定は手動で、<code>CreateProcessWithTokenW</code> または <code>CreateProcessWithLogonW</code> を初めて呼び出したときにサービスが起動します。
 管理者がサービスを無効にしている場合など、サービスを起動できなければ、これらの関数も失敗します。
-コマンドラインツールの <code>runas</code> は、これらの関数を使います。</p></section><section class="page" id="page-119" aria-label="page-119"><p>図3-1に、前のページで説明した関数の呼び出し関係を示します。</p>
+コマンドラインツールの <code>runas</code> は、これらの関数を使います。</p></section><section class="page" id="page-119" aria-label="page-119"><p>図3-1に、前述の関数の呼び出し関係を示します。</p>
 <figure><img loading="lazy" src="assets/36666a740ad7626612254f33.webp" alt="プロセス作成 API から Windows の内部関数への呼び出し関係"><figcaption>図3-1 プロセス作成関数。点線の枠で囲んだものは内部関数です。</figcaption></figure>
 <p>ここまで挙げた公開関数は、正しい Portable Executable（PE）ファイル、バッチファイル、または16ビットの COM アプリケーションを受け取ります。PE ファイルに <code>.exe</code> の拡張子は必須ではありません。
-たとえば <code>.txt</code> をメモ帳に関連付けるような処理は、Windows シェルの <code>ShellExecute</code> や <code>ShellExecuteEx</code> が担当します。
-これらの関数は実行ファイル以外も受け取り、拡張子と <code>HKEY_CLASSES_ROOT</code> のレジストリ設定から、起動する実行ファイルを探します。詳しくは第2部の管理機構を扱う章を参照してください。
+これらの公開関数は、拡張子から対応する実行ファイルを探す機能を持ちません。たとえば <code>.txt</code> に対応するメモ帳を探す処理は、Windows シェルの <code>ShellExecute</code> や <code>ShellExecuteEx</code> が担当します。
+これらの関数は実行ファイル以外も受け取り、拡張子と <code>HKEY_CLASSES_ROOT</code> のレジストリ設定から、起動する実行ファイルを探します。詳しくは<a href="#第10章-管理-診断-トレース">第10章「管理、診断、トレース」</a>を参照してください。
 最終的に <code>ShellExecute</code> または <code>ShellExecuteEx</code> は、適切な実行ファイルとコマンドライン引数を指定して <code>CreateProcess</code> を呼び出します。たとえばテキストファイルを編集する場合は、<code>Notepad.exe</code> にそのファイル名を渡します。</p>
 <p>どの経路でも、最後は内部関数 <code>CreateProcessInternal</code> に行き着きます。
 この関数が、ユーザーモードの Windows プロセスを作成する処理を開始します。
 処理が順調に進むと、<code>Ntdll.dll</code> の <code>NtCreateUserProcess</code> を呼び出してカーネルモードに移ります。
-プロセス作成の残りの処理は、エグゼクティブにある同名の関数 <code>NtCreateUserProcess</code> が担当します。</p>
+プロセス作成のうちカーネルモードで行う処理は、エグゼクティブにある同名の関数 <code>NtCreateUserProcess</code> が担当します。</p>
 <h4 id="CreateProcess-系の関数の引数">CreateProcess 系の関数の引数</h4>
 <p><code>CreateProcess</code> 系の関数の主要な引数を確認します。一部は後述の「CreateProcess の処理の流れ」にも登場します。
 ユーザーモードからプロセスを作成すると、その中には必ず1つのスレッドが作られます。
