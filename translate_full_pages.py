@@ -19213,3 +19213,16 @@ full_pages_ja['p2-page-583'] = full_pages_ja['p2-page-583'].replace(
     'ここでは、従来型の Win32 デスクトップアプリケーションがユーザー入力に応答しなくなる場合を取り上げます。',
     'ここでは、ハング検出のうち、よくある例として、従来型の Win32 デスクトップアプリケーションがユーザー入力に応答しなくなる場合を取り上げます。',
 )
+
+full_pages_ja['p2-page-584'] = (
+    full_pages_ja['p2-page-584']
+    .removesuffix('\n<figure><img loading="lazy" width="375" height="212" src="assets/85f1ea5f13a436351878526a.webp" alt="応答していない HangWindow.exe を閉じるか待機するかを選ぶダイアログ">\n<img loading="lazy" width="690" height="354" src="assets/8cf79b97b67b180948f67579.webp" alt="HangWindow.exe のハングを記録したアプリケーションログのイベント ID 1002"></figure>')
+    .replace('<p>図10-44 アプリケーションがハングしたときの Windows エラー報告ダイアログ。</p>', '<figure><img loading="lazy" width="375" height="212" src="assets/85f1ea5f13a436351878526a.webp" alt="応答していない HangWindow.exe を閉じるか待機するかを選ぶダイアログ"><figcaption>図10-44\u3000アプリケーションがハングしたときの Windows エラー報告ダイアログ。</figcaption></figure>', 1)
+    .replace('<p>図10-45 ハングしたアプリケーションを終了できなかったときに、アプリケーションログへ書き込まれた ETW エラーイベント。</p>', '<figure><img loading="lazy" width="690" height="354" src="assets/8cf79b97b67b180948f67579.webp" alt="HangWindow.exe のハングを記録したアプリケーションログのイベント ID 1002"><figcaption>図10-45\u3000ハングしたアプリケーションを終了できなかったときに、アプリケーションログへ書き込まれた ETW エラーイベント。</figcaption></figure>', 1)
+)
+
+full_pages_ja['p2-page-585'] = (
+    full_pages_ja['p2-page-585']
+    .removesuffix('\n<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="GFlags でシステムのデバッグオプションを設定する画面"></figure>')
+    .replace('<p>図10-46 GFlags でシステムのデバッグオプションを設定する。</p>', '<figure><img loading="lazy" width="453" height="453" src="assets/993796e7182ed0584a0461b9.webp" alt="GFlags でシステムのデバッグオプションを設定する画面"><figcaption>図10-46\u3000GFlags でシステムのデバッグオプションを設定する。</figcaption></figure>', 1)
+)
