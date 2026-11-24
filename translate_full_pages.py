@@ -18355,3 +18355,8 @@ full_pages_ja['page-594'] = (
     .replace('Multiple UNC Provider（MUP）ドライバーは、', 'Multiple UNC Provider（MUP）ドライバーは、UNC（Universal Naming Convention）形式のパスを扱います。たとえば、')
     .replace('のような UNC パスでリモートリソースにアクセスできるようにします。', 'のようなパスでリモートリソースにアクセスできます。')
 )
+
+full_pages_ja['page-599'] = full_pages_ja['page-599'].replace(
+    'に割り当てられるすべてのリソース範囲を、<code>WDFIORESLIST</code> の配列で表します。',
+    'に割り当て可能なリソース範囲のすべての候補を、<code>WDFIORESLIST</code> の配列で表します。',
+)
