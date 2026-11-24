@@ -20881,7 +20881,7 @@ Value[1]   : 352550</pre>
 <tr><th scope="row"><code>DeleteService</code></th><td>サービスを削除する</td><td>保護されていないプロセスは、保護されたサービスを削除できません。</td></tr>
 <tr><th scope="row"><code>ControlService</code></th><td>サービスに制御コードを送る</td><td>保護されていない呼び出し元には、サービスが独自に定義した制御コードと <code>SERVICE_CONTROL_INTERROGATE</code> が許可されます。<code>SERVICE_CONTROL_STOP</code> は、Antimalware 以外の保護レベルで許可されます。</td></tr>
 </tbody></table></div>
-<p><code>ScCheckServiceProtectedProcess</code> は、呼び出し元が指定したサービスハンドルからサービスレコードを探します。対象が保護されたサービスでなければ、この検査ではアクセスを許可します。保護されたサービスの場合は、クライアントプロセスのトークンを偽装し、そのプロセスの保護レベルを取得して、次の規則を適用します。</p>
+<p><code>ScCheckServiceProtectedProcess</code> は、呼び出し元が指定したサービスハンドルからサービスレコードを探します。対象が保護されたサービスでなければ、この検査ではアクセスを許可します。保護されたサービスの場合は、クライアントプロセスのトークンを使ってクライアントを偽装し、そのプロセスの保護レベルを取得して、次の規則を適用します。</p>
 <ul>
 <li>要求が停止で、対象サービスの保護レベルが Antimalware でなければ、アクセスを許可します。保護されていないプロセスは、Antimalware レベルで保護されたサービスを停止できません。</li>
 <li>クライアントのトークンのグループに TrustedInstaller のサービス SID が含まれるか、その SID がトークンのユーザーに設定されていれば、SCM はクライアントの保護レベルにかかわらず、この検査でアクセスを許可します。</li>
