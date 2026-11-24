@@ -11963,7 +11963,7 @@ CPU 内部の分岐予測器と分岐先予測器が、この判断を行いま�
 <h4 id="CPU-キャッシュ">CPU キャッシュ</h4>
 <p>CPU キャッシュは、データや命令の読み書きにかかる時間を短縮する高速メモリです。メモリとキャッシュの間では、ラインまたはキャッシュブロックと呼ばれる固定長の単位（通常は64バイトまたは128バイト）でデータを転送します。ラインをメモリからキャッシュにコピーすると、コピーしたデータと元のメモリ位置を識別するタグを持つエントリが作られます。分岐先予測器とは異なり、ここで説明するキャッシュは物理アドレスで索引を付けます。仮想アドレスを使うと、同じメモリへの複数のマッピングやアドレス空間の切り替えを扱うのが複雑になるためです。物理アドレスの上位ビットは通常タグ、下位ビットはラインの番号とライン内のオフセットを表します。図8-4のように、タグはキャッシュブロックの元のメモリアドレスを一意に識別するために使われます。</p>
 <p>CPU はメモリを読み書きするとき、まずそのアドレスのデータを保持できるラインに、対応するエントリがあるか調べます。後述するように、キャッシュによっては複数のウェイを調べます。データが見つかればキャッシュヒットであり、そのラインを直接読み書きできます。見つからなければキャッシュミスであり、CPU はキャッシュに新しいエントリを確保し、メインメモリからデータをコピーしてからアクセスします。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/4d0e6898056e2b678302cca9.webp" alt="48ビットの物理アドレスをタグ、ブロック番号、ブロック内のオフセットに分ける図"><figcaption>図8-4 48ビットの1ウェイ CPU キャッシュの例</figcaption></figure>
+<figure><img loading="lazy" width="77" height="66" src="assets/4d0e6898056e2b678302cca9.webp" alt="48ビットの物理アドレスをタグ、ブロック番号、ブロック内のオフセットに分ける図"><figcaption>図8-4 48ビットの1ウェイ CPU キャッシュの例</figcaption></figure>
 <p>図8-4は、最大48ビットのアドレスを扱える1ウェイキャッシュの例です。CPU がアドレス <code>0x19F566030</code> にある48バイトを読み取るとき、まずメインメモリの内容をキャッシュのブロック <code>0x60</code> に読み込みます。ブロック全体が埋まりますが、要求されたデータはオフセット <code>0x30</code> から始まります。図の例では、タグは <code>0x19F56</code> です。</p></section><section class="page" id="p2-page-44" aria-label="p2-page-44"><p>このキャッシュには256バイトのブロックが256個あるため、複数の物理アドレスが同じブロック番号 <code>0x60</code> に対応します。
 タグ <code>0x19F56</code> によって、データがメインメモリのどの物理アドレスにあるかを一意に識別できます。</p>
 <p>CPU があるメモリアドレスにデータを書き込むよう指示されると、まず、そのアドレスに対応するキャッシュラインを更新します。
@@ -12196,7 +12196,7 @@ Spectre の緩和策のうち、性能への影響が最も大きかったのは
 プロセッサは攻撃の影響を受ける間接呼び出しに代えて、安全な命令列にジャンプします。
 この命令列はスタックを動的に書き換え、投機実行が起きた場合はその実行を閉じ込めます。
 実際の実行は復帰命令を使って分岐先に到達します。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/909f749111977039034bc1a3.webp" alt="間接分岐を置き換える x86 用の Retpoline 命令列"><figcaption>図8-9 x86 CPU の Retpoline 命令列</figcaption></figure>
+<figure><img loading="lazy" width="580" height="160" src="assets/909f749111977039034bc1a3.webp" alt="間接分岐を置き換える x86 用の Retpoline 命令列"><figcaption>図8-9 x86 CPU の Retpoline 命令列</figcaption></figure>
 <p>Windows は NT カーネルに Retpoline を実装しています。
 カーネルは動的値再配置テーブル（DVRT）を通じて、自身や外部ドライバーのイメージに Retpoline の命令列を動的に適用できます。</p></section><section class="page" id="p2-page-55" aria-label="p2-page-55"><p>対応するコンパイラーで Retpoline を有効にしてカーネルイメージをビルドすると、コンパイラーはコードに含まれる間接分岐ごとに、そのアドレスと種類を記述するエントリをイメージの DVRT に追加します。
 間接分岐のオペコードは最終コードに残し、長さが可変のパディングを付けます。
@@ -12254,7 +12254,7 @@ IAT（Image Import Address Table）は、インポートした関数のポイン
 Windows ローダーが IAT を構築すると、まれな例外を除いて、その内容が変わることはほとんどありません。
 図8-10に示すように、NT カーネルは呼び出し元と呼び出し先のイメージの仮想アドレスを、直接呼び出せる距離（2 GB 未満）に配置できます。
 そのため、インポートした関数への間接分岐を Retpoline に変換する必要はありません。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/af00a97c1bbb89f50e0740c9.webp" alt="ExAllocatePool の呼び出しに使われるさまざまな分岐の例"><figcaption>図8-10 <code>ExAllocatePool</code> を対象とする間接分岐の例</figcaption></figure>
+<figure><img loading="lazy" width="594" height="182" src="assets/af00a97c1bbb89f50e0740c9.webp" alt="ExAllocatePool の呼び出しに使われるさまざまな分岐の例"><figcaption>図8-10 <code>ExAllocatePool</code> を対象とする間接分岐の例</figcaption></figure>
 <p>インポートの最適化は、内部ではインポートリンクとも呼ばれます。
 Retpoline の動的再配置を使い、インポートした関数への間接呼び出しを直接分岐に変換する機能です。
 インポートした関数への制御移行に直接分岐を使えば、この分岐は投機実行を悪用する攻撃の対象にならないため、Retpoline を適用する必要がありません。
@@ -12860,7 +12860,7 @@ IDT には最大256個のエントリがあるため、優先度は16段階で�
 その場合は、そこで追加の処理を行ってから、実際のドライバーを呼び出します。
 ドライバーフレームワークについては、第1部の第6章「I/O システム」を参照してください。</p>
 <p>図8-15に、割り込みオブジェクトに関連付けられた割り込みの一般的な制御の流れを示します。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/45c997df51f7378470745c06.webp" alt="デバイスコントローラー、I/O APIC、CPU のローカル APIC、割り込みディスパッチテーブル、割り込みオブジェクト、ドライバーの ISR の関係"><figcaption>図8-15 割り込み処理の一般的な流れ</figcaption></figure>
+<figure><img loading="lazy" width="770" height="953" src="assets/46f163769527633b0d6a7bc5.webp" alt="デバイスコントローラー、I/O APIC、CPU のローカル APIC、割り込みディスパッチテーブル、割り込みオブジェクト、ドライバーの ISR の関係"><figcaption>図8-15 割り込み処理の一般的な流れ</figcaption></figure>
 <p>図には、割り込みオブジェクトの ISR アドレス、スピンロック、ディスパッチャー、ディスパッチコードと、CPU の KPRCB を示しています。
 <code>KiInterruptDispatch</code> は IRQL を引き上げ、スピンロックを取得します。
 ドライバーの ISR はデバイスから読み取り、割り込みに応答し、DPC を要求します。
@@ -13076,7 +13076,7 @@ MSI-X は16ビットに代わって32ビットのメッセージをサポート�
 GSIV は、負数で識別される MSI ベクター、従来の IRQ 線、組み込みデバイスの汎用入出力（GPIO）ピンまでを含む、より一般的な用語です。
 ARM と ARM64 のシステムでは、ここまで述べた方式に代わって、汎用割り込みコントローラー（Generic Interrupt Controller、GIC）アーキテクチャを使います。
 図8-16は、2台のコンピューターのデバイスマネージャーに、従来の IRQ による GSIV の割り当てと、負数で表された MSI の値を表示した例です。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/d311bc07faeda2b284e0ee92.webp" alt="デバイスマネージャーに表示された従来の IRQ 番号と負数の MSI 値"><figcaption>図8-16 IRQ と MSI による GSIV の割り当て</figcaption></figure></section><section class="page" id="p2-page-83" aria-label="p2-page-83"><h4 id="割り込みステアリング">割り込みステアリング</h4>
+<figure><img loading="lazy" width="690" height="351" src="assets/d311bc07faeda2b284e0ee92.webp" alt="デバイスマネージャーに表示された従来の IRQ 番号と負数の MSI 値"><figcaption>図8-16 IRQ と MSI による GSIV の割り当て</figcaption></figure></section><section class="page" id="p2-page-83" aria-label="p2-page-83"><h4 id="割り込みステアリング">割り込みステアリング</h4>
 <p>仮想化されておらず、単一のプロセッサグループに2～16個のプロセッサがあるクライアントシステムでは、Windows は割り込みステアリングを有効にします。
 Server SKU は対象外です。
 この機能は、現在のコンシューマー向けシステムで求められる消費電力と応答時間に対応するためのものです。
