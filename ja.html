@@ -75,7 +75,7 @@
 <p>アンケートは短く、寄せられたコメントやご提案はすべて目を通します。ご協力をお願いいたします。</p>
 <h3 id="SNS-でつながる">SNS でつながる</h3>
 <p>Twitter の <code>@MicrosoftPress</code> でもご意見をお寄せください。</p></section><section class="page" id="page-18" aria-label="page-18"><h2 id="第1章-概念とツール">第1章 概念とツール</h2>
-<p>本章では、本書を通じて頻繁に登場する Microsoft Windows オペレーティングシステムの主要な概念と基本用語——Windows API、プロセス、スレッド、仮想メモリ、カーネルモードとユーザーモード、オブジェクト、ハンドル、セキュリティ、レジストリなど——について解説します。また、Windowsの内部構造を読者自身の手で調査・探究できるツール（カーネルデバッガー、パフォーマンスモニター、Sysinternalsの主要ユーティリティなど）や、より深い内部情報を得るためのリソースである Windows Driver Kit (WDK) や Windows SDK の活用方法についても紹介します。</p>
+<p>本章では、本書を通じて頻繁に登場する Microsoft Windows オペレーティングシステムの主要な概念と基本用語——Windows API、プロセス、スレッド、仮想メモリ、カーネルモードとユーザーモード、オブジェクト、ハンドル、セキュリティ、レジストリなど——について解説します。また、Windowsの内部構造を読者自身の手で調査・探究できるツール（カーネルデバッガー、パフォーマンスモニター、<a href="https://learn.microsoft.com/en-us/sysinternals/">Windows Sysinternals</a> の主要ユーティリティなど）や、より深い内部情報を得るためのリソースである Windows Driver Kit (WDK) や Windows SDK の活用方法についても紹介します。</p>
 <p>本章で取り上げる内容は、以降のすべての章を読み進める上での必須の共通土台となります。確実に理解を深めておきましょう。</p>
 
 <h3 id="Windows-オペレーティングシステムのバージョン">Windows オペレーティングシステムのバージョン</h3>
@@ -512,7 +512,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li>一覧をスクロールすると、ほかの組も確認できます。<code>user32.dll</code> や <code>advapi32.dll</code> など、別のシステムファイルを開いて調べることもできます。</li>
 </ol>
 <blockquote><p><strong>注</strong>　Windows の COM ベースの API は通常、Unicode 文字列を使います。型は <code>BSTR</code> の場合があります。これは末尾がヌル文字で終わる Unicode 文字の配列で、メモリ上で配列の先頭の4バイト前にバイト単位の文字列長が格納されます。Windows ランタイムの API は Unicode 文字列のみを使い、不変の文字配列を表す <code>HSTRING</code> 型で扱います。</p></blockquote>
-<p>Unicode の詳細については、Unicode Consortium のサイトと MSDN ライブラリのプログラミング資料を参照してください。</p>
+<p>Unicode の詳細については、<a href="https://www.unicode.org/">Unicode Consortium のサイト</a>と MSDN ライブラリのプログラミング資料を参照してください。</p>
 <h3 id="Windows-の内部動作を調べる">Windows の内部動作を調べる</h3>
 <p>本書の説明の多くは、Windows のソースコードを読み、開発者に話を聞いた結果に基づいています。読者も、Windows に付属のツールや Windows デバッグツールなどを使って、内部動作の多くを自分で確認できます。これらのツールについては本節の後半で簡単に紹介します。</p>
 <p>本書の各所には、Windows の特定の内部動作を調べるための手順を「実験」として掲載しています。この章の前半でも、いくつかの実験を紹介しました。実際に試して、本書で扱う仕組みが動く様子を確かめてください。</p>
@@ -6869,7 +6869,7 @@ Modified</pre>
 <h3 id="物理メモリの上限">物理メモリの上限</h3>
 <p>ここまでは Windows が物理メモリを追跡する仕組みを説明しました。ここからは、Windows が扱える物理メモリの量を説明します。多くのシステムでは、稼働中にアクセスするコードとデータの総量が、物理メモリに一度に収まる量を超えます。物理メモリに載っているのは、稼働中に使われるコードとデータの一部です。プロセスや OS が必要とするデータやコードがそこになければ、メモリマネージャーはディスクやリモートストレージから読み込む必要があるため、物理メモリの容量は性能に影響します。</p>
 <p>物理メモリの容量は、性能に加え、ほかのリソースの上限にも影響します。たとえば、非ページプールの内容は物理メモリに保持されるため、そのサイズは物理メモリの容量に制約されます。システムの仮想メモリのコミット上限も、おおむね物理メモリの容量と、すべてのページファイルの現在のサイズの合計です。また、物理メモリは、作成できるプロセスの最大数を間接的に制限することがあります。</p>
-<p>Windows がサポートする物理メモリの量は、ハードウェアの制約、ライセンス、OS のデータ構造、ドライバーの互換性によって決まります。Windows の各エディションの上限は Microsoft の「Memory Limits for Windows and Windows Server Releases」に記載されています。表5-23では、本書が対象とする Windows 8 以降のバージョンの上限をまとめます。</p></section><section class="page" id="page-464" aria-label="page-464"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-23　Windows の物理メモリ対応上限（原著執筆時点）</caption><thead><tr><th scope="col">バージョンとエディション</th><th scope="col">32ビット版の上限</th><th scope="col">64ビット版の上限</th></tr></thead><tbody>
+<p>Windows がサポートする物理メモリの量は、ハードウェアの制約、ライセンス、OS のデータ構造、ドライバーの互換性によって決まります。Windows の各エディションの上限は Microsoft の「<a href="https://learn.microsoft.com/en-us/windows/win32/memory/memory-limits-for-windows-releases">Memory Limits for Windows and Windows Server Releases</a>」に記載されています。表5-23では、本書が対象とする Windows 8 以降のバージョンの上限をまとめます。</p></section><section class="page" id="page-464" aria-label="page-464"><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-23　Windows の物理メモリ対応上限（原著執筆時点）</caption><thead><tr><th scope="col">バージョンとエディション</th><th scope="col">32ビット版の上限</th><th scope="col">64ビット版の上限</th></tr></thead><tbody>
 <tr><td>Windows 8.x Professional、Enterprise</td><td>4 GB</td><td>512 GB</td></tr>
 <tr><td>Windows 8.x（その他のエディション）</td><td>4 GB</td><td>128 GB</td></tr>
 <tr><td>Windows Server 2012／R2 Standard、Datacenter</td><td>該当なし</td><td>4 TB</td></tr>
