@@ -2265,10 +2265,10 @@ VDM が別のデスクトップで動作している場合や、呼び出し元�
 <li>Process Monitor に、Cmd.exe 用と Notepad.exe 用の2つのフィルターを追加します。対象に含めるプロセスはこの2つだけです。対象のイベントを見分けられるよう、この時点ではどちらのプロセスも動作していないことを確認してください。フィルターの設定画面は次のようになります。
 <figure><img loading="lazy" width="389" height="245" src="assets/08d9650721ca324b12d09091.webp" alt="Process Monitor で Cmd.exe と Notepad.exe だけを対象にするフィルター"></figure></li>
 <li>「File」メニューで「Capture Events」をオフにして、イベントの記録が止まっていることを確認します。その後、コマンドプロンプトを起動します。</li>
-<li>「File」メニュー、Ctrl+E キー、またはツールバーの虫眼鏡アイコンでイベントの記録を再開します。<code>Notepad.exe</code> と入力し、Enter キーを押します。一般的な Windows システムでは、500〜3,500件ほどのイベントが表示されます。</li>
-<li>記録を停止し、「Sequence」と「Time of Day」の列を非表示にして、調べたい列に絞ります。次のページの画面例のように表示されます。</li>
+<li>「File」メニューの「Capture Events」、Ctrl+E キー、またはツールバーの虫眼鏡アイコンでイベントの記録を再開します。<code>Notepad.exe</code> と入力し、Enter キーを押します。一般的な Windows システムでは、500〜3,500件ほどのイベントが表示されます。</li>
+<li>記録を停止し、「Sequence」と「Time of Day」の列を非表示にして、調べたい列に絞ります。続く画面例のように表示されます。</li>
 </ol>
-<p><code>CreateProcess</code> の第1段階で述べたように、プロセスが起動して最初のスレッドが作成される直前に、Cmd.exe は <code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Notepad.exe</code> を読み取ります。Notepad.exe にはイメージファイル実行オプションが登録されていないため、そのままプロセスが作成されます。</p></section><section class="page" id="page-168" aria-label="page-168"><figure><img loading="lazy" width="544" height="317" src="assets/a6ef065fae4b1fc9640fd385.webp" alt="Process Monitor に記録された Cmd.exe と Notepad.exe のイベント"></figure>
+<p><code>CreateProcess</code> の第1段階で述べたように、プロセスが起動して最初のスレッドが作成される直前に、Cmd.exe は <code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Notepad.exe</code> を読み取ります。このトレース例では、Notepad.exe のイメージファイル実行オプションが登録されていなかったため、指定どおり Notepad.exe のプロセスが作成されました。</p></section><section class="page" id="page-168" aria-label="page-168"><figure><img loading="lazy" width="544" height="317" src="assets/a6ef065fae4b1fc9640fd385.webp" alt="Process Monitor に記録された Cmd.exe と Notepad.exe のイベント"></figure>
 <p>Process Monitor のログでは、このイベントもほかのイベントも、呼び出しスタックを調べられます。スタックを見れば、プロセス作成の各処理がユーザーモードとカーネルモードのどちらで行われたか、どのルーチンが処理したかがわかります。<code>RegOpenKey</code> イベントをダブルクリックし、「Stack」タブに切り替えます。次の図は、64ビット版 Windows 10 での典型的な呼び出しスタックです。</p>
 <figure><img loading="lazy" width="484" height="463" src="assets/6a79522c810e5ce4bd13f5ce.webp" alt="RegOpenKey イベントの Stack タブに表示された呼び出しスタック"></figure></section><section class="page" id="page-169" aria-label="page-169"><p>このスタックから、処理が <code>NtCreateUserProcess</code> を通じてカーネルモードのプロセス作成に進んでおり、その中の補助ルーチン <code>PspAllocateProcess</code> がこの確認を行っていることがわかります。</p>
 <p>スレッドとプロセスの作成後のイベントを順に見ると、次の3つのグループが見つかります。</p>
