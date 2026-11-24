@@ -21114,7 +21114,7 @@ uint32  OverwriteOutDated;
 <p>開発者は MOF でクラスを定義したあと、いくつかの方法でその定義を WMI に渡せます。WDM ドライバーの開発者は、MOF ファイルをよりコンパクトなバイナリ MOF（BMF）ファイルにコンパイルし、実行時に WDM インフラストラクチャに渡すか、ドライバーのバイナリに組み込めます。プロバイダーが MOF をコンパイルして、WMI COM API 経由で定義を WMI インフラストラクチャに渡す方法もあります。また、MOF コンパイラー（<code>Mofcomp.exe</code>）を使い、コンパイル済みのクラス定義を WMI インフラストラクチャに直接登録することもできます。</p>
 <aside><p><strong>注</strong>　Windows 7 までの旧版では、WMI 管理ツールに WMI CIM Studio という GUI ツールが付属し、WMI の名前空間、クラス、プロパティ、メソッドを画面で確認できました。原著の執筆時点では、Windows PowerShell の WMI 機能に置き換わり、CIM Studio のサポートと配布は終了していました。PowerShell はスクリプト言語で、WMI を閲覧するための GUI はありません。CIM Studio に似たインターフェイスを備えたサードパーティ製ツールには、<a href="https://github.com/vinaypamnani/wmie2/releases">WMI Explorer</a> などがあります。</p></aside></section><section class="page" id="p2-page-524" aria-label="p2-page-524"><p>Common Information Model（CIM）リポジトリは <code>%SystemRoot%&#92;System32&#92;wbem&#92;Repository</code> にあり、次のファイルを含みます。</p>
 <ul>
-<li><code>Index.btr</code>。ツリー構造のインデックスファイルです。</li>
+<li><code>Index.btr</code>。B ツリー（btree）のインデックスファイルです。</li>
 <li><code>MappingX.map</code>。トランザクション制御ファイルです。<code>X</code> は1から始まる番号です。</li>
 <li><code>Objects.data</code>。管理対象リソースの定義を保持する CIM リポジトリのデータファイルです。</li>
 </ul>
