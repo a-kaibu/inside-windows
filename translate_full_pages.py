@@ -18254,3 +18254,11 @@ full_pages_ja['page-547'] = full_pages_ja['page-547'].replace(
     'バッファード I/O では常に CPU によるコピーが発生するため、DMA を使う利点が失われます。',
     'バッファード I/O では、DMA でデバイスとの間を転送しても、システムバッファーとユーザーバッファーの間のコピーに CPU を使います。',
 )
+
+full_pages_ja['page-549'] = full_pages_ja['page-549'].replace(
+    '<tr><th scope="row">利用できる IRQL</th><td><code>DISPATCH_LEVEL</code>（2）未満</td><td><code>DISPATCH_LEVEL</code>（2）以上</td></tr>\n',
+    '',
+).replace(
+    '表6-3のとおり、IRQL が2以上で同期するには',
+    'IRQL が2以上で同期するには',
+)
