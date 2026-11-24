@@ -26223,7 +26223,7 @@ UEFI が定義するのは3種類ですが、各 OS ベンダーも独自のパ�
 UEFI 規格では、FAT32 でフォーマットされた EFI システムパーティションが少なくとも1つ必要です。</p>
 <p>Windows セットアップはディスクを初期化し、通常は少なくとも次の4つのパーティションを作成します。</p>
 <ul>
-<li><strong>EFI システムパーティション</strong>：Windows ブートマネージャー（<code>Bootmgrfw.efi</code>）、メモリテストアプリケーション（<code>Memtest.efi</code>）、Device Guard が有効なシステム向けのロックダウンポリシー（<code>Winsipolicy.p7b</code>）、起動リソースファイル（<code>Bootres.dll</code>）をコピーします。</li>
+<li><strong>EFI システムパーティション</strong>：Windows ブートマネージャー（<code>bootmgfw.efi</code>）、メモリテストアプリケーション（<code>Memtest.efi</code>）、Device Guard が有効なシステム向けのロックダウンポリシー（<code>Winsipolicy.p7b</code>）、起動リソースファイル（<code>Bootres.dll</code>）をコピーします。</li>
 <li><strong>回復パーティション</strong>：起動時に問題が起きた場合に Windows 回復環境を起動するためのファイル（<code>boot.sdi</code> と <code>Winre.wim</code>）を格納します。ファイルシステムは NTFS です。</li>
 <li><strong>Windows 予約パーティション</strong>：セットアップが一時データを保存するための、高速で復旧可能な作業領域です。一部のシステムツールは、ブートボリュームで破損したセクターを別の場所に割り当て直すためにも、このパーティションを使います。ファイルシステムはありません。</li>
 <li><strong>ブートパーティション</strong>：Windows をインストールし、その起動ファイルを置くパーティションです。通常、システムパーティションとは別です。固定ディスクにインストールした Windows が起動に使えるファイルシステムは NTFS に限られるため、このパーティションも NTFS でフォーマットします。</li>
