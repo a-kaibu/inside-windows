@@ -4,6 +4,7 @@ import os
 
 from translate_pages import pages_ja
 from translate_new_pages import new_pages_ja
+from translate_full_pages import full_pages_ja
 
 print("Building unified ja.html (removing cover photo, copyright/imprint, and raw contents)...")
 
@@ -13,7 +14,7 @@ with open('part1.html', 'r', encoding='utf-8') as f:
 with open('part2.html', 'r', encoding='utf-8') as f:
     p2_html = f.read()
 
-translated_dict = {**pages_ja, **new_pages_ja}
+translated_dict = {**pages_ja, **new_pages_ja, **full_pages_ja}
 
 # 1. Header & Styles
 head_match = re.search(r'(<head>.*?</head>)', p1_html, re.DOTALL)
@@ -742,6 +743,7 @@ p2_omit |= {f"p2-page-{i}" for i in range(892, 913)}
 preserve_source_pages = {f"p2-page-{i}" for i in range(236, 275)}
 preserve_source_pages |= {f"p2-page-{i}" for i in (284, 285, 292, 293, 335)}
 preserve_source_pages |= {f"p2-page-{i}" for i in range(808, 913)}
+preserve_source_pages -= full_pages_ja.keys()
 
 def render_plain_translation(text):
     if re.search(r"<(?:p|h[1-6]|ul|ol|table|pre|div|details)\b", text, re.I):
