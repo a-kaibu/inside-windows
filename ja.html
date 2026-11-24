@@ -1678,13 +1678,13 @@ System プロセスのハンドルテーブルにはシステム内のすべて�
 デバッガーでは <code>_PS_PROTECTED_SIGNER</code> 型として確認できます。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表3-2 署名者とレベル</caption><thead><tr><th>署名者名（PS_PROTECTED_SIGNER）</th><th>レベル</th><th>用途</th></tr></thead><tbody>
 <tr><th scope="row"><code>PsProtectedSignerWinSystem</code></th><td>7</td><td>System プロセスと最小プロセス（Pico プロセスを含む）</td></tr>
-<tr><th scope="row"><code>PsProtectedSignerWinTcb</code></th><td>6</td><td>Windows の中核コンポーネント。終了権限は拒否されます。</td></tr>
+<tr><th scope="row"><code>PsProtectedSignerWinTcb</code></th><td>6</td><td>Windows の中核コンポーネント。終了権限（<code>PROCESS_TERMINATE</code>）は拒否されます。</td></tr>
 <tr><th scope="row"><code>PsProtectedSignerWindows</code></th><td>5</td><td>機密データを扱う重要な Windows コンポーネント</td></tr>
 <tr><th scope="row"><code>PsProtectedSignerLsa</code></th><td>4</td><td>保護モードに設定された Lsass.exe</td></tr>
-<tr><th scope="row"><code>PsProtectedSignerAntimalware</code></th><td>3</td><td>サードパーティー製品を含むマルウェア対策サービスとプロセス。終了権限は拒否されます。</td></tr>
+<tr><th scope="row"><code>PsProtectedSignerAntimalware</code></th><td>3</td><td>サードパーティー製品を含むマルウェア対策サービスとプロセス。終了権限（<code>PROCESS_TERMINATE</code>）は拒否されます。</td></tr>
 <tr><th scope="row"><code>PsProtectedSignerCodeGen</code></th><td>2</td><td>NGEN（.NET のネイティブコード生成）</td></tr>
 <tr><th scope="row"><code>PsProtectedSignerAuthenticode</code></th><td>1</td><td>DRM コンテンツのホストやユーザーモードフォントのロード</td></tr>
-<tr><th scope="row"><code>PsProtectedSignerNone</code></th><td>0</td><td>保護なし</td></tr>
+<tr><th scope="row"><code>PsProtectedSignerNone</code></th><td>0</td><td>保護に使える署名者ではありません（保護なし）。</td></tr>
 </tbody></table></div>
 <p>悪意のあるプロセスが自分を保護プロセスだと名乗り、マルウェア対策アプリケーションからのアクセスを防げないように、Windows はコード署名の証明書を検証します。
 保護プロセスとして動くために Windows Media DRM 証明書が必須ではなくなったため、Microsoft はコード整合性モジュールを拡張し、コード署名証明書に含まれる特別な拡張キー使用法（EKU）の識別子を認識できるようにしました。
