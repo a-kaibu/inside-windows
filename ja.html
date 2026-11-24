@@ -960,8 +960,8 @@ ntdll!NtCreateFile:
 00007ffa&#x27;9f4e5b24 c3              ret
 00007ffa&#x27;9f4e5b25 cd2e            int     2Eh
 00007ffa&#x27;9f4e5b27 c3              ret</pre>
-<p><code>EAX</code> にシステムサービス番号が入ります。この例の Windows 10 Pro x64 では16進数の <code>55</code> です。<code>syscall</code> 命令によってプロセッサーはカーネルモードに移り、システムサービスディスパッチャーは <code>EAX</code> の値を使って <code>NtCreateFile</code> を選びます。その前に、共有ユーザーデータのオフセット <code>0x308</code> にあるフラグを検査しています。この構造体については第4章を参照してください。フラグがセットされていれば、<code>syscall</code> の代わりに <code>int 2Eh</code> を実行します。第7章で説明する Credential Guard を有効にすると、このフラグがセットされます。ハイパーバイザーは <code>syscall</code> より <code>int</code> のほうを効率よく処理できるためです。</p>
-<p><code>syscall</code> と <code>int</code> の動作を含め、詳細は第2部の第8章で説明します。同じ方法で、<code>NtReadFile</code>、<code>NtWriteFile</code>、<code>NtClose</code> などのネイティブサービスも確認できます。</p>
+<p><code>EAX</code> にシステムサービス番号が入ります。この例の Windows 10 Pro x64 では16進数の <code>55</code> です。<code>syscall</code> 命令によってプロセッサーはカーネルモードに移り、システムサービスディスパッチャーは <code>EAX</code> の値を使って <code>NtCreateFile</code> を選びます。その前に、共有ユーザーデータのオフセット <code>0x308</code> にあるバイトを、マスク <code>1</code> で検査しています。この構造体については第4章を参照してください。フラグがセットされていれば、<code>syscall</code> の代わりに <code>int 2Eh</code> を実行します。第7章で説明する Credential Guard を有効にすると、このフラグがセットされます。ハイパーバイザーは <code>syscall</code> より <code>int</code> のほうを効率よく処理できるためです。</p>
+<p><code>syscall</code> と <code>int</code> の動作を含め、詳細は、第2部の第8章「<a href="#システムサービスの処理">システムサービスの処理</a>」で説明します。同じ方法で、<code>NtReadFile</code>、<code>NtWriteFile</code>、<code>NtClose</code> などのネイティブサービスも確認できます。</p>
 <p>仮想化ベースのセキュリティの節で説明したように、分離ユーザーモード（IUM）のアプリケーションは、<code>Ntdll.dll</code> に相当する <code>IumDll.dll</code> を使います。こちらにもシステムコールがありますが、番号は異なります。Credential Guard が有効な環境では、WinDbg の「File」メニューで「Open Crash Dump」を選び、<code>IumDll.dll</code> を開いて同様に調べられます。次の出力例ではシステムコール番号の上位ビットがセットされています。共有ユーザーデータの検査はなく、常に <code>syscall</code> を使います。これをセキュアシステムコールと呼びます。</p>
 <pre>0:000&gt; u iumdll!IumCrypto
 iumdll!IumCrypto:
