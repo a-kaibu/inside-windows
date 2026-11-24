@@ -13241,7 +13241,8 @@ Windows には、DPC 関連の問題の診断に役立つさまざまなパフ�
 表示が更新されるたびに、前回の更新から今回の更新までに発生した割り込みと、実行された DPC の件数が表示されます。
 既定の更新間隔は1秒です。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/050bb5d9a5b8883418d71b03.webp" alt="Process Explorer の CPU タブに割り込みと DPC の件数を表示した原本ページ">
+<img loading="lazy" width="627" height="455" src="assets/b2d40760255c3d150758860b.webp" alt="Process Explorer のシステム情報にある CPU タブ">
+<img loading="lazy" width="550" height="197" src="assets/136e7c19d31d24c77cd58dfa.webp" alt="割り込みと DPC の件数の拡大表示">
 <figcaption>Process Explorer に表示された割り込みと DPC の件数</figcaption>
 </figure></section><section class="page" id="p2-page-90" aria-label="p2-page-90"><p>カーネルデバッガーでは、<code>DpcRequestRate</code>、<code>DpcLastCount</code>、<code>DpcTime</code>、<code>DpcData</code> など、<code>KPRCB</code> 内の <code>Dpc</code> で始まるフィールドも調べられます。
 <code>DpcData</code> は、スレッド化されていない DPC とスレッド化 DPC の両方について、<code>DpcQueueDepth</code> と <code>DpcCount</code> を保持します。
@@ -13279,7 +13280,7 @@ IRQL を戻すケースとして、ドライバーが DPC を実行している�
 図8-18のシステムには論理プロセッサーが16個あり、アイドルスレッドと DPC デリゲートスレッドが16個ずつあります。
 デリゲートスレッドには実際のスレッド ID（TID）があり、この表示では「Processor」列をそのスレッドの TID として読みます。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/3975c8b4a1cb624df8b0cd24.webp" alt="16個の論理プロセッサーに対応する DPC デリゲートスレッドの一覧を含む原本ページ">
+<img loading="lazy" width="318" height="598" src="assets/57e8d5419d2ed22ace7b6552.webp" alt="16個の論理プロセッサーに対応する DPC デリゲートスレッドの一覧">
 <figcaption>図8-18　16個の論理プロセッサーを持つシステムの DPC デリゲートスレッド</figcaption>
 </figure></section><section class="page" id="p2-page-92" aria-label="p2-page-92"><p>カーネルは DPC をディスパッチするたびに、長時間実行される DPC がキューにどれだけたまっているかを調べます。
 しきい値は既定で2ですが、前に示したレジストリキーで変更できます。
@@ -13478,7 +13479,7 @@ Windows は早い時期から、システムのクロック割り込み間隔を
 開発者やシステム管理者は、この情報を使って、ほかに問題のないシステムでバッテリーの持ちが悪い原因を特定したり、大規模システム全体の消費電力を減らしたりできます。
 <code>powercfg /energy</code> を実行すると、図のような HTML ファイル <code>energy-report.html</code> が作成されます。</p>
 <figure>
-<img loading="lazy" width="770" height="953" src="assets/18b39db391ebcd5dd5ef6bd9.webp" alt="powercfg のエネルギー効率レポートの画面を含む原本ページ">
+<img loading="lazy" width="649" height="563" src="assets/6f1fdd5dc1cd84846cf48249.webp" alt="powercfg のエネルギー効率レポート">
 <figcaption>エネルギー効率レポートに表示されたタイマー分解能の情報</figcaption>
 </figure></section><section class="page" id="p2-page-100" aria-label="p2-page-100"><p>［Platform Timer Resolution］までスクロールすると、タイマー分解能を変更し、現在も動作中のアプリケーションが、要求を発行したときのコールスタックとともに表示されます。
 タイマー分解能は100ナノ秒単位で表示されるため、20,000は2ミリ秒に相当します。
