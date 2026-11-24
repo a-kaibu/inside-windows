@@ -19088,3 +19088,8 @@ full_pages_ja['p2-page-538'] = full_pages_ja['p2-page-538'].replace(
     '<code>EnableTrace</code> API で要求したセッションでプロバイダーを有効にできるようになります。',
     'コントローラーは <code>EnableTrace</code> API を使って、対象セッションでプロバイダーを有効にできます。',
 )
+
+full_pages_ja['p2-page-541'] = full_pages_ja['p2-page-541'].replace(
+    'プロバイダーに関連付けられたセッションはありません。',
+    'そのプロバイダー登録からイベントを書き込めるセッションはありません。',
+)
