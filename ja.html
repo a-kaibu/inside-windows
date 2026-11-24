@@ -3377,7 +3377,7 @@ HardErrorMode:        0</pre></li>
 </ol>
 <p>図4-4の <code>CSR_THREAD</code> は、プロセス用の <code>CSR_PROCESS</code> に対応する、スレッド用の構造体です。セッション内の Csrss プロセスが管理し、そのセッションで動く Windows サブシステムのスレッドを識別します。<code>CSR_THREAD</code> には、Csrss が保持するスレッドのハンドル、各種フラグ、クライアント ID（スレッド ID とプロセス ID）、スレッドの作成時刻のコピーが格納されます。スレッドが Csrss に最初のメッセージを送ると、そのスレッドが Csrss に登録されます。通常、これは何らかの操作や状態を Csrss に通知する必要がある API を呼び出したときに起こります。</p>
 <figure><img loading="lazy" width="373" height="170" src="assets/6565434f473aae6134973e3d.webp" alt="CSR_THREAD に格納されるハンドル、フラグ、クライアント ID、作成時刻"><figcaption>図4-4 CSR スレッドのフィールド</figcaption></figure></section><section class="page" id="page-223" aria-label="page-223"><h4 id="実験-CSR_THREAD-の内容を確認する">実験：CSR_THREAD の内容を確認する</h4>
-<p>カーネルデバッガーで Csrss プロセスのコンテキストに切り替えてから <code>dt</code> コマンドを使うと、<code>CSR_THREAD</code> 構造体の内容を表示できます。コンテキストの切り替えは、第3章の実験「CSR_PROCESS の内容を確認する」の手順に従ってください。次は64ビット版 Windows 10 での出力例です。</p>
+<p>カーネルデバッガーで Csrss プロセスのコンテキストに切り替えてから <code>dt</code> コマンドを使うと、<code>CSR_THREAD</code> 構造体の内容を表示できます。コンテキストの切り替えは、第3章の実験「<a href="#実験-CSR_PROCESS-を調べる">CSR_PROCESS を調べる</a>」の手順に従ってください。次は64ビット版 Windows 10 での出力例です。</p>
 <pre>lkd&gt; dt csrss!_csr_thread
 +0x000 CreateTime       : _LARGE_INTEGER
 +0x008 Link             : _LIST_ENTRY
