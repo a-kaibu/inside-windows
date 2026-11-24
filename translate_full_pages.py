@@ -19018,3 +19018,8 @@ full_pages_ja['p2-page-508'] = full_pages_ja['p2-page-508'].replace(
     'システムの電源管理機能を取得します。',
     'システムが対応する電源管理機能の情報を取得します。',
 )
+
+full_pages_ja['p2-page-511'] = full_pages_ja['p2-page-511'].replace(
+    '実行するセキュリティプリンシパル',
+    'タスクの実行主体となるセキュリティプリンシパル',
+)

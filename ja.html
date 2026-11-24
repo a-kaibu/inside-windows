@@ -20912,7 +20912,7 @@ Value[1]   : 352550</pre>
 <p>タスクストアはタスク記述子を XML ファイルとレジストリの両方に保存します。この実験では、両方の形式を確認します。Cortana の検索ボックスに <code>taskschd.msc</code> と入力し、タスクスケジューラを開きます。「タスク スケジューラ ライブラリ」から <code>Microsoft&#92;Windows</code> フォルダーまで展開します。各サブフォルダーを調べ、「操作」タブに「カスタム ハンドラー」と表示されるタスクを探します。この操作の種類は COM ホスト型のタスクを表します。スナップインはこの種類の操作の設定には対応していません。この例では <code>MemoryDiagnostic</code> フォルダーの <code>ProcessMemoryDiagnosticEvents</code> を使います。「カスタム ハンドラー」と表示される別のタスクでも実験できます。</p>
 <figure><img loading="lazy" width="648" height="412" src="assets/890c6bebdfff14d8038f2629.webp" alt="タスクスケジューラの操作タブに表示されたカスタムハンドラー"><figcaption>COM ホスト型のタスクに設定されたカスタムハンドラー。</figcaption></figure>
 <p>Cortana の検索ボックスに <code>CMD</code> と入力し、「管理者として実行」を選んでコマンドプロンプトを開きます。次のコマンドを入力します。別のタスクを選んだ場合は、そのタスクのパスに置き換えてください。</p>
-<pre><code>schtasks /query /tn "Microsoft&#92;Windows&#92;MemoryDiagnostic&#92;ProcessMemoryDiagnosticEvents" /xml</code></pre></section><section class="page" id="p2-page-511" aria-label="p2-page-511"><p>出力にはタスクの XML 記述子が表示されます。この記述子には、許可されていない主体がタスクを開くのを防ぐセキュリティ記述子、タスクの作成者と説明、実行するセキュリティプリンシパル、タスクの設定、トリガー、アクションが含まれます。</p>
+<pre><code>schtasks /query /tn "Microsoft&#92;Windows&#92;MemoryDiagnostic&#92;ProcessMemoryDiagnosticEvents" /xml</code></pre></section><section class="page" id="p2-page-511" aria-label="p2-page-511"><p>出力にはタスクの XML 記述子が表示されます。この記述子には、許可されていない主体がタスクを開くのを防ぐセキュリティ記述子、タスクの作成者と説明、タスクの実行主体となるセキュリティプリンシパル、タスクの設定、トリガー、アクションが含まれます。</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-16&quot;?&gt;
 &lt;Task xmlns=&quot;http://schemas.microsoft.com/windows/2004/02/mit/task&quot;&gt;
 &lt;RegistrationInfo&gt;
