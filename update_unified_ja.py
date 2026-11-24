@@ -6,7 +6,7 @@ from translate_pages import pages_ja
 from translate_new_pages import new_pages_ja
 from translate_full_pages import full_pages_ja
 
-print("Building unified ja.html (removing cover photo, copyright/imprint, and raw contents)...")
+print("Building unified ja.html (removing cover photo, raw contents, and index)...")
 
 with open('part1.html', 'r', encoding='utf-8') as f:
     p1_html = f.read()
@@ -732,11 +732,11 @@ unified_intro = ""
 
 # Pages to omit:
 # Part 1: page-1 (Cover), page-2 (Title Page), page-3 (Copyright), page-4..page-11 (Contents)
-p1_omit = {f"page-{i}" for i in range(1, 12) if i != 2} | {"page-117", "page-209"}
+p1_omit = {f"page-{i}" for i in range(1, 12) if i not in (2, 3)} | {"page-117", "page-209"}
 p1_omit |= {f"page-{i}" for i in range(788, 802)}
 
 # Part 2: p2-page-1 (Cover), p2-page-2 (Title), p2-page-3 (Copyright), p2-page-4..p2-page-18 (Contents at a Glance / Contents)
-p2_omit = {f"p2-page-{i}" for i in range(1, 19) if i not in (2, 4)}
+p2_omit = {f"p2-page-{i}" for i in range(1, 19) if i not in (2, 3, 4)}
 p2_omit |= {f"p2-page-{i}" for i in range(892, 913)}
 
 def render_plain_translation(text):

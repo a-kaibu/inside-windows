@@ -18496,3 +18496,53 @@ full_pages_ja['page-2'] = """<h2>Windows Internals 第7版 第1部</h2>
 
 full_pages_ja['p2-page-2'] = """<h2>Windows Internals 第7版 第2部</h2>
 <p>Andrea Allievi、Alex Ionescu、Mark E. Russinovich、David A. Solomon</p>"""
+
+
+full_pages_ja['page-3'] = """<h3>第1部の出版情報と献辞</h3>
+<p>発行元は Microsoft Corporation の一部門である Microsoft Press です。所在地は One Microsoft Way, Redmond, Washington 98052-6399 です。</p>
+<p>© 2017 Pavel Yosifovich、Alex Ionescu、Mark E. Russinovich、David A. Solomon。無断転載を禁じます。本書のいかなる部分も、発行元の書面による許可なく、形式や手段を問わず複製または送信することはできません。</p>
+<p>米国議会図書館管理番号は 2014951935、ISBN は 978-0-7356-8418-8 です。米国内で印刷・製本された初刷です。</p>
+<p>Microsoft Press の書籍は、世界各地の書店と販売代理店から入手できます。本書のサポート窓口は mspinput@microsoft.com です。本書へのご意見は <a href="https://aka.ms/tellpress">Microsoft Press の窓口</a>へお寄せください。</p>
+<p>本書は現状のまま提供され、著者の見解と意見を述べたものです。本書に記載した見解、意見、情報は、URL やウェブサイトへの参照を含め、予告なく変更されることがあります。</p>
+<p>一部の例は説明用の架空のものです。実在の対象との関係を意図したものではなく、そのような関係があると解釈すべきではありません。</p>
+<p>Microsoft および Microsoft のウェブサイトの商標ページに記載されている商標は Microsoft グループの商標です。その他の標章は各権利者に帰属します。</p>
+<ul>
+<li>企画編集　Devon Musgrave</li>
+<li>編集制作　Polymath Publishing</li>
+<li>技術査読　Christophe Nasarre</li>
+<li>組版　Shawn Morningstar</li>
+<li>索引作成　Kelly Talbot Editing Services</li>
+<li>校正　Corina Lebegioara</li>
+<li>表紙　Twist Creative（シアトル）</li>
+</ul>
+<p>妻のイディット、子どもたちのダニエル、アミット、ヨアヴへ。この大変な仕事の間、辛抱強く支え、励ましてくれてありがとう。</p>
+<p>Pavel Yosifovich</p>
+<p>夢を追うよう導き、励ましてくれた両親と、数え切れないほどの夜を支えてくれた家族へ。</p>
+<p>Alex Ionescu</p>
+<p>夢を追うよう導き、励ましてくれた私たちの両親へ。</p>
+<p>Mark E. Russinovich、David A. Solomon</p>"""
+
+full_pages_ja['p2-page-3'] = """<h3>第2部の出版情報</h3>
+<ul>
+<li>編集長　Brett Bartow</li>
+<li>開発編集　Mark Renfrow</li>
+<li>編集責任者　Sandra Schroeder</li>
+<li>上級プロジェクト編集　Tracey Croom</li>
+<li>編集統括　Loretta Yates</li>
+<li>制作編集　Dan Foster</li>
+<li>原稿校閲　Charlotte Kughen</li>
+<li>索引作成　Valerie Haynes Perry</li>
+<li>校正　Dan Foster</li>
+<li>技術編集　Christophe Nasarre</li>
+<li>編集補佐　Cindy Teeters</li>
+<li>表紙デザイン　Twist Creative（シアトル）</li>
+<li>組版　Danielle Foster</li>
+<li>図版　Vived Graphics</li>
+</ul>
+<p>『Windows Internals 第7版 第2部』は、Microsoft Corporation の許諾を受けて Pearson Education, Inc. が発行しています。© 2022 Pearson Education, Inc. 無断転載を禁じます。</p>
+<p>本書は著作権で保護されています。電子的・機械的手段、複写、録音など、形式や手段を問わず、禁止されている複製、検索システムへの保存、送信を行うには、事前に発行元の許可を得る必要があります。許諾に関する情報、申請書、Pearson Education の権利許諾部門の連絡先は、<a href="https://www.pearson.com/permissions">権利許諾ページ</a>で確認できます。</p>
+<p>本書の情報の利用について、特許に関する責任は負いません。制作時には十分な注意を払っていますが、発行元と著者は誤りや記載漏れについて責任を負わず、本書の情報の利用による損害についても責任を負いません。</p>
+<p>ISBN-13 は 978-0-13-546240-9、ISBN-10 は 0-13-546240-1 です。米国議会図書館管理番号は 2021939878 です。印刷コード表記は ScoutAutomatedPrintCode です。</p>
+<p>Microsoft および Microsoft のウェブサイトの商標ページに記載されている商標は Microsoft グループの商標です。その他の標章は各権利者に帰属します。</p>
+<p>本書は可能な限り完全かつ正確になるよう制作しましたが、保証や特定の用途への適合性を示すものではありません。情報は現状のまま提供されます。著者、発行元、Microsoft Corporation は、本書の情報や付属プログラムの利用により生じた損失または損害について、いかなる個人または団体に対しても責任を負いません。</p>
+<p>大量購入や特別販売については、法人営業部門（corpsales@pearsoned.com、(800) 382-3419）へお問い合わせください。電子版、特別な表紙、事業、研修、マーケティング、ブランディングに合わせた内容も相談できます。政府機関向けの販売は governmentsales@pearsoned.com、米国外での販売は intlcs@pearson.com が窓口です。</p>"""
