@@ -18302,3 +18302,8 @@ full_pages_ja['page-570'] = full_pages_ja['page-570'].replace(
     'クラッシュ解析での使い方は Part 2 の第15章を参照してください。',
     'クラッシュの原因を切り分ける際に Driver Verifier が果たす役割は、第2部の第15章で説明します。',
 )
+
+full_pages_ja['page-575'] = full_pages_ja['page-575'].replace(
+    'Driver Verifier のその他の検査には、プール内でまだ使用中のシステム構造体が解放されたことを検出するものがあります。',
+    'Driver Verifier のその他の検査には、まだ使用中のシステム構造体を含むプール領域が解放されたことを検出するものがあります。',
+)

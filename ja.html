@@ -8419,7 +8419,7 @@ Args: 00000000 00000000 83360020 00000000</pre>
 <h4 id="Systematic-Low-Resources-Simulation-体系的なリソース不足のシミュレーション">Systematic Low Resources Simulation（体系的なリソース不足のシミュレーション）</h4>
 <p>このオプションも Low Resources Simulation と同様に、カーネルおよびネットワークドライバー用の <code>Ndis.sys</code> に対する特定の呼び出しを失敗させます。障害を注入する時点のコールスタックを調べ、体系的に検証を進めます。ドライバーが失敗を正しく処理すれば、同じコールスタックには再び障害を注入しません。開発者は報告された問題を1つずつ修正し、次の問題に進めます。コールスタックの調査には比較的コストがかかるため、この設定で複数のドライバーを同時に検証することは推奨されません。</p>
 <h4 id="その他の検査">その他の検査</h4>
-<p>Driver Verifier のその他の検査には、プール内でまだ使用中のシステム構造体が解放されたことを検出するものがあります。たとえば、次の操作を検査します。</p>
+<p>Driver Verifier のその他の検査には、まだ使用中のシステム構造体を含むプール領域が解放されたことを検出するものがあります。たとえば、次の操作を検査します。</p>
 <ul>
 <li><strong>解放領域に残るワーク項目</strong>　ドライバーが <code>IoQueueWorkItem</code> でキューに入れたワーク項目が残るプールブロックを、<code>ExFreePool</code> で解放する。</li>
 <li><strong>解放領域に残るリソース</strong>　ドライバーが <code>ExDeleteResource</code> で <code>ERESOURCE</code> オブジェクトを破棄する前に、<code>ExFreePool</code> を呼び出す。</li>
