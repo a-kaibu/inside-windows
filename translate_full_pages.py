@@ -15741,7 +15741,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'を調べ、セーフモードかどうかを判断します。セーフモードの場合、SCM は <code>IopSafebootDriverLoad</code> '
                 'と同様の判定を行います。<code>HKLM\\SYSTEM\\CurrentControlSet\\Services</code> '
                 'に列挙されたサービスを調べ、対応するセーフモードのサブキーで名前を指定したサービスだけを読み込みます。</p>',
- 'p2-page-881': '<p>SCM の初期化については、第10章「サービス」を参照してください。</p>\n'
+ 'p2-page-881': '<p>SCM の初期化については、第10章「<a href="#サービスコントロールマネージャー-SCM">サービスコントロールマネージャー（SCM）</a>」を参照してください。</p>\n'
                 '<p>ユーザーのログオン時に環境を初期化する '
                 'Userinit（<code>%SystemRoot%\\System32\\Userinit.exe</code>）も、起動モードを確認する必要があるユーザーモードコンポーネントです。Userinit '
                 'は '
