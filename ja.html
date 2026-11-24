@@ -3355,7 +3355,7 @@ ffffe0012c87b400  SynchronizationEvent
 <pre>lkd&gt; .thread /p ffffe0012bf53080
 Implicit thread is now ffffe001&#x27;2bf53080
 Implicit process is now ffffe001&#x27;2bea7840</pre></li>
-<li>これで、指定したスレッドと、その親プロセスのコンテキストに切り替わりました。次に、一覧に表示されたそのスレッドの TEB アドレスを <code>!teb</code> に渡します。
+<li>これでデバッガーは指定したスレッドのコンテキストに切り替わり、そのスレッドが属するプロセスのアドレス空間を参照できるようになります。次に、一覧に表示されたそのスレッドの TEB アドレスを <code>!teb</code> に渡します。
 <pre>lkd&gt; !teb 0000000000252000
 TEB at 0000000000252000
 ExceptionList:        0000000000000000
