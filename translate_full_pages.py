@@ -18360,3 +18360,9 @@ full_pages_ja['page-599'] = full_pages_ja['page-599'].replace(
     'に割り当てられるすべてのリソース範囲を、<code>WDFIORESLIST</code> の配列で表します。',
     'に割り当て可能なリソース範囲のすべての候補を、<code>WDFIORESLIST</code> の配列で表します。',
 )
+
+full_pages_ja['page-602'] = (
+    full_pages_ja['page-602']
+    .replace('ファンクションドライバー', '機能ドライバー')
+    .replace('ドライバーが登録したイベントを通知し', 'ドライバーが通知を登録したイベントが発生すると、そのドライバーに通知し')
+)
