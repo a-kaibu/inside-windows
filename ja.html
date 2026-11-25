@@ -7087,17 +7087,15 @@ TotalNodeMemory:      ( 31 Gb 904 Mb 532 Kb )</pre>
 <pre>0: kd&gt; !process 0 0 memcombinetest.exe
 PROCESS ffffe70a3cb29080
 SessionId: 2  Cid: 0728    Peb: 00d08000  ParentCid: 11c4
-DirBase: c7c95000  ObjectTable: ffff918ede582640  HandleCount: &lt;Data Not
-Accessible&gt;
+DirBase: c7c95000  ObjectTable: ffff918ede582640  HandleCount: &lt;データにアクセスできません&gt;
 Image: MemCombineTest.exe</pre>
 </li>
 <li>見つけたプロセスのコンテキストに切り替えます。
 <pre>0: kd&gt; .process /i /r ffffe70a3cb29080
-You need to continue execution (press &#x27;g&#x27; &lt;enter&gt;) for the context
-to be switched. When the debugger breaks in again, you will be in
-the new process context.
+プロセスのコンテキストを切り替えるには、g と入力して Enter キーを押し、実行を再開してください。
+デバッガーが次に実行を停止したとき、新しいプロセスのコンテキストに切り替わっています。
 0: kd&gt; g
-Break instruction exception - code 80000003 (first chance)
+ブレーク命令の例外、コード 80000003（初回通知）
 nt!DbgBreakPointWithStatus:
 fffff801&#x27;94b691c0 cc              int     3</pre>
 </li>
