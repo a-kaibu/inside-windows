@@ -21347,7 +21347,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>ダイアログでログに名前を付け、表示先のフォルダーを選びます。この例では、既定の名前 <code>process_trace</code> と「保存されたログ」フォルダーを使います。</li>
 </ol></section><section class="page" id="p2-page-546" aria-label="p2-page-546"><ol start="8">
 <li>イベントビューアーにログ内のイベントが表示されます。「日付と時刻」列をクリックして古い順に並べます。Ctrl+F で <code>ProcessStart</code> を検索すると、メモ帳のプロセスを作成したイベントが見つかります。
-<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>
+<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。ソースは Kernel-Process で、イベント ID は 1、タスクのカテゴリはプロセス開始（ProcessStart）です。レベルは情報（Information）、操作コードは開始（Start）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>
 <li>説明のない <code>ThreadWorkOnBehalfUpdate</code> が多数記録されるため、収集対象から外します。このイベントを選び、「詳細」タブの「System」を展開すると、キーワードのビットマスクが <code>0x8000000000002000</code> の <code>WINEVENT_KEYWORD_WORK_ON_BEHALF</code> カテゴリであることがわかります。上位16ビットは Microsoft が定義するカテゴリ用です。この64ビット値の全ビットを反転すると <code>0x7FFFFFFFFFFFDFFF</code> になります。</li>
 <li>イベントビューアーを閉じ、次のコマンドで新しいトレースを収集します。
 <pre><code>xperf -start TestSession -on Microsoft-Windows-Kernel-Process:0x7FFFFFFFFFFFDFFF -f c:&#92;process_trace.etl</code></pre></li>

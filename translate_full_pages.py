@@ -6330,7 +6330,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'に変換します。デコードしたログのサイズは小さくなり、<code>ThreadWorkOnBehalfUpdate</code> は記録されていません。</li>\n'
                 '</ol>\n'
                 '<figure><img loading="lazy" width="587" height="384" '
-                'src="assets/addbf40d0d755fc39c34023c.webp" alt="原文の図（第2巻 PDF 546ページ）"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>',
+                'src="assets/addbf40d0d755fc39c34023c.webp" alt="原文の図（第2巻 PDF 546ページ）"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。ソースは Kernel-Process で、イベント ID は 1、タスクのカテゴリはプロセス開始（ProcessStart）です。レベルは情報（Information）、操作コードは開始（Start）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>',
  'p2-page-547': '<h4>システムロガー</h4>\n'
                 '<p>Windows XP 以降の ETW は、通常のセッションとプロバイダーに加えて、システムロガーをサポートしています。システムロガーを使うと、NT '
                 'カーネルは特定のプロバイダーに属さないイベントをシステム全体で記録できます。主な用途は性能測定です。執筆時点の主なシステムロガーは NT '
@@ -19106,8 +19106,8 @@ full_pages_ja['p2-page-545'] = full_pages_ja['p2-page-545'].replace(
 
 full_pages_ja['p2-page-546'] = (
     full_pages_ja['p2-page-546']
-    .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>')
-    .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>')
+    .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。ソースは Kernel-Process で、イベント ID は 1、タスクのカテゴリはプロセス開始（ProcessStart）です。レベルは情報（Information）、操作コードは開始（Start）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>')
+    .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。ソースは Kernel-Process で、イベント ID は 1、タスクのカテゴリはプロセス開始（ProcessStart）です。レベルは情報（Information）、操作コードは開始（Start）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
