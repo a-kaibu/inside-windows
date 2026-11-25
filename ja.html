@@ -3723,7 +3723,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>インスタンス欄で「すべてのインスタンス」を選びます。<code>cpustres</code> と入力し、「検索」をクリックします。</li>
 <li>最初の3つのスレッド（<code>cpustres/0</code>、<code>cpustres/1</code>、<code>cpustres/2</code>）を選び、「追加 &gt;&gt;」、続いて「OK」をクリックします。スレッド0は GUI スレッドで、ユーザーの入力を待っているため、状態5（待機中）になるはずです。スレッド1と2は状態2（実行中）と状態5を行き来します。両者は活動レベルと優先度が同じため、グラフ上でスレッド1の線がスレッド2の線に重なる場合があります。</li>
 </ol></section><section class="page" id="page-243" aria-label="page-243"><figure><img loading="lazy" width="562" height="364" src="assets/6b56f1a7c2b6b9184cbfec21.webp" alt="スレッド1と2が実行中と待機中を行き来するグラフ"><figcaption>パフォーマンスモニターに表示した CPU Stress のスレッド状態。横軸は時刻、縦軸は Thread State の値です。インスタンス 0 は値 5（待機中）に留まり、インスタンス 1 と 2 は値 5（待機中）と値 2（実行中）を行き来します。</figcaption></figure>
-<ol start="13"><li>CPU Stress に戻り、スレッド2を右クリックして、活動レベルのメニューから「Busy」を選びます。次のグラフのように、スレッド2はスレッド1より頻繁に状態2（実行中）になります。
+<ol start="13"><li>CPU Stress に戻り、スレッド2を右クリックして、活動レベルのメニューから「高負荷（Busy）」を選びます。次のグラフのように、スレッド2はスレッド1より頻繁に状態2（実行中）になります。
 <figure><img loading="lazy" width="562" height="364" src="assets/913a753caa1ab0f2ed6e2fe7.webp" alt="スレッド2の実行頻度が上がったグラフ"><figcaption>スレッド 2（青）の活動量を増やすと、値 2（実行中）を示す区間が増えます。値 5 は待機中を示します。</figcaption></figure></li>
 <li>スレッド1を右クリックし、活動レベルを「Maximum」にします。スレッド2にも同じ設定を行います。どちらも実質的に無限ループを実行するため、常に状態2になります。</li></ol></section><section class="page" id="page-244" aria-label="page-244"><figure><img loading="lazy" width="546" height="353" src="assets/79269a813b251c9f1335ed69.webp" alt="両方のスレッドが継続して実行中になるグラフ"><figcaption>両スレッドの活動量を最大にすると、どちらも値 2（実行中）を示します。2 本の線は重なっています。</figcaption></figure>
 <p>プロセッサが1つのシステムでは、一度に実行できるスレッドは1つです。次のグラフのように、2つのスレッドが状態1（実行可能）と状態2（実行中）を交互に取ります。</p>
@@ -3939,7 +3939,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>「システムの詳細設定」を開き、「詳細設定」タブの「パフォーマンス」にある「設定」をクリックします。開いたダイアログで「詳細設定」タブを選びます。</li>
 <li>「プログラム」を選びます。これで <code>PsPrioritySeparation</code> が2になります。</li>
 </ol></section><section class="page" id="page-261" aria-label="page-261"><ol start="4">
-<li>CPU Stress を起動し、スレッド1を右クリックして、コンテキストメニューから「Busy」を選びます。</li>
+<li>CPU Stress を起動し、スレッド1を右クリックして、コンテキストメニューから「高負荷（Busy）」を選びます。</li>
 <li>パフォーマンスモニターを起動します。</li>
 <li>ツールバーのカウンター追加ボタンをクリックするか、Ctrl+I を押して、「カウンターの追加」ダイアログを開きます。</li>
 <li>オブジェクト「スレッド（Thread）」を選び、カウンター「現在の優先度（Priority Current）」を選びます。</li>
@@ -3949,7 +3949,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>「OK」をクリックします。</li>
 <li>カウンターを右クリックし、「プロパティ」を選びます。</li>
 <li>「グラフ」タブを開き、縦軸の最大値を16に変更して「OK」をクリックします。</li>
-<li>CPU Stress のウィンドウをフォアグラウンドに移します。対象スレッドの優先度が2段階上がり、そのあと徐々に下がって基本優先度に戻る様子を確認できます。「Busy」では、スレッドは時間の約25%をスリープに費やし、スリープが終わるたびに優先度が2段階上がります。活動レベルを「Maximum」にすると、スレッドが無限ループに入り、待機関数を呼ばなくなるため、ブーストは観察できません。</li>
+<li>CPU Stress のウィンドウをフォアグラウンドに移します。対象スレッドの優先度が2段階上がり、そのあと徐々に下がって基本優先度に戻る様子を確認できます。「高負荷（Busy）」では、スレッドは時間の約25%をスリープに費やし、スリープが終わるたびに優先度が2段階上がります。活動レベルを「Maximum」にすると、スレッドが無限ループに入り、待機関数を呼ばなくなるため、ブーストは観察できません。</li>
 </ol></section><section class="page" id="page-262" aria-label="page-262"><figure><img loading="lazy" width="569" height="409" src="assets/ce585eb9acfab4a731f8a94f.webp" alt="CPUSTRES のスレッドの優先度が上がり、基本優先度に戻る様子を示すグラフ"><figcaption>CPUSTRES のスレッド 1 の現在の優先度。横軸は時刻、縦軸は優先度です。優先度は基本値 8 から一時的に 10 に上がり、8 に戻ります。</figcaption></figure>
 <ol start="14"><li>観察を終えたら、パフォーマンスモニターと CPU Stress を終了します。</li></ol>
 <h5 id="GUI-スレッドの待機解除後の優先度ブースト">GUI スレッドの待機解除後の優先度ブースト</h5>
@@ -4044,7 +4044,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>CPU Stress を起動します。</li>
 <li>スレッド1の活動レベルを「Maximum」にします。</li>
 <li>スレッド1の優先度を「Normal」から「Time Critical」に変更します。</li>
-<li>CPUSTRES の優先度クラスを「High」に変更します。</li>
+<li>CPUSTRES の優先度クラスを「高（High）」に変更します。</li>
 <li>CPUSTRES のアフィニティを変更し、Wmplayer と同じ CPU だけを使うようにします。システムの応答は大幅に遅くなりますが、音楽の再生は続きます。システムのほかの部分も、ときどき応答が戻ります。</li>
 <li>パフォーマンスモニターで、Wmplayer のスレッドの優先度が、ときどき16から下がる様子を確認します。
 <figure><img loading="lazy" width="550" height="405" src="assets/1892d00d833911b435559d5d.webp" alt="Wmplayer のスレッドの優先度が16から一時的に下がるグラフ"><figcaption>Windows Media Player のスレッドごとの現在の優先度（Priority Current）。横軸は時刻、縦軸は優先度です。一部のスレッドの優先度は 16 から一時的に下がります。</figcaption></figure></li>
@@ -4528,7 +4528,7 @@ Flags: 0 (0x0)  Parked: False  Allocated: False  Realtime: False  Tag: 0
 <li>記録したトレースを WPA で開き、「Utilization by CPU」を表示します。</li>
 <li>「CPU 0」を展開します。ほとんどが CPUSTRES で、ときどき System プロセスも表示されます。
 <figure><img loading="lazy" width="237" height="220" src="assets/2e70f148397a62fd18bd89ec.webp" alt="設定変更後の CPU 0 で実行されたプロセスの一覧"><figcaption>設定変更後の CPU 0 のトレース。件数は 15 で、切り替え先は主に CPUSTRES.exe（PID 18276）です。System（PID 4）への切り替えも確認できます。</figcaption></figure></li>
-<li>「CPU Usage (in View) (ms)」列を見ると、System プロセスが使った時間はマイクロ秒単位で、ごくわずかです。CPU 0 が実質的に CPUSTRES 専用になったことがわかります。</li>
+<li>「表示範囲内の CPU 使用時間（ミリ秒）（CPU Usage (in View) (ms)）」列を見ると、System プロセスが使った時間はマイクロ秒単位で、ごくわずかです。CPU 0 が実質的に CPUSTRES 専用になったことがわかります。</li>
 <li>引数なしでもう一度 <code>CPUSET.exe</code> を実行します。最初のセット（CPU 0）には <code>Allocated: True</code> と表示されます。システム汎用の CPU から外れ、特定のプロセスに割り当てられたためです。</li>
 </ol></section><section class="page" id="page-300" aria-label="page-300"><ol start="22">
 <li>CPU Stress を終了します。</li>
@@ -4678,7 +4678,7 @@ Scheduling Group: ffffd28c089e7a40 KSCB: ffffd28c089e7c68 rank 0</pre>
 </ol></section><section class="page" id="page-309" aria-label="page-309"><ol start="8">
 <li>Ctrl+Alt+Del を押して「ユーザーの切り替え」を選びます。先ほど作成した別のユーザーのアカウントを選び、サインインします。</li>
 <li>このセッションでも CPU Stress を起動し、先ほどと同じ数のスレッドを最高の活動レベルで動かします。</li>
-<li>この CPUSTRES プロセスの「プロセス（Process）」メニューから「Priority Class」を開き、「High」を選びます。DFSS が無効なら、3つのプロセッサを4つのスレッドが取り合い、優先度の低いプロセスに属するスレッドの1つが実行機会を得られなくなるため、高い優先度クラスのプロセスが CPU 時間の大半を使います。</li>
+<li>この CPUSTRES プロセスの「プロセス（Process）」メニューから「Priority Class」を開き、「高（High）」を選びます。DFSS が無効なら、3つのプロセッサを4つのスレッドが取り合い、優先度の低いプロセスに属するスレッドの1つが実行機会を得られなくなるため、高い優先度クラスのプロセスが CPU 時間の大半を使います。</li>
 <li>Process Explorer を開き、2つの CPUSTRES プロセスをそれぞれダブルクリックして、「パフォーマンスグラフ（Performance Graph）」タブを選びます。</li>
 <li>両方のウィンドウを横に並べます。DFSS が有効な状態では、優先度クラスが異なる両プロセスに、ほぼ同じだけの CPU 時間が配分されます。
 <figure><img loading="lazy" width="590" height="159" src="assets/a6b6373646301f023ce6e703.webp" alt="DFSS が有効なとき、2つの CPUSTRES プロセスの CPU 使用量がおおむね等しいことを示すグラフ"><figcaption>DFSS が有効な状態で比較した CPU 使用率。左の CPUSTRES.EXE（PID 8328）は 41.90%、右の CPUSTRES.EXE（PID 6472）は 46.96% です。</figcaption></figure></li>
