@@ -24624,7 +24624,7 @@ NVDIMM ドライバーは物理デバイスを管理し、その正常性を監�
 <p>DAX ストレージドライバーモデルは、DAX ボリュームという種類のボリュームを導入します。
 <code>Format</code> ツールでパーティションを初めてフォーマットする際、コマンドラインに <code>/DAX</code> を指定できます。
 基盤のメディアが DAX ディスクで、GPT 形式でパーティション分割されている場合、ツールは NTFS に必要な基本データ構造を作る前に、<code>GPT_BASIC_DATA_ATTRIBUTE_DAX</code> 属性を書き込みます。</p>
-<figure><img loading="lazy" width="192" height="149" src="assets/653e131a0cc3dc6dc0c89a40.webp" alt="SCM ストレージドライバーモデルの図の一部（原文の図1）"></figure></section><section class="page" id="p2-page-754" aria-label="p2-page-754"><p>このフラグは対象ボリュームの GPT パーティションエントリのビット58に対応します。
+<figure><img loading="lazy" width="192" height="149" src="assets/653e131a0cc3dc6dc0c89a40.webp" alt="ケーブルで接続されたメモリモジュールと予備電源"></figure></section><section class="page" id="p2-page-754" aria-label="p2-page-754"><p>このフラグは対象ボリュームの GPT パーティションエントリのビット58に対応します。
 パーティションテーブルの構造については、<a href="https://en.wikipedia.org/wiki/GUID_Partition_Table">GUID パーティションテーブルの解説</a>を参照してください。</p>
 <p>NTFS ドライバーはボリュームをマウントするときにこのフラグを検出し、下位のストレージドライバーに <code>STORAGE_QUERY_PROPERTY</code> の制御要求を送ります。
 SCM バスドライバーがこの IOCTL を認識し、基盤のディスクが DAX ディスクであることを示す別のフラグをファイルシステムドライバーに返します。

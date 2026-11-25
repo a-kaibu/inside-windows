@@ -11638,7 +11638,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '基盤のメディアが DAX ディスクで、GPT 形式でパーティション分割されている場合、ツールは NTFS '
                 'に必要な基本データ構造を作る前に、<code>GPT_BASIC_DATA_ATTRIBUTE_DAX</code> 属性を書き込みます。</p>\n'
                 '<figure><img loading="lazy" width="192" height="149" '
-                'src="assets/653e131a0cc3dc6dc0c89a40.webp" alt="SCM ストレージドライバーモデルの図の一部（原文の図1）"></figure>',
+                'src="assets/653e131a0cc3dc6dc0c89a40.webp" alt="ケーブルで接続されたメモリモジュールと予備電源"></figure>',
  'p2-page-754': '<p>このフラグは対象ボリュームの GPT パーティションエントリのビット58に対応します。\n'
                 'パーティションテーブルの構造については、<a href="https://en.wikipedia.org/wiki/GUID_Partition_Table">GUID '
                 'パーティションテーブルの解説</a>を参照してください。</p>\n'
