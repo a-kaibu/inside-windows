@@ -3667,18 +3667,18 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>Process Explorer を開きます。</li>
 <li>メモ帳のプロセスをダブルクリックし、「Properties」ダイアログの「Threads」タブを開きます。</li>
 <li>スレッドが複数ある場合は、先頭のスレッドを選びます。次のように表示されます。
-<figure><img loading="lazy" width="326" height="378" src="assets/4632664584c7fa28bab70282.webp" alt="Process Explorer の Threads タブに表示されたメモ帳のスレッドと優先度"></figure></li>
+<figure><img loading="lazy" width="326" height="378" src="assets/4632664584c7fa28bab70282.webp" alt="Process Explorer の Threads タブに表示されたメモ帳のスレッドと優先度"><figcaption>メモ帳の「スレッド（Threads）」タブ。4 本のスレッドのうち、選択したスレッド（TID 11940）の状態はユーザー要求待ち（Wait:WrUserRequest）です。基本優先度（Base Priority）は 8、動的優先度（Dynamic Priority）は 10 です。</figcaption></figure></li>
 </ol></section><section class="page" id="page-238" aria-label="page-238"><ol start="9">
 <li>スレッドの優先度を確認します。基本優先度は8ですが、現在の動的優先度は10です。この差が生じる理由は、後述の「優先度のブースト」で説明します。</li>
 <li>必要に応じて、スレッドの一時停止や強制終了を試せます。どちらの操作も慎重に行ってください。</li>
 <li>タスクマネージャーでメモ帳のプロセスを右クリックし、「優先度の設定」から「高」を選びます。
 <figure><img loading="lazy" width="302" height="171" src="assets/2b0518ac388f3d2ecefe0ec9.webp" alt="タスクマネージャーの優先度設定メニューで「高」を選んだ画面"></figure></li>
 <li>確認ダイアログで変更を承認し、Process Explorer に戻ります。スレッドの基本優先度は「高」に対応する13に上がり、動的優先度も同じ幅だけ上がり、基本優先度との差は変わりません。
-<figure><img loading="lazy" width="326" height="378" src="assets/44da7efc0d101c6ef0fea036.webp" alt="変更後のメモ帳のスレッドの基本優先度と動的優先度を表示した Process Explorer"></figure></li>
+<figure><img loading="lazy" width="326" height="378" src="assets/44da7efc0d101c6ef0fea036.webp" alt="変更後のメモ帳のスレッドの基本優先度と動的優先度を表示した Process Explorer"><figcaption>プロセスの優先度クラスを「高」に変更したあとの表示。同じスレッド（TID 11940）の基本優先度は 13、動的優先度は 15 です。</figcaption></figure></li>
 <li>タスクマネージャーで優先度クラスを「リアルタイム」に変更します。変更にはマシンの管理者権限が必要です。Process Explorer でも同じ変更ができます。</li>
 </ol></section><section class="page" id="page-239" aria-label="page-239"><ol start="14">
 <li>Process Explorer で、スレッドの基本優先度と動的優先度がどちらも24になったことを確認します。カーネルは、リアルタイム優先度の範囲にあるスレッドの優先度を一時的に引き上げることはありません。
-<figure><img loading="lazy" width="316" height="367" src="assets/5a5d43e6f0ab1f488389d5ff.webp" alt="基本優先度と動的優先度がともに24になったメモ帳のスレッド"></figure></li>
+<figure><img loading="lazy" width="316" height="367" src="assets/5a5d43e6f0ab1f488389d5ff.webp" alt="基本優先度と動的優先度がともに24になったメモ帳のスレッド"><figcaption>同じスレッド（TID 11940）の基本優先度と動的優先度がともに 24 になった状態です。</figcaption></figure></li>
 </ol>
 <h4 id="Windows-システムリソースマネージャー">Windows システムリソースマネージャー</h4>
 <p>Windows Server 2012 R2 Standard Edition 以上の SKU には、オプションでインストールできる Windows システムリソースマネージャー（WSRM）があります。管理者は、プロセスの CPU 使用率、アフィニティ、物理メモリと仮想メモリの上限をポリシーで指定できます。WSRM は、利用量の計上や、ユーザーと取り交わしたサービスレベル契約の確認に使うリソース使用状況レポートも生成できます。</p>
