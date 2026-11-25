@@ -19438,3 +19438,9 @@ full_pages_ja['p2-page-79'] = full_pages_ja['p2-page-79'].replace(
     '<p>Interrupt Arbiter &quot;ACPI_IRQ&quot; at fffff804575415a0</p>',
     '<p>割り込みアービター <code>ACPI_IRQ</code> のアドレスは <code>fffff804575415a0</code> です。</p>',
 )
+
+
+full_pages_ja['page-758'] = full_pages_ja['page-758'].replace(
+    '<h4>Control Flow Guard</h4>',
+    '<h4>制御フロー ガード（CFG）</h4>',
+)
