@@ -19473,3 +19473,16 @@ for page, labels in (
         full_pages_ja[page] = full_pages_ja[page].replace(
             f'「{label}」', f'「{translated}（{label}）」',
         )
+
+
+full_pages_ja['p2-page-805'] = full_pages_ja['p2-page-805'].replace(
+    'システムが取り付けた各ディスクの種類を認識していることを確認します。',
+    'システムが取り付けた各ディスクの種類を認識していることを確認します。'
+    '出力にはデバイス ID（<code>DeviceId</code>）、表示名（<code>FriendlyName</code>）、'
+    '一意の ID（<code>UniqueID</code>）、容量（<code>Size</code>）、'
+    'メディアの種類（<code>MediaType</code>）、プールへの追加可否（<code>CanPool</code>）が並びます。',
+).replace(
+    '仮想環境では、基盤ディスクのメディアの種類をシステムが正しく識別できないことがあります。',
+    '仮想環境では、基盤ディスクのメディアの種類をシステムが正しく識別できないことがあります。'
+    '次の出力では、仮想ディスクの種類が「未指定」（<code>Unspecified</code>）と表示されています。',
+)

@@ -26047,7 +26047,7 @@ LRC では、故障したディスクと同じ行に属するディスクだけ�
 この実験では、Windows の起動ディスクに加え、空の SSD と空の回転式 HDD があるワークステーションで仮想階層化ディスクを作ります。
 Hyper-V でもこの構成を再現できます。その場合は一方の仮想ディスクファイルを SSD に、もう一方を回転式 HDD に置きます。</p>
 <p>スタートボタンを右クリックし、「Windows PowerShell（管理者）」を開きます。
-システムが取り付けた各ディスクの種類を認識していることを確認します。</p>
+システムが取り付けた各ディスクの種類を認識していることを確認します。出力にはデバイス ID（<code>DeviceId</code>）、表示名（<code>FriendlyName</code>）、一意の ID（<code>UniqueID</code>）、容量（<code>Size</code>）、メディアの種類（<code>MediaType</code>）、プールへの追加可否（<code>CanPool</code>）が並びます。</p>
 <pre><code>PS C:&#92;&gt; Get-PhysicalDisk | FT DeviceId, FriendlyName, UniqueID, Size, MediaType, CanPool
 DeviceId FriendlyName
                                    UniqueID
@@ -26069,7 +26069,7 @@ DeviceId FriendlyName
 <p>この例では SSD 2台と回転式 HDD 1台が識別されています。
 空のディスクの <code>CanPool</code> が <code>True</code> であることを確認します。
 そうでなければ、この例では有効なパーティションが残っており、プールで使う前に削除する必要があります。
-仮想環境では、基盤ディスクのメディアの種類をシステムが正しく識別できないことがあります。</p>
+仮想環境では、基盤ディスクのメディアの種類をシステムが正しく識別できないことがあります。次の出力では、仮想ディスクの種類が「未指定」（<code>Unspecified</code>）と表示されています。</p>
 <pre><code>PS C:&#92;&gt; Get-PhysicalDisk | FT DeviceId, FriendlyName, UniqueID, Size, MediaType, CanPool
 DeviceId FriendlyName
                            UniqueID
