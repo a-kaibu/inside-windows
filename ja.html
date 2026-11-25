@@ -7770,7 +7770,7 @@ NTFS!NtfsReleaseFileForCcFlush</pre></section><section class="page" id="page-530
 <p>これらのリストをグローバルなルックアサイドリストでも補い、CPU 間で IRP を効率よく融通できるようにしています。大型リストの IRP が持つ数を超えるスタックロケーションが必要な場合、I/O マネージャーは非ページプールから IRP を割り当てます。割り当てには <code>IoAllocateIrp</code> を使います。デバイスドライバーの開発者もこの関数を利用できます。ドライバーが IRP を直接作成し、初期化して I/O 要求を発行する場合があるためです。IRP を割り当てて初期化したあと、I/O マネージャーは呼び出し元のファイルオブジェクトへのポインターを IRP に格納します。</p>
 <blockquote><p><strong>注</strong>　レジストリキー <code>HKLM\System\CurrentControlSet\Session Manager\I/O System</code> に DWORD 値 <code>LargeIrpStackLocations</code> が定義されている場合、その値は大型 IRP 用ルックアサイドリストに格納される IRP のスタックロケーション数を指定します。同じキーの <code>MediumIrpStackLocations</code> で、中型 IRP 用ルックアサイドリストの IRP のスタックロケーション数も変更できます。</p></blockquote>
 <p>図6-11に、IRP 構造体の主なメンバーを示します。IRP には必ず1つ以上の <code>IO_STACK_LOCATION</code> オブジェクトが伴います。これらのオブジェクトは次節で説明します。</p>
-<figure><img loading="lazy" width="497" height="326" src="assets/2c0b7bb5869ad9247aeb492c.webp" alt="IRP 構造体の主なメンバー"><figcaption>図6-11　IRP 構造体の主なメンバー</figcaption></figure></section><section class="page" id="page-532" aria-label="page-532"><p>主なメンバーを以下に示します。</p>
+<figure><img loading="lazy" width="497" height="326" src="assets/2c0b7bb5869ad9247aeb492c.webp" alt="IRP 構造体の主なメンバー"><figcaption>図6-11　IRP 構造体の主なメンバー。MdlAddress はメモリ記述子リスト（MDL）を指します。AssociatedIrp には用途に応じて親 IRP、関連 IRP の数、システムバッファーのいずれかが入ります。続いて、現在の I/O スタック位置とスタック位置の総数、I/O の結果（状態コードと情報）、ユーザーイベント、ユーザーバッファー、キャンセルルーチンがあり、その下に複数の IO_STACK_LOCATION が並びます。</figcaption></figure></section><section class="page" id="page-532" aria-label="page-532"><p>主なメンバーを以下に示します。</p>
 <ul>
 <li><strong><code>IoStatus</code></strong>　IRP の状態を表し、実際のステータスコードを格納する <code>Status</code> と、操作によって意味が変わる <code>Information</code> の2つからなります。たとえば読み取りや書き込みでは、ドライバーが <code>Information</code> に処理したバイト数を設定します。この値が <code>ReadFile</code> や <code>WriteFile</code> の出力値として呼び出し元に返ります。</li>
 <li><strong><code>MdlAddress</code></strong>　メモリ記述子リスト（MDL）への省略可能なポインターです。MDL は、物理メモリ内のバッファーに関する情報を表す構造体です。デバイスドライバーでの主な用途は次節で説明します。MDL を要求しなかった場合は <code>NULL</code> です。</li>
@@ -7793,7 +7793,7 @@ NTFS!NtfsReleaseFileForCcFlush</pre></section><section class="page" id="page-530
 <li><strong>完了ルーチン</strong>　ドライバーが DDI の <code>IoSetCompletionRoutine</code> または <code>IoSetCompletionRoutineEx</code> で任意に登録できる関数です。下位層のドライバーが IRP を完了すると呼び出されます。この時点で、ドライバーは IRP の完了ステータスを調べ、必要な後処理を行えます。完了ルーチンから <code>STATUS_MORE_PROCESSING_REQUIRED</code> を返して完了処理を中断し、必要に応じてパラメーターを変更して、同じデバイスノードや別のデバイスノードへ IRP を送り直すこともできます。</li>
 <li><strong><code>Context</code></strong>　<code>IoSetCompletionRoutine</code> または <code>IoSetCompletionRoutineEx</code> の呼び出しで指定した任意の値です。指定した値がそのまま完了ルーチンに渡されます。</li>
 </ul>
-<figure><img loading="lazy" width="325" height="251" src="assets/92e667bcbed0a94843180267.webp" alt="IO_STACK_LOCATION 構造体の主なメンバー"><figcaption>図6-12　IO_STACK_LOCATION 構造体の主なメンバー</figcaption></figure></section><section class="page" id="page-534" aria-label="page-534"><p>情報を IRP 本体と I/O スタックロケーションに分けておくと、元の要求のパラメーターを保持したまま、デバイススタック内の次のデバイスに渡すパラメーターを変更できます。たとえば、USB デバイス宛ての読み取り IRP は、機能ドライバーによってデバイス I/O 制御 IRP に変換されることがよくあります。この場合、デバイス制御の入力バッファー引数は、下位層の USB バスドライバーが解釈できる USB 要求ブロック（URB）を指します。完了ルーチンは、最下位を除くどの層でも登録できます。各層の完了ルーチンの格納先は、それぞれの1つ下にある I/O スタックロケーションです。</p>
+<figure><img loading="lazy" width="325" height="251" src="assets/92e667bcbed0a94843180267.webp" alt="IO_STACK_LOCATION 構造体の主なメンバー"><figcaption>図6-12　IO_STACK_LOCATION 構造体の主なメンバー。スタック位置にはメジャー機能コードとマイナー機能コード、操作ごとの引数、ファイルとデバイスの各オブジェクト、完了ルーチンとそのコンテキストがあります。引数の内容は、作成、読み取り、書き込み、デバイス制御、電源管理、デバイス開始などの操作によって変わります。</figcaption></figure></section><section class="page" id="page-534" aria-label="page-534"><p>情報を IRP 本体と I/O スタックロケーションに分けておくと、元の要求のパラメーターを保持したまま、デバイススタック内の次のデバイスに渡すパラメーターを変更できます。たとえば、USB デバイス宛ての読み取り IRP は、機能ドライバーによってデバイス I/O 制御 IRP に変換されることがよくあります。この場合、デバイス制御の入力バッファー引数は、下位層の USB バスドライバーが解釈できる USB 要求ブロック（URB）を指します。完了ルーチンは、最下位を除くどの層でも登録できます。各層の完了ルーチンの格納先は、それぞれの1つ下にある I/O スタックロケーションです。</p>
 <h4 id="実験-ドライバーのディスパッチルーチンを調べる">実験：ドライバーのディスパッチルーチンを調べる</h4>
 <p>カーネルデバッガーの <code>!drvobj</code> コマンドでフラグのビット1（値は2）を指定すると、ドライバーがディスパッチルーチンとして定義した関数を一覧表示できます。次の出力は、NTFS ドライバーが扱うメジャー機能コードを示しています。高速 I/O で行った実験と同じコマンドです。</p>
 <pre>lkd&gt; !drvobj \filesystem\ntfs 2
@@ -7906,7 +7906,7 @@ Args: 00000000 00000000 00110008 00000000</pre>
 <p>この IRP には2つのスタックロケーションがあり、名前付きパイプファイルシステム（NPFS）ドライバーのデバイスが宛先です。NPFS については、第2部の第10章「ネットワーク」で説明します。</p>
 <h4 id="IRP-の処理の流れ">IRP の処理の流れ</h4>
 <p>通常、I/O マネージャーが IRP を作成し、対象のデバイスノードの先頭にあるデバイスに送ります。図6-13に、ハードウェアデバイス用のドライバーを IRP が通るときの典型的な流れを示します。</p>
-<figure><img loading="lazy" width="472" height="320" src="assets/1b1b6043eefb0b151284dad0.webp" alt="ハードウェアデバイス用のドライバーを通る IRP の処理の流れ"><figcaption>図6-13　IRP の処理の流れ</figcaption></figure></section><section class="page" id="page-537" aria-label="page-537"><p>IRP を作成するのは I/O マネージャーだけではありません。プラグアンドプレイマネージャーはメジャー機能コードが <code>IRP_MJ_PNP</code> の IRP を、電源マネージャーは <code>IRP_MJ_POWER</code> の IRP を作成します。</p>
+<figure><img loading="lazy" width="472" height="320" src="assets/1b1b6043eefb0b151284dad0.webp" alt="ハードウェアデバイス用のドライバーを通る IRP の処理の流れ"><figcaption>図6-13　IRP の処理の流れ。PnP マネージャー、I/O マネージャー、電源マネージャーが発行する IRP は、上位フィルター、機能ドライバー、下位フィルター、バスドライバーの順にデバイススタックを下ります。各層は下りで IRP を処理し、必要なら完了ルーチンを登録します。下位層が要求を完了すると、IRP はスタックを上り、登録された完了ルーチンが呼び出されます。</figcaption></figure></section><section class="page" id="page-537" aria-label="page-537"><p>IRP を作成するのは I/O マネージャーだけではありません。プラグアンドプレイマネージャーはメジャー機能コードが <code>IRP_MJ_PNP</code> の IRP を、電源マネージャーは <code>IRP_MJ_POWER</code> の IRP を作成します。</p>
 <p>図6-13のデバイスノードの例には、上位フィルター2つ、FDO、下位フィルター2つ、PDO の計6つのデバイスオブジェクトが積み重なっています。このノード宛ての IRP は、各層に1つずつ、計6つの I/O スタックロケーションを持ちます。スタックの途中にある名前付きデバイスへのハンドルを開いた場合でも、IRP は必ず最上位のデバイスに渡されます。</p>
 <p>IRP を受け取ったドライバーは、次のいずれかの方法で処理します。</p>
 <ul>
@@ -8069,7 +8069,7 @@ Win32 Start Address nt!ExpWorkerThread (0x81e68710)
 Stack Init 89aecca0 Current 89aebeb4 Base 89aed000 Limit 89aea000 Call 00000000
 Priority 13 BasePriority 13 PriorityDecrement 0 IoPriority 2 PagePriority 5</pre></section><section class="page" id="page-542" aria-label="page-542"><h3 id="単層のハードウェアドライバーへの-I-O-要求">単層のハードウェアドライバーへの I/O 要求</h3>
 <p>ここでは、単層のカーネルモードデバイスドライバーに送られた I/O 要求を追います。図6-14に、この種のドライバーでの典型的な IRP 処理を示します。</p>
-<figure><img loading="lazy" width="515" height="396" src="assets/93a627ab0b2b0996079c6fd0.webp" alt="単層のハードウェアドライバーによる I/O 要求処理"><figcaption>図6-14　単層のハードウェアドライバーによる典型的な I/O 要求処理</figcaption></figure>
+<figure><img loading="lazy" width="515" height="396" src="assets/93a627ab0b2b0996079c6fd0.webp" alt="単層のハードウェアドライバーによる I/O 要求処理"><figcaption>図6-14　単層のハードウェアドライバーによる典型的な I/O 要求処理。アプリケーションが ReadFile などを呼び（1）、カーネルが要求を検証し（2）、要求元スレッドのコンテキストでディスパッチルーチンを呼びます（3）。図の MyDriver.sys では、I/O 開始ルーチン（4）、デバイス割り込み（5）で呼ばれる ISR（6）、ソフトウェア割り込み（7）で呼ばれる DPC ルーチン（8）が任意のスレッドコンテキストで動きます。最後に特殊カーネル APC（9）が要求元スレッドのコンテキストに戻って処理します。</figcaption></figure>
 <p>図6-14の各段階を説明する前に、図を横切る2種類の境界線を確認します。実線はユーザーモードとカーネルモードの境界です。点線は、要求元スレッドのコンテキストで実行されるコードと、任意のスレッドのコンテキストで実行されるコードを分けます。</p>
 <ul>
 <li><strong>要求元スレッドのコンテキスト</strong>　I/O 操作を要求したスレッドがコードを実行します。最初の呼び出しを行ったスレッドで実行しているため、プロセスコンテキストも元のプロセスのものです。そのため、I/O 操作に渡されたユーザーバッファーがあるユーザーモードアドレス空間に直接アクセスできます。</li>
