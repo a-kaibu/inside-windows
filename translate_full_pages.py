@@ -19319,3 +19319,12 @@ full_pages_ja['p2-page-681'] = full_pages_ja['p2-page-681'].replace(
     '<code>UniqueId</code> はこの階層の一意な識別子です。</p>\n'
     '<p>出力の <code>DesiredStorageTierClass</code> は',
 )
+
+
+full_pages_ja['page-199'] = (
+    '<p>直前の基本アカウンティング情報（Basic Accounting Information）には、'
+    '累積のユーザーモード時間、カーネルモード時間、サイクル数、'
+    '現在の集計期間のユーザーモード時間とカーネルモード時間、ページフォールトの総数が並びます。'
+    'この出力ではそれらがすべて 0 で、総プロセス数とアクティブなプロセス数はどちらも 3 です。</p>\n'
+    + full_pages_ja['page-199']
+)
