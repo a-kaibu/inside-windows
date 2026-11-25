@@ -12033,7 +12033,7 @@ CPU 内部の分岐予測器と分岐先予測器が、この判断を行いま�
 投機的に実行された後続の命令は確定せず、その結果はレジスタや RAM の状態に反映されません。
 しかし、命令の結果が取り消された後も、CPU キャッシュに観測可能な変化が残ることがあります。
 この変化が、メモリ保護を越える情報漏えいにつながります。</p>
-<figure><img loading="lazy" width="319" height="67" src="assets/0ad6b9bf47a1add0df85f640.webp" alt="大半のページでアクセス時間が同程度で、1か所だけ明確に短いことを示すグラフ"><figcaption>図8-6　メモリアクセス時間の測定結果</figcaption></figure>
+<figure><img loading="lazy" width="319" height="67" src="assets/0ad6b9bf47a1add0df85f640.webp" alt="大半のページでアクセス時間が同程度で、1か所だけ明確に短いことを示すグラフ"><figcaption>図8-6　メモリアクセス時間の測定結果。横軸はページ番号（0〜250を50刻みで表示）、縦軸はアクセス時間（CPU サイクル、200〜500を100刻みで表示）です。</figcaption></figure>
 <p>図8-6は、測定対象のメモリのページ番号を横軸に、アクセスにかかる CPU サイクル数を縦軸にとっています。
 他のページより短い時間でアクセスできるページがあり、キャッシュの状態がタイミングの差として観測できることを示しています。</p>
 <h4 id="Spectre">Spectre</h4>
@@ -12123,7 +12123,7 @@ OS はユーザーモードからカーネルモードへ切り替えるため�
 各スレッドには専用のカーネルスタックがあります。
 スケジューラーが次に実行するスレッドを選ぶと、そのスタックをプロセッサの PRCB に登録してアクティブにします。
 これに対して、IST スタックはプロセッサ単位で保持されます。</p>
-<figure><img loading="lazy" width="770" height="953" src="assets/e66886f9a2d26ee2d98879a0.webp" alt="移行用アドレス空間とカーネル空間での TSS、RSP0、IST、KTHREAD、ベースフレームとリンクフレームの関係"><figcaption>図8-8 KVA シャドウイングが有効な場合の CPU のタスク状態セグメント（TSS）の構成</figcaption></figure>
+<figure><figcaption>図8-8 KVA シャドウイングが有効な場合の CPU のタスク状態セグメント（TSS）の構成</figcaption><div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><thead><tr><th>CPU の TSS の項目</th><th>移行用アドレス空間</th><th>カーネル空間</th></tr></thead><tbody><tr><td>RSP0</td><td>移行スタックのベース兼トップ（+0x200）</td><td>KTHREAD が参照するカーネルスタック</td></tr><tr><td>IST 0、IST 2</td><td>各 IST 移行スタックのトップ（+0x1D0）。ベース（+0x200）までに KIST_BASE_FRAME がある</td><td>各 IST スタックのトップ（+0x5FB0）。ベース（+0x6000）までに KIST_LINK_FRAME がある</td></tr><tr><td>IoMapBase</td><td>I/O 権限ビットマップの基点を示す TSS のフィールド</td><td>図に対応するスタックなし</td></tr></tbody></table></div><p>図の下方向にメモリアドレスが増えます。通常のカーネルスタックはスレッドごと、IST スタックはプロセッサーごとに用意されます。</p></figure>
 <p>図では、TSS の <code>RSP0</code>、<code>IST 0</code>、<code>IST 2</code> が、移行用アドレス空間内の対応するスタックを指します。
 IST の移行用スタックの <code>KIST_BASE_FRAME</code> と、カーネル空間の IST スタックの <code>KIST_LINK_FRAME</code> が、2つのスタックを結び付けます。
 通常のカーネルスタックは <code>KTHREAD</code> に関連付けられます。</p>
