@@ -5180,11 +5180,11 @@ Pool         8     12834368          0           0        プールテーブル�
 </ol></section><section class="page" id="page-347" aria-label="page-347"><figure><img loading="lazy" width="239" height="307" src="assets/a750cfb95b1fc4f2b1ca8b9b.webp" alt="Not My Fault の Leak タブと、リーク量を指定する欄"><figcaption>Not My Fault の「リーク（Leak）」タブ。毎秒のリーク量は 1,000 KB です。現在はページプールと非ページプールのどちらもリークしていません。割り当てたメモリはアプリケーションを閉じると解放されます。</figcaption></figure>
 <ol start="3">
 <li>「Leak/Second」が1,000 KBに設定されていることを確認します。</li>
-<li>「Leak Paged」をクリックします。Notmyfault が Myfault デバイスドライバーに、ページプールからメモリを割り当てる要求を送ります。「Stop Paged」をクリックするまで要求を送り続けます。通常、不具合のあるデバイスドライバーを介してページプールのリークを起こしたプログラムを閉じても、リークしたメモリは解放されず、再起動まで残ります。Myfault ドライバーは、テストしやすいよう、Notmyfault のプロセスが終了したことを検知し、そのプロセスの要求で確保したページプールのメモリを解放します。</li>
+<li>「ページプールのリークを開始（Leak Paged）」をクリックします。Notmyfault が Myfault デバイスドライバーに、ページプールからメモリを割り当てる要求を送ります。「ページプールのリークを停止（Stop Paged）」をクリックするまで要求を送り続けます。通常、不具合のあるデバイスドライバーを介してページプールのリークを起こしたプログラムを閉じても、リークしたメモリは解放されず、再起動まで残ります。Myfault ドライバーは、テストしやすいよう、Notmyfault のプロセスが終了したことを検知し、そのプロセスの要求で確保したページプールのメモリを解放します。</li>
 <li>リークが進んでいる間にタスクマネージャーを開き、「パフォーマンス」タブの「メモリ」を選びます。「ページプール」の値が増えていくことを確認します。Process Explorer でも、「View」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開くと確認できます。</li>
 <li>リークしているプールタグを特定するため、Poolmon を起動し、<kbd>B</kbd> を押してバイト数で並べ替えます。</li>
 <li><kbd>P</kbd> を2回押し、ページプールだけを表示します。<code>Leak</code> タグが一覧の上位に上がっていきます。Poolmon は、割り当てが変化した行を強調表示します。</li>
-<li>システムのページプールを使い切る前に、「Stop Paged」をクリックします。</li>
+<li>システムのページプールを使い切る前に、「ページプールのリークを停止（Stop Paged）」をクリックします。</li>
 <li>前節の方法に従い、Sysinternals の Strings で、<code>Leak</code> を含むドライバーのバイナリを探します。<code>Myfault.sys</code> が一致し、このドライバーが <code>Leak</code> タグを使っていることを確認できます。
 <pre>Strings %SystemRoot%\system32\drivers\*.sys | findstr Leak</pre></li>
 </ol></section><section class="page" id="page-348" aria-label="page-348"><h3 id="ルックアサイドリスト">ルックアサイドリスト</h3>
@@ -8195,7 +8195,7 @@ Priority 13 BasePriority 13 PriorityDecrement 0 IoPriority 2 PagePriority 5</pre
 <p>この実験では、Sysinternals の Notmyfault を使います。<code>Notmyfault.exe</code> が利用するドライバー <code>Myfault.sys</code> に、キャンセルルーチンを登録せず IRP を保持させ、強制終了できないプロセスを作ります。Notmyfault の詳細は Part 2 の第15章「クラッシュダンプ解析」の「クラッシュダンプ解析」節を参照してください。</p>
 <ol>
 <li><code>Notmyfault.exe</code> を実行します。</li>
-<li>「Not My Fault」ダイアログが表示されたら、「Hang」タブを開きます。次の画面のように「Hang with IRP」を選び、「Hang」ボタンをクリックします。
+<li>「Not My Fault」ダイアログが表示されたら、「ハング（Hang）」タブを開きます。次の画面のように「IRP でハング（Hang with IRP）」を選び、「ハング（Hang）」ボタンをクリックします。
 <figure><img loading="lazy" width="216" height="276" src="assets/1d03db192869748a78058d4a.webp" alt="Not My Fault の Hang タブで Hang with IRP を選んだ画面"><figcaption>Not My Fault の「ハング（Hang）」タブ。「IRP でハング（Hang with IRP）」が選択されています。「DPC でハング（Hang with DPC）」はシステム全体の応答を停止させます。「IRP でハング」と「デッドロック（Deadlock）」は、アプリケーションを閉じられなくします。</figcaption></figure></li>
 <li>見た目に変化はなく、「キャンセル（Cancel）」ボタンでアプリケーションの画面を閉じられます。タスクマネージャーや Process Explorer には、引き続き Notmyfault のプロセスが表示されます。Myfault ドライバーがキャンセルルーチンを登録していないため、Windows は IRP の完了を待ち続けます。そのため、プロセスを強制終了しようとしても失敗します。</li>
 </ol></section><section class="page" id="page-557" aria-label="page-557"><ol start="4">

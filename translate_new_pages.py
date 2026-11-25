@@ -906,7 +906,7 @@ Pool         8     12834368          0           0        Pool tables, etc.</pre
     'page-347': r'''<figure><img loading="lazy" width="239" height="307" src="assets/a750cfb95b1fc4f2b1ca8b9b.webp" alt="Not My Fault の Leak タブ"><figcaption>Not My Fault のリーク設定</figcaption></figure>
 <ol start="3">
 <li>「Leak/Second」が <code>1000 KB</code> に設定されていることを確認します。</li>
-<li>「Leak Paged」をクリックします。Notmyfault は、ページプールからメモリを割り当てる要求を Myfault ドライバーに送信し始めます。「Stop Paged」をクリックするまで、要求は送信され続けます。
+<li>「ページプールのリークを開始（Leak Paged）」をクリックします。Notmyfault は、ページプールからメモリを割り当てる要求を Myfault ドライバーに送信し始めます。「ページプールのリークを停止（Stop Paged）」をクリックするまで、要求は送信され続けます。
 通常、不具合のあるドライバーを使ってリークを起こしたプログラムを閉じても、リークしたページプールのメモリは再起動まで解放されません。
 Myfault ドライバーは検証しやすいように、プロセスの終了を検出し、自分で割り当てたメモリを解放します。</li>
 <li>リークが続いている間に、タスクマネージャーの「パフォーマンス」タブで「メモリ」を選び、「ページ プール」の値が増えていくことを確認します。
@@ -914,7 +914,7 @@ Process Explorer でも、「View」から「System Information」を開き、�
 <li>どのプールタグの割り当てがリークしているかを特定するため、PoolMon を実行して <kbd>B</kbd> キーを押し、バイト数順に並べ替えます。</li>
 <li><kbd>P</kbd> キーを2回押し、ページプールだけを表示します。<code>Leak</code> タグが一覧の上位へ移動します。
 PoolMon は割り当てが変化した行を強調表示します。</li>
-<li>ページプールを使い切る前に「Stop Paged」をクリックします。</li>
+<li>ページプールを使い切る前に「ページプールのリークを停止（Stop Paged）」をクリックします。</li>
 <li>前節で説明した方法に従って Sysinternals の Strings を実行し、<code>Leak</code> タグを含むドライバーのバイナリを探します。
 <code>Myfault.sys</code> が見つかり、このドライバーが <code>Leak</code> タグを使っていると確認できます。
 <pre>Strings %SystemRoot%\system32\drivers\*.sys | findstr Leak</pre></li>
@@ -4502,7 +4502,7 @@ I/O マネージャーは、スレッドに関連付けられた IRP のリス�
 <code>Notmyfault.exe</code> が使う <code>Myfault.sys</code> ドライバーは、キャンセルルーチンを登録せずに IRP を保持し続けます。
 実験には再起動できる検証環境を使ってください。Notmyfault の詳細は Part 2 のクラッシュダンプ解析の章を参照してください。</p>
 <ol><li><code>Notmyfault.exe</code> を実行します。</li>
-<li>「Not My Fault」ダイアログで「Hang」タブを開き、図のように「Hang with IRP」を選び、「Hang」をクリックします。</li></ol>
+<li>「Not My Fault」ダイアログで「ハング（Hang）」タブを開き、図のように「IRP でハング（Hang with IRP）」を選び、「ハング（Hang）」をクリックします。</li></ol>
 <figure><img loading="lazy" width="216" height="276" src="assets/1d03db192869748a78058d4a.webp" alt="Not My Fault の Hang タブで Hang with IRP を選んだ画面"><figcaption>キャンセルできない IRP を残す実験</figcaption></figure>
 <ol start="3"><li>画面上では特に変化せず、「Cancel」でアプリケーションを閉じられます。ただし、タスクマネージャーや Process Explorer には Notmyfault のプロセスが残ります。Myfault ドライバーはキャンセルルーチンを登録していないため、Windows は IRP の完了を待ち続け、プロセスを終了できません。</li></ol>''',
     'page-557': '''<ol start="4"><li>WinDbg で、スレッドが現在何をしているか調べます。ローカルカーネルデバッグを開始し、<code>!process</code> で <code>Notmyfault.exe</code> の情報を表示します。<code>notmyfault64</code> は64ビット版です。</li></ol>
