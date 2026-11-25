@@ -27223,6 +27223,7 @@ Intel の場合と同じように、ブートライブラリを再初期化し�
                                                      ( 20 Kb )
 0000000006  000000009a  ( 5) FirmwareTemporary    ( 616 Kb )
 ...</pre></section><section class="page" id="p2-page-851" aria-label="p2-page-851"><p>メモリ領域一覧の「種類」欄では、<code>OsloaderHeap</code> は OS ローダーのヒープ、<code>FirmwareTemporary</code> はファームウェアの一時領域、<code>RegistryData</code> はレジストリデータ、<code>SystemCode</code> はシステムコード、<code>BootDriver</code> はブートドライバー、<code>Free</code> は空き領域を示します。</p>
+<p>集計に出てくる <code>LoadedProgram</code> は読み込み済みのプログラム、<code>MemoryData</code> はメモリ管理用データ、<code>NlsData</code> は言語・地域設定用のデータです。<code>HALCachedMemory</code> は HAL のキャッシュ済みメモリを示します。ファームウェア関連の <code>FirmwarePermanent</code>、<code>FirmwareCode</code>、<code>FirmwareData</code>、<code>FirmwareReserved</code> は、それぞれ恒久領域、コード、データ、予約領域を示します。</p>
 <p>集計では、各種類のページ数が 16 進数と 10 進数で示され、その右に換算した容量が表示されます。たとえば空き領域の <code>0x7a89c</code> は 501,916 ページです。ページ数と容量の対応から、この出力の <code>Kb</code>、<code>Mb</code>、<code>Gb</code> はそれぞれ KiB、MiB、GiB を表しています。</p>
 <pre>0000001304  0000000001  ( 7) OsloaderHeap
                                                      ( 4 Kb )
