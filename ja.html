@@ -6724,7 +6724,7 @@ The operation completed successfully.</pre>
 <p>空きページリストのサイズが一時的に増えることがあります。ゼロページスレッドは空きリストに8ページ入った時点で起床し、すぐに処理を始めます。Process Explorer の表示は1秒に1回しか更新されないため、増加が表示される前に、大部分のページがすでにゼロで埋められ、ゼロページリストへ移っていることもあります。一時的な増加を観察できた場合は、その後、空きリストがゼロに戻り、その分だけゼロページリストが増えます。観察できなかった場合は、ゼロページリストの増加だけが見えます。</p>
 <h4 id="実験-変更済みページリストとスタンバイページリスト">実験：変更済みページリストとスタンバイページリスト</h4>
 <p>Sysinternals の VMMap と RAMMap、およびライブカーネルデバッガーを使うと、ページがプロセスのワーキングセットから変更済みリストへ、その後スタンバイリストへ移る様子を観察できます。次の手順を実行します。</p>
-<ol><li>RAMMap を開き、負荷がかかっていないシステムの状態を確認します。この実験では RAM を3 GB搭載した x86 システムを使います。画面の各列は図5-37に示したページの状態に対応します。ここで使わない列は、見やすくするために幅を狭くしてあります。</li></ol></section><section class="page" id="page-448" aria-label="page-448"><figure><img loading="lazy" width="569" height="355" src="assets/e7f41472147e53d8149de2af.webp" alt="実験開始前の RAMMap に表示された物理ページの状態別・用途別の内訳"></figure>
+<ol><li>RAMMap を開き、負荷がかかっていないシステムの状態を確認します。この実験では RAM を3 GB搭載した x86 システムを使います。画面の各列は図5-37に示したページの状態に対応します。ここで使わない列は、見やすくするために幅を狭くしてあります。</li></ol></section><section class="page" id="page-448" aria-label="page-448"><figure><img loading="lazy" width="569" height="355" src="assets/e7f41472147e53d8149de2af.webp" alt="実験開始前の RAMMap に表示された物理ページの状態別・用途別の内訳"><figcaption>実験前の RAMMap の「用途別集計（Use Counts）」。物理メモリの合計は 3,145,268 K で、アクティブが 838,264 K、スタンバイが 1,836,668 K、空きが 418,688 K です。</figcaption></figure>
 <ol start="2">
 <li>このシステムの空き RAM は約420 MBで、空きページリストとゼロページリストの合計です。約580 MBはスタンバイリストにあります。これは利用可能なメモリに含まれますが、プロセスのワーキングセットから最近外れたデータや、SuperFetch が使用するデータが残っている場合があります。約830 MBはアクティブで、有効なページテーブルエントリを通じて仮想アドレスに直接マップされています。</li>
 <li>各行には、プロセスのプライベートメモリやマップされたファイルなど、用途や由来ごとのページ状態の内訳が表示されます。たとえば、この時点では、アクティブな830 MBのうち約400 MBがプロセスのプライベートな割り当てです。</li>
@@ -6738,17 +6738,17 @@ Leaking private bytes with touch (MB)...
 Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 </li>
 <li>TestLimit は1 MBずつ、合計1,975回の割り当てを行いました。RAMMap の「File」メニューから「Refresh」を選び、表示を更新します。情報を集める処理の負荷が高いため、RAMMap は表示を継続的には更新しません。</li>
-</ol></section><section class="page" id="page-449" aria-label="page-449"><figure><img loading="lazy" width="493" height="308" src="assets/3359df0078aea093c7ebd56b.webp" alt="TestLimit の実行後、アクティブなページが増え、空きページが減った RAMMap の集計画面"></figure>
+</ol></section><section class="page" id="page-449" aria-label="page-449"><figure><img loading="lazy" width="493" height="308" src="assets/3359df0078aea093c7ebd56b.webp" alt="TestLimit の実行後、アクティブなページが増え、空きページが減った RAMMap の集計画面"><figcaption>TestLimit の実行後は、アクティブなページが 2,863,428 K に増え、スタンバイが 165,384 K に減りました。用途別では、プロセスのプライベートメモリが 2,505,828 K を占めています。</figcaption></figure>
 <ol start="6">
 <li>アクティブなメモリは2.8 GBを超え、そのうち2.4 GBが「Process Private」行にあります。これは、TestLimit プロセスがメモリを割り当て、実際にアクセスしたためです。スタンバイリスト、ゼロページリスト、空きリストはいずれも大幅に縮小しています。TestLimit に割り当てた RAM の大半は、これらのリストから取得したものです。</li>
 <li>次に、RAMMap でプロセスに割り当てられた物理ページを確認します。「Physical Pages」タブに切り替え、画面下部のフィルターで「Process」列を選び、値に <code>Testlimit.exe</code> を指定します。これで、プロセスのワーキングセットに属するすべての物理ページが表示されます。</li>
 </ol>
-<figure><img loading="lazy" width="568" height="354" src="assets/0fdfa7fa6e2936d23bcdff41.webp" alt="RAMMap の Physical Pages タブで Testlimit.exe の物理ページだけを表示した画面"></figure></section><section class="page" id="page-450" aria-label="page-450"><ol start="8">
+<figure><img loading="lazy" width="568" height="354" src="assets/0fdfa7fa6e2936d23bcdff41.webp" alt="RAMMap の Physical Pages タブで Testlimit.exe の物理ページだけを表示した画面"><figcaption>RAMMap の「物理ページ（Physical Pages）」タブを Testlimit.exe（PID 7548）で絞り込んだ結果です。各行に物理アドレス、状態、用途、優先度、対応する仮想アドレスが表示されています。</figcaption></figure></section><section class="page" id="page-450" aria-label="page-450"><ol start="8">
 <li>TestLimit の <code>-d</code> オプションで割り当てた仮想アドレス空間に対応する物理ページを特定します。RAMMap の表示からは、どの仮想メモリ領域がこの実験の <code>VirtualAlloc</code> 呼び出しで割り当てられたかは分かりません。そこで、同じプロセスを VMMap で開き、割り当てられた領域を調べます。
-<figure><img loading="lazy" width="525" height="463" src="assets/71e4b8fcdc19e28aac9feb89.webp" alt="VMMap で TestLimit のプライベートメモリの割り当てを表示し、先頭アドレスが 0x310000 の領域を選んだ画面"></figure></li>
+<figure><img loading="lazy" width="525" height="463" src="assets/71e4b8fcdc19e28aac9feb89.webp" alt="VMMap で TestLimit のプライベートメモリの割り当てを表示し、先頭アドレスが 0x310000 の領域を選んだ画面"><figcaption>VMMap で Testlimit.exe（PID 7548）を表示した結果。下段では仮想アドレス 0x310000 から始まるプライベートデータ領域を選択しています。この領域は 1,024 K で、全体がコミット済みです。</figcaption></figure></li>
 <li>画面下部には、プロセスのプライベートな割り当てが数百件表示されます。それぞれのサイズは1 MBで、コミット済みのサイズも1 MBです。これは TestLimit の割り当てサイズと一致します。上の画面例で選択した領域の先頭仮想アドレス <code>0x310000</code> を控えます。</li>
 <li>RAMMap の物理メモリ表示に戻ります。「Virtual Address」列が見やすくなるように列を並べ替え、その列をクリックして値でソートすると、先ほど控えた仮想アドレスを見つけられます。</li>
-</ol></section><section class="page" id="page-451" aria-label="page-451"><figure><img loading="lazy" width="409" height="255" src="assets/67839ea05f12edb637f0e558.webp" alt="RAMMap で仮想アドレス 0x310000 に対応する物理アドレスを確認する画面"></figure>
+</ol></section><section class="page" id="page-451" aria-label="page-451"><figure><img loading="lazy" width="409" height="255" src="assets/67839ea05f12edb637f0e558.webp" alt="RAMMap で仮想アドレス 0x310000 に対応する物理アドレスを確認する画面"><figcaption>RAMMap の物理ページ一覧で、仮想アドレス列の 0x310000 の行を選択しています。同じ行の物理アドレス列で、対応する物理ページを確認できます。</figcaption></figure>
 <ol start="11">
 <li>この表示では、仮想アドレス <code>0x310000</code> から始まるページは、現在、物理アドレス <code>0x212D1000</code> にマップされています。TestLimit の <code>-d</code> オプションは、割り当てた領域の先頭にプログラム自身の名前を書き込みます。ローカルカーネルデバッガーの <code>!dc</code> コマンドを使うと、物理アドレスを指定して文字列を表示し、これを確認できます。
 <pre>lkd&gt; !dc 0x212d1000
@@ -6758,7 +6758,7 @@ Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 </li>
 <li>確認に時間がかかると、そのページがすでにワーキングセットから外れ、同じ結果が得られない場合があります。実験の最後では、プロセスのワーキングセットが縮小され、ページが変更済みリスト、次いでスタンバイリストに移っても、データがしばらく保持されることを確認します。</li>
 <li>VMMap で TestLimit プロセスを選んだ状態で、「View」メニューから「Empty Working Set」を選び、プロセスのワーキングセットを最小限まで縮小します。すると、VMMap は次のように表示されます。
-<figure><img loading="lazy" width="359" height="317" src="assets/12fb09c58afa9e94fab27353.webp" alt="ワーキングセットを縮小した後の TestLimit を表示する VMMap の画面"></figure></li>
+<figure><img loading="lazy" width="359" height="317" src="assets/12fb09c58afa9e94fab27353.webp" alt="ワーキングセットを縮小した後の TestLimit を表示する VMMap の画面"><figcaption>ワーキングセット縮小後の VMMap。プライベートバイトは 2,027,204 K で、ワーキングセットは縮小前の 2,031,284 K から約 4 MB に減りました。</figcaption></figure></li>
 </ol></section><section class="page" id="page-452" aria-label="page-452"><ol start="14">
 <li>「Working Set」の棒グラフはほとんど空です。画面中央の集計では、プロセスのワーキングセットは合計わずか4 KBで、そのほぼすべてをページテーブルが占めています。RAMMap に戻り、表示を更新します。「Use Counts」タブでは、アクティブなページが大幅に減り、多数のページが変更済みリストに、一部のページがスタンバイリストに移ったことが分かります。
 <figure><img loading="lazy" width="466" height="291" src="assets/0c1e24265e0ac558127b0915.webp" alt="ワーキングセット縮小後に変更済みページとスタンバイページが増えた RAMMap の Use Counts タブ"></figure></li>
