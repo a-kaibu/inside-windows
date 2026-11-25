@@ -28018,7 +28018,14 @@ Windows Internals 第7版 Web Reader (日本語統合版)<br>
 </footer>
 </main>
 <script>
-document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{if(d.open){const i=d.querySelector('img');if(i.dataset.src){i.src=i.dataset.src;delete i.dataset.src}}}));
+document.querySelector('main').addEventListener('toggle', event => {
+    const details = event.target;
+    if (!(details instanceof HTMLDetailsElement) || !details.open) return;
+    for (const image of details.querySelectorAll('img[data-src]')) {
+        image.src = image.dataset.src;
+        delete image.dataset.src;
+    }
+}, true);
 document.getElementById('tocToggle').onclick=()=>{if(innerWidth<=900)document.body.classList.toggle('mobile-toc');else document.body.classList.toggle('toc-hidden')};
 document.querySelector('aside').addEventListener('click',e=>{if(e.target.closest('a'))document.body.classList.remove('mobile-toc')});
 document.querySelector('aside').addEventListener('toggle',e=>{const d=e.target;if(d instanceof HTMLDetailsElement&&d.open&&d.hasAttribute('data-toc-lazy')&&!d.dataset.loaded){d.append(d.querySelector('template').content.cloneNode(true));d.querySelector('template').remove();d.dataset.loaded='true'}},true);
