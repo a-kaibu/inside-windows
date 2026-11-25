@@ -19451,3 +19451,12 @@ for page, heading in (('page-101', 'h4'), ('page-595', 'h3')):
         f'<{heading}>Windows Driver Foundation</{heading}>',
         f'<{heading}>Windows ドライバーフレームワーク（WDF）</{heading}>',
     )
+
+
+full_pages_ja['p2-page-147'] = full_pages_ja['p2-page-147'].replace(
+    '<h4>CHPE（Compiled Hybrid Portable Executable）</h4>',
+    '<h4>CHPE（コンパイル済みのハイブリッド実行ファイル）</h4>',
+).replace(
+    'こうした理由から CHPE が設計されました。',
+    'こうした理由から CHPE（Compiled Hybrid Portable Executable）が設計されました。',
+)
