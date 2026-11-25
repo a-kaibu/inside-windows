@@ -19338,8 +19338,8 @@ icacls C:\TestVm /grant &lt;UserName&gt;:(CI)(OI)F</code></pre>
 <p>次に、NVMe コントローラーが DDA に対応しているかを調べるため、Microsoft のサンプルから PowerShell スクリプト <code>survey-dda.ps1</code> をダウンロードします。Cortana の検索ボックスに「PowerShell」と入力し、「管理者として実行」を選びます。<code>Get-ExecutionPolicy</code> で、スクリプトの実行ポリシーが <code>Unrestricted</code> か確認します。異なる値が返った場合、原著では <code>Set-ExecutionPolicy -Scope LocalMachine -ExecutionPolicy Unrestricted</code> を実行し、Enter キーを押して <code>Y</code> で確定する手順を案内しています。<a href="https://github.com/MicrosoftDocs/Virtualization-Documentation/tree/master/hyperv-samples/benarm-powershell/DDA">DDA の PowerShell サンプル</a></p>
 <p>ダウンロードした <code>survey-dda.ps1</code> を実行すると、NVMe デバイスをゲスト仮想マシンに割り当てられるかを確認できます。次は割り当て可能な場合の出力例です。</p>
 <pre><code>Standard NVM Express Controller
-Express Endpoint -- more secure.
-And its interrupts are message-based, assignment can work.
+PCI Express エンドポイント。セキュリティが高い構成です。
+割り込みはメッセージ方式のため、デバイスを割り当てられます。
 PCIROOT(0)#PCI(0302)#PCI(0000)</code></pre>
 <p>この例では、スクリプトは標準 NVM Express コントローラーが PCI Express のエンドポイントであるため、より安全と表示しています。さらに、メッセージベースの割り込みを使うことを確認し、割り当て可能と判定しています。</p></section><section class="page" id="p2-page-366" aria-label="p2-page-366"><p>デバイスの場所のパスを控えます。この例では <code>PCIROOT(0)#PCI(0302)#PCI(0000)</code> です。DDA の要件に従い、対象の仮想マシンの自動停止時の動作を「電源を切る」に設定してから、ホストからデバイスを取り外します。次の PowerShell コマンドでは、仮想マシン名の <code>Vibranium</code> とデバイスの場所のパスを実際の値に置き換えます。</p>
 <pre><code>Set-VM -Name "Vibranium" -AutomaticStopAction TurnOff
@@ -21597,20 +21597,20 @@ dtrace.exe -s dynamic_memory.d</code></pre>
 <p>スクリプトは FBT を <code>MmAddPhysicalMemory</code> と <code>MiRemovePhysicalMemory</code> の2つに接続します。前者は NT カーネルがエクスポートしています。後者はエクスポートされず、公開 WDK にも含まれないため、シンボルなしでは FBT がアドレスを求められません。</p>
 <p>後述する「DTrace の型ライブラリ」のとおり、DTrace は複数のソースから型とシンボルを取得できます。FBT が OS 内部の関数を扱えるよう、次のコマンドで Microsoft の公開シンボルサーバーを指定します。</p>
 <pre><code>set _NT_SYMBOL_PATH=srv*C:&#92;symbols*http://msdl.microsoft.com/download/symbols</code></pre></section><section class="page" id="p2-page-564" aria-label="p2-page-564"><p>シンボルストアのパスを設定してから <code>dynamic_memory.d</code> を指定して DTrace を再実行すると、スクリプトがコンパイルされ、次のメッセージが表示されます。</p>
-<pre><code>The Dynamic Memory script has begun.</code></pre>
+<pre><code>動的メモリのスクリプトを開始しました。</code></pre>
 <p>次に、ゲストのメモリ逼迫を再現します。たとえばブラウザーで多数のタブを開く、3D ゲームを起動する、TestLimit を <code>-d</code> オプション付きで実行するなどの方法があります。このオプションは、リソースを使い切るまで連続してメモリを割り当て、その領域に書き込みます。ルートパーティションの VM ワーカープロセスが逼迫を検知して子 VM にメモリを追加すると、DTrace に次のような結果が表示されます。</p>
-<pre><code>Physical memory addition request intercepted. Start physical address 0x00112C00, Number of
+<pre><code>物理メモリの追加要求を捕捉しました。開始物理アドレス: 0x00112C00, Number of
 pages: 0x00000400.
-Addition of 1024 memory pages starting at PFN 0x00112C00 succeeded!</code></pre>
+PFN 0x00112C00 から1,024ページの追加に成功しました。</code></pre>
 <p>同様に、ゲストでアプリケーションをすべて閉じ、ホストでメモリを逼迫させると、スクリプトが動的メモリの削減要求を捕捉します。</p>
-<pre><code>Physical memory removal request intercepted. Start physical address 0x00132000, Number of
+<pre><code>物理メモリの削除要求を捕捉しました。開始物理アドレス: 0x00132000, Number of
 pages: 0x00000200.
-Removal of 512 memory pages starting at PFN 0x00132000 succeeded!</code></pre>
+PFN 0x00132000 から512ページの削除に成功しました。</code></pre>
 <p>Ctrl+C で DTrace を停止すると、スクリプトが統計を出力します。この例では、稼働中のメモリ追加が217回、削減が1602回発生し、計測開始時からページ数が <code>0x00017A00</code>（378 MB）増えました。</p>
-<pre><code>Dynamic Memory script ended.
-Numbers of Hot Additions: 217
-Numbers of Hot Removals: 1602
-Since starts the system has gained 0x00017A00 pages (378 MB).</code></pre>
+<pre><code>動的メモリのスクリプトを終了しました。
+稼働中の追加回数: 217
+稼働中の削除回数: 1602
+スクリプト開始からシステムのメモリは 0x00017A00 ページ（378 MB）増えました。</code></pre>
 <p><code>dynamic_memory.d</code> をメモ帳で開くと、FBT のプローブ4つと組み込みのプローブ2つで、イベントの記録と件数の集計を行っていることがわかります。たとえば、以下のプローブは <code>MmAddPhysicalMemory</code> の出口で、入口で取得した物理開始アドレスが0以外の場合にアクションを実行します。D 言語の詳細は <a href="http://dtrace.org/guide/preface.html">illumos Dynamic Tracing Guide</a> を参照してください。</p>
 <pre><code>fbt:nt:MmAddPhysicalMemory:return
 / self-&gt;pStartingAddress != 0 /</code></pre>
