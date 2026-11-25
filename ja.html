@@ -8192,7 +8192,7 @@ Priority 13 BasePriority 13 PriorityDecrement 0 IoPriority 2 PagePriority 5</pre
 <ol>
 <li><code>Notmyfault.exe</code> を実行します。</li>
 <li>「Not My Fault」ダイアログが表示されたら、「Hang」タブを開きます。次の画面のように「Hang with IRP」を選び、「Hang」ボタンをクリックします。
-<figure><img loading="lazy" width="216" height="276" src="assets/1d03db192869748a78058d4a.webp" alt="Not My Fault の Hang タブで Hang with IRP を選んだ画面"></figure></li>
+<figure><img loading="lazy" width="216" height="276" src="assets/1d03db192869748a78058d4a.webp" alt="Not My Fault の Hang タブで Hang with IRP を選んだ画面"><figcaption>Not My Fault の「ハング（Hang）」タブ。「IRP でハング（Hang with IRP）」が選択されています。「DPC でハング（Hang with DPC）」はシステム全体の応答を停止させます。「IRP でハング」と「デッドロック（Deadlock）」は、アプリケーションを閉じられなくします。</figcaption></figure></li>
 <li>見た目に変化はなく、「Cancel」ボタンでアプリケーションの画面を閉じられます。タスクマネージャーや Process Explorer には、引き続き Notmyfault のプロセスが表示されます。Myfault ドライバーがキャンセルルーチンを登録していないため、Windows は IRP の完了を待ち続けます。そのため、プロセスを強制終了しようとしても失敗します。</li>
 </ol></section><section class="page" id="page-557" aria-label="page-557"><ol start="4">
 <li>このような問題は、WinDbg でスレッドが現在何をしているかを確認して調べられます。ローカルカーネルデバッグのセッションを開き、まず <code>!process</code> コマンドで Notmyfault のプロセス情報を表示します。以下では64ビット版の <code>notmyfault64.exe</code> を使います。
