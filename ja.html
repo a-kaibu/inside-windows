@@ -10921,7 +10921,7 @@ Service-0x0-5c203$</pre></section><section class="page" id="page-735" aria-label
 <li><strong>ストレージアダプター</strong>　安全なストレージを操作する関数を公開します。これらの関数でテンプレートを保存・取得し、エンジンアダプターが、読み取られた生体情報をそのテンプレートと照合します。Windows は、Windows の暗号化サービスと通常のディスク上のファイルを使うストレージアダプターを提供します。センサーのベンダーが別のストレージアダプターを提供することもあります。</li>
 <li><strong>生体認証スキャナーの機能ドライバー</strong>　上位層に WBDI を公開します。通常は USB バスドライバーなど、下位のバスドライバーの機能を使ってスキャナーにアクセスします。このドライバーは常にセンサーのベンダーが提供します。</li>
 </ul>
-<figure><img loading="lazy" width="364" height="288" src="assets/89b7fd798eea414d69b64b47.webp" alt="生体認証サービス、アダプター、スキャナードライバーの関係"><figcaption>図7-21　Windows 生体認証フレームワークのコンポーネントとアーキテクチャ</figcaption></figure>
+<figure><img loading="lazy" width="364" height="288" src="assets/89b7fd798eea414d69b64b47.webp" alt="生体認証サービス、アダプター、スキャナードライバーの関係"><figcaption>図7-21　Windows 生体認証フレームワークのコンポーネントとアーキテクチャ。Win32 アプリと UWP アプリは Windows 生体認証フレームワーク API（WinBio.dll）を使います。その下の Windows 生体認証サービスには、生体認証サービスプロバイダーと、そのセンサー、エンジン、ストレージの各アダプターがあります。さらに下に Windows 生体認証ドライバーインターフェイスとドライバーがあります。青は Microsoft、黄はハードウェアまたはソフトウェアのベンダー、橙はそのいずれかが提供する部分です。</figcaption></figure>
 <p>指紋スキャンでログオンする場合、典型的には次の順序で処理します。</p>
 <ol>
 <li>初期化後、センサーアダプターがサービスプロバイダーからデータ取得の要求を受け取ります。センサーアダプターは、制御コード <code>IOCTL_BIOMETRIC_CAPTURE_DATA</code> を指定した <code>DeviceIoControl</code> 要求を、指紋スキャナーの WBDI ドライバーに送ります。</li>
@@ -10964,7 +10964,7 @@ Service-0x0-5c203$</pre></section><section class="page" id="page-735" aria-label
 <li><strong>サービスである</strong>　サービスには仮想化を適用しません。</li>
 </ul>
 <p>プロセスの仮想化の状態は、トークンにフラグとして保存されます。図7-22のように、タスクマネージャーの「詳細」タブに「UAC 仮想化」列を追加すると確認できます。デスクトップウィンドウマネージャー（<code>Dwm.exe</code>）、クライアントサーバーランタイムサブシステム（<code>Csrss.exe</code>）、エクスプローラーなど、Windows のコンポーネントの多くは、UAC 対応マニフェストを持つか管理者権限で実行されるため、仮想化が無効です。32ビットの Internet Explorer（<code>iexplore.exe</code>）では仮想化が有効です。複数の ActiveX コントロールやスクリプトを読み込むことがあり、それらが標準ユーザー権限で正常に動作するように作られているとは限らないためです。必要に応じて、ローカルセキュリティポリシーの設定でシステム全体の仮想化を無効にできます。</p>
-<p>一部のアプリケーションを標準ユーザーの権限で動かすには、ファイルシステムとレジストリの仮想化に加えて、別の対応が必要です。たとえば、実行中のアカウントが Administrators グループに所属するかを確認し、所属しなければ実行を中止するアプリケーションがあります。所属の確認さえなければ、その権限で動作できる場合もあります。Windows は、こうしたアプリケーションを動かすために、アプリケーション互換性シムを用意しています。表7-15に、従来のアプリケーションを標準ユーザー権限で実行する際によく適用されるシムを示します。</p></section><section class="page" id="page-741" aria-label="page-741"><figure><img loading="lazy" width="429" height="617" src="assets/186bc9e2a40ec47dc174ce92.webp" alt="タスクマネージャーの詳細タブでプロセスごとの UAC 仮想化の状態を確認する画面"><figcaption>図7-22　タスクマネージャーで仮想化の状態を確認する</figcaption></figure>
+<p>一部のアプリケーションを標準ユーザーの権限で動かすには、ファイルシステムとレジストリの仮想化に加えて、別の対応が必要です。たとえば、実行中のアカウントが Administrators グループに所属するかを確認し、所属しなければ実行を中止するアプリケーションがあります。所属の確認さえなければ、その権限で動作できる場合もあります。Windows は、こうしたアプリケーションを動かすために、アプリケーション互換性シムを用意しています。表7-15に、従来のアプリケーションを標準ユーザー権限で実行する際によく適用されるシムを示します。</p></section><section class="page" id="page-741" aria-label="page-741"><figure><img loading="lazy" width="429" height="617" src="assets/186bc9e2a40ec47dc174ce92.webp" alt="タスクマネージャーの詳細タブでプロセスごとの UAC 仮想化の状態を確認する画面"><figcaption>図7-22　タスクマネージャーで仮想化の状態を確認する。タスクマネージャーの「詳細」タブです。名前、PID、状態、CPU、プラットフォーム、UAC 仮想化の列が表示されています。プラットフォームには32ビットと64ビットがあり、UAC 仮想化の状態には「有効」「無効」「許可されていません」があります。</figcaption></figure>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表7-15　UAC 仮想化の互換性シム</caption>
 <thead><tr><th scope="col">フラグ</th><th scope="col">動作</th></tr></thead>
@@ -10981,7 +10981,7 @@ Service-0x0-5c203$</pre></section><section class="page" id="page-735" aria-label
 <aside><p><strong>注</strong>　仮想化の対象外とする拡張子を追加するには、レジストリの <code>HKLM\System\CurrentControlSet\Services\Luafv\Parameters</code> にある <code>ExcludedExtensionsAdd</code> に指定し、再起動します。複数の拡張子は複数文字列型で指定します。拡張子の先頭にはドットを付けません。</p></aside>
 <p>従来のプロセスが仮想化対象のディレクトリに加えた変更は、そのユーザーの仮想ルートディレクトリ <code>%LocalAppData%\VirtualStore</code> に振り向けられます。パスに <code>Local</code> が含まれるとおり、ローミングプロファイルを使うアカウントでも、仮想化されたファイルはプロファイルのほかのデータと一緒には移動しません。</p>
 <p>ファイルシステムの仮想化を実装するのは、UAC ファイル仮想化フィルタードライバー（<code>%SystemRoot%\System32\Drivers\Luafv.sys</code>）です。ファイルシステムフィルタードライバーなので、ローカルのファイルシステム操作をすべて受け取りますが、仮想化を適用するのは従来のプロセスからの操作だけです。図7-23に示すように、従来のプロセスがシステム全体で共有する場所にファイルを作成しようとすると、フィルタードライバーは対象のパスを変更します。標準ユーザー権限で動作する仮想化対象外のプロセスのパスは変更しません。<code>\Windows</code> ディレクトリの既定のアクセス許可では、UAC に対応したアプリケーションからの作成は拒否されます。従来のプロセスには成功したように見えますが、実際のファイルはユーザーが自由にアクセスできる場所に作られています。</p>
-<figure><img loading="lazy" width="467" height="307" src="assets/055d16a6dd90083972f35a47.webp" alt="UAC ファイル仮想化フィルターが従来のプロセスのファイル作成先を振り向ける仕組み"><figcaption>図7-23　UAC ファイル仮想化フィルタードライバーの動作</figcaption></figure></section><section class="page" id="page-743" aria-label="page-743"><h4 id="実験-ファイル仮想化の動作">実験：ファイル仮想化の動作</h4>
+<figure><img loading="lazy" width="467" height="307" src="assets/055d16a6dd90083972f35a47.webp" alt="UAC ファイル仮想化フィルターが従来のプロセスのファイル作成先を振り向ける仕組み"><figcaption>図7-23　UAC ファイル仮想化フィルタードライバーの動作。従来のアプリと UAC 対応アプリが、どちらも Windows フォルダーの App.ini に書き込もうとします。カーネルモードの Luafv.sys は、従来のアプリの書き込みをユーザープロファイル内の AppData／Local／VirtualStore／Windows／App.ini にリダイレクトします。UAC 対応アプリの要求は元のパスのまま Ntfs.sys に渡り、この例ではアクセスが拒否されます。</figcaption></figure></section><section class="page" id="page-743" aria-label="page-743"><h4 id="実験-ファイル仮想化の動作">実験：ファイル仮想化の動作</h4>
 <p>この実験では、コマンドプロンプトの仮想化を切り替え、ファイルの作成先と読み取り結果がどう変わるかを確認します。</p>
 <ol>
 <li>管理者として実行していないコマンドプロンプトを開き、そのプロセスの仮想化を有効にします。この実験には UAC が有効である必要があります。タスクマネージャーの「詳細」タブでプロセスを右クリックし、メニューの「UAC 仮想化」を選ぶと状態を切り替えられます。</li>
@@ -11019,7 +11019,7 @@ Service-0x0-5c203$</pre></section><section class="page" id="page-735" aria-label
 <tr><th scope="row"><code>REG_KEY_RECURSE_FLAG</code></th><td>このキーの仮想化フラグを子キーに伝播するかどうかを指定します。</td></tr>
 </tbody>
 </table></div>
-<figure><img loading="lazy" width="416" height="239" src="assets/56cd2653c432b0ce3ce323e8.webp" alt="Software キーと Windows キーの仮想化フラグを表示したコマンド出力"><figcaption>図7-24　Software キーと Windows キーの UAC レジストリ仮想化フラグ</figcaption></figure>
+<figure><img loading="lazy" width="416" height="239" src="assets/56cd2653c432b0ce3ce323e8.webp" alt="Software キーと Windows キーの仮想化フラグを表示したコマンド出力"><figcaption>図7-24　Software キーと Windows キーの UAC レジストリ仮想化フラグ。管理者のコマンドプロンプトでレジストリキーの仮想化フラグを照会した結果です。HKLM の Software キーでは、仮想化禁止、失敗を通知しない動作の禁止、サブキーへの再帰適用の3フラグがいずれも未設定（CLEAR）です。Software 内の Microsoft／Windows キーでは、仮想化禁止と再帰適用が設定済み（SET）です。両方の照会は正常に完了しています。</figcaption></figure>
 <p>ファイルの仮想化はフィルタードライバーが処理し、レジストリの仮想化は構成マネージャーが処理します。レジストリと構成マネージャーの詳細は、第2部の第9章を参照してください。ファイルシステムの仮想化と同様に、従来のプロセスが仮想化対象のキーの下にサブキーを作ろうとすると、ユーザー専用のレジストリ仮想ルートに振り向けられます。UAC 対応のプロセスでは、既定のアクセス許可によって拒否されます。図7-25にこの違いを示します。</p>
 <figure><img loading="lazy" width="439" height="251" src="assets/902265d54c80be3a23a27d7f.webp" alt="従来のプロセスによるサブキーの作成だけが仮想ルートに振り向けられる仕組み"><figcaption>図7-25　UAC レジストリ仮想化の動作</figcaption></figure></section><section class="page" id="page-746" aria-label="page-746"><h3 id="権限の昇格">権限の昇格</h3>
 <p>標準ユーザーの権限で動作するプログラムだけを使っていても、一部の操作には管理者権限が必要です。たとえば、ほとんどのソフトウェアをインストールする際には、システム全体で共有する場所にディレクトリやレジストリキーを作成したり、サービスやデバイスドライバーをインストールしたりするために、管理者権限が必要です。Windows やアプリケーションのシステム全体の設定を変更する場合や、保護者による制限機能を使う場合も同様です。専用の管理者アカウントに切り替えれば、これらの操作の大半は実行できます。ただし、切り替えが面倒だと、ほとんどのユーザーは、管理者権限が不要な日常の作業も管理者アカウントのまま行うでしょう。</p>
