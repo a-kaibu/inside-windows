@@ -19432,3 +19432,9 @@ for counter, label in (
         f'<code>Memory: {counter}</code>',
         f'{label}（<code>Memory: {counter}</code>）',
     )
+
+
+full_pages_ja['p2-page-79'] = full_pages_ja['p2-page-79'].replace(
+    '<p>Interrupt Arbiter &quot;ACPI_IRQ&quot; at fffff804575415a0</p>',
+    '<p>割り込みアービター <code>ACPI_IRQ</code> のアドレスは <code>fffff804575415a0</code> です。</p>',
+)
