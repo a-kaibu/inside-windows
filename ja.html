@@ -9674,7 +9674,7 @@ Process Token TrustLevelSid: (null)</pre>
 <li>メモ帳の「ファイル」メニューから「新規」を選びます。</li>
 </ol></section><section class="page" id="page-659" aria-label="page-659"><ol start="4">
 <li>メモ帳に文字を入力し、<code>%SystemRoot%\System32</code> に保存しようとします。メモ帳は権限が足りないことを示すダイアログを表示し、「ドキュメント」フォルダーへの保存を提案します。
-<figure><img loading="lazy" width="227" height="110" src="assets/135b98e55d706e0cb3e07f1c.webp" alt="ファイルの保存権限がなく、別の保存先を提案するメモ帳のダイアログ"></figure></li>
+<figure><img loading="lazy" width="227" height="110" src="assets/135b98e55d706e0cb3e07f1c.webp" alt="ファイルの保存権限がなく、別の保存先を提案するメモ帳のダイアログ"><figcaption>「名前を付けて保存」の警告。この場所に保存する権限がありません。権限を取得するには管理者に連絡してください。代わりにドキュメントフォルダーに保存するか、「はい」または「いいえ」で選びます。</figcaption></figure></li>
 <li>提案を受け入れます。同じダイアログが再び表示され、保存を試みるたびに繰り返されます。</li>
 <li>この章の前の実験で確認した、ユーザープロファイル内の <code>LocalLow</code> ディレクトリに保存します。</li>
 </ol>
@@ -9720,7 +9720,7 @@ Process Token TrustLevelSid: (null)</pre>
 <li>スタートメニューを開いて「command」と入力します。表示された「コマンド プロンプト」を右クリックし、「管理者として実行」を選びます。</li>
 <li>別の <code>cmd.exe</code> を、今度は昇格せずに起動します。</li>
 <li>Process Explorer を管理者権限で起動します。2つのコマンドプロンプトのプロセスのプロパティを開き、それぞれの「Security」タブを表示します。標準ユーザートークンには拒否専用 SID と Medium の必須ラベルがあり、特権も少数に限られています。次の画面の右側は管理者トークン、左側はフィルター処理済み管理者トークンで動くコマンドプロンプトのプロパティです。</li>
-</ol></section><section class="page" id="page-663" aria-label="page-663"><figure><img loading="lazy" width="582" height="394" src="assets/c50b28e579855d0fea7ac8a5.webp" alt="Process Explorer で比較したフィルター処理済み管理者トークン（左）と管理者トークン（右）"></figure>
+</ol></section><section class="page" id="page-663" aria-label="page-663"><figure><img loading="lazy" width="582" height="394" src="assets/c50b28e579855d0fea7ac8a5.webp" alt="Process Explorer で比較したフィルター処理済み管理者トークン（左）と管理者トークン（右）"><figcaption>同じユーザーで起動した cmd.exe のトークンを比較した例。左のフィルター処理済みトークンでは Administrators グループは拒否専用（Deny）、整合性レベルは中です。右の管理者トークンでは同グループに所有者（Owner）の属性があり、整合性レベルは高です。</figcaption></figure>
 <h3 id="仮想サービスアカウント">仮想サービスアカウント</h3>
 <p>Windows は、管理の手間を抑えながらサービスの分離とアクセス制御を強化するため、仮想サービスアカウント（仮想アカウント）を提供します。Windows サービスの詳細は Part 2 の第9章を参照してください。この仕組みを使わない場合、サービスは Local Service や Network Service など、Windows の組み込みサービス用に定義されたアカウントか、通常のドメインアカウントで実行する必要があります。Local Service などのアカウントは多くのサービスで共有されるため、サービスごとに特権やアクセス権を細かく設定できず、ドメイン全体での管理もできません。ドメインアカウントはセキュリティのためにパスワードを定期的に変更する必要があり、変更の前後にサービスの可用性が下がる場合があります。サービスごとに専用アカウントを使えば分離を強化できますが、通常のアカウントでは管理の手間が増えます。</p>
 <p>仮想サービスアカウントを使うと、各サービスは固有の SID を持つ専用アカウントで動作します。アカウント名は <code>NT SERVICE\&lt;サービスの内部名&gt;</code> の形式です。ほかのアカウントと同様にアクセス制御リストに指定でき、グループポリシーを使って特権を割り当てられます。通常のアカウント管理ツールでの作成や削除、グループへの追加には対応していません。</p>
@@ -10172,9 +10172,9 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <li>タスクバーの通知領域にある時計を右クリックし、「日付と時刻の調整」を選びます。または、「設定」アプリで時刻を検索して「日付と時刻」の設定ページを開きます。</li>
 </ol></section><section class="page" id="page-691" aria-label="page-691"><ol start="3">
 <li>Process Explorer で <code>SystemSettings.exe</code> プロセスを右クリックし、「Properties」を選びます。プロパティダイアログで「Security」タブを開きます。<code>SeTimeZonePrivilege</code> が無効であることを確認できます。
-<figure><img loading="lazy" width="288" height="377" src="assets/aa32fd3ae815a359691f32da.webp" alt="SeTimeZonePrivilege が無効と表示された Security タブ"></figure></li>
+<figure><img loading="lazy" width="288" height="377" src="assets/aa32fd3ae815a359691f32da.webp" alt="SeTimeZonePrivilege が無効と表示された Security タブ"><figcaption>タイムゾーン変更前の SystemSettings.exe の「セキュリティ」タブ。タイムゾーンを変更する特権 SeTimeZonePrivilege は「無効（Disabled）」です。</figcaption></figure></li>
 <li>タイムゾーンを変更します。Process Explorer のプロパティダイアログを閉じて開き直すと、「Security」タブで <code>SeTimeZonePrivilege</code> が有効になったことを確認できます。
-<figure><img loading="lazy" width="288" height="378" src="assets/bc2647c0aa9e521d1d977ef5.webp" alt="タイムゾーンの変更後に SeTimeZonePrivilege が有効と表示された Security タブ"></figure></li>
+<figure><img loading="lazy" width="288" height="378" src="assets/bc2647c0aa9e521d1d977ef5.webp" alt="タイムゾーンの変更後に SeTimeZonePrivilege が有効と表示された Security タブ"><figcaption>タイムゾーン変更後の同じプロセス。SeTimeZonePrivilege は「有効（Enabled）」です。</figcaption></figure></li>
 </ol></section><section class="page" id="page-692" aria-label="page-692"><h4 id="実験-走査チェックの省略特権">実験：走査チェックの省略特権</h4>
 <p>システム管理者は、走査チェックの省略特権（表7-11では <code>SeChangeNotifyPrivilege</code>、原文のこの実験では <code>SeNotifyPrivilege</code>）がアクセス判定に及ぼす影響を把握する必要があります。この実験では、フォルダーのアクセス許可と、その中にあるファイルのアクセス許可がどのように作用するかを確認します。</p>
 <ol>
