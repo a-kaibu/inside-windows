@@ -6761,9 +6761,9 @@ Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 <figure><img loading="lazy" width="359" height="317" src="assets/12fb09c58afa9e94fab27353.webp" alt="ワーキングセットを縮小した後の TestLimit を表示する VMMap の画面"><figcaption>ワーキングセット縮小後の VMMap。プライベートバイトは 2,027,204 K で、ワーキングセットは縮小前の 2,031,284 K から約 4 MB に減りました。</figcaption></figure></li>
 </ol></section><section class="page" id="page-452" aria-label="page-452"><ol start="14">
 <li>「Working Set」の棒グラフはほとんど空です。画面中央の集計では、プロセスのワーキングセットは合計わずか4 KBで、そのほぼすべてをページテーブルが占めています。RAMMap に戻り、表示を更新します。「Use Counts」タブでは、アクティブなページが大幅に減り、多数のページが変更済みリストに、一部のページがスタンバイリストに移ったことが分かります。
-<figure><img loading="lazy" width="466" height="291" src="assets/0c1e24265e0ac558127b0915.webp" alt="ワーキングセット縮小後に変更済みページとスタンバイページが増えた RAMMap の Use Counts タブ"></figure></li>
+<figure><img loading="lazy" width="466" height="291" src="assets/0c1e24265e0ac558127b0915.webp" alt="ワーキングセット縮小後に変更済みページとスタンバイページが増えた RAMMap の Use Counts タブ"><figcaption>縮小後の「用途別集計（Use Counts）」。システム全体ではスタンバイが 227,036 K、変更済みが 444,472 K です。プロセスのプライベートメモリのうち、442,776 K が変更済みです。</figcaption></figure></li>
 <li>RAMMap の「Processes」タブでは、これらのリストに移ったページの大半が TestLimit プロセスに由来することを確認できます。
-<figure><img loading="lazy" width="569" height="354" src="assets/8d5abb7b30f3537858ebcae7.webp" alt="TestLimit の変更済みページとスタンバイページの量を示す RAMMap の Processes タブ"></figure></li>
+<figure><img loading="lazy" width="569" height="354" src="assets/8d5abb7b30f3537858ebcae7.webp" alt="TestLimit の変更済みページとスタンバイページの量を示す RAMMap の Processes タブ"><figcaption>「プロセス（Processes）」タブで Testlimit.exe（PID 4544）を選択した状態。プライベートは 44 K、スタンバイは 16 K、変更済みは 439,784 K、ページテーブルは 4,076 K です。</figcaption></figure></li>
 </ol></section><section class="page" id="page-453" aria-label="page-453"><h3 id="ページの優先度">ページの優先度</h3>
 <p>メモリマネージャーは、システム上のすべての物理ページに0から7までの優先度を割り当てます。主な用途は、スタンバイリストからページを再利用する順序を決めることです。スタンバイリストは優先度別に8つのリストに分かれており、メモリマネージャーは優先度の低いリストから順にページを取り出します。</p>
 <p>システム内の各スレッドとプロセスにも、ページ優先度が割り当てられます。物理ページの優先度には通常、そのページの割り当てを最初に引き起こしたスレッドに設定されているページ優先度が反映されます。共有ページでは、共有しているスレッドの中で最も高いページ優先度が反映されます。スレッドは、属するプロセスからページ優先度を継承します。メモリマネージャーは、プロセスがアクセスしそうなページを予測してディスクから先読みする際、それらのページに低い優先度を割り当てます。</p>
