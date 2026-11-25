@@ -9733,18 +9733,18 @@ Process Token TrustLevelSid: (null)</pre>
 [SC] CreateService SUCCESS</pre>
 </li>
 <li>コマンドを実行すると、レジストリとサービスコントロールマネージャーの内部リストにサービスが登録され、仮想サービスアカウントが作成されます。「サービス」MMC スナップイン（<code>services.msc</code>）を起動し、新しいサービスを選んで「プロパティ」を開きます。
-<figure><img loading="lazy" width="549" height="256" src="assets/4b1d9395bd0b0209ff8ee0d0.webp" alt="サービスの一覧で新しく作成した srvany を選択した画面"></figure></li>
+<figure><img loading="lazy" width="549" height="256" src="assets/4b1d9395bd0b0209ff8ee0d0.webp" alt="サービスの一覧で新しく作成した srvany を選択した画面"><figcaption>「サービス」管理コンソールで srvany を選択しています。スタートアップの種類は「手動（Manual）」で、ログオンアカウントは NT SERVICE の srvany です。</figcaption></figure></li>
 <li>「ログオン」タブを開きます。
-<figure><img loading="lazy" width="225" height="258" src="assets/5ecef381905f4b9ec346ae0d.webp" alt="サービスのログオンタブに仮想サービスアカウントが表示された画面"></figure></li>
+<figure><img loading="lazy" width="225" height="258" src="assets/5ecef381905f4b9ec346ae0d.webp" alt="サービスのログオンタブに仮想サービスアカウントが表示された画面"><figcaption>srvany のプロパティの「ログオン」タブ。「このアカウント」が選択され、仮想サービスアカウント NT SERVICE の srvany が指定されています。</figcaption></figure></li>
 </ol></section><section class="page" id="page-665" aria-label="page-665"><ol start="4">
 <li>既存のサービスにも、そのサービスのプロパティから仮想サービスアカウントを設定できます。「アカウント」欄に <code>NT SERVICE\servicename</code> と入力し、2つのパスワード欄を空にします。仮想サービスアカウントに必要なファイルやその他のリソースへのアクセス権がなければ、既存のサービスが正常に動作しない場合があります。</li>
 <li>仮想アカウントを使うサービスについて、Process Explorer のプロパティで「Security」タブを開くと、アカウント名と SID を確認できます。試すには、<code>srvany</code> サービスのプロパティで、コマンドライン引数に <code>notepad.exe</code> を指定します。<code>srvany</code> は通常の実行可能ファイルをサービスとして動かすため、実行対象をコマンドラインで受け取ります。「開始」をクリックしてサービスを起動します。
 <figure><img loading="lazy" width="383" height="472" src="assets/7e4d92b0e77cf1fccf54b833.webp" alt="サービスのプロパティで起動引数を指定する例"></figure></li>
 <li>サービスがアクセスするファイルなどのオブジェクトのアクセス制御エントリに、仮想サービスアカウントを指定できます。ファイルのプロパティで「セキュリティ」タブを開き、仮想サービスアカウントを参照する ACL を作成します。「名前の確認」を実行すると、入力した <code>NT SERVICE\srvany</code> などの名前がサービス名だけ（<code>srvany</code>）に短縮され、ACL に表示されます。</li>
-</ol></section><section class="page" id="page-666" aria-label="page-666"><figure><img loading="lazy" width="282" height="356" src="assets/654eeb9eacb43206be3faed7.webp" alt="ファイルのアクセス制御リストに表示された仮想サービスアカウント"></figure>
+</ol></section><section class="page" id="page-666" aria-label="page-666"><figure><img loading="lazy" width="282" height="356" src="assets/654eeb9eacb43206be3faed7.webp" alt="ファイルのアクセス制御リストに表示された仮想サービスアカウント"><figcaption>PEExplorer フォルダーのアクセス許可。srvany には「読み取りと実行」「フォルダーの内容の一覧表示」「読み取り」が許可されています。</figcaption></figure>
 <ol start="7">
 <li>グループポリシーで仮想サービスアカウントにアクセス許可やユーザー権利を付与できます。この例では、ローカルセキュリティポリシーエディター（<code>secpol.msc</code>）を使い、<code>srvany</code> の仮想アカウントにページファイルを作成する権利を付与しています。
-<figure><img loading="lazy" width="326" height="396" src="assets/7a9be916578eabdfed37d4e4.webp" alt="仮想サービスアカウントにページファイル作成の権利を割り当てた例"></figure></li>
+<figure><img loading="lazy" width="326" height="396" src="assets/7a9be916578eabdfed37d4e4.webp" alt="仮想サービスアカウントにページファイル作成の権利を割り当てた例"><figcaption>ローカルセキュリティ設定の「ページ ファイルの作成」のプロパティ。権利を割り当てられた一覧に Administrators と NT SERVICE の srvany が表示されています。</figcaption></figure></li>
 </ol></section><section class="page" id="page-667" aria-label="page-667"><ol start="8">
 <li>仮想サービスアカウントは SAM レジストリハイブに格納されないため、<code>lusrmgr.msc</code> などのユーザー管理ツールには表示されません。原文の画面例では、組み込みの System アカウントのコンテキストから、レジストリの <code>HKLM\Security\Policy\Secrets</code> キーに、このアカウントに関する情報があることを確認しています。
 <figure><img loading="lazy" width="539" height="339" src="assets/a7bd4c7f3d7e929b2ecfe346.webp" alt="仮想サービスアカウントに関する情報をレジストリエディターで表示した例"></figure></li>
