@@ -6636,10 +6636,10 @@ a5fc09          6        0        1
 </tbody></table></div>
 <p>これらのワーキングセットや、その構成要素のサイズは、表5-17のパフォーマンスカウンターまたはシステム変数で確認できます。カウンターの値はバイト単位、システム変数の値はページ単位です。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-17　システムのワーキングセットのパフォーマンスカウンター</caption><thead><tr><th>カウンター（バイト）</th><th>システム変数（ページ）</th><th>説明</th></tr></thead><tbody>
-<tr><td><code>Memory: Cache Bytes</code><br><code>Memory: System Cache Resident Bytes</code></td><td><code>WorkingSetSize</code> メンバー</td><td>ファイルシステムキャッシュが使用している物理メモリです。</td></tr>
-<tr><td><code>Memory: Cache Bytes Peak</code></td><td><code>PeakWorkingSetSize</code> メンバー（Windows 10、Server 2016）<br><code>Peak</code> メンバー（Windows 8.x、Server 2012／R2）</td><td>システムのワーキングセットのピークサイズです。</td></tr>
-<tr><td><code>Memory: System Driver Resident Bytes</code></td><td><code>SystemPageCounts.SystemDriverPage</code>（グローバル、Windows 10、Server 2016）<br><code>MmSystemDriverPage</code>（グローバル、Windows 8.x、Server 2012／R2）</td><td>ページング可能なデバイスドライバーのコードが使用している物理メモリです。</td></tr>
-<tr><td><code>Memory: Pool Paged Resident Bytes</code></td><td><code>WorkingSetSize</code> メンバー</td><td>ページプールが使用している物理メモリです。</td></tr>
+<tr><td>キャッシュのバイト数（<code>Memory: Cache Bytes</code>）<br>システムキャッシュの常駐バイト数（<code>Memory: System Cache Resident Bytes</code>）</td><td><code>WorkingSetSize</code> メンバー</td><td>ファイルシステムキャッシュが使用している物理メモリです。</td></tr>
+<tr><td>キャッシュの最大バイト数（<code>Memory: Cache Bytes Peak</code>）</td><td><code>PeakWorkingSetSize</code> メンバー（Windows 10、Server 2016）<br><code>Peak</code> メンバー（Windows 8.x、Server 2012／R2）</td><td>システムのワーキングセットのピークサイズです。</td></tr>
+<tr><td>システムドライバーの常駐バイト数（<code>Memory: System Driver Resident Bytes</code>）</td><td><code>SystemPageCounts.SystemDriverPage</code>（グローバル、Windows 10、Server 2016）<br><code>MmSystemDriverPage</code>（グローバル、Windows 8.x、Server 2012／R2）</td><td>ページング可能なデバイスドライバーのコードが使用している物理メモリです。</td></tr>
+<tr><td>ページプールの常駐バイト数（<code>Memory: Pool Paged Resident Bytes</code>）</td><td><code>WorkingSetSize</code> メンバー</td><td>ページプールが使用している物理メモリです。</td></tr>
 </tbody></table></div>
 <p>システムキャッシュのワーキングセットにおけるページングの状況は、<code>Memory: Cache Faults/Sec</code> カウンターでも確認できます。このカウンターは、システムキャッシュのワーキングセットで発生するハードフォールトとソフトフォールトの両方を追跡します。その値は、システムキャッシュのワーキングセット構造体の <code>PageFaultCount</code> メンバーに格納されます。</p>
 <h3 id="メモリ通知イベント">メモリ通知イベント</h3>

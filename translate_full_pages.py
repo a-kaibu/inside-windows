@@ -19419,3 +19419,16 @@ for label, localized in (
 ):
     service_table = service_table.replace(label, localized)
 full_pages_ja['p2-page-497'] = service_table
+
+
+for counter, label in (
+    ('Cache Bytes', 'キャッシュのバイト数'),
+    ('System Cache Resident Bytes', 'システムキャッシュの常駐バイト数'),
+    ('Cache Bytes Peak', 'キャッシュの最大バイト数'),
+    ('System Driver Resident Bytes', 'システムドライバーの常駐バイト数'),
+    ('Pool Paged Resident Bytes', 'ページプールの常駐バイト数'),
+):
+    full_pages_ja['page-440'] = full_pages_ja['page-440'].replace(
+        f'<code>Memory: {counter}</code>',
+        f'{label}（<code>Memory: {counter}</code>）',
+    )
