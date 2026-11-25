@@ -1626,7 +1626,7 @@ DirBase:   ObjectTable: ffffc0004ddff040  HandleCount: 514.
 Image: csrss.exe</pre>
 <p>そのうちの1つを選び、ユーザーモードのモジュールを表示できるよう、デバッガーのプロセスコンテキストを切り替えます。</p>
 <pre>lkd&gt; .process /r /P ffffe00078796080
-Implicit process is now ffffe000&#x27;78796080
+現在のプロセスコンテキスト: ffffe000&#x27;78796080
 Loading User Symbols
 .............</pre>
 <p><code>/p</code> オプションは、指定したプロセスオブジェクト（<code>EPROCESS</code>）にデバッガーのプロセスコンテキストを切り替えます。主にライブデバッグで必要です。
@@ -6137,7 +6137,7 @@ Image: smss.exe</pre>
 <li>最初のプロセス（セッション ID が <code>none</code>）を見つけます。これがマスター <code>Smss.exe</code> です。詳しくは第2章を参照してください。</li>
 <li>デバッガーのプロセスコンテキストをそのプロセスに切り替えます。
 <pre>lkd&gt; .process /r /p 8e54bc40
-Implicit process is now 8e54bc40
+現在のプロセスコンテキスト: 8e54bc40
 Loading User Symbols
 ..</pre>
 </li>
@@ -6341,7 +6341,7 @@ PROCESS ffffc8068913e080</pre></section><section class="page" id="page-426" aria
 DirBase: 252e25000  ObjectTable: ffffda8f49269c40  HandleCount: 1915.
 Image: POWERPNT.EXE
 lkd&gt; .process /p ffffc8068913e080
-Implicit process is now ffffc806&#x27;8913e080
+現在のプロセスコンテキスト: ffffc806&#x27;8913e080
 lkd&gt; !handle
 ...
 0c08: Object: ffffc8068f56a630  GrantedAccess: 00120089 Entry: ffffda8f491d0020
@@ -18400,9 +18400,8 @@ TEB の詳細は Part 1 の第4章を参照してください。</p>
 <p>ハンドルを右クリックして閉じてみます。
 メモ帳が終了し、WinDbg に次のメッセージが表示されます。</p>
 <pre>ERROR: WaitForEvent failed, NTSTATUS 0xC0000354
-This usually indicates that the debuggee has been
-killed out from underneath the debugger.
-You can use .tlist to see if the debuggee still exists.</pre>
+通常はデバッガーの制御外でデバッグ対象が終了したことを示します。
+対象がまだ存在するかは .tlist で確認できます。</pre>
 <p>このメッセージは、イベントの待機に失敗したことを示しています。
 通常は、デバッガーの制御外でデバッグ対象が終了したことを意味します。対象がまだ存在するかは <code>.tlist</code> で確認できます。
 示された NTSTATUS コードの説明には「デバッグポートが削除中のため、ポートに対する操作が失敗しました」とあります。
@@ -19802,8 +19801,8 @@ Win32Thread: 0000000000000000 WAIT: (WrQueue) UserMode Alertable
     ffff8904dfdd7440  QueueObject</code></pre>
 <p>キューを待っているスレッドにデバッガーのコンテキストを切り替え、スタックを表示します。</p>
 <pre><code>lkd&gt; .thread /p ffff8904e12ac040
-Implicit thread is now ffff8904`e12ac040
-Implicit process is now ffff8904`dfdaa080
+現在のスレッドコンテキスト: ffff8904`e12ac040
+現在のプロセスコンテキスト: ffff8904`dfdaa080
 .cache forcedecodeuser done
 lkd&gt; k
 *** Stack trace for last set context - .thread/.cxr resets it
