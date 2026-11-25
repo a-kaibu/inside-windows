@@ -171,8 +171,7 @@
 <blockquote><p><strong>注</strong>　HTML を使っていても、Windows アプリはローカルで動くクライアントアプリです。Web サーバーから取得して実行する Web アプリケーションとは異なります。</p></blockquote>
 <h4 id="NET-Framework">.NET Framework</h4>
 <p>.NET Framework は Windows の構成要素です。表1-2に、Windows の各バージョンに標準で組み込まれているバージョンを示します。古い Windows に、より新しい .NET Framework をインストールすることもできます。</p>
-<p><strong>表1-2　Windows に標準で組み込まれている .NET Framework</strong></p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;">
+<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;"><caption>表1-2　Windows に標準で組み込まれている .NET Framework</caption>
 <thead><tr style="border-bottom:2px solid var(--line);text-align:left;">
 <th style="padding:6px;">Windows バージョン</th><th style="padding:6px;">.NET Framework バージョン</th>
 </tr></thead>
@@ -420,8 +419,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>第2章「システムアーキテクチャ」で説明するように、ユーザーアプリケーションがシステムサービスを呼び出すと、ユーザーモードからカーネルモードに切り替わります。たとえば、Windows API の <code>ReadFile</code> は、最終的にファイルの読み取りを担当する Windows 内部のルーチンを呼び出します。このルーチンはシステム内部のデータ構造にアクセスするため、カーネルモードで実行する必要があります。特殊なプロセッサー命令を実行するとカーネルモードに移行し、カーネル内のシステムサービスディスパッチコードに制御が移ります。このコードが <code>Ntoskrnl.exe</code> または <code>Win32k.sys</code> 内の対応する関数を呼び出します。ユーザースレッドに制御を返す前にユーザーモードに戻ります。この仕組みにより、OS は自身のコードとデータをユーザープロセスによる参照や変更から保護します。</p>
 <blockquote><p><strong>注</strong>　モードを切り替えても、切り替え自体はスレッドのスケジューリングに影響しません。同じスレッドが実行を続けるため、コンテキストスイッチは発生しません。システムサービスのディスパッチについては第2章を参照してください。</p></blockquote>
 <p>ユーザースレッドは通常、実行時間の一部をユーザーモードで、残りをカーネルモードで過ごします。グラフィックスとウィンドウシステムの大半もカーネルモードで動作するため、描画処理の多いアプリケーションではカーネルモードでの実行時間のほうが長くなります。Microsoft ペイントなどを動かし、表1-3のパフォーマンスカウンターを使うと、実行時間の内訳を確認できます。Direct2D や DirectComposition を使うアプリケーションは、計算の大半をユーザーモードで処理し、サーフェスの生データだけをカーネルに渡せます。これにより、モード切り替えにかかる時間を減らせます。</p>
-<p><strong>表1-3：モード関連のパフォーマンスカウンタ</strong></p>
-<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;">
+<div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table style="width:100%;border-collapse:collapse;margin:1em 0;font-size:14px;"><caption>表1-3：モード関連のパフォーマンスカウンタ</caption>
 <thead><tr style="border-bottom:2px solid var(--line);text-align:left;">
 <th style="padding:6px;">オブジェクト：カウンタ</th><th style="padding:6px;">説明</th>
 </tr></thead>
