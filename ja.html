@@ -2832,7 +2832,7 @@ api-ms-win-core-job-l1-1-0
 <li>Process Explorer を起動します。「Options」メニューで「Configure Colors」を選び、「Jobs」にチェックを入れます。次の画面のように、Cmd.exe と、その子である ConHost.exe が、ジョブに属するプロセスとして強調表示されます。
 <figure><img loading="lazy" width="595" height="143" src="assets/d0a66140e51a378c6780a493.webp" alt="ジョブに属する Cmd.exe と ConHost.exe を強調表示した Process Explorer"></figure></li>
 <li>Cmd.exe または ConHost.exe をダブルクリックし、プロパティのダイアログを開きます。「Job」タブを開くと、プロセスが属するジョブの情報が表示されます。</li>
-</ol></section><section class="page" id="page-198" aria-label="page-198"><figure><img loading="lazy" width="337" height="280" src="assets/7fe90b5358f939d5faf126c3.webp" alt="Process Explorer の Job タブに表示されたジョブの情報"></figure>
+</ol></section><section class="page" id="page-198" aria-label="page-198"><figure><img loading="lazy" width="337" height="280" src="assets/7fe90b5358f939d5faf126c3.webp" alt="Process Explorer の Job タブに表示されたジョブの情報"><figcaption>cmd.exe のプロパティにある「ジョブ（Job）」タブ。ジョブ名（Job Name）は「名前なしのジョブ（&lt;Unnamed Job&gt;）」です。「ジョブ内のプロセス（Processes in Job）」には cmd.exe（PID 1500）と conhost.exe（PID 16136）が表示され、「ジョブの制限（Job Limits）」の一覧は空です。</figcaption></figure>
 <ol start="5">
 <li>コマンドプロンプトから <code>Notepad.exe</code> を起動します。</li>
 <li>Process Explorer でメモ帳のプロセスのプロパティを開き、「Job」タブを確認します。Cmd.exe はプロセス作成時に <code>CREATE_BREAKAWAY_FROM_JOB</code> フラグを使わないため、メモ帳も同じジョブで実行されています。ジョブが入れ子になっている場合、このタブには、対象のプロセスが直接属するジョブと、その子ジョブすべてに属するプロセスが表示されます。</li>
