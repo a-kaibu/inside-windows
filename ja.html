@@ -8349,10 +8349,10 @@ Args: 00000000 00000000 83360020 00000000</pre>
 <li><code>IoPriority.exe</code> を起動します。</li>
 <li>ダイアログの「Thread 1」で「Low Priority」チェックボックスをオンにします。</li>
 <li>「Start I/O」ボタンをクリックします。次の画面のように、2つのスレッドの処理速度に大きな差が出ます。
-<figure><img loading="lazy" width="278" height="98" src="assets/d0ffa3606ec4aae1832fec3c.webp" alt="IO Priority で2つのスレッドのスループットを比較した画面"></figure>
+<figure><img loading="lazy" width="278" height="98" src="assets/d0ffa3606ec4aae1832fec3c.webp" alt="IO Priority で2つのスレッドのスループットを比較した画面"><figcaption>I/O Priority の実行結果。「低優先度（Low Priority）」を選んだスレッド 1 は毎秒 624 バイトで、スレッド 2 は毎秒 1,910,161 バイトです。</figcaption></figure>
 <blockquote><p><strong>注</strong>　両方のスレッドを低い優先順位で動かし、システムが比較的アイドル状態にあれば、両者を合わせたスループットは、この例で通常の I/O 優先順位を使う1つのスレッドとほぼ同じになります。高い優先順位の I/O と競合しなければ、低い優先順位の I/O に意図的な速度制限などはかからないためです。</p></blockquote></li>
 <li>Process Explorer でプロセスを開き、I/O 優先順位が低い方のスレッドを選んで、各優先順位を確認します。
-<figure><img loading="lazy" width="309" height="340" src="assets/a97e54b75552cd65204ed88f.webp" alt="Process Explorer で低い I/O 優先順位のスレッドを確認した画面"></figure></li>
+<figure><img loading="lazy" width="309" height="340" src="assets/a97e54b75552cd65204ed88f.webp" alt="Process Explorer で低い I/O 優先順位のスレッドを確認した画面"><figcaption>Process Explorer の「スレッド」タブ。選択中のスレッド（TID 4464）の I/O 優先度は「非常に低い（Very Low）」です。基本優先度は 4、動的優先度は 6 です。</figcaption></figure></li>
 <li>Process Monitor で IO Priority が発行する I/O を追跡し、各要求の I/O 優先順位ヒントを確認することもできます。Process Monitor を起動して <code>IoPriority.exe</code> のフィルターを設定し、実験を繰り返します。このアプリケーションでは、各スレッドが <code>_File_</code> にスレッド ID を連結した名前のファイルから読み取ります。</li>
 </ol></section><section class="page" id="page-568" aria-label="page-568"><ol start="6">
 <li>対象ファイルへの読み取りが表示されるまでスクロールします（原文は <code>File_1</code> への書き込みとしていますが、画面の選択行は <code>_File_7920</code> に対する <code>ReadFile</code> です）。次のような出力が表示されます。
@@ -8571,7 +8571,7 @@ ServiceName is &quot;CmBatt&quot;
 <figure><img loading="lazy" width="458" height="286" src="assets/34b09f5c4fbd38d32e202718.webp" alt="HP 6830 複合機が1台のデバイスとして表示された画面"><figcaption>図6-39　コントロールパネルの「デバイスとプリンター」</figcaption></figure>
 <h4 id="実験-デバイスマネージャーでデバイスノードの詳細を表示する">実験：デバイスマネージャーでデバイスノードの詳細を表示する</h4>
 <p>デバイスマネージャーの「詳細」タブでは、デバイスノードの詳細情報を確認できます。表示できる項目には、デバイスインスタンス ID、ハードウェア ID、サービス名、フィルター、電源管理機能などがあります。</p>
-<p>次の画面は、「詳細」タブの選択欄を開いて、参照できる情報の種類を表示した例です。</p></section><section class="page" id="page-586" aria-label="page-586"><figure><img loading="lazy" width="307" height="349" src="assets/fe9eaa51a4675005e39aa20a.webp" alt="デバイスマネージャーの「詳細」タブで参照できるプロパティの一覧"></figure>
+<p>次の画面は、「詳細」タブの選択欄を開いて、参照できる情報の種類を表示した例です。</p></section><section class="page" id="page-586" aria-label="page-586"><figure><img loading="lazy" width="307" height="349" src="assets/fe9eaa51a4675005e39aa20a.webp" alt="デバイスマネージャーの「詳細」タブで参照できるプロパティの一覧"><figcaption>Intel HD Graphics 5000 のプロパティの「詳細」タブ。プロパティの一覧では、デバイスの説明、ハードウェア ID、ドライバーの日付とバージョンなどを選べます。画面では「INF 名（Inf name）」が強調表示されています。</figcaption></figure>
 <h3 id="ドライバーのプラグアンドプレイ対応">ドライバーのプラグアンドプレイ対応</h3>
 <p>プラグアンドプレイに対応するドライバーは、プラグアンドプレイ用のディスパッチルーチン（<code>IRP_MJ_PNP</code>）、電源管理用のディスパッチルーチン（<code>IRP_MJ_POWER</code>。この章の後半の「電源マネージャー」で説明します）、デバイス追加ルーチンを実装します。バスドライバーが処理するプラグアンドプレイ要求は、機能ドライバーやフィルタードライバーが処理するものとは異なります。たとえば起動時にデバイスを列挙する際、PnP マネージャーは PnP IRP を使い、各バスドライバーに、そのバスで見つけたデバイスの情報を問い合わせます。</p>
 <p>機能ドライバーとフィルタードライバーは、デバイス追加ルーチンでデバイスを管理する準備を済ませます。この段階ではデバイスのハードウェアとは通信せず、PnP マネージャーからプラグアンドプレイ用のディスパッチルーチンにデバイスの開始要求（PnP IRP のマイナーコード <code>IRP_MN_START_DEVICE</code>）が届くまで待ちます。PnP マネージャーは開始要求を送る前に、リソース調停を行い、デバイスに割り当てるリソースを決めます。開始要求にはその割り当てが含まれます。ドライバーは開始要求を受け取ると、指定されたリソースを使うようデバイスを構成できます。デバイスの起動が完了する前にアプリケーションがデバイスを開こうとすると、デバイスが存在しないことを示すエラーが返ります。</p>
@@ -8625,7 +8625,7 @@ kbdclass.sys,,,0x100
 <h4 id="実験-カタログファイルを表示する">実験：カタログファイルを表示する</h4>
 <p>ドライバーなど、カタログファイル付きのコンポーネントをインストールすると、Windows はカタログファイルを <code>%SystemRoot%\System32\Catroot</code> 配下にコピーします。エクスプローラーでこのディレクトリを開くと、<code>.cat</code> ファイルを含むサブディレクトリが見つかります。たとえば <code>Nt5.cat</code> と <code>Nt5ph.cat</code> には、Windows のシステムファイルの署名とページハッシュが格納されています。</p>
 <p>カタログファイルを開くと、2つのタブがあるダイアログが表示されます。「General」タブにはカタログファイルの署名情報が、「Security Catalog」タブには、そのカタログで署名されたコンポーネントのハッシュが表示されます。次の画面は Intel のオーディオドライバーのカタログで、ドライバーの SYS ファイルのハッシュを表示しています。同じカタログには、ドライバーに同梱される各種の補助 DLL のハッシュも含まれます。</p>
-<figure><img loading="lazy" width="249" height="313" src="assets/17d8f511dade0015623647d6.webp" alt="Intel のオーディオドライバーの SYS ファイルのハッシュを表示したカタログの画面"></figure>
+<figure><img loading="lazy" width="249" height="313" src="assets/17d8f511dade0015623647d6.webp" alt="Intel のオーディオドライバーの SYS ファイルのハッシュを表示したカタログの画面"><figcaption>「セキュリティ カタログ」に含まれる項目の一覧です。「タグ（Tag）」列にはハッシュが並びます。選択した項目では「ファイル（File）」の値が IntcDAud.sys、DRM レベル（DRMLevel）が 1300 です。</figcaption></figure>
 <p>インストール時に、ユーザーモードの PnP マネージャーはカタログファイルから署名を取り出し、Microsoft のドライバー署名用公開鍵で検証します。署名が保証するハッシュと、インストールしようとしているドライバーファイルから計算したハッシュが一致すれば、そのドライバーは WHQL テストに合格したものとして扱われます。署名を検証できなければ、システムのドライバー署名ポリシーに従い、インストールを中止する、署名のないドライバーだとユーザーに警告する、または通知せずにインストールする、のいずれかを行います。</p></section><section class="page" id="page-592" aria-label="page-592"><blockquote><p><strong>注</strong>　PnP マネージャーのドライバー署名ポリシーは、INF ファイルを使ってインストールするドライバーに適用されます。セットアッププログラムがレジストリを直接設定し、ドライバーファイルをコピーする場合や、アプリケーションがドライバーを動的に読み込む場合は、第2部の第8章で説明するカーネルモードのコード署名ポリシーで検証されます。</p></blockquote>
 <blockquote><p><strong>注</strong>　ユーザーモードの PnP マネージャーは、インストールしようとするドライバーが、Windows Update の管理する保護対象ドライバーの一覧に載っているかも確認します。互換性の問題や不具合が判明したドライバーはこの一覧に追加されます。該当する場合、ユーザーに警告を表示し、インストールをブロックします。</p></blockquote>
 <h3 id="ドライバーの読み込みとインストールの概要">ドライバーの読み込みとインストールの概要</h3>
