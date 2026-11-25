@@ -26840,7 +26840,7 @@ TPM の不揮発性メモリ（NVRAM）は、電源を切っても内容を保�
 スタートメニューの検索ボックスに <code>tpm.msc</code> と入力し、スナップインを実行します。
 トラステッドプラットフォームモジュール（TPM）の管理コンソールが開きます。
 「状態」欄に「TPM は使用する準備ができています」と表示されていれば、TPM が存在し、有効になっています。</p>
-<figure><img loading="lazy" width="544" height="337" src="assets/8149fb0a2d1b0ad142db118d.webp" alt="TPM 管理コンソールの状態欄で、TPM が使用可能であることを確認する画面"><figcaption>TPM 管理コンソールで使用可能な状態を確認する</figcaption></figure></section><section class="page" id="p2-page-835" aria-label="p2-page-835"><p>システムボリュームを BitLocker で暗号化します。すでに暗号化されていれば、この操作は省略できます。
+<figure><img loading="lazy" width="544" height="337" src="assets/8149fb0a2d1b0ad142db118d.webp" alt="TPM 管理コンソールの状態欄で、TPM が使用可能であることを確認する画面"><figcaption>TPM 管理コンソールで使用可能な状態を確認する</figcaption><p>「状態」には「TPM は使用する準備ができています」と表示されています。画面下部には、製造元の名前（NTC）、製造元バージョン（1.3.0.1）、仕様バージョン（2.0）が表示されています。</p></figure></section><section class="page" id="p2-page-835" aria-label="p2-page-835"><p>システムボリュームを BitLocker で暗号化します。すでに暗号化されていれば、この操作は省略できます。
 いずれの場合も、回復キーは必ず保存してください。
 コントロールパネルの「BitLocker ドライブ暗号化」で「回復キーのバックアップ」を選ぶと、回復キーを確認できます。</p>
 <p>タスクバーのアイコンからエクスプローラーを開き、「PC」に移動します。
@@ -26849,7 +26849,7 @@ Windows のすべてのファイルを格納しているシステムボリュー
 これにより、TPM は起動時の測定値を封印解除の条件として、ボリュームマスターキー（VMK）を保護します。
 次の手順で使うので、回復キーは忘れずに保存するか印刷してください。控えがなければファイルにアクセスできなくなります。
 その他のオプションは既定値のままにします。</p>
-<figure><img loading="lazy" width="530" height="413" src="assets/c9a3378acdac5dfd1555abe1.webp" alt="BitLocker で起動時のドライブのロック解除方法を選ぶ画面"><figcaption>BitLocker で起動時の自動ロック解除を選ぶ</figcaption></figure>
+<figure><img loading="lazy" width="530" height="413" src="assets/c9a3378acdac5dfd1555abe1.webp" alt="BitLocker で起動時のドライブのロック解除方法を選ぶ画面"><figcaption>BitLocker で起動時の自動ロック解除を選ぶ</figcaption><p>起動時のロック解除方法は「PIN を入力する（推奨）」「USB フラッシュドライブを挿入する」「BitLocker でドライブのロックを自動的に解除する」の3つです。この実験では3番目を選びます。</p></figure>
 <p>暗号化が完了したらコンピューターの電源を切り、次に電源を入れるときに UEFI の設定画面へ入ります。
 手順は PC メーカーごとに異なるので、ハードウェアのマニュアルを参照してください。
 設定画面で起動順序を変更し、コンピューターを再起動します。
@@ -27077,7 +27077,7 @@ Windows ローダーは起動時にこの変数を検出すると、<code>VbsPol
 「UEFI ロックで有効にする」を選ぶと、管理者権限での設定変更に対しても保護されます。
 再起動後、同じグループポリシーエディターを使って、VBS の設定をすべて無効にします。
 さらにレジストリエディターで、<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard</code> 配下のキーと値を削除します。値を0に設定しても同じ結果になります。</p>
-<figure><img loading="lazy" width="645" height="174" src="assets/51c9530c5abaabad033a8384.webp" alt="レジストリエディターで DeviceGuard の設定を確認する画面"><figcaption>DeviceGuard のレジストリ設定</figcaption></figure>
+<figure><img loading="lazy" width="645" height="174" src="assets/51c9530c5abaabad033a8384.webp" alt="レジストリエディターで DeviceGuard の設定を確認する画面"><figcaption>DeviceGuard のレジストリ設定</figcaption><p>画面では、<code>EnableVirtualizationBasedSecurity</code>、<code>Locked</code>、<code>RequireMicrosoftSignedBootChain</code>、<code>RequirePlatformSecurityFeatures</code> の各 DWORD 値が0になっています。</p></figure>
 <p>管理者権限のコマンドプロンプトで、次のコマンドを実行して、BCD 上でハイパーバイザーの起動を無効にします。</p>
 <pre>bcdedit /set {current} hypervisorlaunchtype off</pre>
 <p>もう一度コンピューターを再起動します。
@@ -27093,7 +27093,7 @@ FAT32 の USB メモリの <code>efi\boot</code> ディレクトリに、<code>b
 USB メモリからコンピューターを起動すると EFI シェルが開くので、次のコマンドを実行します。</p>
 <pre>dmpstore VbsPolicy -guid 77FA9ABD-0359-4D32-BD60-28F4E78F784B</pre>
 <p><code>77FA9ABD-0359-4D32-BD60-28F4E78F784B</code> は、セキュアブートの非公開名前空間を識別する GUID です。</p>
-<figure><img loading="lazy" width="649" height="356" src="assets/8ffe7a276bf87bf63f535eb4.webp" alt="EFI シェルで VbsPolicy の内容を表示した画面"><figcaption>EFI シェルで VBS 起動ポリシーを確認する</figcaption></figure>
+<figure><img loading="lazy" width="649" height="356" src="assets/8ffe7a276bf87bf63f535eb4.webp" alt="EFI シェルで VbsPolicy の内容を表示した画面"><figcaption>EFI シェルで VBS 起動ポリシーを確認する</figcaption><p>ドライブのマッピング表に続き、<code>VbsPolicy</code> の属性が <code>NV+BS</code>、データサイズが <code>0x08</code> と表示されています。</p></figure>
 <h3 id="Secure-Launch">Secure Launch</h3>
 <p>VSM ポリシーで Trusted Execution が有効になっており、システムがこの機能に対応している場合、Winload は通常とは異なる起動経路を使います。
 これを<strong>Secure Launch</strong>と呼びます。
