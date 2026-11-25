@@ -1491,13 +1491,13 @@ Windows サブシステムのカーネルモード部分（<code>Win32k.sys</cod
 プロセスのオーバーヘッドを考える際は、こうしたデータ構造の大きさも考慮する必要がある場合が多いものの、正確な値を求めるのはほぼ不可能です。
 また、一部の関数では、コンポーネントがプロセスの作成を拒否できます。
 これにより、マルウェア対策製品のベンダーは、ハッシュ値に基づくブロックリストなどの手法を使って OS のセキュリティを強化できます。</p></section><section class="page" id="page-123" aria-label="page-123"><p>まずプロセスオブジェクトを見ていきます。図3-2に <code>EPROCESS</code> 構造体の主要なフィールドを示します。</p>
-<figure><img loading="lazy" src="assets/6be9c2711bde662c13c9a982.webp" alt="エグゼクティブプロセス構造体 EPROCESS の主要なフィールド"><figcaption>図3-2 エグゼクティブプロセス構造体の主要なフィールド</figcaption></figure>
+<figure><img loading="lazy" src="assets/6be9c2711bde662c13c9a982.webp" alt="エグゼクティブプロセス構造体 EPROCESS の主要なフィールド"><figcaption>図3-2 エグゼクティブプロセス構造体の主要なフィールド。EPROCESS はプロセス制御ブロック、保護用のロック、プロセス ID と親プロセス ID、フラグ、作成・終了時刻、クォータを保持します。アクティブプロセスとセッションの各リストに連結されます。主アクセストークン、所属ジョブ、ハンドルテーブル、PEB、スレッドリスト、Win32k と WoW64 の構造体への参照が図に示されています。残りのフィールドにはイメージ名とベースアドレス、メモリと I/O のカウンター、シーケンス番号、トラストレット識別情報、電力消費量、Pico コンテキスト、保護レベルと署名、DirectX の構造体、ワーキングセット、セクションオブジェクトがあります。</figcaption></figure>
 <p>カーネルの API やコンポーネントは、固有の命名規則を持つ独立したモジュールに分かれ、階層をなしています。プロセスのデータ構造も同じように設計されています。
 図3-2のように、エグゼクティブプロセス構造体の最初のメンバーは <code>Pcb</code>（Process Control Block、プロセス制御ブロック）です。
 このメンバーは、カーネルプロセスを表す <code>KPROCESS</code> 型の構造体です。
 エグゼクティブのルーチンは情報を <code>EPROCESS</code> に格納します。一方、OS カーネルの一部であるディスパッチャー、スケジューラー、割り込みや実行時間を集計するコードは <code>KPROCESS</code> を使います。
 こうして、エグゼクティブが提供する上位の機能と、その一部を支える下位の実装の間に抽象化の境界を設け、層の間に不要な依存関係が生じにくくなります。
-図3-3に <code>KPROCESS</code> 構造体の主要なフィールドを示します。</p></section><section class="page" id="page-124" aria-label="page-124"><figure><img loading="lazy" src="assets/f62de3ed02f135a6f4754d6c.webp" alt="カーネルプロセス構造体 KPROCESS の主要なフィールド"><figcaption>図3-3 カーネルプロセス構造体の主要なフィールド</figcaption></figure>
+図3-3に <code>KPROCESS</code> 構造体の主要なフィールドを示します。</p></section><section class="page" id="page-124" aria-label="page-124"><figure><img loading="lazy" src="assets/f62de3ed02f135a6f4754d6c.webp" alt="カーネルプロセス構造体 KPROCESS の主要なフィールド"><figcaption>図3-3 カーネルプロセス構造体の主要なフィールド。KPROCESS はディスパッチャーヘッダー、ページディレクトリのベース、カーネル・ユーザーモードの実行時間、サイクル時間、コンテキストスイッチ数を保持します。スレッドリストの先頭から KTHREAD をたどれます。ほかにプロセスロック、アフィニティ、フラグ、優先ノード、スレッド用のシード値、基本優先度、プロセスリストの項目、計測用コールバック、セキュアプロセス ID が示されています。</figcaption></figure>
 <h4 id="実験-EPROCESS-構造体のレイアウトを表示する">実験：EPROCESS 構造体のレイアウトを表示する</h4>
 <p><code>EPROCESS</code> を構成するフィールドと、それぞれの16進オフセットを表示するには、カーネルデバッガーで <code>dt nt!_eprocess</code> と入力します。
 カーネルデバッガーの詳細と、ローカルシステムでのデバッグ手順については、第1章の「<a href="#カーネルデバッグ">カーネルデバッグ</a>」を参照してください。
