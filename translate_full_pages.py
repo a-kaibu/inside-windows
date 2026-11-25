@@ -19244,23 +19244,23 @@ full_pages_ja['p2-page-590'] = full_pages_ja['p2-page-590'].replace(
     'SDB はタグを使い、XML に似た階層構造をバイナリ形式で表現します。',
 )
 
-full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].removesuffix('\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面">\n<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure>')
+full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].removesuffix('\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面">\n<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"><figcaption>シム適用前の DebugView。テストドライバーは DriverEntry が呼び出されたことを報告し、インストール済みのシムは検出されなかったと表示します。ホスト OS は Windows 10.0 Server と報告されます。</figcaption></figure>')
 
 full_pages_ja['p2-page-592'] = full_pages_ja['p2-page-592'].replace(
     'の一覧が表示されます。</li>',
-    'の一覧が表示されます。\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面"></figure></li>',
+    'の一覧が表示されます。\n<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面"><figcaption>SDB Explorer でドライバー互換性データベースを開いた例。選択中の DeviceIdShim には修正 ID（FIX_ID）、フラグ（FLAGS）、対象モジュール（MODULE）が表示され、対象モジュールは storport です。</figcaption></figure></li>',
 )
 
 full_pages_ja['p2-page-593'] = full_pages_ja['p2-page-593'].replace(
     'Insider リリースを使っています。</li>',
-    'Insider リリースを使っています。\n<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></li>',
+    'Insider リリースを使っています。\n<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"><figcaption>シム適用前の DebugView。テストドライバーは DriverEntry が呼び出されたことを報告し、インストール済みのシムは検出されなかったと表示します。ホスト OS は Windows 10.0 Server と報告されます。</figcaption></figure></li>',
 )
 
 full_pages_ja['p2-page-594'] = (
     full_pages_ja['p2-page-594']
-    .removesuffix('\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">\n<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure>')
-    .replace('DebugView の出力が変わります。</li>', 'DebugView の出力が変わります。\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"></figure></li>')
-    .replace('対象ドライバーの読み込みを阻止します。</li>', '対象ドライバーの読み込みを阻止します。\n<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></li>')
+    .removesuffix('\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">\n<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"><figcaption>テストドライバーの起動要求はエラー 1275 で失敗し、「このドライバーの読み込みはブロックされました」と表示されています。</figcaption></figure>')
+    .replace('DebugView の出力が変わります。</li>', 'DebugView の出力が変わります。\n<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"><figcaption>シム適用後の DebugView。テストドライバーは RtlGetVersion と PsGetVersion でシムを検出し、ホスト OS を Windows 6.3 Server（ビルド 9600、Service Pack 0.0）と報告しています。</figcaption></figure></li>')
+    .replace('対象ドライバーの読み込みを阻止します。</li>', '対象ドライバーの読み込みを阻止します。\n<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"><figcaption>テストドライバーの起動要求はエラー 1275 で失敗し、「このドライバーの読み込みはブロックされました」と表示されています。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-596'] = full_pages_ja['p2-page-596'].replace(

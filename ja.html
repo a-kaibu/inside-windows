@@ -21908,7 +21908,7 @@ Module: &quot;(null)&quot;, Status: 0xc0000135
 <li>管理者のコマンドプロンプトで次を実行します。<pre><code>bcdedit /set testsigning on</code></pre></li>
 <li>コンピューターを再起動します。SDB Explorer をダウンロードして起動し、<code>%SystemRoot%&#92;apppatch</code> の <code>drvmain.sdb</code> を開きます。</li>
 <li>SDB Explorer のメイン画面で、Indexes、Databases、String table の3ブロックに分かれたデータベース全体を調べられます。ルートの <code>DATABASES</code> ブロックを展開し、<code>KDEVICE</code> の後ろまでスクロールすると、図のように <code>KSHIM</code> の一覧が表示されます。
-<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面"></figure></li>
+<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面"><figcaption>SDB Explorer でドライバー互換性データベースを開いた例。選択中の DeviceIdShim には修正 ID（FIX_ID）、フラグ（FLAGS）、対象モジュール（MODULE）が表示され、対象モジュールは storport です。</figcaption></figure></li>
 </ol></section><section class="page" id="p2-page-593" aria-label="p2-page-593"><ol start="4">
 <li>テストドライバーに Version Lie シムの1つを適用します。まず <code>ShimDriver64.sys</code> を <code>%SystemRoot%&#92;System32&#92;Drivers</code> にコピーします。次に、64ビットの検証環境で管理者のコマンドプロンプトを開き、コピー先のパスを指定してドライバーを登録します。
 <pre><code>sc create ShimDriver type= kernel start= demand error= normal binPath= "%SystemRoot%&#92;System32&#92;Drivers&#92;ShimDriver64.sys"</code></pre></li>
@@ -21916,17 +21916,21 @@ Module: &quot;(null)&quot;, Status: 0xc0000135
 <li>次のコマンドで <code>ShimDriver</code> を起動します。
 <pre><code>sc start shimdriver</code></pre></li>
 <li>DebugView の出力を確認します。図のようなメッセージが表示されます。内容は、ドライバーを実行した Windows のバージョンによって異なります。この例では Windows Server 2022 の Insider リリースを使っています。
-<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></li>
-</ol></section><section class="page" id="p2-page-594" aria-label="p2-page-594"><ol start="8">
+<figure><img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"><figcaption>シム適用前の DebugView。テストドライバーは DriverEntry が呼び出されたことを報告し、インストール済みのシムは検出されなかったと表示します。ホスト OS は Windows 10.0 Server と報告されます。</figcaption></figure></li>
+</ol>
+<figure><img loading="lazy" width="588" height="322" src="assets/c785317a5e5d9b193f541433.webp" alt="SDB Explorer でドライバー互換性データベースのシムの詳細を表示した画面">
+<img loading="lazy" width="588" height="134" src="assets/5057013336b11da3a868e0de.webp" alt="シムを適用する前のテストドライバーの起動メッセージを表示した DebugView"></figure></section><section class="page" id="p2-page-594" aria-label="p2-page-594"><ol start="8">
 <li>テストドライバーを停止し、SDB データベースに含まれるシムを1つ有効にします。ここでは Version Lie シムを使います。次のコマンドで対象ドライバーを停止し、シムを設定します。<code>ShimDriver64.sys</code> は先ほど登録したドライバーのファイル名です。
 <pre><code>sc stop shimdriver
 reg add "HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Driver&#92;ShimDriver64.sys" /v Shims /t REG_MULTI_SZ /d KmWin81VersionLie /f /reg:64</code></pre></li>
 <li>最後のコマンドは、OS のバージョンとして Windows 8.1 を返すシムを追加します。別のバージョンを返すシムも選べます。</li>
 <li>ドライバーを起動し直すと、図のように DebugView の出力が変わります。
-<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"></figure></li>
+<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている"><figcaption>シム適用後の DebugView。テストドライバーは RtlGetVersion と PsGetVersion でシムを検出し、ホスト OS を Windows 6.3 Server（ビルド 9600、Service Pack 0.0）と報告しています。</figcaption></figure></li>
 <li>この変化は、OS のバージョン情報を取得する NT API にシムエンジンがフックを適用した結果です。ドライバー自身もシムの適用を検知できます。別のシムでも実験を繰り返せます。たとえば、<code>SkipDriverUnload</code> はドライバーのアンロードルーチンを無効化し、<code>KernelPadSectionsOverride</code> は図に示すように対象ドライバーの読み込みを阻止します。
-<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></li>
-</ol></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
+<figure><img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"><figcaption>テストドライバーの起動要求はエラー 1275 で失敗し、「このドライバーの読み込みはブロックされました」と表示されています。</figcaption></figure></li>
+</ol>
+<figure><img loading="lazy" width="587" height="134" src="assets/fd2ae53bd8cf2ff1cf7c5e5c.webp" alt="シム適用後のテストドライバーのデバッグ出力。報告された OS のバージョンが変わっている">
+<img loading="lazy" width="565" height="151" src="assets/a695e278071284a79327bf82.webp" alt="テストドライバーの読み込みがブロックされたことを示すコマンドプロンプト"></figure></section><section class="page" id="p2-page-595" aria-label="p2-page-595"><h4 id="デバイス用シム">デバイス用シム</h4>
 <p>デバイスオブジェクト用のシムは、ドライバー用シムとは異なり、要求に応じて読み込まれ、適用されます。ドライバーは、NT カーネルが公開する <code>KseQueryDeviceData</code> で、デバイスオブジェクトにシムを適用する必要があるかを調べられます。公開関数 <code>KseQueryDeviceFlags</code> では、その機能のうちフラグの照会だけを行えます。ユーザーモードアプリケーションからの照会には、<code>SystemDeviceDataInformation</code> 情報クラスを指定して <code>NtQuerySystemInformation</code> を呼び出します。システムは次の3か所を順に調べます。</p>
 <ol>
 <li><code>HKLM&#92;System&#92;CurrentControlSet&#92;Control&#92;Compatibility&#92;Device</code> 配下のレジストリキー。キー名にはデバイスの PnP ハードウェア ID を使います。区切り文字と混同されないよう、ID 内の <code>&#92;</code> は <code>!</code> に置き換えます。キーの値には、照会対象となるデバイスのシムデータが格納されます。通常は、特定のデバイスクラスに対するフラグです。</li>
