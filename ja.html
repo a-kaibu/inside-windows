@@ -2502,7 +2502,7 @@ Fusion で DLL 名のリダイレクトを調べるとき、システムはス�
 <li>OneDrive が動作していれば通知領域のアイコンから終了し、OneDrive の内容を表示しているエクスプローラーのウィンドウもすべて閉じます。</li>
 <li>Process Monitor を開き、<code>OneDrive.exe</code> のイベントだけを表示するフィルターを追加します。必要なら、操作を <code>CreateFile</code> だけに絞ります。</li>
 <li><code>%LocalAppData%\Microsoft\OneDrive</code> を開き、<code>OneDrive.exe</code> または <code>OneDrive Personal.cmd</code> を起動します。後者は法人用ではなく個人用として <code>OneDrive.exe</code> を起動します。次のような結果が表示されます。この例では、64ビットシステム上で32ビットの OneDrive プロセスが動いています。</li>
-</ol></section><section class="page" id="page-181" aria-label="page-181"><figure><img loading="lazy" width="638" height="384" src="assets/8349f317951e12b9655ff7d7.webp" alt="Process Monitor に表示された OneDrive の DLL 検索と読み込み"></figure>
+</ol></section><section class="page" id="page-181" aria-label="page-181"><figure><img loading="lazy" width="638" height="384" src="assets/8349f317951e12b9655ff7d7.webp" alt="Process Monitor に表示された OneDrive の DLL 検索と読み込み"><figcaption>OneDrive.exe によるファイルの検索を記録したトレースです。CreateFile の結果には「成功」と「名前が見つかりません」があります。たとえば WSOC32.dll は OneDrive のディレクトリで見つからず、バージョン別のサブディレクトリで開かれています。</figcaption></figure>
 <p>画面に表示された呼び出しのうち、前述の検索順序に関係するものを見ていきます。</p>
 <ul>
 <li>KnownDlls に登録された DLL はシステムディレクトリから読み込まれます。画面では <code>ole32.dll</code> が該当します。</li>
@@ -2830,7 +2830,7 @@ api-ms-win-core-job-l1-1-0
 <li>コマンドプロンプトから <code>runas</code> を使って、新しいコマンドプロンプト（Cmd.exe）を起動します。たとえば <code>runas /user:&lt;ドメイン&gt;\&lt;ユーザー名&gt; cmd</code> と入力します。</li>
 <li>パスワードの入力を求められます。指定したユーザーのパスワードを入力すると、新しいコマンドプロンプトウィンドウが開きます。<code>runas</code> の要求を実行する Windows サービスは、すべての関連プロセスを収める名前のないジョブを作成します。これにより、ログオフ時にそれらのプロセスを終了できます。</li>
 <li>Process Explorer を起動します。「Options」メニューで「Configure Colors」を選び、「Jobs」にチェックを入れます。次の画面のように、Cmd.exe と、その子である ConHost.exe が、ジョブに属するプロセスとして強調表示されます。
-<figure><img loading="lazy" width="595" height="143" src="assets/d0a66140e51a378c6780a493.webp" alt="ジョブに属する Cmd.exe と ConHost.exe を強調表示した Process Explorer"></figure></li>
+<figure><img loading="lazy" width="595" height="143" src="assets/d0a66140e51a378c6780a493.webp" alt="ジョブに属する Cmd.exe と ConHost.exe を強調表示した Process Explorer"><figcaption>Process Explorer のプロセスツリー。cmd.exe（PID 1500）の下に conhost.exe（PID 16136）が表示されています。どちらもジョブに属するプロセスとして色が付いています。</figcaption></figure></li>
 <li>Cmd.exe または ConHost.exe をダブルクリックし、プロパティのダイアログを開きます。「Job」タブを開くと、プロセスが属するジョブの情報が表示されます。</li>
 </ol></section><section class="page" id="page-198" aria-label="page-198"><figure><img loading="lazy" width="337" height="280" src="assets/7fe90b5358f939d5faf126c3.webp" alt="Process Explorer の Job タブに表示されたジョブの情報"><figcaption>cmd.exe のプロパティにある「ジョブ（Job）」タブ。ジョブ名（Job Name）は「名前なしのジョブ（&lt;Unnamed Job&gt;）」です。「ジョブ内のプロセス（Processes in Job）」には cmd.exe（PID 1500）と conhost.exe（PID 16136）が表示され、「ジョブの制限（Job Limits）」の一覧は空です。</figcaption></figure>
 <ol start="5">
@@ -3569,7 +3569,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <ol>
 <li>プロセス一覧で、Audiodg.exe や Csrss.exe などの保護プロセスまたは軽量保護プロセス（PPL）を探します。</li>
 <li>対象プロセスの「Properties」ダイアログを開き、「Threads」タブを選びます。
-<figure><img loading="lazy" width="332" height="426" src="assets/8559b7647cedeab4bb14a45a.webp" alt="保護プロセスのスレッドに対して Process Explorer が表示できる情報"></figure></li>
+<figure><img loading="lazy" width="332" height="426" src="assets/8559b7647cedeab4bb14a45a.webp" alt="保護プロセスのスレッドに対して Process Explorer が表示できる情報"><figcaption>保護された csrss.exe（PID 692）の「スレッド」タブ。選択中のスレッド（TID 3324）の待機理由は WrLpcReceive で、基本優先度は 13、動的優先度は 14 です。I/O 優先度、メモリ優先度、サイクル数の欄には n/a と表示されています。</figcaption></figure></li>
 <li>開始アドレスの列には、アプリケーションが指定した Win32 の開始アドレスに代わり、<code>Ntdll.dll</code> にある標準のスレッド起動ラッパーのアドレスが表示されます。「Stack」ボタンを押すとエラーになります。スタックを表示するには対象プロセスの仮想メモリを読む必要がありますが、Process Explorer には保護プロセスのメモリを読む権限がありません。</li>
 <li>基本優先度と動的優先度は表示されますが、I/O 優先度、メモリ優先度、サイクル数（「Cycles」）は表示されません。これは、制限付きの照会権限 <code>THREAD_QUERY_LIMITED_INFORMATION</code> と、完全な照会権限 <code>THREAD_QUERY_INFORMATION</code> の違いの一例です。</li>
 <li>保護プロセス内のスレッドを強制終了しようとすると、ここでもアクセス拒否のエラーになります。必要な <code>THREAD_TERMINATE</code> 権限が付与されていないためです。</li>
@@ -3662,7 +3662,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>「基本優先度」列を追加します。タスクマネージャーでは優先度クラスをこの名前で表示します。</li>
 </ol></section><section class="page" id="page-237" aria-label="page-237"><ol start="4">
 <li>タスクマネージャーの一覧でメモ帳を探します。次のように表示されます。
-<figure><img loading="lazy" width="406" height="272" src="assets/2759839d4ec38434e9301621.webp" alt="タスクマネージャーの詳細タブに表示されたメモ帳の基本優先度"></figure></li>
+<figure><img loading="lazy" width="406" height="272" src="assets/2759839d4ec38434e9301621.webp" alt="タスクマネージャーの詳細タブに表示されたメモ帳の基本優先度"><figcaption>タスクマネージャーの「詳細」タブでメモ帳（PID 5348）を選択しています。「基本優先度」列の値は「通常（Normal）」です。</figcaption></figure></li>
 <li>メモ帳の優先度クラスが「通常」（8）になっていることを確認します。タスクマネージャーでは「アイドル」の優先度クラスを「低」と表示します。</li>
 <li>Process Explorer を開きます。</li>
 <li>メモ帳のプロセスをダブルクリックし、「Properties」ダイアログの「Threads」タブを開きます。</li>
@@ -3672,7 +3672,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>スレッドの優先度を確認します。基本優先度は8ですが、現在の動的優先度は10です。この差が生じる理由は、後述の「優先度のブースト」で説明します。</li>
 <li>必要に応じて、スレッドの一時停止や強制終了を試せます。どちらの操作も慎重に行ってください。</li>
 <li>タスクマネージャーでメモ帳のプロセスを右クリックし、「優先度の設定」から「高」を選びます。
-<figure><img loading="lazy" width="302" height="171" src="assets/2b0518ac388f3d2ecefe0ec9.webp" alt="タスクマネージャーの優先度設定メニューで「高」を選んだ画面"></figure></li>
+<figure><img loading="lazy" width="302" height="171" src="assets/2b0518ac388f3d2ecefe0ec9.webp" alt="タスクマネージャーの優先度設定メニューで「高」を選んだ画面"><figcaption>メモ帳の「優先度の設定」メニュー。現在値は黒丸が付いた「通常（Normal）」で、変更先の「高（High）」にカーソルを合わせています。</figcaption></figure></li>
 <li>確認ダイアログで変更を承認し、Process Explorer に戻ります。スレッドの基本優先度は「高」に対応する13に上がり、動的優先度も同じ幅だけ上がり、基本優先度との差は変わりません。
 <figure><img loading="lazy" width="326" height="378" src="assets/44da7efc0d101c6ef0fea036.webp" alt="変更後のメモ帳のスレッドの基本優先度と動的優先度を表示した Process Explorer"><figcaption>プロセスの優先度クラスを「高」に変更したあとの表示。同じスレッド（TID 11940）の基本優先度は 13、動的優先度は 15 です。</figcaption></figure></li>
 <li>タスクマネージャーで優先度クラスを「リアルタイム」に変更します。変更にはマシンの管理者権限が必要です。Process Explorer でも同じ変更ができます。</li>
