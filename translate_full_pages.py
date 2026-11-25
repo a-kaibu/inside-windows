@@ -19529,6 +19529,10 @@ full_pages_ja['p2-page-851'] = (
     '<code>SystemCode</code> はシステムコード、'
     '<code>BootDriver</code> はブートドライバー、'
     '<code>Free</code> は空き領域を示します。</p>\n'
+    '<p>集計では、各種類のページ数が 16 進数と 10 進数で示され、その右に換算した容量が表示されます。'
+    'たとえば空き領域の <code>0x7a89c</code> は 501,916 ページです。'
+    'ページ数と容量の対応から、この出力の <code>Kb</code>、<code>Mb</code>、<code>Gb</code> は'
+    'それぞれ KiB、MiB、GiB を表しています。</p>\n'
     + full_pages_ja['p2-page-851']
 )
 
