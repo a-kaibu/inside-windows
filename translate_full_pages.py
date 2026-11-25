@@ -19356,6 +19356,16 @@ full_pages_ja['page-200'] = full_pages_ja['page-200'].replace(
 
 
 full_pages_ja['page-208'] = (
-    '<p>次の XML は cmdserver.exe のサイロ定義ファイルです。</p>\n'
+    '<p>次の XML は cmdserver.exe のサイロ定義ファイルです。'
+    'コメントは、ホストのディレクトリをマップするために必要な項目と、'
+    'デバイス名前空間への有効なリンクを示しています。</p>\n'
     + full_pages_ja['page-208']
+)
+
+
+full_pages_ja['page-716'] = full_pages_ja['page-716'].replace(
+    '<!-- original-pre -->',
+    '<p>コード例のコメントは、MRT の文字列を解決するために必要な項目を示しています。</p>\n'
+    '<!-- original-pre -->',
+    1,
 )
