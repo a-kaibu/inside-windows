@@ -5148,37 +5148,24 @@ The operation completed successfully.</pre></li>
 <p>ドライバーごとのプール使用量を調べるには、第6章で説明する Driver Verifier のプール追跡機能を使う方法もあります。プールタグからドライバーを特定する手間は省けますが、対象ドライバーに Driver Verifier を適用するために再起動が必要です。プール追跡を有効にして再起動したあとは、GUI の Driver Verifier Manager（<code>%SystemRoot%\System32\Verifier.exe</code>）を実行するか、<code>Verifier /Log</code> コマンドでプール使用量をファイルに記録できます。</p>
 <p>カーネルデバッガーの <code>!poolused</code> でも、プールの使用状況を確認できます。<code>!poolused 2</code> は非ページプール、<code>!poolused 4</code> はページプールの使用量を、どちらもタグごとに使用量の多い順に表示します。次のページに、両コマンドの出力の一部を示します。</p></section><section class="page" id="page-346" aria-label="page-346"><pre>lkd&gt; !poolused 2
 ........
-Sorting by NonPaged Pool Consumed
-NonPaged                  Paged
-Tag     Allocs         Used     Allocs         Used
-File    626381    260524032          0           0        File objects
-Ntfx    733204    227105872          0           0        General Allocation , Binary:
-ntfs.sys
-MmCa    513713    148086336           0           0        Mm control areas for mapped
-files , Binary: nt!mm
-FMsl    732490    140638080           0           0        STREAM_LIST_CTRL structure ,
-Binary: fltmgr.sys
-CcSc    104420     56804480          0           0        Cache Manager Shared Cache Map
-, Binary: nt!cc
-SQSF    283749     45409984           0           0        UNKNOWN pooltag &#x27;SQSF&#x27;, please
-update pooltag.txt
-FMfz    382318     42819616          0           0        FILE_LIST_CTRL structure ,
-Binary: fltmgr.sys
-FMsc     36130     32950560          0           0        SECTION_CONTEXT structure ,
-Binary: fltmgr.sys
-EtwB       517     31297568        107    105119744       Etw Buffer , Binary: nt!etw
-DFmF    382318     30585440     382318     91756320       UNKNOWN pooltag &#x27;DFmF&#x27;, please
-update pooltag.txt
-DFmE    382318     18351264          0           0        UNKNOWN pooltag &#x27;DFmE&#x27;, please
-update pooltag.txt
-FSfc    382318     18351264          0           0        Unrecoginzed File System Run
-Time allocations (update
-pooltag.w) , Binary: nt!fsrtl
-smNp      4295     17592320          0           0        ReadyBoost store node pool
-allocations , Binary: nt!store
-or rdyboost.sys
-Thre      5780     12837376          0           0        Thread objects , Binary: nt!ps
-Pool         8     12834368          0           0        Pool tables, etc.</pre>
+非ページプールの使用量で並べ替え
+非ページプール             ページプール
+タグ    割り当て数     使用量   割り当て数     使用量
+File    626381    260524032          0           0        ファイルオブジェクト
+Ntfx    733204    227105872          0           0        一般用途の割り当て。バイナリ: ntfs.sys
+MmCa    513713    148086336           0           0        マップされたファイルのメモリ管理用制御領域。バイナリ: nt!mm
+FMsl    732490    140638080           0           0        STREAM_LIST_CTRL 構造体。バイナリ: fltmgr.sys
+CcSc    104420     56804480          0           0        キャッシュマネージャーの共有キャッシュマップ。バイナリ: nt!cc
+SQSF    283749     45409984           0           0        不明なプールタグ「SQSF」。pooltag.txt を更新してください。
+FMfz    382318     42819616          0           0        FILE_LIST_CTRL 構造体。バイナリ: fltmgr.sys
+FMsc     36130     32950560          0           0        SECTION_CONTEXT 構造体。バイナリ: fltmgr.sys
+EtwB       517     31297568        107    105119744       ETW バッファー。バイナリ: nt!etw
+DFmF    382318     30585440     382318     91756320       不明なプールタグ「DFmF」。pooltag.txt を更新してください。
+DFmE    382318     18351264          0           0        不明なプールタグ「DFmE」。pooltag.txt を更新してください。
+FSfc    382318     18351264          0           0        不明なファイルシステムランタイムの割り当て（pooltag.w を更新）。バイナリ: nt!fsrtl
+smNp      4295     17592320          0           0        ReadyBoost のストアノード用プール割り当て。バイナリ: nt!store または rdyboost.sys
+Thre      5780     12837376          0           0        スレッドオブジェクト。バイナリ: nt!ps
+Pool         8     12834368          0           0        プールテーブルなど</pre>
 <h4 id="実験-プールのメモリリークを調べる">実験：プールのメモリリークを調べる</h4>
 <p>この実験では、Sysinternals の Notmyfault でページプールのメモリリークを発生させ、前節で紹介した方法で原因を特定します。</p>
 <ol>
