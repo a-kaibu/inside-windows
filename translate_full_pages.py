@@ -6440,7 +6440,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'だけをオンにして「OK」をクリックします。</li>\n'
                 '</ol>\n'
                 '<figure><img loading="lazy" width="456" height="356" '
-                'src="assets/9e0f406aec3a5c8719a3679a.webp" alt="原文の図（第2巻 PDF 550ページ）"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>',
+                'src="assets/9e0f406aec3a5c8719a3679a.webp" alt="原文の図（第2巻 PDF 550ページ）"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。プロパティ欄には「キーワード（いずれか）」（Keywords (Any)）、「キーワード（すべて）」（Keywords (All)）、「レベル」（Level）、「プロパティ」（Properties）が並びます。この画面ではすべて 0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>',
  'p2-page-551': '<ol start="6">\n'
                 '<li>「次へ」をクリックしてログファイルの保存先を指定します。データコレクターセットを <code>experiment</code> と名付けた場合、既定の保存先は '
                 '<code>%SystemDrive%&#92;PerfLogs&#92;Admin&#92;experiment&#92;</code> '
@@ -19117,8 +19117,8 @@ full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
 
 full_pages_ja['p2-page-550'] = (
     full_pages_ja['p2-page-550']
-    .removesuffix('<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>')
-    .replace('プロパティの一覧で「キーワード（いずれか）（Keywords (Any)）」を選び、「編集」をクリックします。</li>', 'プロパティの一覧で「キーワード（いずれか）（Keywords (Any)）」を選び、「編集」をクリックします。\n<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>')
+    .removesuffix('<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。プロパティ欄には「キーワード（いずれか）」（Keywords (Any)）、「キーワード（すべて）」（Keywords (All)）、「レベル」（Level）、「プロパティ」（Properties）が並びます。この画面ではすべて 0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>')
+    .replace('プロパティの一覧で「キーワード（いずれか）（Keywords (Any)）」を選び、「編集」をクリックします。</li>', 'プロパティの一覧で「キーワード（いずれか）（Keywords (Any)）」を選び、「編集」をクリックします。\n<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。プロパティ欄には「キーワード（いずれか）」（Keywords (Any)）、「キーワード（すべて）」（Keywords (All)）、「レベル」（Level）、「プロパティ」（Properties）が並びます。この画面ではすべて 0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-551'] = (

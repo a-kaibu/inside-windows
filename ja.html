@@ -21426,7 +21426,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>「ユーザー定義」を右クリックし、「新規」から「データ コレクター セット」を選びます。</li>
 <li>データコレクターセットの名前（たとえば <code>experiment</code>）を入力し、「手動で作成する（詳細）」を選んで「次へ」をクリックします。</li>
 <li>「データ ログを作成する」を選び、「イベント トレース データ」をオンにして「次へ」をクリックします。プロバイダーの一覧で「追加」をクリックし、<code>Windows Kernel Trace</code> を選んで「OK」をクリックします。プロパティの一覧で「キーワード（いずれか）（Keywords (Any)）」を選び、「編集」をクリックします。
-<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>
+<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。プロパティ欄には「キーワード（いずれか）」（Keywords (Any)）、「キーワード（すべて）」（Keywords (All)）、「レベル」（Level）、「プロパティ」（Properties）が並びます。この画面ではすべて 0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>
 <li>プロパティのウィンドウで「自動」を選び、TCP/IP のネットワークイベントに対応する <code>net</code> だけをオンにして「OK」をクリックします。</li>
 </ol></section><section class="page" id="p2-page-551" aria-label="p2-page-551"><ol start="6">
 <li>「次へ」をクリックしてログファイルの保存先を指定します。データコレクターセットを <code>experiment</code> と名付けた場合、既定の保存先は <code>%SystemDrive%&#92;PerfLogs&#92;Admin&#92;experiment&#92;</code> です。「次へ」をクリックし、「実行ユーザー」に管理者アカウントの名前とパスワードを入力します。「完了」をクリックすると、図のように作成したデータコレクターセットが表示されます。
