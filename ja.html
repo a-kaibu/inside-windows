@@ -14242,9 +14242,9 @@ Process Explorer はスレッドの開始アドレスを表示する際に、ラ
 これまでの節では割り込み処理と例外処理を取り上げました。この節ではシステムサービスを説明します。
 システムサービスのディスパッチは、図8-25に示すように、そのために割り当てられた命令を実行すると始まります。
 Windows が使う命令は、プロセッサーの種類と、ハイパーバイザーで保護されたコード整合性（HVCI）が有効かどうかによって異なります。</p>
-<p><strong>図8-25　システムサービスのディスパッチ</strong>　ユーザーモードからのシステムサービス呼び出しは、カーネルモードのシステムサービスディスパッチャーに渡ります。
+<figure><figcaption><strong>図8-25　システムサービスのディスパッチ</strong>　ユーザーモードからのシステムサービス呼び出しは、カーネルモードのシステムサービスディスパッチャーに渡ります。
 ディスパッチャーは、0から <code>n</code> までのエントリを持つディスパッチテーブルを参照します。
-図では、エントリ2からシステムサービス2を呼び出しています。</p></section><section class="page" id="p2-page-123" aria-label="p2-page-123"><h4 id="アーキテクチャに依存するシステムサービスのディスパッチ">アーキテクチャに依存するシステムサービスのディスパッチ</h4>
+図では、エントリ2からシステムサービス2を呼び出しています。</figcaption></figure></section><section class="page" id="p2-page-123" aria-label="p2-page-123"><h4 id="アーキテクチャに依存するシステムサービスのディスパッチ">アーキテクチャに依存するシステムサービスのディスパッチ</h4>
 <p>ほとんどの x64 システムで、Windows は <code>syscall</code> 命令を使います。
 この命令は、あらかじめ設定された次のモデル固有レジスター（MSR）に基づいて、本章で説明してきたプロセッサー状態の一部を変更します。</p>
 <ul>
@@ -21806,7 +21806,7 @@ fffff800`5c32f180 ffff8701`9f703180 ffff8701`9f3a0180</code></pre>
 <p><code>Smss.exe</code> はダンプの出力先がページファイルと同じボリュームかを確認します。異なる場合は、ページファイルのダンプヘッダーに記録された必要容量を参照して、書き込み先に十分な空きがあるかを調べます。続いて、ページファイルをクラッシュデータの長さに切り詰め、一時ダンプファイルに改名します。新しいページファイルは、セッションマネージャーが後で <code>NtCreatePagingFile</code> を呼んだときに作成されます。一時ファイル名は <code>DUMPxxxx.tmp</code> で、<code>xxxx</code> は現在のシステムティック数の下位ワードです。システムは重複しない値を最大100回試します。改名後、隠し属性とシステム属性を外し、適切なセキュリティ記述子を設定します。</p>
 <p>次に、セッションマネージャーは揮発性レジストリキー <code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;CrashControl&#92;MachineCrash</code> を作成し、一時ダンプファイル名を <code>DumpFile</code> に保存します。</p></section><section class="page" id="p2-page-581" aria-label="p2-page-581"><p>続いて、ダンプの保存先が一時的なものかどうかを示す DWORD を <code>TempDestination</code> に書き込みます。ページファイルと最終的なダンプファイルの保存先が同じボリュームにあれば、ページファイルを必要な長さに切り詰め、最終的なダンプ名に直接改名します。この場合、<code>DumpFile</code> は最終的なダンプファイル名になり、<code>TempDestination</code> は0になります。</p>
 <p>起動処理が進むと、Wininit は <code>MachineCrash</code> キーが存在するかを調べます。キーがあれば、<code>-k -c</code> を指定して Windows 障害報告プロセス（<code>WerFault.exe</code>）を起動します。<code>-k</code> はカーネル障害の報告、<code>-c</code> は完全ダンプまたはカーネルダンプからミニダンプへの変換を指示します。<code>WerFault</code> は <code>TempDestination</code> と <code>DumpFile</code> を読み込みます。<code>TempDestination</code> が1なら、一時ファイルを最終的な保存先に移動し、SYSTEM アカウントとローカルの Administrators グループにだけアクセスを許可します。最後に、<code>MachineCrash</code> キーの <code>FinalDumpFileLocation</code> に最終的なダンプファイル名を書き込みます。図10-43に、この流れを示します。</p>
-<p>図10-43 クラッシュダンプファイルの生成。セッションマネージャー（SMSS）は <code>SmpCheckForCrashDump</code> でページファイルを調べ、一時ファイル <code>Dumpxxxx.tmp</code> と <code>MachineCrash</code> キーを用意します。Wininit が起動した WerFault は、ダンプを最終的な保存先である <code>Memory.dmp</code> に移します。</p>
+<figure><figcaption>図10-43 クラッシュダンプファイルの生成。セッションマネージャー（SMSS）は <code>SmpCheckForCrashDump</code> でページファイルを調べ、一時ファイル <code>Dumpxxxx.tmp</code> と <code>MachineCrash</code> キーを用意します。Wininit が起動した WerFault は、ダンプを最終的な保存先である <code>Memory.dmp</code> に移します。</figcaption></figure>
 <p>SAN から起動するシステムや、ページファイルのあるボリュームの空き容量が不足するシステムでは、専用ダンプファイルを使ってダンプの書き込み先を指定できます。<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Control&#92;CrashControl</code> の <code>DedicatedDumpFile</code> と <code>DumpFileSize</code> で設定します。専用ダンプファイルを指定すると、クラッシュダンプドライバーは指定されたサイズのファイルを作成し、ページファイルの代わりにそこへクラッシュデータを書き込みます。<code>DumpFileSize</code> を指定しなければ、Windows は完全ダンプの保存に必要な最大サイズで専用ファイルを作成します。必要なサイズは、搭載されたすべての物理メモリページの合計サイズに、ダンプヘッダー用の容量（32ビットシステムでは1ページ、64ビットシステムでは2ページ）と、追加のクラッシュダンプデータの上限である256 MB を足した値です。完全ダンプまたはカーネルダンプを設定した場合でも、保存先ボリュームに必要なサイズの専用ファイルを作成できるだけの空きがなければ、ミニダンプの書き込みに切り替えます。</p></section><section class="page" id="p2-page-582" aria-label="p2-page-582"><h4 id="カーネルのクラッシュ報告">カーネルのクラッシュ報告</h4>
 <p>Wininit が起動した <code>WerFault</code> は、最終的なダンプファイルを作成できたら、Microsoft のオンラインクラッシュ解析（OCA）サイトまたは設定済みの社内エラー報告サーバーに送る報告を生成します。カーネルのクラッシュを報告する手順は次のとおりです。</p>
 <ol>
