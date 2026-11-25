@@ -9341,7 +9341,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '全体が容量階層に割り当てられています。実際に確認するには、階層化ディスクから高速な SSD '
                 'ボリュームへファイルをコピーします。転送速度は回転式ディスクの性能によって異なりますが、通常は160〜250 MB/s 程度です。</p>\n'
                 '<figure><img loading="lazy" width="380" height="243" '
-                'src="assets/01b60fa2715339464912bdd1.webp" alt="Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗25％、転送速度163 MB/s"></figure>',
+                'src="assets/01b60fa2715339464912bdd1.webp" alt="Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗25％、転送速度163 MB/s"><figcaption>最適化前。Test（E:）からローカルディスク（C:）に Big_Image.iso をコピーしています。進捗は 25%、速度は 163 MB/s です。残りは 1 項目（3.16 GB）で、推定残り時間は約 25 秒です。</figcaption></figure>',
  'p2-page-681': '<p>次に、<code>Set-FileStorageTier</code> でファイルを指定の階層に固定します。まず <code>Get-StorageTier</code> で '
                 'SSD の階層名を確認します。</p>\n'
                 '<pre><code>PS E:&#92;&gt; Get-StorageTier -MediaType SSD | FL FriendlyName, Size, '
@@ -9423,7 +9423,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '<p>Windows 10 のクライアント版では、ファイルのクラスターが既定で性能階層から割り当てられるため、容量階層に固定して同じ実験を繰り返せます。本書のダウンロード資料にある '
                 'FsTool にも同じ固定機能があり、希望する階層へファイルを直接コピーできます。</p>\n'
                 '<figure><img loading="lazy" width="379" height="242" '
-                'src="assets/5017672aea9608ad05f9a88b.webp" alt="階層の最適化後に Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗97％、転送速度914 MB/s"></figure>',
+                'src="assets/5017672aea9608ad05f9a88b.webp" alt="階層の最適化後に Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗97％、転送速度914 MB/s"><figcaption>階層の最適化後に、同じファイルを同じ場所にコピーした結果。進捗は 97%、速度は 914 MB/s です。残りは 1 項目（90.5 MB）で、推定残り時間は約 5 秒です。</figcaption></figure>',
  'p2-page-683': '<h4>NTFS ファイルシステムドライバー</h4>\n'
                 '<p>第1部第6章で説明したとおり、Windows の I/O システムでは、NTFS '
                 'などのファイルシステムは、カーネルモードで動作するロード可能なデバイスドライバーです。アプリケーションが Windows の I/O API '
