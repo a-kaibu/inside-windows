@@ -19309,3 +19309,13 @@ full_pages_ja['p2-page-79'] = full_pages_ja['p2-page-79'].replace(
     'プロセッサー 0 の一覧で、ベクター <code>0x70</code> に <code>i8042prt</code> が対応しています。</p>\n'
     '<p>キーボードの GSIV は IRQ 1 です。',
 )
+
+
+full_pages_ja['p2-page-681'] = full_pages_ja['p2-page-681'].replace(
+    '<p>出力の <code>DesiredStorageTierClass</code> は',
+    '<p><code>Get-StorageTier</code> の出力では、表示名（<code>FriendlyName</code>）は SSD です。'
+    '階層のサイズ（<code>Size</code>）とストレージプール内で占める容量（<code>FootprintOnPool</code>）は'
+    'ともに 128,849,018,880 バイトです。'
+    '<code>UniqueId</code> はこの階層の一意な識別子です。</p>\n'
+    '<p>出力の <code>DesiredStorageTierClass</code> は',
+)
