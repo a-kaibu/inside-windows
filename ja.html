@@ -8964,7 +8964,7 @@ Hibernation is not available.</pre>
 <p>電源ポリシーを担当するドライバーは、同じデバイスを管理するほかのドライバーに決定を直接伝える代わりに、<code>PoRequestPowerIrp</code> を呼び出します。これを受けた電源マネージャーは、ほかのドライバーの電源管理用ディスパッチルーチンにデバイスの電源要求を送ります。こうすることで、システムで同時に処理する電源要求の数を電源マネージャーが制御できます。たとえば、通電を始めるときに大きな電流を必要とするデバイスが複数あれば、それらの電源を同時に入れないようにします。</p>
 <h4 id="実験-ドライバーの電源状態の対応を確認する">実験：ドライバーの電源状態の対応を確認する</h4>
 <p>システムとデバイスの電源状態の対応は、デバイスマネージャーで確認できます。対象デバイスの「プロパティ」を開き、「詳細」タブの「プロパティ」ドロップダウンから「電源データ」を選びます。現在のデバイス電源状態、そのデバイスが提供する電源管理機能、デバイスがシステムを復帰させられる電源状態も表示されます。</p>
-<figure><img loading="lazy" width="265" height="302" src="assets/ed4cf85f4a55341fe8ece03e.webp" alt="デバイスマネージャーの詳細タブに表示された電源データ"></figure>
+<figure><img loading="lazy" width="265" height="302" src="assets/ed4cf85f4a55341fe8ece03e.webp" alt="デバイスマネージャーの詳細タブに表示された電源データ"><figcaption>デバイスマネージャーの「詳細」タブで「電源データ（Power data）」を表示した例。このデバイスは D0 と D3 に対応します。システム状態 S0 は D0、S3〜S5 は D3 に対応し、S1 と S2 の対応は未指定です。</figcaption></figure>
 <p>多くの電源要求には、事前に可否を問い合わせる要求があります。たとえばシステムがスリープへ移行する場合、電源マネージャーはまず、システム上のデバイスに移行してよいかを問い合わせます。時間制約のある処理を実行しているデバイスや、ハードウェアとやり取りしているデバイスは、移行を拒否することがあります。その場合、システムは現在の電源状態を維持します。</p></section><section class="page" id="page-614" aria-label="page-614"><h4 id="実験-システムの電源管理機能とポリシーを確認する">実験：システムの電源管理機能とポリシーを確認する</h4>
 <p>コンピューターが備える電源管理機能は、カーネルデバッガーの <code>!pocaps</code> コマンドで確認できます。次の例は、x64 版 Windows 10 を実行するノート PC での出力です。</p>
 <pre>lkd&gt; !pocaps
@@ -8985,7 +8985,7 @@ Min Device Wake:        Sx
 Default Wake:           Sx</pre>
 <p><code>Misc Supported Features</code> の行から、このシステムは稼働状態の S0 に加え、S3、S4、S5 をサポートしていることがわかります。S1 と S2 には対応していません。また、休止状態（S4）に移行するときにメモリの内容を保存できる、有効な休止ファイルがあります。</p>
 <p>コントロールパネルで「電源オプション」を開くと、システムの電源ポリシーを設定できます。設定できる項目は、システムが備える電源管理機能によって異なります。</p>
-<figure><img loading="lazy" width="662" height="381" src="assets/102fc4a2b0781def733c8d32.webp" alt="コントロールパネルの電源オプション画面"></figure></section><section class="page" id="page-615" aria-label="page-615"><p>OEM は独自の電源プランを追加できます。次の例のように、<code>powercfg /list</code> コマンドで利用可能なプランを一覧表示できます。</p>
+<figure><img loading="lazy" width="662" height="381" src="assets/102fc4a2b0781def733c8d32.webp" alt="コントロールパネルの電源オプション画面"><figcaption>コントロールパネルの「電源オプション」。選択中のプランは「HP 最適化（推奨）」です。「省電力」は性能を抑えて消費電力を減らし、「バランス」は性能と消費電力を自動で調整します。「高パフォーマンス」は性能を優先します。</figcaption></figure></section><section class="page" id="page-615" aria-label="page-615"><p>OEM は独自の電源プランを追加できます。次の例のように、<code>powercfg /list</code> コマンドで利用可能なプランを一覧表示できます。</p>
 <pre>C:\WINDOWS\system32&gt;powercfg /list
 Existing Power Schemes (* Active)
 -----------------------------------
@@ -8995,7 +8995,7 @@ Power Scheme GUID: 8759706d-706b-4c22-b2ec-f91e1ef6ed38  (HP Optimized
 Power Scheme GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (High performance)
 Power Scheme GUID: a1841308-3541-4fab-bc81-f71556f20b4a  (Power saver)</pre>
 <p>構成済みの電源プランを編集すると、アイドル状態が何分続いたらモニターの電源を切るか、ハードディスクの回転を止めるか、スタンバイ（前の実験では S3）や休止状態（S4）に移るかを設定できます。また、「プラン設定の変更」では、電源ボタンやスリープボタンを押したとき、ノート PC のふたを閉じたときにシステムがどう動作するかを指定できます。</p>
-<figure><img loading="lazy" width="581" height="348" src="assets/c14eafe605f1ff7cdf48ac0c.webp" alt="Windows の電源プランを設定する画面"></figure>
+<figure><img loading="lazy" width="581" height="348" src="assets/c14eafe605f1ff7cdf48ac0c.webp" alt="Windows の電源プランを設定する画面"><figcaption>「プラン設定の編集」画面。バッテリー駆動時は 5 分後に画面を消し、15 分後にスリープに入ります。電源接続時は 10 分後に画面を消し、自動ではスリープしません。画面の明るさも電源の状態ごとに設定できます。</figcaption></figure>
 <p>「詳細な電源設定の変更」を選ぶと、システムの電源ポリシーを直接変更できます。ポリシーの値は、デバッガーの <code>!popolicy</code> コマンドで表示できます。次は、同じシステムでの実行結果です。</p>
 <pre>lkd&gt; !popolicy
 SYSTEM_POWER_POLICY (R.1) @ 0xfffff8035a98cc64
