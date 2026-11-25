@@ -21338,7 +21338,7 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>ダイアログでログに名前を付け、表示先のフォルダーを選びます。この例では、既定の名前 <code>process_trace</code> と「保存されたログ」フォルダーを使います。</li>
 </ol></section><section class="page" id="p2-page-546" aria-label="p2-page-546"><ol start="8">
 <li>イベントビューアーにログ内のイベントが表示されます。「日付と時刻」列をクリックして古い順に並べます。Ctrl+F で <code>ProcessStart</code> を検索すると、メモ帳のプロセスを作成したイベントが見つかります。
-<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></li>
+<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>
 <li>説明のない <code>ThreadWorkOnBehalfUpdate</code> が多数記録されるため、収集対象から外します。このイベントを選び、「詳細」タブの「System」を展開すると、キーワードのビットマスクが <code>0x8000000000002000</code> の <code>WINEVENT_KEYWORD_WORK_ON_BEHALF</code> カテゴリであることがわかります。上位16ビットは Microsoft が定義するカテゴリ用です。この64ビット値の全ビットを反転すると <code>0x7FFFFFFFFFFFDFFF</code> になります。</li>
 <li>イベントビューアーを閉じ、次のコマンドで新しいトレースを収集します。
 <pre><code>xperf -start TestSession -on Microsoft-Windows-Kernel-Process:0x7FFFFFFFFFFFDFFF -f c:&#92;process_trace.etl</code></pre></li>
@@ -21417,11 +21417,11 @@ running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;S
 <li>「ユーザー定義」を右クリックし、「新規」から「データ コレクター セット」を選びます。</li>
 <li>データコレクターセットの名前（たとえば <code>experiment</code>）を入力し、「手動で作成する（詳細）」を選んで「次へ」をクリックします。</li>
 <li>「データ ログを作成する」を選び、「イベント トレース データ」をオンにして「次へ」をクリックします。プロバイダーの一覧で「追加」をクリックし、<code>Windows Kernel Trace</code> を選んで「OK」をクリックします。プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。
-<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure></li>
+<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>
 <li>プロパティのウィンドウで「自動」を選び、TCP/IP のネットワークイベントに対応する <code>net</code> だけをオンにして「OK」をクリックします。</li>
 </ol></section><section class="page" id="p2-page-551" aria-label="p2-page-551"><ol start="6">
 <li>「次へ」をクリックしてログファイルの保存先を指定します。データコレクターセットを <code>experiment</code> と名付けた場合、既定の保存先は <code>%SystemDrive%&#92;PerfLogs&#92;Admin&#92;experiment&#92;</code> です。「次へ」をクリックし、「実行ユーザー」に管理者アカウントの名前とパスワードを入力します。「完了」をクリックすると、図のように作成したデータコレクターセットが表示されます。
-<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure></li>
+<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"><figcaption>パフォーマンスモニターの「データ コレクター セット」から「ユーザー定義」の experiment を開いた例。右ペインにトレース型の DataCollector01 が表示されています。</figcaption></figure></li>
 <li>作成したデータコレクターセット（例では <code>experiment</code>）を右クリックし、「開始」をクリックします。ブラウザーでウェブサイトを開き、ネットワーク通信を発生させます。</li>
 <li>データコレクターセットをもう一度右クリックし、「停止」をクリックします。</li>
 </ol>

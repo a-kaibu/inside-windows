@@ -6330,7 +6330,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'に変換します。デコードしたログのサイズは小さくなり、<code>ThreadWorkOnBehalfUpdate</code> は記録されていません。</li>\n'
                 '</ol>\n'
                 '<figure><img loading="lazy" width="587" height="384" '
-                'src="assets/addbf40d0d755fc39c34023c.webp" alt="原文の図（第2巻 PDF 546ページ）"></figure>',
+                'src="assets/addbf40d0d755fc39c34023c.webp" alt="原文の図（第2巻 PDF 546ページ）"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>',
  'p2-page-547': '<h4>システムロガー</h4>\n'
                 '<p>Windows XP 以降の ETW は、通常のセッションとプロバイダーに加えて、システムロガーをサポートしています。システムロガーを使うと、NT '
                 'カーネルは特定のプロバイダーに属さないイベントをシステム全体で記録できます。主な用途は性能測定です。執筆時点の主なシステムロガーは NT '
@@ -6440,7 +6440,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 'だけをオンにして「OK」をクリックします。</li>\n'
                 '</ol>\n'
                 '<figure><img loading="lazy" width="456" height="356" '
-                'src="assets/9e0f406aec3a5c8719a3679a.webp" alt="原文の図（第2巻 PDF 550ページ）"></figure>',
+                'src="assets/9e0f406aec3a5c8719a3679a.webp" alt="原文の図（第2巻 PDF 550ページ）"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>',
  'p2-page-551': '<ol start="6">\n'
                 '<li>「次へ」をクリックしてログファイルの保存先を指定します。データコレクターセットを <code>experiment</code> と名付けた場合、既定の保存先は '
                 '<code>%SystemDrive%&#92;PerfLogs&#92;Admin&#92;experiment&#92;</code> '
@@ -6456,7 +6456,7 @@ full_pages_ja = {'p2-page-298': '<h2>第9章 仮想化技術</h2>\n'
                 '<pre><code>xperf -on NETWORKTRACE -f c:&#92;network.etl</code></pre>\n'
                 '<p>システムトレースセッションを停止して取得したファイルを変換すると、パフォーマンスモニターで収集したものと同様のイベントが得られます。</p>\n'
                 '<figure><img loading="lazy" width="588" height="329" '
-                'src="assets/6df6181451c9336f55e63a18.webp" alt="原文の図（第2巻 PDF 551ページ）"></figure>',
+                'src="assets/6df6181451c9336f55e63a18.webp" alt="原文の図（第2巻 PDF 551ページ）"><figcaption>パフォーマンスモニターの「データ コレクター セット」から「ユーザー定義」の experiment を開いた例。右ペインにトレース型の DataCollector01 が表示されています。</figcaption></figure>',
  'p2-page-552': '<h4>グローバルロガーと自動ロガー</h4>\n'
                 '<p>一部のロガーセッションはシステムの起動時に自動で開始されます。グローバルロガーセッションは、NT カーネルロガーが生成するものを含め、OS '
                 'の起動初期に発生するイベントを記録します。表10-16に示したとおり、グローバルロガー自体もシステムロガーです。アプリケーションやデバイスドライバーはこのセッションで、ユーザーのログイン前にトレースを取得できます。ただし、ディスクのデバイスドライバーなど、一部のドライバーはセッション開始時点でまだ読み込まれていません。グローバルロガーが主に '
@@ -19107,8 +19107,8 @@ full_pages_ja['p2-page-545'] = full_pages_ja['p2-page-545'].replace(
 
 full_pages_ja['p2-page-546'] = (
     full_pages_ja['p2-page-546']
-    .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure>')
-    .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"></figure></li>')
+    .removesuffix('<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure>')
+    .replace('メモ帳のプロセスを作成したイベントが見つかります。</li>', 'メモ帳のプロセスを作成したイベントが見つかります。\n<figure><img loading="lazy" width="587" height="384" src="assets/addbf40d0d755fc39c34023c.webp" alt="イベントビューアーでメモ帳の起動を示す ProcessStart イベントを検索した結果"><figcaption>イベントビューアーで保存済みログ process_trace を開いた例。イベント ID 1 のカテゴリはプロセス開始（ProcessStart）です。詳細には、親プロセスがセッション 1 で notepad.exe を起動したことが記録されています。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
@@ -19118,14 +19118,14 @@ full_pages_ja['p2-page-549'] = full_pages_ja['p2-page-549'].replace(
 
 full_pages_ja['p2-page-550'] = (
     full_pages_ja['p2-page-550']
-    .removesuffix('<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure>')
-    .replace('プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。</li>', 'プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。\n<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"></figure></li>')
+    .removesuffix('<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure>')
+    .replace('プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。</li>', 'プロパティの一覧で「Keywords (Any)」を選び、「編集」をクリックします。\n<figure><img loading="lazy" width="456" height="356" src="assets/9e0f406aec3a5c8719a3679a.webp" alt="パフォーマンスモニターでカーネルトレースのネットワークキーワードを選択する画面"><figcaption>「新しいデータ コレクター セットの作成」で Windows Kernel Trace を選んだ画面。「キーワード（いずれか）」と「キーワード（すべて）」の初期値は 0x0 です。「編集」からトレース対象のキーワードを指定できます。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-551'] = (
     full_pages_ja['p2-page-551']
-    .removesuffix('<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure>')
-    .replace('図のように作成したデータコレクターセットが表示されます。</li>', '図のように作成したデータコレクターセットが表示されます。\n<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"></figure></li>')
+    .removesuffix('<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"><figcaption>パフォーマンスモニターの「データ コレクター セット」から「ユーザー定義」の experiment を開いた例。右ペインにトレース型の DataCollector01 が表示されています。</figcaption></figure>')
+    .replace('図のように作成したデータコレクターセットが表示されます。</li>', '図のように作成したデータコレクターセットが表示されます。\n<figure><img loading="lazy" width="588" height="329" src="assets/6df6181451c9336f55e63a18.webp" alt="パフォーマンスモニターに作成したデータコレクターセットを表示した画面"><figcaption>パフォーマンスモニターの「データ コレクター セット」から「ユーザー定義」の experiment を開いた例。右ペインにトレース型の DataCollector01 が表示されています。</figcaption></figure></li>')
 )
 
 full_pages_ja['p2-page-552'] += '\n<p>プロバイダーの構成データを検証したあと、ETW は通常の ETW セッションと同様に、内部関数 <code>EtwpEnableTrace</code> を使ってセッション内でプロバイダーを有効にします。</p>'
