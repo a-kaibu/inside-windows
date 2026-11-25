@@ -19460,3 +19460,16 @@ full_pages_ja['p2-page-147'] = full_pages_ja['p2-page-147'].replace(
     'こうした理由から CHPE が設計されました。',
     'こうした理由から CHPE（Compiled Hybrid Portable Executable）が設計されました。',
 )
+
+for page, labels in (
+    ('p2-page-586', {
+        'System Registry': 'システムレジストリ',
+        'Kernel Flags': 'カーネルフラグ',
+        'Image File': 'イメージファイル',
+    }),
+    ('p2-page-868', {'Include Empty Locations': '空の場所を含める'}),
+):
+    for label, translated in labels.items():
+        full_pages_ja[page] = full_pages_ja[page].replace(
+            f'「{label}」', f'「{translated}（{label}）」',
+        )
