@@ -19520,3 +19520,14 @@ for source, localized in (
     ('Path: Harddisk0', 'パス（Path）: Harddisk0'),
 ):
     full_pages_ja['p2-page-819'] = full_pages_ja['p2-page-819'].replace(source, localized)
+
+full_pages_ja['p2-page-851'] = (
+    '<p>メモリ領域一覧の「種類」欄では、'
+    '<code>OsloaderHeap</code> は OS ローダーのヒープ、'
+    '<code>FirmwareTemporary</code> はファームウェアの一時領域、'
+    '<code>RegistryData</code> はレジストリデータ、'
+    '<code>SystemCode</code> はシステムコード、'
+    '<code>BootDriver</code> はブートドライバー、'
+    '<code>Free</code> は空き領域を示します。</p>\n'
+    + full_pages_ja['p2-page-851']
+)
