@@ -9229,10 +9229,10 @@ ACTIVELOCKSCREEN:
 <li>Process Explorer を開きます。</li>
 <li>「View」メニューの「Lower Pane View」で「Handles」を選び、下部ペインにハンドルを表示します。</li>
 <li>下部ペインの列見出しを右クリックし、「Select Columns」を選んで、次のダイアログを開きます。
-<figure><img loading="lazy" width="147" height="208" src="assets/1f653af61bc88d07d7285443.webp" alt="Process Explorer の下部ペインに表示する列を選ぶダイアログ"></figure></li>
+<figure><img loading="lazy" width="147" height="208" src="assets/1f653af61bc88d07d7285443.webp" alt="Process Explorer の下部ペインに表示する列を選ぶダイアログ"><figcaption>「列の選択」の「ハンドル」タブで、下ペインに「アクセスマスク（Access Mask）」と「アクセス権の内訳（Decoded Access Mask）」を表示するよう設定します。</figcaption></figure></li>
 <li>「Access Mask」と「Decoded Access Mask」を選択して「OK」をクリックします。「Decoded Access Mask」はバージョン16.10以降で利用できます。</li>
 <li>プロセス一覧で <code>Explorer.exe</code> を選び、下部ペインのハンドルを確認します。各ハンドルのアクセスマスクは、そのハンドルで許可されたアクセス権を示します。「Decoded Access Mask」列では、多くの種類のオブジェクトについて、各ビットが表す権限を名前で確認できます。
-<figure><img loading="lazy" width="422" height="240" src="assets/5f4bc7ea7c0a584b42691fb3.webp" alt="Access Mask と Decoded Access Mask を表示したハンドル一覧"></figure></li>
+<figure><img loading="lazy" width="422" height="240" src="assets/5f4bc7ea7c0a584b42691fb3.webp" alt="Access Mask と Decoded Access Mask を表示したハンドル一覧"><figcaption>ハンドル一覧の「アクセス」列にはアクセスマスクが 16 進数で表示されます。右隣の列には、マスクに含まれるアクセス権が READ_CONTROL や KEY_READ などの名前で表示されます。</figcaption></figure></li>
 </ol>
 <p>一覧には、<code>READ_CONTROL</code> や <code>SYNCHRONIZE</code> のように複数のオブジェクト型に共通するアクセス権と、<code>KEY_READ</code> や <code>MODIFY_STATE</code> のように、その型に固有のアクセス権があります。固有のアクセス権の表示名の多くは、Windows のヘッダーで定義された定数の略称です。たとえば、<code>EVENT_MODIFY_STATE</code> は <code>MODIFY_STATE</code>、<code>PROCESS_TERMINATE</code> は <code>TERMINATE</code> と表示されます。</p></section><section class="page" id="page-642" aria-label="page-642"><h3 id="セキュリティ識別子">セキュリティ識別子</h3>
 <p>Windows は、システム上で操作を行う主体を、重複する可能性のある名前ではなく、セキュリティ識別子（SID）で識別します。ユーザー、ローカルグループとドメイングループ、ローカルコンピューター、ドメイン、ドメインメンバー、サービスには、それぞれ SID があります。SID は可変長の数値で、構造のリビジョン番号、48ビットの識別機関の値、可変個数の32ビットのサブオーソリティまたは相対識別子（RID）からなります。識別機関は SID の発行元で、通常は Windows のローカルシステムまたはドメインです。サブオーソリティの値は、その発行元のもとでセキュリティ主体を識別します。RID を使うと、共通のベース SID から一意の SID を作れます。SID は長く、その生成には乱数が使われるため、異なるマシンやドメインで同じ SID が発行される可能性はごくわずかです。</p>
@@ -9271,7 +9271,7 @@ ACTIVELOCKSCREEN:
 Account for S-1-5-21-1787744166-3910675280-2727264193-1027:
 User: redmond\johndoe</pre>
 <p>Process Explorer の「Security」タブでも、アカウントとグループの SID を確認できます。プロセスを所有するアカウントと、そのアカウントが所属するグループなどが表示されます。プロセス一覧で <code>Explorer.exe</code> などをダブルクリックし、「Security」タブを開くと、次のような画面になります。</p>
-<figure><img loading="lazy" width="219" height="298" src="assets/24ff59df85db7f46ca24ca6c.webp" alt="Process Explorer の Security タブに表示したユーザー SID とグループ一覧"></figure>
+<figure><img loading="lazy" width="219" height="298" src="assets/24ff59df85db7f46ca24ca6c.webp" alt="Process Explorer の Security タブに表示したユーザー SID とグループ一覧"><figcaption>explorer.exe の「セキュリティ」タブ。上段にユーザー SID とセッション情報、中央にグループとその属性、下段に特権とその状態が表示されます。グループ一覧には中整合性レベルも含まれています。</figcaption></figure>
 <p>「User」欄にはプロセスを所有するアカウントの表示名が、「SID」欄には実際の SID が表示されます。「Group」一覧には、アカウントが所属するすべてのグループの情報が表示されます。グループについては、この章の後半で説明します。</p></section><section class="page" id="page-645" aria-label="page-645"><h4 id="整合性レベル">整合性レベル</h4>
 <p>整合性レベルを使うと、随意アクセス制御で許可されたアクセスにも制限を加えられます。これにより、同じユーザーのアカウントで実行するプロセスと、そのユーザーが所有するオブジェクトを区別し、アカウント内でコードとデータを分離できます。強制整合性制御（MIC）は、呼び出し元に整合性レベルを関連付け、その性質を判断するための情報を SRM に提供します。オブジェクトにも整合性レベルを設定し、アクセスに必要な信頼度を示します。</p>
 <p>トークンの整合性レベルを取得するには、<code>GetTokenInformation</code> API の情報クラスに <code>TokenIntegrityLevel</code> を指定します。整合性レベルは SID で表します。任意の値を取れますが、システムは表7-3に示す6つの主なレベルを使い、権限を分離します。</p>
@@ -9297,9 +9297,9 @@ User: redmond\johndoe</pre>
 <li>Process Explorer を管理者権限で起動します。プロセス一覧の任意の列見出しを右クリックし、「Select Columns」を選びます。</li>
 </ol></section><section class="page" id="page-646" aria-label="page-646"><ol start="5">
 <li>「Process Image」タブを開き、「Integrity Level」チェックボックスをオンにします。ダイアログは次のようになります。
-<figure><img loading="lazy" width="211" height="297" src="assets/d1f23427886ce128ef6b5743.webp" alt="Process Explorer の列設定で Integrity Level を選んだ画面"></figure></li>
+<figure><img loading="lazy" width="211" height="297" src="assets/d1f23427886ce128ef6b5743.webp" alt="Process Explorer の列設定で Integrity Level を選んだ画面"><figcaption>「列の選択」の「プロセスイメージ」タブで「整合性レベル（Integrity Level）」を選択しています。</figcaption></figure></li>
 <li>Process Explorer の一覧に、各プロセスの整合性レベルが表示されます。この例では、メモ帳は Medium、Edge（<code>MicrosoftEdge.exe</code>）は AppContainer、管理者権限で開いたコマンドプロンプトは High と表示されます。サービスやシステムプロセスは、さらに高い System レベルで動作しています。
-<figure><img loading="lazy" width="406" height="407" src="assets/d26fb671e0c81bfcab3a7e08.webp" alt="Process Explorer の Integrity Level 列で各プロセスの整合性レベルを比較した画面"></figure></li>
+<figure><img loading="lazy" width="406" height="407" src="assets/d26fb671e0c81bfcab3a7e08.webp" alt="Process Explorer の Integrity Level 列で各プロセスの整合性レベルを比較した画面"><figcaption>プロセス一覧の「整合性」列。lsass.exe はシステム（System）、メモ帳は中（Medium）、MicrosoftEdge.exe は AppContainer です。PerfWatson2.exe には中と高（High）のインスタンスが表示されています。</figcaption></figure></li>
 </ol></section><section class="page" id="page-647" aria-label="page-647"><p>各プロセスの整合性レベルはトークンに格納され、次の規則で子プロセスに引き継がれます。</p>
 <ul>
 <li>通常、子プロセスは親プロセスの整合性レベルを継承します。そのため、昇格したコマンドプロンプトから起動するプロセスも昇格した状態で動作します。</li>
