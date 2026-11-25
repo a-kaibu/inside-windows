@@ -3713,7 +3713,9 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>ツールバーの追加ボタンを押して、「カウンターの追加」ダイアログを開きます。</li>
 <li>パフォーマンスオブジェクト「Thread」を選び、カウンター「Thread State」を選びます。</li>
 <li>「説明の表示」にチェックを入れると、各値の定義が表示されます。
-<figure><img loading="lazy" width="601" height="105" src="assets/17ee505a1370d5ea17f2760d.webp" alt="Thread State カウンターの値の説明"></figure></li>
+<figure><img loading="lazy" width="601" height="105" src="assets/17ee505a1370d5ea17f2760d.webp" alt="Thread State カウンターの値の説明"><figcaption>スレッドの現在の状態を表す Thread State カウンター。値は 0 が初期化済み、1 が実行可能、2 が実行中、3 がスタンバイ、4 が終了、5 が待機中、6 が遷移中、7 が不明です。
+実行中のスレッドはプロセッサーを使用しており、スタンバイのスレッドは次に使用する予定です。
+実行可能なスレッドはプロセッサーの空きを待ちます。遷移中のスレッドは実行に必要なリソースを待ちます。たとえば、実行スタックをディスクからページインする場合です。</figcaption></figure></li>
 <li>インスタンス欄で「すべてのインスタンス」を選びます。<code>cpustres</code> と入力し、「検索」をクリックします。</li>
 <li>最初の3つのスレッド（<code>cpustres/0</code>、<code>cpustres/1</code>、<code>cpustres/2</code>）を選び、「追加 &gt;&gt;」、続いて「OK」をクリックします。スレッド0は GUI スレッドで、ユーザーの入力を待っているため、状態5（待機中）になるはずです。スレッド1と2は状態2（実行中）と状態5を行き来します。両者は活動レベルと優先度が同じため、グラフ上でスレッド1の線がスレッド2の線に重なる場合があります。</li>
 </ol></section><section class="page" id="page-243" aria-label="page-243"><figure><img loading="lazy" width="562" height="364" src="assets/6b56f1a7c2b6b9184cbfec21.webp" alt="スレッド1と2が実行中と待機中を行き来するグラフ"></figure>
