@@ -19531,3 +19531,10 @@ full_pages_ja['p2-page-851'] = (
     '<code>Free</code> は空き領域を示します。</p>\n'
     + full_pages_ja['p2-page-851']
 )
+
+full_pages_ja['p2-page-851'] += (
+    '<p>拡張部の例では、<code>LastBootSucceeded</code> と <code>LastBootShutdown</code> が 1 で、'
+    '前回は起動に成功し、シャットダウンも行われたことを示します。'
+    '<code>IoPortAccessSupported</code> は 1 で、I/O ポートへのアクセスをサポートしています。'
+    '<code>BootDebuggerActive</code> は 0 で、ブートデバッガーは動作していません。</p>'
+)
