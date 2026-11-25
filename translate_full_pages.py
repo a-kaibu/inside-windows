@@ -19328,3 +19328,28 @@ full_pages_ja['page-199'] = (
     'この出力ではそれらがすべて 0 で、総プロセス数とアクティブなプロセス数はどちらも 3 です。</p>\n'
     + full_pages_ja['page-199']
 )
+
+
+full_pages_ja['page-199'] = full_pages_ja['page-199'].replace(
+    '<!-- original-pre -->\n<ol start="9">',
+    '<!-- original-pre -->\n'
+    '<p>続く出力では、凍結（FreezeCount）、バックグラウンド（BackgroundCount）、'
+    '終了済みプロセス（TotalTerminatedProcesses）の各カウントは 0 です。'
+    'ジョブ全体のメモリ使用量のピーク（PeakJobMemoryUsed）は 0x10db、'
+    '個々のプロセスのピーク（PeakProcessMemoryUsed）は 0xa56 です。'
+    '設定された制限と実効制限のフラグはいずれも 0x0 です。</p>\n<ol start="9">',
+).replace(
+    '<!-- original-pre --></li>',
+    '<!-- original-pre -->'
+    '<p>一覧の <code>Cid</code> はプロセス ID、<code>ParentCid</code> は親プロセスの ID です。'
+    'cmd.exe と conhost.exe のハンドル数は「データにアクセスできません」と表示され、'
+    'notepad.exe のハンドル数は 188 です。</p></li>',
+)
+
+full_pages_ja['page-200'] = full_pages_ja['page-200'].replace(
+    '<!-- original-pre -->',
+    '<!-- original-pre -->\n'
+    '<p><code>ParentJob</code> は空で、<code>RootJob</code> はこのジョブ自身を指しています。'
+    '<code>EnergyValues</code> はエネルギー使用量の情報を指し、'
+    '<code>SharedCommitCharge</code> は共有コミット量を示します。</p>',
+)
