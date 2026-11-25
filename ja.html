@@ -5703,9 +5703,9 @@ Testlimit v5.24 - test Windows limits
 Copyright (C) 2012-2015 Mark Russinovich
 Sysinternals - www.sysinternals.com
 Process ID: 264
-Reserving private bytes (MB)...
-Leaked 4008 MB of reserved memory (4008 MB total leaked). Lasterror: 8
-Not enough storage is available to process this command.</pre></section><section class="page" id="page-376" aria-label="page-376"><p>この結果は、TestLimit のリンク時に <code>/LARGEADDRESSAWARE</code> を指定した場合のものです。この指定がなければ、どの実験でも約2 GBになります。64ビットアプリケーションも、このオプションを指定せずにリンクすると、32ビットアプリケーションと同様に、プロセスの仮想アドレス空間の先頭2 GBに制限されます。Visual Studio では、64ビットビルドでこのフラグが既定で設定されます。</p>
+プライベート領域を予約しています（MB）...
+予約済みメモリを4008 MBリークさせました（合計4008 MB）。最終エラー: 8
+このコマンドを処理するための記憶領域が不足しています。</pre></section><section class="page" id="page-376" aria-label="page-376"><p>この結果は、TestLimit のリンク時に <code>/LARGEADDRESSAWARE</code> を指定した場合のものです。この指定がなければ、どの実験でも約2 GBになります。64ビットアプリケーションも、このオプションを指定せずにリンクすると、32ビットアプリケーションと同様に、プロセスの仮想アドレス空間の先頭2 GBに制限されます。Visual Studio では、64ビットビルドでこのフラグが既定で設定されます。</p>
 <h3 id="x64-の仮想アドレス指定の制約">x64 の仮想アドレス指定の制約</h3>
 <p>64ビットの仮想アドレスで指定できる仮想メモリは、理論上、最大16 EBです。32ビットで指定できる4 GBを大きく上回り、現在や近い将来のコンピューターが必要とする量をはるかに超えています。</p>
 <p>チップの構成を簡素化し、特に後述のアドレス変換で余分な処理を省くため、本書の対象となる AMD と Intel の x64 プロセッサは、256 TBの仮想アドレス空間だけを実装しています。64ビットの仮想アドレスのうち、実装されているのは下位48ビットです。ただし、仮想アドレス自体は64ビット幅で、レジスターやメモリに格納するときは8バイトを使います。上位16ビット（ビット48〜63）は、2の補数の符号拡張と同様に、実装された最上位ビット（ビット47）と同じ値にそろえる必要があります。この規則に従うアドレスを、正準アドレス（canonical address）と呼びます。</p>
@@ -8893,19 +8893,19 @@ Total: 1 library loaded</pre>
 <h4 id="実験-システムの電源状態を確認する">実験：システムの電源状態を確認する</h4>
 <p>システムがサポートする電源状態を確認するには、管理者権限でコマンドプロンプトを開き、<code>powercfg /a</code> を実行します。次のような結果が表示されます。</p>
 <pre>C:\WINDOWS\system32&gt;powercfg /a
-The following sleep states are available on this system:
-Standby (S3)
-Hibernate
-Fast Startup
-The following sleep states are not available on this system:
-Standby (S1)
-The system firmware does not support this standby state.
-Standby (S2)
-The system firmware does not support this standby state.
-Standby (S0 Low Power Idle)
-The system firmware does not support this standby state.
-Hybrid Sleep
-The hypervisor does not support this standby state.</pre>
+このシステムで利用できるスリープ状態:
+スタンバイ (S3)
+休止状態
+高速スタートアップ
+このシステムで利用できないスリープ状態:
+スタンバイ (S1)
+システムのファームウェアはこのスタンバイ状態をサポートしていません。
+スタンバイ (S2)
+システムのファームウェアはこのスタンバイ状態をサポートしていません。
+スタンバイ (S0 低電力アイドル)
+システムのファームウェアはこのスタンバイ状態をサポートしていません。
+ハイブリッドスリープ
+ハイパーバイザーはこのスタンバイ状態をサポートしていません。</pre>
 <p>この例では、スタンバイに S3 が使われ、休止状態も利用できます。休止状態を無効にしてから、同じコマンドを再実行します。</p>
 <pre>C:\WINDOWS\system32&gt;powercfg /h off
 C:\WINDOWS\system32&gt;powercfg /a</pre></section><section class="page" id="page-610" aria-label="page-610"><pre>The following sleep states are available on this system:
@@ -9053,22 +9053,22 @@ MinThrottle:             0% DyanmicThrottle:      None (0)</pre>
 DISPLAY:
 [PROCESS] \Device\HarddiskVolume4\Program Files\WindowsApps\Microsoft.
 ZuneVideo_10.16092.10311.0_x64__8wekyb3d8bbwe\Video.UI.exe
-Windows Runtime Package: Microsoft.ZuneVideo_8wekyb3d8bbwe
+Windows ランタイムパッケージ: Microsoft.ZuneVideo_8wekyb3d8bbwe
 SYSTEM:
 [DRIVER] Conexant ISST Audio (INTELAUDIO\FUNC_01&amp;VEN_14F1&amp;DEV_50F4&amp;SUBSYS_103C80D3&amp;R
 EV_1001\4&amp;1a010da&amp;0&amp;0001)
-An audio stream is currently in use.
+オーディオストリームが使用中です。
 [PROCESS] \Device\HarddiskVolume4\Program Files\WindowsApps\Microsoft.
 ZuneVideo_10.16092.10311.0_x64__8wekyb3d8bbwe\Video.UI.exe
-Windows Runtime Package: Microsoft.ZuneVideo_8wekyb3d8bbwe
+Windows ランタイムパッケージ: Microsoft.ZuneVideo_8wekyb3d8bbwe
 AWAYMODE:
-None.
+なし。
 EXECUTION:
-None.
+なし。
 PERFBOOST:
-None.
+なし。
 ACTIVELOCKSCREEN:
-None.</pre>
+なし。</pre>
 <p>出力には、先に説明した4種類に加えて、<code>PERFBOOST</code> と <code>ACTIVELOCKSCREEN</code> の2種類が表示されています。この2つはカーネルのヘッダーで内部用の電源要求の型として宣言されていますが、本書の対象バージョンでは使われていません。</p>
 <h3 id="まとめ-6">まとめ</h3>
 <p>I/O システムは Windows の I/O 処理モデルを定義し、複数のドライバーに共通する機能や、複数のドライバーが必要とする機能を提供します。主な役割は、I/O 要求を表す IRP を作成し、各ドライバーへ順に渡し、I/O が完了したら結果を呼び出し元へ返すことです。I/O マネージャーは、ドライバーオブジェクトやデバイスオブジェクトなどの I/O システムオブジェクトを使って、ドライバーやデバイスを特定します。Windows の I/O システムは、高い性能を得るために内部では非同期に動作し、ユーザーモードのアプリケーションには同期 I/O と非同期 I/O の両方を提供します。</p></section><section class="page" id="page-621" aria-label="page-621"><p>デバイスドライバーには、従来のハードウェア用ドライバーのほかに、ファイルシステムドライバー、ネットワークドライバー、階層化されたフィルタードライバーがあります。すべてのドライバーは共通の構造を持ち、共通の仕組みを使って、ほかのドライバーや I/O マネージャーとやり取りします。I/O システムのインターフェイスにより、高水準言語でドライバーを書けるため、開発期間を短縮し、移植性を高められます。OS に対して共通の構造を提供するため、ドライバーを重ねて機能を分割し、実装の重複を減らせます。ユニバーサル DDI の共通セットを使えば、コードを変更せずに複数のデバイスや形態に対応できます。</p>
