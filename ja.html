@@ -5973,7 +5973,7 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <h4 id="実験-アドレスの変換">実験：アドレスの変換</h4>
 <p>アドレス変換の仕組みを確認するため、この実験では x86 PAE システムを例に、カーネルデバッガーで PDPT、ページディレクトリ、ページテーブル、PTE を調べます。ここで使うプロセスでは、仮想アドレス <code>0x3166004</code> が有効な物理アドレスにマップされています。後の実験では、無効なアドレスの変換をカーネルデバッガーでたどる方法を説明します。</p>
 <p>まず <code>0x3166004</code> を2進数に変換し、変換に使う3つのインデックスとページ内オフセットに分けます。<code>0x3166004</code> の2進表記は <code>11.0001.0110.0110.0000.0000.0100</code> です。各フィールドへの分割を次の図に示します。</p>
-<figure><img loading="lazy" width="473" height="142" src="assets/b395466e8ad3f9df3bfab057.webp" alt="仮想アドレスを PDPT、ページディレクトリ、ページテーブルのインデックスとページ内オフセットに分割した図"></figure></section><section class="page" id="page-396" aria-label="page-396"><p>CPU は変換を始めるために、プロセスの PDPT の物理アドレスを必要とします。そのプロセスのスレッドを実行している間、このアドレスは <code>CR3</code> に入っています。デバッガーでは、次のように <code>!process</code> コマンドの出力にある <code>DirBase</code> フィールドで確認できます。</p>
+<figure><img loading="lazy" width="473" height="142" src="assets/b395466e8ad3f9df3bfab057.webp" alt="仮想アドレスを PDPT、ページディレクトリ、ページテーブルのインデックスとページ内オフセットに分割した図"><figcaption>32 ビット仮想アドレスの内訳。ビット 31〜30 はページディレクトリポインターテーブルのインデックス（0）、29〜21 はページディレクトリのインデックス（24）、20〜12 はページテーブルのインデックス（0x166、10 進数で 358）、11〜0 はページ内のバイトオフセット（4）です。</figcaption></figure></section><section class="page" id="page-396" aria-label="page-396"><p>CPU は変換を始めるために、プロセスの PDPT の物理アドレスを必要とします。そのプロセスのスレッドを実行している間、このアドレスは <code>CR3</code> に入っています。デバッガーでは、次のように <code>!process</code> コマンドの出力にある <code>DirBase</code> フィールドで確認できます。</p>
 <pre>lkd&gt; !process -1 0
 PROCESS 99aa3040  SessionId: 2  Cid: 1690    Peb: 03159000  ParentCid: 0920
 DirBase: 01024800  ObjectTable: b3b386c0  HandleCount: &lt;Data Not Accessible&gt;
@@ -6227,9 +6227,9 @@ Minimum:  11469744 Kb  Maximum:     11469744 Kb</pre>
 <p>ページファイルを必要以上に大きくしても、システムが実際に使う量は変わりません。これによって増えるのは、システムがコミットできる仮想メモリの量で、性能には影響しません。実行中のアプリケーションに対してページファイルが小さすぎると、仮想メモリが不足しているというエラーが表示されることがあります。その場合は、プロセスごとのプライベートバイト数を調べ、メモリリークが起きていないかを確認します。該当するプロセスが見つからなければ、システムのページプールのサイズを調べます。デバイスドライバーのページプールリークも、このエラーの原因になり得ます。調査方法については、「カーネルモードのヒープ（システムメモリプール）」の「実験：プールのメモリリークを調べる」を参照してください。</p>
 <h4 id="実験-タスクマネージャーでページファイルの使用状況を確認する">実験：タスクマネージャーでページファイルの使用状況を確認する</h4>
 <p>タスクマネージャーでは、コミット済みメモリの使用状況を確認できます。「パフォーマンス」タブをクリックすると、ページファイルに関連するカウンターが次のように表示されます。</p>
-<figure><img loading="lazy" width="428" height="405" src="assets/ca1d74ca138dc6d5b511b6e5.webp" alt="タスクマネージャーのパフォーマンスタブでメモリのコミット済み容量と上限を確認する画面"></figure></section><section class="page" id="page-415" aria-label="page-415"><p>システム全体のコミット状況は、タスクマネージャーの「コミット済み」に2つの数値で表示されます。最初の値はコミットチャージで、ページファイルに将来必要となり得る容量の目安です。システム内のプライベートなコミット済み仮想メモリをすべて一度にページアウトしたと仮定した場合に、ページファイルで必要となる容量を示します。2番目の値はコミット上限で、仮想メモリが不足するまでにシステムがコミットできる最大量です。保存先には、物理メモリとページファイルの両方が含まれます。コミット上限は基本的に RAM の容量とページファイルの現在の容量の合計であり、ページファイルを今後拡張できる分は含まれません。</p>
+<figure><img loading="lazy" width="428" height="405" src="assets/ca1d74ca138dc6d5b511b6e5.webp" alt="タスクマネージャーのパフォーマンスタブでメモリのコミット済み容量と上限を確認する画面"><figcaption>タスクマネージャーのメモリ表示。コミット済み容量は 1.8 GB、コミット上限は 3.1 GB です。物理メモリは 2.0 GB で、使用中は 1.6 GB（うち圧縮済みは 50.2 MB）、利用可能は 446 MB です。</figcaption></figure></section><section class="page" id="page-415" aria-label="page-415"><p>システム全体のコミット状況は、タスクマネージャーの「コミット済み」に2つの数値で表示されます。最初の値はコミットチャージで、ページファイルに将来必要となり得る容量の目安です。システム内のプライベートなコミット済み仮想メモリをすべて一度にページアウトしたと仮定した場合に、ページファイルで必要となる容量を示します。2番目の値はコミット上限で、仮想メモリが不足するまでにシステムがコミットできる最大量です。保存先には、物理メモリとページファイルの両方が含まれます。コミット上限は基本的に RAM の容量とページファイルの現在の容量の合計であり、ページファイルを今後拡張できる分は含まれません。</p>
 <p>Process Explorer の「System Information」画面では、システムのコミット上限に対するピーク値と現在値の割合も確認できます。</p>
-<figure><img loading="lazy" width="516" height="346" src="assets/1f28ac4522e51a4378154212.webp" alt="Process Explorer でコミット上限に対する現在値とピーク値の割合を確認する画面"></figure>
+<figure><img loading="lazy" width="516" height="346" src="assets/1f28ac4522e51a4378154212.webp" alt="Process Explorer でコミット上限に対する現在値とピーク値の割合を確認する画面"><figcaption>Process Explorer の「コミット量（Commit Charge）」欄。現在値は 1,781,668 K、上限は 3,276,340 K、ピークは 1,909,232 K です。上限に対する現在値の割合は 54.38%、ピーク値の割合は 58.27% です。</figcaption></figure>
 <h3 id="スタック">スタック</h3>
 <p>スレッドの実行には、関数の引数、ローカル変数、関数呼び出し後の戻り先アドレスを一時的に保持する領域が必要です。このメモリ領域をスタックと呼びます。Windows のメモリマネージャーは、スレッドごとにユーザースタックとカーネルスタックの2つを用意し、さらにプロセッサーごとに DPC スタックを用意します。第2章では、システムコールによって、スレッドがユーザースタックからカーネルスタックに切り替わる流れを説明しました。ここでは、スタック領域を効率よく使うためにメモリマネージャーが提供する機能を見ていきます。</p></section><section class="page" id="page-416" aria-label="page-416"><h3 id="ユーザースタック">ユーザースタック</h3>
 <p>スレッドを作ると、メモリマネージャーはあらかじめ決まった量の仮想メモリを自動で予約します。既定では1 MBです。予約量は、<code>CreateThread</code>、<code>CreateRemoteThread</code>、<code>CreateRemoteThreadEx</code> の呼び出し時に指定できます。アプリケーションのビルド時に Microsoft C/C++ のリンカーオプション <code>/STACK:reserve</code>で指定することもでき、その値はイメージヘッダーに記録されます。1 MBを予約した場合でも、イメージの PE ヘッダーに別の指定がなければ、最初にコミットするのはスタックの先頭1ページとガードページだけです。スタックが伸びてガードページに達すると例外が発生し、次のガードページの割り当てを試みます。この仕組みにより、ユーザースタックは必要に応じて伸び、最初から1 MB全体をコミットせずに済みます。一度伸びたスタックは縮みません。</p>
@@ -6249,13 +6249,13 @@ Created 29900 threads. Lasterror: 8</pre>
 <figure><img loading="lazy" width="346" height="167" src="assets/8da0aebf447d19eb150767d1.webp" alt="呼び出しが深くなったときに別のカーネルスタックへ切り替える図"><figcaption>図5-28　カーネルスタックの切り替え</figcaption></figure>
 <h4 id="実験-カーネルスタックの使用量を確認する">実験：カーネルスタックの使用量を確認する</h4>
 <p>Sysinternals の RAMMap では、カーネルスタックが現在占有する物理メモリを表示できます。次は「Use Counts」タブの画面例です。</p>
-<figure><img loading="lazy" width="348" height="38" src="assets/87ec8201a916e34a388c5e7a.webp" alt="RAMMap の Use Counts タブに表示されたカーネルスタックの使用量"></figure>
+<figure><img loading="lazy" width="348" height="38" src="assets/87ec8201a916e34a388c5e7a.webp" alt="RAMMap の Use Counts タブに表示されたカーネルスタックの使用量"><figcaption>実験前の RAMMap。「カーネルスタック（Kernel Stack）」の合計は 47,496 K、アクティブは 41,380 K です。</figcaption></figure>
 <p>カーネルスタックの使用量を確認するには、次の手順を実行します。</p>
 <ol>
 <li>前の TestLimit の実験を繰り返し、TestLimit を実行したままにします。</li>
 <li>RAMMap に切り替えます。</li>
 <li>「File」メニューの「Refresh」を選ぶか、F5 を押します。カーネルスタックの使用量が大きく増えたことを確認できます。</li>
-</ol></section><section class="page" id="page-418" aria-label="page-418"><figure><img loading="lazy" width="353" height="38" src="assets/1f57833db5e7fc38c3bdeaa7.webp" alt="TestLimit の実行後に増えたカーネルスタックの使用量を示す RAMMap の画面"></figure>
+</ol></section><section class="page" id="page-418" aria-label="page-418"><figure><img loading="lazy" width="353" height="38" src="assets/1f57833db5e7fc38c3bdeaa7.webp" alt="TestLimit の実行後に増えたカーネルスタックの使用量を示す RAMMap の画面"><figcaption>TestLimit 実行後の RAMMap。「カーネルスタック（Kernel Stack）」の合計は 346,076 K、アクティブは 339,916 K に増えています。</figcaption></figure>
 <p>先に起動した TestLimit を閉じずにさらに数回起動すると、32ビットシステムでは物理メモリがすぐに不足します。この制約は、32ビットシステム全体で作成できるスレッド数を制限する主な要因の1つです。</p>
 <h3 id="DPC-スタック">DPC スタック</h3>
 <p>Windows はプロセッサーごとに DPC スタックを用意し、遅延プロシージャ呼び出し（DPC）の実行時に使います。これにより、DPC のコードは現在のスレッドのカーネルスタックを使わずに実行できます。DPC は専用スタックを使いますが、実行コンテキストはそのプロセッサで実行中の任意のスレッドのものです。DPC について詳しくは第6章を参照してください。DPC スタックは、システムコールで <code>sysenter</code>（x86）、<code>svc</code>（ARM）、<code>syscall</code>（x64）命令を処理するときに最初に使うスタックとしても設定されます。これらの命令を実行すると、CPU が所定のレジスター（x86 と x64 ではモデル固有レジスター、MSR）の値に基づいてスタックを切り替えます。コンテキストスイッチのたびに MSR を書き換えるとコストがかかるため、Windows はプロセッサーごとの DPC スタックのポインターを MSR に設定します。</p>
