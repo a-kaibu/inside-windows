@@ -17234,7 +17234,8 @@ ffff8287`943a8310 fffff801`1263e962 nt!KeWaitForSingleObject+0x239
 ffff8287`943a8400 fffff801`1263d682 Ntfs!NtfsNonCachedIo+0xa52
 ffff8287`943a86b0 fffff801`1263b756 Ntfs!NtfsCommonRead+0x1d52
 ffff8287`943a8850 fffff801`1049a725 Ntfs!NtfsFsdRead+0x396
-ffff8287`943a8920 fffff801`11826591 nt!IofCallDriver+0x55</code></pre></section><section class="page" id="p2-page-231" aria-label="p2-page-231"><h4 id="プッシュロック">プッシュロック</h4>
+ffff8287`943a8920 fffff801`11826591 nt!IofCallDriver+0x55</code></pre>
+<p>詳細表示では、共有モードの所有スレッドは 1 本で、競合回数は 28 です。所有プロセス（Owning Process）は svchost.exe です。このスレッドはカーネルモードで通知イベントを待っています。Non-Alertable は警告可能な待機ではないことを示します。IRP List にはこのスレッドに関連付けられた I/O 要求が 2 件あり、呼び出しスタックには NTFS の非キャッシュ I/O と読み取り処理が表示されています。</p></section><section class="page" id="p2-page-231" aria-label="p2-page-231"><h4 id="プッシュロック">プッシュロック</h4>
 <p><strong>プッシュロック</strong>は、イベントオブジェクトを使う同期機構です。
 高速ミューテックスやガード付きミューテックスと同様、ロックが競合した場合にだけイベントを待ちます。
 さらに、エグゼクティブリソースと同じように、共有モードでも排他モードでも取得できます。

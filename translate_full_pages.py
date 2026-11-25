@@ -19280,3 +19280,13 @@ full_pages_ja['p2-page-230'] = full_pages_ja['p2-page-230'].replace(
     'Shared は共有取得、Exclusively owned は排他取得です。'
     'Contention Count は競合回数、Actual Thread は実際のスレッドのアドレスを示します。</p>',
 )
+full_pages_ja['p2-page-230'] = full_pages_ja['p2-page-230'].replace(
+    'Ntfs!NtfsFsdRead+0x396\nffff8287`943a8920 fffff801`11826591 nt!IofCallDriver+0x55</code></pre>',
+    'Ntfs!NtfsFsdRead+0x396\nffff8287`943a8920 fffff801`11826591 nt!IofCallDriver+0x55</code></pre>\n'
+    '<p>詳細表示では、共有モードの所有スレッドは 1 本で、競合回数は 28 です。'
+    '所有プロセス（Owning Process）は svchost.exe です。'
+    'このスレッドはカーネルモードで通知イベントを待っています。'
+    'Non-Alertable は警告可能な待機ではないことを示します。'
+    'IRP List にはこのスレッドに関連付けられた I/O 要求が 2 件あり、'
+    '呼び出しスタックには NTFS の非キャッシュ I/O と読み取り処理が表示されています。</p>',
+)
