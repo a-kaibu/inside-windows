@@ -10039,10 +10039,10 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <p>所有者に DACL の変更が許可される通常の動作では、ユーザーが自分の所有するオブジェクトにアクセスする手段が残ります。たとえば、オブジェクトの DACL が空でアクセス権が一切付与されていなくても、所有者は DACL の変更権を要求してオブジェクトを開き、必要なアクセス許可を含む新しい DACL を設定できます。</p>
 <h4 id="GUI-のアクセス許可エディターでの注意点">GUI のアクセス許可エディターでの注意点</h4>
 <p>ファイル、レジストリキー、Active Directory のオブジェクトなど、セキュリティ保護可能なオブジェクトの設定を GUI のアクセス許可エディターで変更する際、メインのセキュリティダイアログの表示順には注意が必要です。たとえば、Everyone グループにフルコントロールを許可し、Administrators グループにフルコントロールを拒否する場合を考えます。ダイアログで Everyone の行が先に表示されていると、Everyone の許可 ACE が Administrators の拒否 ACE より前にあるように見えます。エディターは、ACL をオブジェクトに適用する際に、拒否 ACE を許可 ACE より前に配置します。</p>
-<figure><img loading="lazy" width="451" height="322" src="assets/5bd933720f3024873816ed38.webp" alt="Everyone と Administrators のアクセス許可を表示するセキュリティダイアログ"></figure>
-<p>「セキュリティの詳細設定」ダイアログの「アクセス許可」タブには、DACL 内の ACE の順序が表示されます。複雑な DACL では、このダイアログでも読み取りにくい場合があります。複数のアクセス権に対する拒否 ACE の後に、別の種類のアクセス権に対する許可 ACE が続くことがあるためです。</p></section><section class="page" id="page-682" aria-label="page-682"><figure><img loading="lazy" width="479" height="332" src="assets/ee824c5e490249f009a6cdfe.webp" alt="セキュリティの詳細設定でアクセス許可エントリの順序を表示した例"></figure>
+<figure><img loading="lazy" width="451" height="322" src="assets/5bd933720f3024873816ed38.webp" alt="Everyone と Administrators のアクセス許可を表示するセキュリティダイアログ"><figcaption>Dummy.txt の「セキュリティ」タブ。左では Everyone にフルコントロールを許可し、右では Administrators にフルコントロールを拒否しています。</figcaption></figure>
+<p>「セキュリティの詳細設定」ダイアログの「アクセス許可」タブには、DACL 内の ACE の順序が表示されます。複雑な DACL では、このダイアログでも読み取りにくい場合があります。複数のアクセス権に対する拒否 ACE の後に、別の種類のアクセス権に対する許可 ACE が続くことがあるためです。</p></section><section class="page" id="page-682" aria-label="page-682"><figure><img loading="lazy" width="479" height="332" src="assets/ee824c5e490249f009a6cdfe.webp" alt="セキュリティの詳細設定でアクセス許可エントリの順序を表示した例"><figcaption>アクセス許可の詳細一覧。Administrators にフルコントロールを拒否するエントリが最初にあり、その後に Everyone、Authenticated Users、SYSTEM、Users を許可するエントリが並びます。いずれも継承元はありません。</figcaption></figure>
 <p>特定のユーザーやグループがオブジェクトに対して持つアクセス権を確かめるには、そのユーザーやグループのメンバーに実際にアクセスしてもらうか、「有効なアクセス」タブで確認します。オブジェクトの「プロパティ」から「詳細設定」を開くと、このタブが表示されます。確認したいユーザーやグループの名前を入力すると、そのオブジェクトに対して許可されているアクセス権を確認できます。</p>
-<figure><img loading="lazy" width="480" height="449" src="assets/269546856a60ed8deb0c9899.webp" alt="有効なアクセスのタブで指定ユーザーの権限を確認する例"></figure></section><section class="page" id="page-683" aria-label="page-683"><h3 id="動的アクセス制御">動的アクセス制御</h3>
+<figure><img loading="lazy" width="480" height="449" src="assets/269546856a60ed8deb0c9899.webp" alt="有効なアクセスのタブで指定ユーザーの権限を確認する例"><figcaption>指定したユーザーに対する「有効なアクセス」の結果。アクセス許可の読み取りと変更は可能です。データの読み書き、削除、所有権の取得などはファイルのアクセス許可によって制限されています。</figcaption></figure></section><section class="page" id="page-683" aria-label="page-683"><h3 id="動的アクセス制御">動的アクセス制御</h3>
 <p>ここまでに説明した随意アクセス制御は、Windows NT の初版からあり、さまざまな場面で使われています。ただし、この方式では表現できない条件があります。たとえば、共有ファイルへのアクセスを、利用者が職場のコンピューターを使う場合だけ許可し、自宅のコンピューターからは拒否したいとします。この条件は ACE だけでは指定できません。</p>
 <p>Windows 8 と Windows Server 2012 で導入された動的アクセス制御（DAC）では、Active Directory で定義したカスタム属性に基づいて規則を作成できます。DAC は既存のアクセス制御に追加される仕組みです。操作が許可されるには、DAC と従来の DACL の両方が許可を与える必要があります。図7-10に動的アクセス制御の主な構成要素を示します。</p>
 <figure><img loading="lazy" width="382" height="155" src="assets/5aad50aa01918b718360d460.webp" alt="動的アクセス制御の構成要素"><figcaption>図7-10　動的アクセス制御の構成要素</figcaption></figure>
@@ -10216,11 +10216,11 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <ol>
 <li>エクスプローラーで普段アクセスできるファイル（たとえばテキストファイル）を選び、「プロパティ」を開きます。「セキュリティ」タブで「詳細設定」を選びます。</li>
 <li>「監査」タブを開き、管理者権限の確認を進めます。表示されたダイアログから、ファイルの SACL にアクセス監査用のエントリを追加できます。</li>
-</ol></section><section class="page" id="page-697" aria-label="page-697"><figure><img loading="lazy" width="423" height="293" src="assets/2b7918182aa91674afd213f1.webp" alt="ファイルのセキュリティの詳細設定にある監査タブ"></figure>
+</ol></section><section class="page" id="page-697" aria-label="page-697"><figure><img loading="lazy" width="423" height="293" src="assets/2b7918182aa91674afd213f1.webp" alt="ファイルのセキュリティの詳細設定にある監査タブ"><figcaption>test.txt の「セキュリティの詳細設定」で「監査」タブを開いた状態。監査エントリの一覧は空です。</figcaption></figure>
 <ol start="3">
 <li>「追加」をクリックし、「プリンシパルの選択」を選びます。</li>
 <li>「ユーザーまたはグループの選択」ダイアログで、自分のユーザー名か、Everyone など自分が所属するグループの名前を入力します。「名前の確認」をクリックし、「OK」を選びます。このユーザーまたはグループによるファイルへのアクセスを監査するエントリを作成するダイアログが開きます。
-<figure><img loading="lazy" width="506" height="328" src="assets/23e2e7e1aa42b0c676763b10.webp" alt="指定したプリンシパルのファイルアクセスを記録する監査エントリの設定"></figure></li>
+<figure><img loading="lazy" width="506" height="328" src="assets/23e2e7e1aa42b0c676763b10.webp" alt="指定したプリンシパルのファイルアクセスを記録する監査エントリの設定"><figcaption>test.txt の監査エントリ。プリンシパルは Everyone、種類は「成功（Success）」です。基本のアクセス許可ではフルコントロール、変更、読み取りと実行、読み取り、書き込みが選択されています。</figcaption></figure></li>
 <li>「OK」を3回クリックして、ファイルの「プロパティ」ダイアログを閉じます。</li>
 <li>エクスプローラーでファイルをダブルクリックし、関連付けられたプログラムで開きます。たとえば、テキストファイルならメモ帳で開きます。</li>
 <li>スタートメニューで「イベント」と入力し、「イベント ビューアー」を選びます。</li>
@@ -10233,7 +10233,7 @@ Process Token TrustLevelSid: S-1-19-512-8192</pre></li>
 <li>イベントビューアーの「操作」メニューから「最新の情報に更新」を選びます。ファイルアクセスの監査レコードが複数表示されます。</li>
 <li>イベント ID 4656 の監査レコードを1つ探します。説明には「オブジェクトへのハンドルが要求されました」と表示されます。「検索」で、開いたファイル名を探すこともできます。</li>
 <li>テキスト欄を下へスクロールして、「アクセスの理由」を探します。次の例では、<code>READ_CONTROL</code>、<code>SYNCHRONIZE</code>、<code>ReadAttributes</code>、拡張属性を読み取る <code>ReadEA</code>、および <code>ReadData</code> が要求されています。<code>READ_CONTROL</code> が許可されたのは、アクセス主体がファイルの所有者だったためです。ほかの権利は、画面に示されたアクセス制御エントリによって許可されました。
-<figure><img loading="lazy" width="503" height="413" src="assets/21e0f639e717cc3b429dd84b.webp" alt="イベント ID 4656 の監査レコードに表示されたアクセスの理由"></figure></li>
+<figure><img loading="lazy" width="503" height="413" src="assets/21e0f639e717cc3b429dd84b.webp" alt="イベント ID 4656 の監査レコードに表示されたアクセスの理由"><figcaption>イベントビューアーのセキュリティログに記録された監査成功イベント 4656。要求元のプロセスは explorer.exe です。「アクセスの理由」には、READ_CONTROL がファイルの所有権によって許可されたことなどが表示されます。</figcaption></figure></li>
 </ol></section><section class="page" id="page-699" aria-label="page-699"><h3 id="グローバル監査ポリシー">グローバル監査ポリシー</h3>
 <p>オブジェクトごとにアクセス監査用の ACE を設定するほか、すべてのファイルシステムオブジェクト、すべてのレジストリキー、またはその両方を対象に、グローバル監査ポリシーを定義できます。これにより、監査担当者は対象オブジェクトの SACL を1つずつ設定したり確認したりせずに、必要な監査が行われることを確かめられます。</p>
 <p>管理者は <code>AuditPol</code> の <code>/resourceSACL</code> オプションでグローバル監査ポリシーを設定または照会できます。プログラムからは <code>AuditSetGlobalSacl</code> と <code>AuditQueryGlobalSacl</code> を使います。オブジェクトの SACL を変更する場合と同様に、グローバル SACL の変更には <code>SeSecurityPrivilege</code> が必要です。</p>
