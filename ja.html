@@ -26130,6 +26130,7 @@ FriendlyName
 TieredVirtualDisk OK
                                       Healthy
                                                     1202590842880   1203664584704</code></pre>
+<p><code>Get-VirtualDisk</code> の出力では、仮想ディスクの動作状態と正常性はどちらも正常です。仮想ディスクの容量は 1,202,590,842,880 バイトで、プール内で占める容量（<code>FootprintOnPool</code>）は 1,203,664,584,704 バイトです。</p>
 <p>仮想ディスクを作成したら、「ディスクの管理」スナップインや <code>Format</code> ツールなどでパーティションを作り、新しいボリュームをフォーマットします。
 完了後、<code>fsutil.exe</code> で階層化ボリュームになったことを確認できます。</p>
 <pre><code>PS E:\&gt; fsutil tiering regionList e:

@@ -19495,3 +19495,12 @@ full_pages_ja['p2-page-806'] = full_pages_ja['p2-page-806'].replace(
     'このプールは正常（<code>OK</code>、<code>Healthy</code>）で、容量は 1.12 TB、'
     '割り当て済みの容量（<code>AllocatedSize</code>）は 512 MB です。</p>',
 )
+
+
+full_pages_ja['p2-page-806'] = full_pages_ja['p2-page-806'].replace(
+    '1202590842880   1203664584704</code></pre>',
+    '1202590842880   1203664584704</code></pre>\n'
+    '<p><code>Get-VirtualDisk</code> の出力では、仮想ディスクの動作状態と正常性はどちらも正常です。'
+    '仮想ディスクの容量は 1,202,590,842,880 バイトで、'
+    'プール内で占める容量（<code>FootprintOnPool</code>）は 1,203,664,584,704 バイトです。</p>',
+)
