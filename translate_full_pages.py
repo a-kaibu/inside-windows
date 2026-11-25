@@ -19271,3 +19271,12 @@ full_pages_ja['p2-page-600'] = full_pages_ja['p2-page-600'].replace(
     'メモリマネージャーが書き戻すのは、変更済みビットが立っており、書き込みがあったとわかるページだけです。',
     'メモリマネージャーは、ユーザーアドレス空間にマップされたページのうち、変更済みビットが立っていて書き込みがあったと分かるページだけを書き戻します。',
 )
+
+
+full_pages_ja['p2-page-230'] = full_pages_ja['p2-page-230'].replace(
+    '9706 total locks, 4 locks currently held</code></pre>',
+    '9706 total locks, 4 locks currently held</code></pre>\n'
+    '<p>デバッガーは全 9,706 個のロックを調べ、そのうち 4 個が取得中だと報告しています。'
+    'Shared は共有取得、Exclusively owned は排他取得です。'
+    'Contention Count は競合回数、Actual Thread は実際のスレッドのアドレスを示します。</p>',
+)

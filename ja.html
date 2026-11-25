@@ -17187,6 +17187,7 @@ Resource @ 0xffffde07a8995900    Exclusively owned
 Threads: ffffde07a9374080-01&lt;*&gt;
 KD: Scanning for held locks...........................................................
 9706 total locks, 4 locks currently held</code></pre>
+<p>デバッガーは全 9,706 個のロックを調べ、そのうち 4 個が取得中だと報告しています。Shared は共有取得、Exclusively owned は排他取得です。Contention Count は競合回数、Actual Thread は実際のスレッドのアドレスを示します。</p>
 <p>取得済みのリソースを見つけたら、<code>!locks</code> に <code>-v</code> とリソースのアドレスを指定し、そのリソースオブジェクトの詳細を調べられます。
 リソースを所有するスレッドと、待機中のスレッドを確認できます。
 次の例では、あるスレッドがファイルシステムからデータを読み取ろうとしているときに、NTFS に関連するとみられるリソースが共有モードで取得されています。</p>
