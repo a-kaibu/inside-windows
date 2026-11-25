@@ -9133,7 +9133,7 @@ ACTIVELOCKSCREEN:
 <h4 id="実験-SAM-キーと-Security-キーのアクセス制御">実験：SAM キーと Security キーのアクセス制御</h4>
 <p>レジストリの <code>HKLM\SAM</code> と <code>HKLM\Security</code> には、ローカルシステムアカウントだけがアクセスできるようにセキュリティ記述子が設定されています。両キーのセキュリティ設定を変更すると、システムの保護が弱まるおそれがあります。</p>
 <p>原文の例では、ローカルシステムアカウントのコンテキストでレジストリエディターを実行し、アクセス制御がアカウントによって異なることを示しています。この例の PsExec は、対話型ウィンドウステーションにウィンドウを表示し、起動したプロセスの終了を待たずに戻ります。非対話型ウィンドウステーションで実行されたプロセスのウィンドウは、ユーザーには見えません。</p>
-<figure><img loading="lazy" width="438" height="314" src="assets/cb05eb2820dec123c7dfb70b.webp" alt="レジストリエディターで表示したセキュリティ関連のレジストリキー"></figure></section><section class="page" id="page-628" aria-label="page-628"><p>カーネルモードで動く SRM と、ユーザーモードで動く Lsass は、Part 2 の第8章「システムの仕組み」で説明する ALPC を使って通信します。システムの初期化中、SRM は <code>SeRmCommandPort</code> というポートを作成し、Lsass がそこに接続します。Lsass も起動時に <code>SeLsaCommandPort</code> という ALPC ポートを作成します。SRM がそこに接続すると、専用の通信用ポートが作られます。SRM は256バイトを超えるメッセージ用に共有メモリセクションを作り、そのハンドルを接続時に渡します。初期化中に相互の接続を確立すると、両者は接続用ポートで新たな接続を待ち受けなくなります。そのため、あとからユーザープロセスがどちらのポートに接続を試みても、要求は完了しません。</p>
+<figure><img loading="lazy" width="438" height="314" src="assets/cb05eb2820dec123c7dfb70b.webp" alt="レジストリエディターで表示したセキュリティ関連のレジストリキー"><figcaption>SAM のアカウント情報をレジストリエディターで表示した例。「Users」の下で相対 ID が 0x1F4 のアカウントを選ぶと、バイナリ型の値 F と V が表示されます。</figcaption></figure></section><section class="page" id="page-628" aria-label="page-628"><p>カーネルモードで動く SRM と、ユーザーモードで動く Lsass は、Part 2 の第8章「システムの仕組み」で説明する ALPC を使って通信します。システムの初期化中、SRM は <code>SeRmCommandPort</code> というポートを作成し、Lsass がそこに接続します。Lsass も起動時に <code>SeLsaCommandPort</code> という ALPC ポートを作成します。SRM がそこに接続すると、専用の通信用ポートが作られます。SRM は256バイトを超えるメッセージ用に共有メモリセクションを作り、そのハンドルを接続時に渡します。初期化中に相互の接続を確立すると、両者は接続用ポートで新たな接続を待ち受けなくなります。そのため、あとからユーザープロセスがどちらのポートに接続を試みても、要求は完了しません。</p>
 <h3 id="仮想化ベースのセキュリティ">仮想化ベースのセキュリティ</h3>
 <p>カーネルは高い権限を持ち、ユーザーモードのアプリケーションから隔離されているため、一般に信頼できるものとして扱われます。しかし、サードパーティー製のドライバーは毎月数多く開発されています。原著執筆時点の Microsoft の説明によると、テレメトリでは毎月100万種類ものドライバーハッシュが観測されていました。これらのドライバーには脆弱性が含まれる可能性があり、悪意を持って書かれたカーネルモードコードもあり得ます。カーネルを小さく保護されたコンポーネントにとどめ、ユーザーモードのアプリケーションを攻撃から守るという理想は、現実には成り立ちません。カーネルを全面的に信頼できなければ、機密性の高いユーザーデータを扱うアプリケーションも、カーネルモードの不具合を悪用するアプリケーションや、悪意あるカーネルモードプログラムによって侵害されるおそれがあります。</p>
 <p>第2章「システムアーキテクチャ」で説明したように、Windows 10 と Windows Server 2016 は、既存の権限階層とは別に仮想信頼レベル（VTL）を設ける仮想化ベースのセキュリティ（VBS）を備えています。この節では、Credential Guard と Device Guard が VTL を利用し、ユーザーデータを保護し、コードのデジタル署名の検証にハードウェアを基盤とする保護を加える仕組みを説明します。章末では、PatchGuard によるカーネルパッチ保護（KPP）と、VBS を利用してその保護を強化する HyperGuard を取り上げます。</p>
@@ -9739,7 +9739,7 @@ Process Token TrustLevelSid: (null)</pre>
 </ol></section><section class="page" id="page-665" aria-label="page-665"><ol start="4">
 <li>既存のサービスにも、そのサービスのプロパティから仮想サービスアカウントを設定できます。「アカウント」欄に <code>NT SERVICE\servicename</code> と入力し、2つのパスワード欄を空にします。仮想サービスアカウントに必要なファイルやその他のリソースへのアクセス権がなければ、既存のサービスが正常に動作しない場合があります。</li>
 <li>仮想アカウントを使うサービスについて、Process Explorer のプロパティで「Security」タブを開くと、アカウント名と SID を確認できます。試すには、<code>srvany</code> サービスのプロパティで、コマンドライン引数に <code>notepad.exe</code> を指定します。<code>srvany</code> は通常の実行可能ファイルをサービスとして動かすため、実行対象をコマンドラインで受け取ります。「開始」をクリックしてサービスを起動します。
-<figure><img loading="lazy" width="383" height="472" src="assets/7e4d92b0e77cf1fccf54b833.webp" alt="サービスのプロパティで起動引数を指定する例"></figure></li>
+<figure><img loading="lazy" width="383" height="472" src="assets/7e4d92b0e77cf1fccf54b833.webp" alt="Process Explorer で表示した srvany.exe のサービストークン"><figcaption>Process Explorer で srvany.exe（PID 3300）の「セキュリティ」タブを開いた例。ユーザー欄には仮想サービスアカウントの srvany とその SID が表示されています。セッションは 0 で、グループ欄ではサービスおよび全サービスへの所属と高整合性レベルを確認できます。</figcaption></figure></li>
 <li>サービスがアクセスするファイルなどのオブジェクトのアクセス制御エントリに、仮想サービスアカウントを指定できます。ファイルのプロパティで「セキュリティ」タブを開き、仮想サービスアカウントを参照する ACL を作成します。「名前の確認」を実行すると、入力した <code>NT SERVICE\srvany</code> などの名前がサービス名だけ（<code>srvany</code>）に短縮され、ACL に表示されます。</li>
 </ol></section><section class="page" id="page-666" aria-label="page-666"><figure><img loading="lazy" width="282" height="356" src="assets/654eeb9eacb43206be3faed7.webp" alt="ファイルのアクセス制御リストに表示された仮想サービスアカウント"><figcaption>PEExplorer フォルダーのアクセス許可。srvany には「読み取りと実行」「フォルダーの内容の一覧表示」「読み取り」が許可されています。</figcaption></figure>
 <ol start="7">
@@ -9747,7 +9747,7 @@ Process Token TrustLevelSid: (null)</pre>
 <figure><img loading="lazy" width="326" height="396" src="assets/7a9be916578eabdfed37d4e4.webp" alt="仮想サービスアカウントにページファイル作成の権利を割り当てた例"><figcaption>ローカルセキュリティ設定の「ページ ファイルの作成」のプロパティ。権利を割り当てられた一覧に Administrators と NT SERVICE の srvany が表示されています。</figcaption></figure></li>
 </ol></section><section class="page" id="page-667" aria-label="page-667"><ol start="8">
 <li>仮想サービスアカウントは SAM レジストリハイブに格納されないため、<code>lusrmgr.msc</code> などのユーザー管理ツールには表示されません。原文の画面例では、組み込みの System アカウントのコンテキストから、レジストリの <code>HKLM\Security\Policy\Secrets</code> キーに、このアカウントに関する情報があることを確認しています。
-<figure><img loading="lazy" width="539" height="339" src="assets/a7bd4c7f3d7e929b2ecfe346.webp" alt="仮想サービスアカウントに関する情報をレジストリエディターで表示した例"></figure></li>
+<figure><img loading="lazy" width="539" height="339" src="assets/a7bd4c7f3d7e929b2ecfe346.webp" alt="仮想サービスアカウントに関する情報をレジストリエディターで表示した例"><figcaption>レジストリエディターで srvany の情報を表示した例。左のツリーでは _SC_srvany が選ばれ、配下に現在値（CurrVal）や旧値（OldVal）などの項目があります。</figcaption></figure></li>
 </ol>
 <h3 id="セキュリティ記述子とアクセス制御">セキュリティ記述子とアクセス制御</h3>
 <p>ユーザーの資格情報を表すトークンは、オブジェクトのアクセス判定に用いる情報の一部です。判定には、誰がそのオブジェクトに対してどの操作を実行できるかを示す、オブジェクト側の情報も使います。この情報を格納するデータ構造をセキュリティ記述子と呼びます。セキュリティ記述子の属性は次のとおりです。</p>
