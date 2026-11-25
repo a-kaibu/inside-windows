@@ -24700,7 +24700,7 @@ DAX モードのボリュームはもともとデータを高速に格納する�
 そのため、NTFS ドライバーにも、その上下に接続されているミニフィルターにも、その読み書きは見えません。</p>
 <p>この動作を確認するには Process Monitor を開きます。
 通常のボリュームを P: ドライブに、DAX モードのボリュームを Q: ドライブにマウントしているものとして、次の画面と同様にフィルターを設定します。</p>
-<figure><img loading="lazy" width="432" height="273" src="assets/f3c83fd3c9afc92dc3150123.webp" alt="Process Monitor のフィルター設定画面。通常の P: ドライブと DAX モードの Q: ドライブを比較する設定です。"></figure></section><section class="page" id="p2-page-757" aria-label="p2-page-757"><p>DAX モードのボリュームで I/O を発生させるには、FsTool で DAX を使うコピーを実行します。
+<figure><img loading="lazy" width="432" height="273" src="assets/f3c83fd3c9afc92dc3150123.webp" alt="Process Monitor のフィルター設定画面。通常の P: ドライブと DAX モードの Q: ドライブを比較する設定です。"><figcaption>Process Monitor のフィルターは、FsTool.exe と System のうち、パスが P: または Q: で始まるイベントを含めます。Procmon.exe や Procexp.exe は除外します。</figcaption></figure></section><section class="page" id="p2-page-757" aria-label="p2-page-757"><p>DAX モードのボリュームで I/O を発生させるには、FsTool で DAX を使うコピーを実行します。
 次の例では、ブロックモードの DAX ボリューム P: にある ISO イメージを、DAX モードのドライブ Q: にコピーします。
 コピー元には、通常のディスク上に作った標準のボリュームも使えます。</p>
 <pre><code>P:&#92;&gt;fstool.exe /daxcopy p:&#92;Big_image.iso q:&#92;test.iso
@@ -24721,7 +24721,7 @@ DAX コピーを開始しています...
 
 何かキーを押すと終了します...</code></pre>
 <p>Process Monitor で DAX コピーのトレースを取得すると、想定した結果を確認できます。</p>
-<figure><img loading="lazy" width="649" height="317" src="assets/7fec64b5d2699bd91826ac64.webp" alt="Process Monitor のトレース。コピー先には CreateFileMapping が表示され、ページング I/O はコピー元にだけ表示されています。"></figure>
+<figure><img loading="lazy" width="649" height="317" src="assets/7fec64b5d2699bd91826ac64.webp" alt="Process Monitor のトレース。コピー先には CreateFileMapping が表示され、ページング I/O はコピー元にだけ表示されています。"><figcaption>通常の P: から DAX の Q: へのコピー。コピー先に CreateFileMapping が記録され、コピー元には読み取りのページング I/O が並んでいます。選択行はオフセット 0 からの 32,768 バイトの読み取りです。</figcaption></figure>
 <p>トレースを見ると、コピー先ファイル（<code>Q:&#92;test.iso</code>）で捕捉されたのは <code>CreateFileMapping</code> だけで、<code>WriteFile</code> イベントはありません。
 コピー中に Process Monitor が検出したページング I/O は、コピー元ファイルに対するものだけです。
 アプリケーションがメモリマップファイルにアクセスしてページフォールトが発生し、メモリマネージャーがコピー元のボリュームからデータを読み込むために、これらの I/O を発行しました。</p></section><section class="page" id="p2-page-758" aria-label="p2-page-758"><p>メモリマップ I/O と通常のキャッシュ I/O の違いを比較するため、同じファイルを通常のファイルコピーで再度コピーします。
@@ -24738,7 +24738,7 @@ Copyright (C) 2018 Andrea Allievi (AaLl86)
 キャッシュマネージャーはアプリケーションのバッファーとシステムキャッシュの間でデータをコピーします。
 このシステムキャッシュは DAX ディスクに直接マップされています。
 今回もコピー先ファイルに対するページング I/O は表示されていません。</p>
-<figure><img loading="lazy" width="648" height="318" src="assets/54553dee72455f7afaff2ad4.webp" alt="通常のファイルコピーを記録した Process Monitor のトレース"></figure>
+<figure><img loading="lazy" width="648" height="318" src="assets/54553dee72455f7afaff2ad4.webp" alt="通常のファイルコピーを記録した Process Monitor のトレース"><figcaption>比較用のコピーのトレース。選択行は P: 上のコピー元からの 1 MiB の読み取りで、直後に Q: 上のコピー先への 1 MiB の書き込みが続きます。</figcaption></figure>
 <p>最後に、同じ DAX モードのボリューム内、または別々の DAX モードのボリューム間で、DAX コピーを試します。</p>
 <pre><code>P:&#92;&gt;fstool /daxcopy q:&#92;test.iso q:&#92;test_copy_2.iso
 TFS / ReFS Tool v0.1
@@ -24759,7 +24759,7 @@ DAX コピーを開始しています...
 何かキーを押すと終了します...</code></pre>
 <p>最後の実験で取得したトレースから、DAX ボリューム上のメモリマップ I/O ではページング I/O が発生しないことが分かります。
 コピー元とコピー先のどちらのファイルにも、<code>WriteFile</code> や <code>ReadFile</code> のイベントは表示されません。</p>
-<figure><img loading="lazy" width="649" height="318" src="assets/a56d2ec4e0ee8d95c234dcd5.webp" alt="DAX コピーの Process Monitor トレース。コピー元にもコピー先にも WriteFile や ReadFile のイベントはありません。"></figure>
+<figure><img loading="lazy" width="649" height="318" src="assets/a56d2ec4e0ee8d95c234dcd5.webp" alt="DAX ボリューム内のファイルコピーに伴うマッピングのトレース"><figcaption>DAX ボリューム内のコピーを記録した結果。コピー元とコピー先には CreateFileMapping が記録されています。System による 4,096 バイトの書き込みはありますが、比較図に並んでいた 1 MiB 単位の ReadFile と WriteFile は見られません。</figcaption></figure>
 <h5 id="ブロックボリューム">ブロックボリューム</h5>
 <p>DAX ボリュームの制約を許容できない用途もあります。
 Windows は永続メモリ（PM）ハードウェアで従来の動作を提供するため、<strong>ブロックモードのボリューム</strong>を使えます。
