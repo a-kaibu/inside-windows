@@ -19504,3 +19504,10 @@ full_pages_ja['p2-page-806'] = full_pages_ja['p2-page-806'].replace(
     '仮想ディスクの容量は 1,202,590,842,880 バイトで、'
     'プール内で占める容量（<code>FootprintOnPool</code>）は 1,203,664,584,704 バイトです。</p>',
 )
+
+full_pages_ja['p2-page-682'] = full_pages_ja['p2-page-682'].replace(
+    '配置状態が <code>Completely on tier</code> である一方、',
+    '配置状況（<code>PlacementStatus</code>）は「指定階層に完全に配置済み」'
+    '（<code>Completely on tier</code>）、状態（<code>State</code>）は「正常」'
+    '（<code>OK</code>）です。一方、',
+)

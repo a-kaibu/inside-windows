@@ -22809,7 +22809,7 @@ FileSizeOnPerformanceTierClass : 0
 FileSizeOnCapacityTierClass    : 4556566528
 PlacementStatus                : Completely on tier
 State                          : OK</code></pre>
-<aside><p>原本の出力例では、配置状態が <code>Completely on tier</code> である一方、バイト数の欄には性能階層が0、容量階層がファイル全体と表示されています。この出力だけでは、データがすべて性能階層に移ったことは確認できません。</p></aside>
+<aside><p>原本の出力例では、配置状況（<code>PlacementStatus</code>）は「指定階層に完全に配置済み」（<code>Completely on tier</code>）、状態（<code>State</code>）は「正常」（<code>OK</code>）です。一方、バイト数の欄には性能階層が0、容量階層がファイル全体と表示されています。この出力だけでは、データがすべて性能階層に移ったことは確認できません。</p></aside>
 <p>Windows 10 のクライアント版では、ファイルのクラスターが既定で性能階層から割り当てられるため、容量階層に固定して同じ実験を繰り返せます。本書のダウンロード資料にある FsTool にも同じ固定機能があり、希望する階層へファイルを直接コピーできます。</p>
 <figure><img loading="lazy" width="379" height="242" src="assets/5017672aea9608ad05f9a88b.webp" alt="階層の最適化後に Big_Image.iso を Test（E:）からローカルディスク（C:）へコピー中。進捗97％、転送速度914 MB/s"><figcaption>階層の最適化後に、同じファイルを同じ場所にコピーした結果。進捗は 97%、速度は 914 MB/s です。残りは 1 項目（90.5 MB）で、推定残り時間は約 5 秒です。</figcaption></figure></section><section class="page" id="p2-page-683" aria-label="p2-page-683"><h4 id="NTFS-ファイルシステムドライバー">NTFS ファイルシステムドライバー</h4>
 <p>第1部第6章で説明したとおり、Windows の I/O システムでは、NTFS などのファイルシステムは、カーネルモードで動作するロード可能なデバイスドライバーです。アプリケーションが Windows の I/O API などを使うと、これらのドライバーが間接的に呼び出されます。図11-28に示すように、Windows の環境サブシステムがシステムサービスを呼ぶと、システムサービスは、読み込み済みのドライバーから対象を探して呼び出します。この振り分け処理については、第8章「システムサービスのディスパッチ」を参照してください。</p>
