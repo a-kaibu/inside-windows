@@ -3602,7 +3602,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>リアルタイム優先度の16段階（16〜31）。</li>
 <li>可変優先度の16段階（0〜15）。0は第5章で説明するページのゼロ初期化を行うスレッド専用です。</li>
 </ul>
-<figure><img loading="lazy" width="219" height="180" src="assets/7d652e026112b850732a5370.webp" alt="可変優先度とリアルタイム優先度の範囲"><figcaption>図4-6 スレッドの優先度レベル</figcaption></figure></section><section class="page" id="page-233" aria-label="page-233"><p>スレッドの優先度には、Windows API と Windows カーネルの2つの見方があります。Windows API ではまず、作成時に割り当てられた優先度クラスでプロセスを分類します。括弧内は、カーネルが使う内部インデックス <code>PROCESS_PRIORITY_CLASS</code> の値です。</p>
+<figure><img loading="lazy" width="219" height="180" src="assets/7d652e026112b850732a5370.webp" alt="可変優先度とリアルタイム優先度の範囲"><figcaption>図4-6 スレッドの優先度レベル。16〜31はリアルタイム、1〜15は可変（通常）、0はゼロページスレッド用です。</figcaption></figure></section><section class="page" id="page-233" aria-label="page-233"><p>スレッドの優先度には、Windows API と Windows カーネルの2つの見方があります。Windows API ではまず、作成時に割り当てられた優先度クラスでプロセスを分類します。括弧内は、カーネルが使う内部インデックス <code>PROCESS_PRIORITY_CLASS</code> の値です。</p>
 <ul>
 <li>リアルタイム（4）</li>
 <li>高（3）</li>
@@ -3624,7 +3624,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 </ul>
 <p>時間優先とアイドルの値（+15と−15）は飽和値と呼ばれます。この2つを指定した場合は、差分を加算せず、対応する所定のレベルを適用します。Windows API の <code>SetThreadPriority</code> にこれらの値を渡して、スレッドの相対優先度を変更できます。</p>
 <p>Windows API から見た各スレッドの基本優先度は、プロセスの優先度クラスとスレッドの相対優先度で決まります。カーネルは、先ほどの <code>PROCESS_PRIORITY_CLASS</code> の値をインデックスとしてグローバル配列 <code>PspPriorityTable</code> を参照し、プロセスの優先度クラスを基本優先度に変換します。インデックス1〜6に対応する値は順に4、8、13、14、6、10です。この対応関係は固定です。次に、スレッドの相対優先度を差分として適用します。たとえば相対優先度が「最高」のスレッドは、プロセスの基本優先度より2段階高い基本優先度を得ます。</p>
-<p>Windows API の優先度と、Windows 内部で使う数値の対応を図4-7と表4-1に示します。</p></section><section class="page" id="page-234" aria-label="page-234"><figure><img loading="lazy" width="681" height="340" src="assets/3ea2d80b413eefb12c75a4de.webp" alt="プロセスの優先度クラスとスレッドの相対優先度の組み合わせ"><figcaption>図4-7 Windows API で指定できるスレッドの優先度</figcaption></figure>
+<p>Windows API の優先度と、Windows 内部で使う数値の対応を図4-7と表4-1に示します。</p></section><section class="page" id="page-234" aria-label="page-234"><figure><img loading="lazy" width="681" height="340" src="assets/3ea2d80b413eefb12c75a4de.webp" alt="プロセスの優先度クラスとスレッドの相対優先度の組み合わせ"><figcaption>図4-7 Windows API で指定できるスレッドの優先度。横軸は優先度です。上からリアルタイム、高、通常より上、通常、通常より下、アイドルの各優先度クラスを示します。色付きのマスが指定できる値で、可変（通常）とリアルタイムの境界は15と16の間です。</figcaption></figure>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table>
 <caption>表4-1 Windows API の設定とカーネルの優先度の対応</caption>
 <thead><tr><th scope="col">スレッドの相対優先度</th><th scope="col">リアルタイム</th><th scope="col">高</th><th scope="col">通常より上</th><th scope="col">通常</th><th scope="col">通常より下</th><th scope="col">アイドル</th></tr></thead>
@@ -3699,7 +3699,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <dt>終了済み（Terminated）</dt><dd>スレッドが実行を終えると、この状態に入ります。システムメモリ上でスレッドを表すエグゼクティブのスレッドオブジェクトは、終了時に解放される場合と、そのまま残る場合があります。削除の時期はオブジェクトマネージャーが定めます。たとえば、スレッドへの開いたハンドルが残っていれば、オブジェクトも残ります。別のスレッドが Windows API の <code>TerminateThread</code> などで明示的に強制終了した場合は、ほかの状態から直接この状態に移ることもあります。</dd>
 <dt>初期化中（Initialized）</dt><dd>スレッドの作成中に使う内部状態です。</dd>
 </dl></section><section class="page" id="page-241" aria-label="page-241"><p>図4-8に、スレッドの主な状態遷移を示します。図中の数値は各状態の内部値で、パフォーマンスモニターなどのツールで確認できます。図では、実行可能（Ready）と実行可能への移行待ち（Deferred ready）をまとめています。Deferred ready は、スケジューリングルーチンが処理する間だけ使う一時的な状態だからです。実行待機（Standby）も一時的です。どちらの状態もほとんどの場合はごく短時間しか続きません。これらの状態にあるスレッドは、必ず速やかに実行可能、実行中、待機中のいずれかに移ります。</p>
-<figure><img loading="lazy" width="677" height="385" src="assets/63e31041126516e873ddb915.webp" alt="スレッドの各状態の内部値と、実行開始、待機、プリエンプションなどによる遷移"><figcaption>図4-8 スレッドの状態と遷移</figcaption></figure>
+<figure><img loading="lazy" width="677" height="385" src="assets/63e31041126516e873ddb915.webp" alt="スレッドの各状態の内部値と、実行開始、待機、プリエンプションなどによる遷移"><figcaption>図4-8 スレッドの状態と遷移。初期化（0）から実行可能（1）または実行可能への移行待ち（7）に入り、実行待機（3）を経て実行中（2）になります。実行待機中にプリエンプトされた場合や、実行中にプリエンプトまたはクォンタムの満了が発生した場合は、実行可能側に戻ります。実行中のスレッドは、自発的に切り替わると待機中（5）になり、終了すると終了状態（4）になります。待機を終えると実行可能側へ戻ります。図の下側はカーネルスタックをスワップアウトした経路で、遷移中（6）を経て、スタックをスワップインした後に実行可能側へ戻ります。</figcaption></figure>
 <h4 id="実験-スレッドの状態遷移を観察する">実験：スレッドの状態遷移を観察する</h4>
 <p>Windows のパフォーマンスモニターでは、スケジューリングに伴うスレッドの状態変化を観察できます。マルチスレッドアプリケーションをデバッグしていて、プロセス内のスレッドがどの状態にあるかわからないときに役立ちます。次の手順で状態の変化を観察します。</p>
 <ol>
@@ -3731,7 +3731,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <figure><img loading="lazy" width="506" height="327" src="assets/6dea61123e8d15a57f228437.webp" alt="優先度の高いスレッドが継続して実行されるグラフ"><figcaption>優先度の高いスレッド 1（緑）はほとんどの区間で値 2（実行中）です。スレッド 2（青）は値 1（実行可能）を示し、プロセッサーの空きを待っています。</figcaption></figure>
 <h4 id="ディスパッチャーデータベース">ディスパッチャーデータベース</h4>
 <p>カーネルは、どのスレッドを実行するかを判断するために、ディスパッチャーデータベースと総称される一連のデータ構造を管理します。ここには、実行を待っているスレッドと、各プロセッサで実行中のスレッドが記録されます。</p></section><section class="page" id="page-246" aria-label="page-246"><p>Windows のマルチプロセッサシステムでは、スレッドを並行してディスパッチできるようにするなど、プロセッサの増加に対応するため、図4-9のように、プロセッサごとの実行可能キューと、グループで共有するキューを設けています。各 CPU はシステム全体のキューをロックせず、自分のグループの共有キューから次に実行するスレッドを探せます。</p>
-<figure><img loading="lazy" width="633" height="361" src="assets/9dc004826d58af6cf5afc374.webp" alt="6つのプロセッサの実行可能キューと共有キュー"><figcaption>図4-9 Windows のマルチプロセッサ用ディスパッチャーデータベース。例には6つのプロセッサがあり、P はプロセス、T はスレッドを表します。</figcaption></figure>
+<figure><img loading="lazy" width="633" height="361" src="assets/9dc004826d58af6cf5afc374.webp" alt="6つのプロセッサの実行可能キューと共有キュー"><figcaption>図4-9 Windows のマルチプロセッサ用ディスパッチャーデータベース。例には6つのプロセッサがあり、P はプロセス、T はスレッドを表します。グループ1は CPU 0・1・2、グループ2は CPU 3・4・5です。各グループには優先度0〜31の実行可能キューと、キューの状態を示すビットマップがあります。P1には T1〜T3、P2には T4〜T6 が属します。グループ1のキューは T2 と、同じ優先度の T3・T4 を指し、グループ2のキューは T5 と T6 を別々の優先度で指しています。</figcaption></figure>
 <p>Windows 8 と Windows Server 2012 より前は、プロセッサごとの実行可能キューと実行可能サマリーを、プロセッサ制御ブロック（PRCB）に格納していました。フィールドはカーネルデバッガーで <code>dt nt!_kprcb</code> を実行すると確認できます。Windows 8 と Windows Server 2012 以降は、プロセッサのグループでキューとサマリーを共有します。これにより、グループ内のどのプロセッサを次に使うかを判断しやすくなります。CPU ごとのキューも残っており、アフィニティに制約のあるスレッドで使います。</p>
 <p><strong>注記</strong> 共有データ構造はスピンロックで保護するため、グループを小さくしてキューの競合を抑えます。本書の対象実装では、1グループの上限は4論理プロセッサです。これを超える場合は複数のグループを作り、プロセッサを均等に振り分けます。たとえば、6プロセッサのシステムでは3個ずつの2グループを作ります。</p>
 <p>実行可能キュー、次に説明する実行可能サマリー、その他の情報は、PRCB 内のカーネル構造体 <code>KSHARED_READY_QUEUE</code> に格納されます。各プロセッサの PRCB にこの構造体があります。スケジューラーが使うのは、グループごとに先頭のプロセッサが持つ構造体だけです。同じグループの残りのプロセッサも、その構造体を共有します。</p></section><section class="page" id="page-247" aria-label="page-247"><p>ディスパッチャーの実行可能キュー（<code>KSHARED_READY_QUEUE</code> の <code>ReadyListHead</code>）には、実行可能状態にあり、スケジューラーに選ばれるのを待つスレッドが入ります。キューは32段階の優先度ごとに1つあります。Windows は、実行するスレッドやプリエンプトするスレッドをすばやく選ぶため、実行可能サマリー（<code>ReadySummary</code>）という32ビットのビットマスクを管理します。セットされたビットは、その優先度のキューに1つ以上のスレッドがあることを示します。ビット0は優先度0、ビット1は優先度1に対応します。</p>
@@ -3825,7 +3825,7 @@ Evaluate expression: 156250 = 0002625a</pre>
 <h4 id="クォンタムの制御">クォンタムの制御</h4>
 <p>すべてのプロセスのスレッドに適用するクォンタムを、短い設定と長い設定から選べます。短い設定はクロック2ティックでクライアント版の既定値、長い設定は12ティックでサーバー版の既定値です。</p>
 <p><strong>注記</strong> 長いクォンタムを使うシステムでは、ジョブオブジェクトを使って、ジョブ内のプロセスに別のクォンタム値を設定できます。</p>
-<p>デスクトップまたはエクスプローラーの「PC」を右クリックして「プロパティ」を選び、「システムの詳細設定」を開きます。「詳細設定」タブの「パフォーマンス」にある「設定」をクリックします。開いたダイアログで「詳細設定」タブを選ぶと、図4-10の画面が表示されます。</p></section><section class="page" id="page-252" aria-label="page-252"><figure><img loading="lazy" width="257" height="369" src="assets/a650f7585621fe82dbae9990.webp" alt="プロセッサのスケジュール設定でプログラムとバックグラウンドサービスを選ぶ画面"><figcaption>図4-10 「パフォーマンス オプション」ダイアログのクォンタム設定</figcaption></figure>
+<p>デスクトップまたはエクスプローラーの「PC」を右クリックして「プロパティ」を選び、「システムの詳細設定」を開きます。「詳細設定」タブの「パフォーマンス」にある「設定」をクリックします。開いたダイアログで「詳細設定」タブを選ぶと、図4-10の画面が表示されます。</p></section><section class="page" id="page-252" aria-label="page-252"><figure><img loading="lazy" width="257" height="369" src="assets/a650f7585621fe82dbae9990.webp" alt="プロセッサのスケジュール設定でプログラムとバックグラウンドサービスを選ぶ画面"><figcaption>図4-10 「パフォーマンス オプション」ダイアログのクォンタム設定。タブは「視覚効果」「詳細設定」「データ実行防止」です。「詳細設定」の「プロセッサのスケジュール」で、プロセッサのリソースを「プログラム」と「バックグラウンド サービス」のどちらに優先配分するか選びます。「仮想メモリ」欄には、Windows が RAM のように使うディスク上の領域であるページングファイルの全ドライブ合計（この例では1024 MB）と「変更」ボタンがあります。下部には「OK」「キャンセル」「適用」ボタンがあります。</figcaption></figure>
 <p>このダイアログには、次の2つの選択肢があります。</p>
 <dl>
 <dt>プログラム</dt><dd>短い可変クォンタムを使います。Windows のクライアント版と、モバイル、Xbox、HoloLens などのクライアント系のエディションでは、これが既定値です。サーバーにターミナルサービスをインストールし、アプリケーションサーバーとして構成した場合も、この設定になります。ターミナルサーバーの利用者に、通常のデスクトップやクライアントと同じクォンタム設定を適用するためです。Windows Server をデスクトップ OS として使う場合に、手動で選ぶこともできます。</dd>
