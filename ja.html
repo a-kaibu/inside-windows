@@ -4849,7 +4849,7 @@ Scheduling Group: ffff9e0628d7c1c0</pre>
 <p>パフォーマンスカウンターの「Memory」と「Process」のカテゴリでは、システムとプロセスのメモリ使用状況の大半を確認できます。この章では、説明するコンポーネントについて情報を得られるカウンターを随所で紹介し、関連する例や実験を示します。ただし、メモリ情報を表示するときの項目名はツールによって異なり、一貫性がなかったり、意味を取り違えやすかったりします。次の実験で、その例を見てみましょう。実験で出てくる用語は、後続の節で説明します。</p>
 <h4 id="実験-システムのメモリ情報を表示する">実験：システムのメモリ情報を表示する</h4>
 <p>Windows のタスクマネージャーで「パフォーマンス」タブを開き、左側の「メモリ」を選ぶと、システムの基本的なメモリ情報が表示されます。次の画面は Windows 10 バージョン1607のものです。表示内容は、パフォーマンスカウンターから取得できる詳細な情報の一部で、物理メモリと仮想メモリの両方の使用状況を含みます。各項目の意味を下の表に示します。</p>
-<figure><img loading="lazy" width="431" height="347" src="assets/42a3d43914342df357ca85cc.webp" alt="Windows 10 のタスクマネージャーに表示されたメモリ使用量と構成"></figure>
+<figure><img loading="lazy" width="431" height="347" src="assets/42a3d43914342df357ca85cc.webp" alt="Windows 10 のタスクマネージャーに表示されたメモリ使用量と構成"><figcaption>タスクマネージャーの「メモリ」画面。搭載メモリは 32.0 GB で、使用中は 13.9 GB（うち圧縮は 100 MB）、利用可能は 17.8 GB です。コミット済みは 15.6 GB、コミット上限は 36.9 GB で、キャッシュ済みは 18.0 GB です。ページプールは 2.7 GB、非ページプールは 1,000 MB です。</figcaption></figure>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>タスクマネージャーのメモリ表示</caption><thead><tr><th scope="col">項目</th><th scope="col">意味</th></tr></thead><tbody>
 <tr><th scope="row">メモリ使用量のグラフ</th><td>線の高さは Windows が使用中の物理メモリ量を表します。この値を直接示すパフォーマンスカウンターはありません。線より上の部分は、下段の「利用可能」の値に相当します。グラフの高さ全体は、右上に表示される合計値（この例では31.9 GB）に相当します。これは OS が利用できる RAM の総量で、BIOS のシャドウページやデバイスメモリなどは含みません。</td></tr>
 <tr><th scope="row">メモリ構成</th><td>使用中、スタンバイ、変更済み、空き（ゼロ初期化済みのページを含む）の各領域が占める割合を示します。各領域については、この章の後半で説明します。</td></tr>
@@ -4865,7 +4865,7 @@ Scheduling Group: ffff9e0628d7c1c0</pre>
 </tbody></table></div>
 <p>ページプールと非ページプールの使用量の内訳を調べるには、後述の「プールの使用状況を監視する」で説明する Poolmon を使います。</p>
 <p>Sysinternals の Process Explorer では、物理メモリと仮想メモリについて、さらに詳しい情報を表示できます。メイン画面の「View」メニューから「System Information」を選び、「Memory」タブを開きます。次は64ビット版 Windows 10 での表示例です。これらのカウンターの大半については、この章の関連する節で説明します。</p>
-<figure><img loading="lazy" width="490" height="329" src="assets/3b9292ea2ba7b5b1b1887c96.webp" alt="Process Explorer の System Information にある Memory タブの表示例"></figure></section><section class="page" id="page-324" aria-label="page-324"><p>さらに詳しいメモリ情報を表示できる Sysinternals のツールが2つあります。</p>
+<figure><img loading="lazy" width="490" height="329" src="assets/3b9292ea2ba7b5b1b1887c96.webp" alt="Process Explorer の System Information にある Memory タブの表示例"><figcaption>Process Explorer の「システム情報」にある「メモリ」タブ。上段にはシステム全体のコミット量と物理メモリ使用量の履歴が表示されます。下段ではコミット量の現在値、上限、ピークに加え、物理メモリ、カーネルメモリ、ページング、優先度別のスタンバイリストなどの内訳を確認できます。</figcaption></figure></section><section class="page" id="page-324" aria-label="page-324"><p>さらに詳しいメモリ情報を表示できる Sysinternals のツールが2つあります。</p>
 <dl>
 <dt>VMMap</dt><dd>プロセス内の仮想メモリの用途を細かく表示します。</dd>
 <dt>RAMMap</dt><dd>物理メモリの使用状況を詳しく表示します。</dd>
@@ -4983,13 +4983,13 @@ Leaked 800 MB of private memory (800 MB total leaked). Lasterror: 0
 The operation completed successfully.</pre></li>
 <li>タスクマネージャーを起動し、「詳細」タブを開いて「コミット サイズ」列を追加します。</li>
 <li>一覧で2つの <code>TestLimit.exe</code> を探します。次のように表示されます。
-<figure><img loading="lazy" width="479" height="273" src="assets/68ce3c3ae08e22423f6c7d2a.webp" alt="タスクマネージャーで TestLimit の2つのプロセスのコミット サイズを比較した画面"></figure></li>
+<figure><img loading="lazy" width="479" height="273" src="assets/68ce3c3ae08e22423f6c7d2a.webp" alt="タスクマネージャーで TestLimit の2つのプロセスのコミット サイズを比較した画面"><figcaption>タスクマネージャーの「詳細」タブ。2 つの Testlimit.exe のコミットサイズは、PID 18468 が 1,088 K、PID 14528 が 821,876 K です。一方、メモリ列の値はそれぞれ 788 K と 784 K です。</figcaption></figure></li>
 <li>タスクマネージャーにはコミットした容量が表示されます。もう一方の TestLimit プロセスが予約した容量は、タスクマネージャーのカウンターからは確認できません。</li>
 </ol></section><section class="page" id="page-330" aria-label="page-330"><ol start="7">
 <li>Process Explorer を開きます。</li>
 <li>列の選択画面で「Process Memory」タブを開き、「Private Bytes」と「Virtual Size」の列を有効にします。</li>
 <li>メイン画面で2つの <code>TestLimit.exe</code> プロセスを探します。
-<figure><img loading="lazy" width="584" height="327" src="assets/a73d587c5370be6eacb0f56a.webp" alt="Process Explorer で2つの TestLimit プロセスの Private Bytes と Virtual Size を比較した画面"></figure></li>
+<figure><img loading="lazy" width="584" height="327" src="assets/a73d587c5370be6eacb0f56a.webp" alt="Process Explorer で2つの TestLimit プロセスの Private Bytes と Virtual Size を比較した画面"><figcaption>Process Explorer で同じ 2 プロセスを比較した結果。PID 18468 はプライベートバイト（Private Bytes）が 1,088 K、仮想サイズ（Virtual Size）が 892,752 K です。PID 14528 はそれぞれ 821,876 K と 892,556 K です。</figcaption></figure></li>
 <li>2つのプロセスの「Virtual Size」は同じですが、「Private Bytes」が「Virtual Size」に近いのは片方だけです。もう片方の TestLimit プロセス（プロセス ID 18468）で両者の差が大きいのは、メモリを予約したためです。パフォーマンスモニターでも、「Process」カテゴリの「Virtual Bytes」と「Private Bytes」を使って同じ比較ができます。</li>
 </ol>
 <h3 id="コミット使用量とコミット上限">コミット使用量とコミット上限</h3>
