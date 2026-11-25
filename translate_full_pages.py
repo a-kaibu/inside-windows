@@ -19444,3 +19444,10 @@ full_pages_ja['page-758'] = full_pages_ja['page-758'].replace(
     '<h4>Control Flow Guard</h4>',
     '<h4>制御フロー ガード（CFG）</h4>',
 )
+
+
+for page, heading in (('page-101', 'h4'), ('page-595', 'h3')):
+    full_pages_ja[page] = full_pages_ja[page].replace(
+        f'<{heading}>Windows Driver Foundation</{heading}>',
+        f'<{heading}>Windows ドライバーフレームワーク（WDF）</{heading}>',
+    )
