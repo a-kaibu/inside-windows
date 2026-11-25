@@ -4353,10 +4353,10 @@ Maximum logical processors per core:    2</pre>
 <li>Hyper-V マネージャーで対象の仮想マシンを右クリックし、「設定」を選びます。</li>
 <li>「メモリ」を選び、「動的メモリ」が無効になっていることを確認します。</li>
 <li>「プロセッサ」を選び、「仮想プロセッサの数」に4を入力します。
-<figure><img loading="lazy" width="383" height="148" src="assets/e3758b303addeb3d01051fa2.webp" alt="仮想プロセッサの数を4に設定した画面"></figure></li>
+<figure><img loading="lazy" width="383" height="148" src="assets/e3758b303addeb3d01051fa2.webp" alt="仮想プロセッサの数を4に設定した画面"><figcaption>Hyper-V の仮想マシン設定で「プロセッサー（Processor）」を開きます。「仮想プロセッサーの数」は 4 です。画面に表示されている仮想マシンの予約率とシステム全体のリソースに占める割合はいずれも 0% です。</figcaption></figure></li>
 <li>「プロセッサ」を展開し、配下の「NUMA」を選びます。</li>
 <li>プロセッサの最大数と、ソケットあたりに許可する NUMA ノードの最大数に、それぞれ2を入力します。
-<figure><img loading="lazy" width="445" height="165" src="assets/6bc700494e8c56c24f049ba3.webp" alt="プロセッサ数とソケットあたりの NUMA ノード数の上限を2に設定した画面"></figure></li>
+<figure><img loading="lazy" width="445" height="165" src="assets/6bc700494e8c56c24f049ba3.webp" alt="プロセッサ数とソケットあたりの NUMA ノード数の上限を2に設定した画面"><figcaption>「NUMA」の設定画面。仮想トポロジーはプロセッサー 4 個、NUMA ノード 2 個、ソケット 1 個です。仮想 NUMA ノード 1 個あたりの上限はプロセッサー 2 個とメモリ 30,878 MB です。ソケット 1 個あたりの NUMA ノードの上限は 2 個です。</figcaption></figure></li>
 <li>「OK」をクリックして設定を保存します。</li>
 <li>仮想マシンを起動します。</li>
 <li>カーネルデバッガーで <code>!numa</code> を実行します。次は先ほど構成した仮想マシンでの出力例です。
@@ -4439,7 +4439,7 @@ Unable to get MiNodeInformation</pre>
 <li>コマンドプロンプト（<code>Cmd.exe</code>）を起動します。</li>
 <li>タスクマネージャーまたは Process Explorer を起動し、プロセス一覧で <code>Cmd.exe</code> を探します。</li>
 <li>プロセスを右クリックし、「関係の設定」（Set Affinity）を選びます。プロセッサの一覧が表示されます。次は論理プロセッサが8個あるシステムの例です。
-<figure><img loading="lazy" width="208" height="219" src="assets/b982265149ecf93a5ae093c8.webp" alt="論理プロセッサ8個のアフィニティ設定画面"></figure></li>
+<figure><img loading="lazy" width="208" height="219" src="assets/b982265149ecf93a5ae093c8.webp" alt="論理プロセッサ8個のアフィニティ設定画面"><figcaption>「プロセッサー アフィニティ」ダイアログ。cmd.exe の実行を許可する論理プロセッサーとして、CPU 0 から CPU 7 までの 8 個すべてが選択されています。</figcaption></figure></li>
 <li>利用できるプロセッサの一部を選び、「OK」をクリックします。そのプロセスのスレッドは、選んだプロセッサでのみ実行されるようになります。</li>
 <li>コマンドプロンプトで <code>Notepad</code> と入力し、<code>Notepad.exe</code> を起動します。</li>
 <li>タスクマネージャーまたは Process Explorer に戻り、新しく起動したメモ帳のプロセスを探します。</li>
