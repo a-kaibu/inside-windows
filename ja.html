@@ -10406,14 +10406,14 @@ TOKEN_SECURITY_ATTRIBUTE_TYPE_UINT64
 <ol>
 <li>電卓を起動しておきます。</li>
 <li>Sysinternals の WinObj を管理者として起動し、電卓の AppContainer SID に対応するオブジェクトディレクトリを開きます。電卓の AppContainer SID は前の実験で確認したものです。
-<figure><img loading="lazy" width="515" height="499" src="assets/680c2bef7c94f05e3aa18df5.webp" alt="WinObj で電卓の AppContainer SID に対応するオブジェクトディレクトリを開いた画面"></figure></li>
+<figure><img loading="lazy" width="515" height="499" src="assets/680c2bef7c94f05e3aa18df5.webp" alt="WinObj で電卓の AppContainer SID に対応するオブジェクトディレクトリを開いた画面"><figcaption>WinObj でセッション 1 の AppContainerNamedObjects を展開し、電卓の AppContainer SID に対応するディレクトリを選んでいます。右ペインに、そのディレクトリ内の名前付きオブジェクトが並びます。</figcaption></figure></li>
 </ol></section><section class="page" id="page-713" aria-label="page-713"><ol start="3">
 <li>WinObj でディレクトリを右クリックし、「Properties」を選び、「Security」タブを開きます。次の画面のように、電卓の AppContainer SID には、一覧の表示、オブジェクトの追加、サブディレクトリの追加などの権限が付与されています。このため、電卓はこのディレクトリの下にカーネルオブジェクトを作成できます。画面に収まっていない権限もあります。
-<figure><img loading="lazy" width="260" height="273" src="assets/b51b22fc2ca04df285ca618a.webp" alt="WinObj で表示した電卓のオブジェクトディレクトリのアクセス許可"></figure></li>
+<figure><img loading="lazy" width="260" height="273" src="assets/b51b22fc2ca04df285ca618a.webp" alt="WinObj で表示した電卓のオブジェクトディレクトリのアクセス許可"><figcaption>オブジェクトディレクトリの「セキュリティ」タブ。電卓の AppContainer SID に、一覧表示、オブジェクトの追加、サブディレクトリの追加、読み取り、書き込みが許可されています。</figcaption></figure></li>
 <li><code>%LOCALAPPDATA%\Packages\Microsoft.WindowsCalculator_8wekyb3d8bbwe</code> に移動し、電卓のローカルフォルダーを開きます。<code>Settings</code> サブディレクトリを右クリックし、「プロパティ」を選んで「セキュリティ」タブを開きます。電卓の AppContainer SID に、このフォルダーのフルコントロールが許可されていることを確認できます。
-<figure><img loading="lazy" width="235" height="288" src="assets/0d5df3608f0268772938bea8.webp" alt="電卓の AppContainer SID にフルコントロールを許可した Settings フォルダー"></figure></li>
+<figure><img loading="lazy" width="235" height="288" src="assets/0d5df3608f0268772938bea8.webp" alt="電卓の AppContainer SID にフルコントロールを許可した Settings フォルダー"><figcaption>電卓の Settings フォルダーのアクセス許可。選択中の AppContainer SID にはフルコントロールが許可されています。</figcaption></figure></li>
 <li>エクスプローラーで <code>%SystemRoot%</code>（たとえば <code>C:\Windows</code>）を開き、<code>System32</code> ディレクトリを右クリックします。「プロパティ」を選び、「セキュリティ」タブを開きます。<code>ALL APPLICATION PACKAGES</code> に読み取りと実行が許可されていることを確認できます。Windows 10 バージョン1607以降では、<code>ALL RESTRICTED APPLICATION PACKAGES</code> にも同じ権限が付与されています。</li>
-</ol></section><section class="page" id="page-714" aria-label="page-714"><figure><img loading="lazy" width="236" height="288" src="assets/d8569320fb46d3ae7f06b969.webp" alt="System32 のセキュリティタブに表示されたアプリパッケージの読み取りと実行の権限"></figure>
+</ol></section><section class="page" id="page-714" aria-label="page-714"><figure><img loading="lazy" width="236" height="288" src="assets/d8569320fb46d3ae7f06b969.webp" alt="System32 のセキュリティタブに表示されたアプリパッケージの読み取りと実行の権限"><figcaption>System32 の「セキュリティ」タブ。ALL APPLICATION PACKAGES に読み取りと実行、フォルダーの内容の一覧表示、読み取りが許可されています。</figcaption></figure>
 <p>同じ情報は、Sysinternals のコマンドラインツール AccessChk でも確認できます。</p>
 <h4 id="実験-AppContainer-のアトムテーブルを表示する">実験：AppContainer のアトムテーブルを表示する</h4>
 <p>アトムテーブルは整数と文字列を対応付けるハッシュテーブルです。ウィンドウシステムは、<code>RegisterClassEx</code> で登録するウィンドウクラスや、独自の Windows メッセージなどを識別するために使います。カーネルデバッガーでは、AppContainer 専用のアトムテーブルを確認できます。</p>
@@ -10534,7 +10534,7 @@ wchar_t * 0xffff950a&#x27;ac2f8fea
 <p>多くの RPC サービスでは、トークンの取得を代行するヘルパー関数 <code>RpcClientCapabilityCheck</code> を利用します。渡す必要があるのはケイパビリティ名の文字列だけです。WinRT に対応するサービスやブローカーは、UWP クライアントアプリケーションとの通信に RPC を使うため、この関数をよく利用します。</p>
 <h4 id="実験-AppContainer-のケイパビリティを表示する">実験：AppContainer のケイパビリティを表示する</h4>
 <p>さまざまなケイパビリティがどのように組み合わされてトークンに入るかを確認するため、Cortana のような複雑なアプリのケイパビリティを調べます。先ほど示したマニフェストと画面の表示を比較できます。まず Process Explorer で <code>SearchUI.exe</code> の「Security」タブを開き、「Flags」列で並べ替えると、次のように表示されます。</p>
-<figure><img loading="lazy" width="351" height="409" src="assets/373cb0241e82d355dfc15502.webp" alt="Process Explorer で Flags 列を基準に並べ替えた Cortana のケイパビリティ SID の一覧"></figure>
+<figure><img loading="lazy" width="351" height="409" src="assets/373cb0241e82d355dfc15502.webp" alt="Process Explorer で Flags 列を基準に並べ替えた Cortana のケイパビリティ SID の一覧"><figcaption>Cortana の SearchUI.exe の「セキュリティ」タブ。グループ一覧を属性（Flags）で並べ替えると、AppContainer SID と機能（Capability）SID を確認できます。表示されている機能にはインターネット接続、音楽ライブラリ、画像ライブラリなどがあります。</figcaption></figure>
 <p>Cortana にはマニフェストに記載されたすべてのケイパビリティが付与されています。そのうち、Windows 8 で導入された一部のケイパビリティは <code>IsWellKnownSid</code> などの関数で識別できるため、Process Explorer は分かりやすい名前で表示します。前述のように、ほかのケイパビリティはハッシュ値や GUID を表すため、SID のまま表示されます。</p></section><section class="page" id="page-719" aria-label="page-719"><p>UWP プロセスの元になったパッケージの詳細を確認するには、本書のダウンロード資料に含まれる UWPList ツールを使います。システム上のイマーシブプロセスをすべて表示することも、プロセス ID を指定して1つだけ表示することもできます。</p>
 <pre>C:\WindowsInternals&gt;UwpList.exe 3728
 List UWP Processes - version 1.1 (C)2016 by Pavel Yosifovich
