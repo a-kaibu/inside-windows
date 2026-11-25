@@ -346,7 +346,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>Sysinternals から Process Explorer の最新版をダウンロードして起動します。標準ユーザーの権限で起動できます。管理者権限で起動するには、実行ファイルを右クリックし、「管理者として実行」を選びます。その場合、Process Explorer は追加機能を提供するドライバーをインストールします。以下の手順は、どちらの権限でも同じです。</p>
 <p>初回起動時にシンボルを設定します。設定していないと、プロセスをダブルクリックして「Threads」タブを開いたときに警告が表示されます。設定すると、スレッドの開始関数や呼び出しスタック上の関数が名前で表示され、プロセス内で各スレッドが何をしているか調べやすくなります。</p>
 <p>シンボルを参照するには、本章の後半で説明する Windows 用デバッグツールが必要です。Process Explorer の「Options」メニューで「Configure Symbols」を選び、デバッグツールのフォルダーにある <code>Dbghelp.dll</code> のパスと、有効なシンボルパスを入力します。次の画面は、64ビットシステムに WDK の一部としてデバッグツールを既定の場所にインストールした場合の設定例です。</p>
-<figure><img loading="lazy" width="269" height="147" src="assets/bc299bfa7a6177bfa3b308a1.webp" alt="Process Explorer のシンボル設定に Dbghelp.dll とシンボルサーバーを指定した画面"></figure>
+<figure><img loading="lazy" width="269" height="147" src="assets/bc299bfa7a6177bfa3b308a1.webp" alt="Process Explorer のシンボル設定に Dbghelp.dll とシンボルサーバーを指定した画面"><figcaption>「シンボルの構成」では、Dbghelp.dll の場所とシンボルの検索パスを指定します。Process Explorer は、プロセスのプロパティの「スレッド」タブで開始アドレスやスタック上の位置を表示する際に、シンボルを使って関数名を調べます。</figcaption></figure>
 <p>この例では、必要に応じてシンボルサーバーからファイルを取得し、ローカルの <code>C:\symbols</code> にコピーを保存します。空き容量に余裕がなければ、別のドライブなどのフォルダーを指定できます。詳細は <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ee416588.aspx">MSDN のシンボルサーバーの設定資料</a>を参照してください。</p>
 <blockquote><p><strong>ヒント</strong>　環境変数 <code>_NT_SYMBOL_PATH</code> に画面例のシンボルパスを設定できます。Process Explorer、Windows 用デバッグツールの各デバッガー、Visual Studio などが自動的にこの変数を参照するため、ツールごとに設定する手間を省けます。</p></blockquote>
 <p>Process Explorer は起動すると、既定でプロセスツリーを表示します。下ペインを開くと、開いているハンドルや、マップ済みの DLL とメモリマップトファイルを確認できます。これらについては第5章「メモリ管理」と、第2部の第8章を参照してください。プロセスにマウスポインターを重ねると、コマンドラインとパスがツールチップに表示されます。</p></section><section class="page" id="page-34" aria-label="page-34"><p>プロセスの種類によっては、名前にマウスポインターを重ねたときのツールチップに、次の情報も表示されます。</p>
@@ -358,7 +358,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li><code>WMIPrvSE.exe</code> などの Windows Management Instrumentation（WMI）ホストプロセスのプロバイダー情報。WMI は第2部の第8章で説明します。</li>
 <li>Windows アプリのパッケージ情報。対象は Windows ランタイムをホストするプロセスです。Windows ランタイムについては本章の前半を参照してください。</li>
 </ul>
-<figure><img loading="lazy" width="562" height="390" src="assets/00806f91cd73b0f134142718.webp" alt="Process Explorer のプロセスツリーとツールチップ"></figure>
+<figure><img loading="lazy" width="562" height="390" src="assets/00806f91cd73b0f134142718.webp" alt="Process Explorer のプロセスツリーとツールチップ"><figcaption>一覧にはプロセス名、PID、CPU 使用率、開始時刻、プライベートバイト数、ワーキングセット、説明が並びます。この例では <code>svchost.exe</code> にポインターを合わせると、コマンドラインと、そのプロセスがホストするサービスの一覧が表示されます。</figcaption></figure>
 <p>次の手順で、Process Explorer の基本機能を確認します。</p>
 <ol>
 <li>サービスをホストするプロセスは既定でピンク、自分のプロセスは青で表示されます。「Options」メニューの「Configure Colors」で色を変更できます。</li>
