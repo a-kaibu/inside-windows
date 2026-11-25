@@ -19353,3 +19353,9 @@ full_pages_ja['page-200'] = full_pages_ja['page-200'].replace(
     '<code>EnergyValues</code> はエネルギー使用量の情報を指し、'
     '<code>SharedCommitCharge</code> は共有コミット量を示します。</p>',
 )
+
+
+full_pages_ja['page-208'] = (
+    '<p>次の XML は cmdserver.exe のサイロ定義ファイルです。</p>\n'
+    + full_pages_ja['page-208']
+)
