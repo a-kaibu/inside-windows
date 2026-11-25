@@ -6964,8 +6964,8 @@ MmHighestPhysicalPage: 1015792</pre>
 <p>圧縮済みページを追加したり削除したりするうちに、領域内の空きが断片化します。領域のメモリは、その領域が完全に空になるまで解放されません。そこで、断片化による無駄を抑えるために、圧縮済みページを詰め直します。この処理はすぐには実行せず、後で実行するようにスケジュールします。どの程度積極的に集約するかは、断片化の度合いに応じて調整します。領域をまとめる際には、各領域の優先度も考慮します。</p>
 <h4 id="実験-メモリ圧縮を確認する">実験：メモリ圧縮を確認する</h4>
 <p>システム内で進行中のメモリ圧縮を直接観察する手段は限られています。メモリ圧縮プロセスは、Process Explorer またはカーネルデバッガーで確認できます。次の図は、管理者権限で実行した Process Explorer で Memory Compression プロセスのプロパティを開き、「Performance」タブを表示したものです。</p>
-<figure><img loading="lazy" width="295" height="378" src="assets/253a81e2c6059232f7dd0d1d.webp" alt="Process Explorer で Memory Compression プロセスの CPU 時間とワーキングセットを表示した画面"></figure>
-<p>このプロセス内で処理を行うのはカーネルスレッドだけなので、ユーザーモードの実行時間は0です。また、圧縮済みメモリは共有されないため、ワーキングセットはすべてプライベートです。次に、タスクマネージャーの「メモリ」画面と比較します。</p></section><section class="page" id="page-473" aria-label="page-473"><figure><img loading="lazy" width="394" height="364" src="assets/bc017ca35b3ec0e1ab18dc45.webp" alt="タスクマネージャーのメモリ画面で、圧縮済みメモリの容量がかっこ内に表示されている例"></figure>
+<figure><img loading="lazy" width="295" height="378" src="assets/253a81e2c6059232f7dd0d1d.webp" alt="Process Explorer で Memory Compression プロセスの CPU 時間とワーキングセットを表示した画面"><figcaption>Process Explorer でメモリ圧縮プロセス（PID 2244）の「パフォーマンス」を表示した例。CPU 時間はカーネルモードで 2.609 秒、ユーザーモードで 0 秒です。ワーキングセットは現在 20,116 K で、ピークは 106,452 K です。</figcaption></figure>
+<p>このプロセス内で処理を行うのはカーネルスレッドだけなので、ユーザーモードの実行時間は0です。また、圧縮済みメモリは共有されないため、ワーキングセットはすべてプライベートです。次に、タスクマネージャーの「メモリ」画面と比較します。</p></section><section class="page" id="page-473" aria-label="page-473"><figure><img loading="lazy" width="394" height="364" src="assets/bc017ca35b3ec0e1ab18dc45.webp" alt="タスクマネージャーのメモリ画面で、圧縮済みメモリの容量がかっこ内に表示されている例"><figcaption>タスクマネージャーの「メモリ」画面で、「使用中（圧縮）」の 1.5 GB のうち、括弧内の 19.3 MB が圧縮済みです。利用可能なメモリは 513 MB です。</figcaption></figure>
 <p>かっこ内の圧縮済みメモリの値は、圧縮データが占める容量を表すため、Memory Compression プロセスのワーキングセットのサイズとおおむね一致します。この画面は、前の画面から約1分後に取得したものです。</p>
 <h3 id="メモリパーティション">メモリパーティション</h3>
 <p>従来は、アプリケーションやアプリケーションのグループをセキュリティ上分離するため、別々の仮想マシン（VM）で動かしていました。VM 同士は直接干渉できず、セキュリティとリソースの境界を強く保てます。一方で、VM をホストするハードウェアや、VM の管理にはコストがかかります。そこで、Docker などのコンテナ技術が登場しました。これらの技術は、同じ物理マシンまたは仮想マシン上に、アプリケーションを実行するためのサンドボックス化されたコンテナを作り、分離とリソース管理にかかる負担を減らします。</p>
@@ -7070,7 +7070,7 @@ TotalNodeMemory:      ( 31 Gb 904 Mb 532 Kb )</pre>
 <li>第4章「スレッド」で説明した手順で、仮想マシンを対象にカーネルデバッグセッションを開始します。</li>
 <li>本書のダウンロード資料にある <code>MemCombineTest.exe</code> と、対象が32ビットなら <code>MemCombine32.exe</code>、64ビットなら <code>MemCombine64.exe</code> を、対象マシンにコピーします。</li>
 <li>対象マシンで <code>MemCombineTest.exe</code> を実行します。次のように表示されます。
-<figure><img loading="lazy" width="421" height="153" src="assets/072cfa03d5fb8a39b67d1b19.webp" alt="MemCombineTest が同じデータを入れた2つのバッファーのアドレスを表示する画面"></figure></li>
+<figure><img loading="lazy" width="421" height="153" src="assets/072cfa03d5fb8a39b67d1b19.webp" alt="MemCombineTest が同じデータを入れた2つのバッファーのアドレスを表示する画面"><figcaption>MemCombineTest（PID 1832）の出力。利用可能な物理メモリは 2,591 MB です。同じランダムなデータで埋めた 2 つのバッファーの先頭アドレスは 0x00880000 と 0x00B90000 です。任意のキーを押すと、最初のバッファーの先頭ページを書き換えます。</figcaption></figure></li>
 <li>表示された2つのアドレスを控えます。それぞれのバッファーには、ランダムに生成したバイト列を繰り返し書き込んであり、各ページの内容は同じです。</li>
 <li>デバッガーで実行を中断し、<code>MemCombineTest</code> プロセスを探します。
 <pre>0: kd&gt; !process 0 0 memcombinetest.exe
