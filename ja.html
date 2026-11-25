@@ -10723,7 +10723,7 @@ Target String is &#x27;\Sessions\1\AppContainerNamedObjects
 <li>スタートボタンをクリックし、「フォト」と入力します。検索結果から「フォト」を選び、Windows 10 に組み込まれているアプリを起動します。</li>
 <li>Process Explorer を開き、プロセス一覧をツリー表示に切り替えて、<code>Microsoft.Photos.exe</code> を探します。「フォト」と Process Explorer のウィンドウを横に並べます。</li>
 <li>「フォト」で画像ファイルを選び、上部の「…」メニューか、画像を右クリックして開くメニューから「印刷」を選びます。「印刷」ダイアログが開き、Process Explorer に新しく作成されたブローカー <code>PrintDialog.exe</code> が表示されます。関連するプロセスはすべて同じ <code>Svchost.exe</code> の子です。このプロセスがホストする DCOMLaunch サービスが、すべての UWP プロセスを起動するためです。
-<figure><img loading="lazy" width="466" height="316" src="assets/12c0ce6517b7d40f147b228e.webp" alt="フォトで印刷を選ぶと、Process Explorer に PrintDialog.exe が表示される"></figure></li>
+<figure><img loading="lazy" width="466" height="316" src="assets/12c0ce6517b7d40f147b228e.webp" alt="フォトで印刷を選ぶと、Process Explorer に PrintDialog.exe が表示される"><figcaption>フォト アプリの印刷画面を開いたあとの Process Explorer。プロセス一覧の下部に印刷ダイアログを実行する PrintDialog.exe が表示されています。</figcaption></figure></li>
 <li>「印刷」ダイアログを閉じます。<code>PrintDialog.exe</code> のプロセスが終了します。</li>
 </ol></section><section class="page" id="page-727" aria-label="page-727"><h3 id="ログオン">ログオン</h3>
 <p>対話型ログオンでは、ネットワークログオンとは異なり、次のコンポーネントが連携します。</p>
@@ -10992,8 +10992,8 @@ Service-0x0-5c203$</pre></section><section class="page" id="page-735" aria-label
 <li>次に、別のコマンドプロンプトを管理者として開きます。文字列を <code>hello-2</code> に変え、手順2と3を繰り返します。</li>
 <li>両方のコマンドプロンプトで次のコマンドを実行し、それぞれのファイルの内容を確認します。以降の画面例に実行結果を示します。
 <pre><code>type test.txt</code></pre>
-<figure><img loading="lazy" width="538" height="315" src="assets/1d10b40a9b515a205998eaef.webp" alt="ファイル仮想化を切り替えて test.txt の内容を比較するコマンドプロンプトの画面"></figure></li>
-</ol></section><section class="page" id="page-744" aria-label="page-744"><figure><img loading="lazy" width="354" height="157" src="assets/39aa408ce6ffd6e15886aaf7.webp" alt="コマンドプロンプトで test.txt の内容を表示した結果"></figure>
+<figure><img loading="lazy" width="538" height="315" src="assets/1d10b40a9b515a205998eaef.webp" alt="ファイル仮想化を切り替えて test.txt の内容を比較するコマンドプロンプトの画面"><figcaption>ファイル仮想化が有効なコマンドプロンプトでは test.txt が 10 バイトのファイルとして表示されます。仮想化を無効にすると同じ一覧表示で「ファイルが見つかりません」となり、再び有効にするとファイルの内容 hello-1 を読み取れます。</figcaption></figure></li>
+</ol></section><section class="page" id="page-744" aria-label="page-744"><figure><img loading="lazy" width="354" height="157" src="assets/39aa408ce6ffd6e15886aaf7.webp" alt="コマンドプロンプトで test.txt の内容を表示した結果"><figcaption>管理者として開いたコマンドプロンプトでは、Windows ディレクトリの test.txt に書き込んだ hello-2 を読み取れます。</figcaption></figure>
 <ol start="8">
 <li>管理者として開いたコマンドプロンプトで、<code>test.txt</code> を削除します。
 <pre><code>del test.txt</code></pre></li>
@@ -11254,7 +11254,7 @@ Address
 0000000140004E90  SmpStopCsr
 ...</pre>
 <p>原本では、上の出力のうち CFG に関する情報が太字で示されています。これらの項目は後述します。まず Process Explorer を開き、プロセス一覧の列見出しを右クリックして「Select Columns」を選びます。「Process Image」タブで「Control Flow Guard」にチェックを入れ、「Process Memory」タブで「Virtual Size」も選びます。次のような表示になります。</p>
-<figure><img loading="lazy" width="439" height="329" src="assets/68cf798c286d0547605d876c.webp" alt="Process Explorer に表示されたプロセスごとの Control Flow Guard と Virtual Size の列"></figure>
+<figure><img loading="lazy" width="439" height="329" src="assets/68cf798c286d0547605d876c.webp" alt="Process Explorer に表示されたプロセスごとの Control Flow Guard と Virtual Size の列"><figcaption>Process Explorer の一覧で「制御フロー ガード（Control Flow Guard）」と「仮想サイズ（Virtual Size）」を比較しています。audiodg.exe と conhost.exe の行には CFG の表示があります。</figcaption></figure>
 <p>Smss、Csrss、Audiodg、メモ帳など、Microsoft が提供するプロセスの大半は CFG を有効にしてビルドされています。これらのプロセスの仮想サイズは非常に大きくなります。仮想サイズは、コミット済みか予約のみかを問わず、そのプロセスが使う仮想アドレス空間の合計です。「Private Bytes」列が示すのは、コミット済みのプライベートメモリの量であり、共有メモリなども含む仮想サイズよりはるかに小さくなります。この実験で CFG が有効な64ビットプロセスの仮想サイズは、少なくとも2 TBです。その理由を次に見ていきます。</p>
 <h4 id="CFG-ビットマップ">CFG ビットマップ</h4>
 <p>前述のように、数命令ごとに関数の一覧を走査するのは現実的ではありません。性能を保つには、関数の数に比例する O(<var>n</var>) の探索を避け、関数の数にかかわらず一定時間で参照できる O(1) のアルゴリズムが必要です。1回の参照にかかる時間も、できる限り短くする必要があります。単純な方法としては、分岐先の関数アドレスを添字に使い、そのアドレスが有効かどうかを <code>BOOL</code> などで示す配列が考えられます。しかし、128 TB分のアドレスに対してこの方法を使うと、配列のサイズは 128 TB × <code>sizeof(BOOL)</code> になります。アドレス空間自体よりも大きく、実用になりません。どうすればこの配列を小さくできるでしょうか。</p></section><section class="page" id="page-762" aria-label="page-762"><p>コンパイラーが x64 の関数を16バイト境界に配置するなら、必要な配列は 8 TB × <code>sizeof(BOOL)</code> まで小さくなります。有効か無効かを示すだけなら、1〜4バイトを使う <code>BOOL</code> ではなく、1ビットで足ります。この場合、16バイト区画ごとに1ビットを割り当てるので、配列のサイズは1 TBになります。ただし、手書きのアセンブリコードや一部の最適化では、関数が16バイト境界に配置されるとは限りません。そこで、先頭の境界以外の15バイトのどこかに関数が始まるかどうかを、もう1ビットで表します。</p>
@@ -11277,7 +11277,7 @@ Address
 <p>これにより、コミット済みページが占める RAM を減らし、プライベートメモリに対応するビットだけを計算すれば済みます。通常のアプリケーションでは、プライベートメモリは実行可能ではありません。ライブラリにパッチを当ててコピーオンライトが発生した場合は例外ですが、イメージの読み込み時には起きません。そのため、起動済みのアプリケーションと同じライブラリを共有する場合、アプリケーションの読み込みに伴う CFG ビットマップの追加コストはほとんどありません。次の実験で確認します。</p>
 <h4 id="実験-Control-Flow-Guard-のビットマップ">実験：Control Flow Guard のビットマップ</h4>
 <p>VMMap を開き、メモ帳のプロセスを選びます。次の画面のように、「Sharable」に大きな予約領域が表示されます。</p>
-<figure><img loading="lazy" width="498" height="383" src="assets/c647b885f40f075bf744fc98.webp" alt="VMMap に表示された CFG ビットマップ用の大きな予約領域"></figure>
+<figure><img loading="lazy" width="498" height="383" src="assets/c647b885f40f075bf744fc98.webp" alt="VMMap に表示された CFG ビットマップ用の大きな予約領域"><figcaption>VMMap でメモ帳の仮想メモリを表示した例。下段の「共有可能（Shareable）」領域のうち、先頭行に CFG ビットマップ用の大きな予約領域があります。サイズ列に対し、コミット済み容量はごく小さくなっています。</figcaption></figure>
 <p>下段の一覧をサイズ順に並べると、画面例のように、CFG ビットマップが使う大きな領域を見つけられます。WinDbg をプロセスにアタッチして <code>!address</code> コマンドを実行しても、CFG ビットマップの領域を確認できます。</p>
 <pre>+     7df5&#x27;ff530000 7df6&#x27;0118a000 0&#x27;01c5a000   MEM_MAPPED MEM_RESERVE
 Other  [CFG Bitmap]
