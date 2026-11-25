@@ -424,12 +424,12 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <th style="padding:6px;">オブジェクト：カウンタ</th><th style="padding:6px;">説明</th>
 </tr></thead>
 <tbody>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Processor: % Privileged Time</td><td style="padding:6px;">CPU（個別または全体）がカーネルモードで実行されていた時間の割合</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Processor: % User Time</td><td style="padding:6px;">CPU（個別または全体）がユーザーモードで実行されていた時間の割合</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Process: % Privileged Time</td><td style="padding:6px;">該当プロセスの全スレッドがカーネルモードで実行されていた時間の割合</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Process: % User Time</td><td style="padding:6px;">該当プロセスの全スレッドがユーザーモードで実行されていた時間の割合</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Thread: % Privileged Time</td><td style="padding:6px;">個別スレッドがカーネルモードで実行されていた時間の割合</td></tr>
-<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">Thread: % User Time</td><td style="padding:6px;">個別スレッドがユーザーモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">プロセッサーのカーネルモード時間の割合<br><code>Processor: % Privileged Time</code></td><td style="padding:6px;">CPU（個別または全体）がカーネルモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">プロセッサーのユーザーモード時間の割合<br><code>Processor: % User Time</code></td><td style="padding:6px;">CPU（個別または全体）がユーザーモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">プロセスのカーネルモード時間の割合<br><code>Process: % Privileged Time</code></td><td style="padding:6px;">該当プロセスの全スレッドがカーネルモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">プロセスのユーザーモード時間の割合<br><code>Process: % User Time</code></td><td style="padding:6px;">該当プロセスの全スレッドがユーザーモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">スレッドのカーネルモード時間の割合<br><code>Thread: % Privileged Time</code></td><td style="padding:6px;">個別スレッドがカーネルモードで実行されていた時間の割合</td></tr>
+<tr style="border-bottom:1px solid var(--line);"><td style="padding:6px;">スレッドのユーザーモード時間の割合<br><code>Thread: % User Time</code></td><td style="padding:6px;">個別スレッドがユーザーモードで実行されていた時間の割合</td></tr>
 </tbody></table></div></section><section class="page" id="page-43" aria-label="page-43"><h4 id="実験-カーネルモードとユーザーモードの実行時間を測る">実験：カーネルモードとユーザーモードの実行時間を測る</h4>
 <p>パフォーマンス モニターを使うと、システムがカーネルモードとユーザーモードでそれぞれどれだけの時間を費やしたか確認できます。</p>
 <ol>
