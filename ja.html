@@ -12980,6 +12980,7 @@ Hyper-V 仮想マシンでは <code>Acpi.sys</code> のエントリを使えま�
 +0x0f0 RedirectObject   : (null)
 +0x0f8 Padding
                          : [8]  &quot;&quot;</pre>
+<p>出力の <code>ServiceRoutine</code> は割り込みサービスルーチンを示します。この例では <code>i8042prt!I8042KeyboardInterruptService</code> です。<code>Connected</code> の 1 は接続済み、<code>ShareVector</code> の 0 はベクターを共有しないことを示します。</p>
 <p>この例で Windows が割り込みに割り当てた IRQL は7です。割り込みベクターが <code>0x70</code> で、上位4ビットが7であることと一致します。また、<code>DispatchAddress</code> フィールドから、追加の最適化も共有もない、通常の <code>KiInterruptDispatch</code> 形式の割り込みであることが分かります。</p>
 <p>この割り込みに対応する GSIV（IRQ）は、2つの方法で調べられます。まず、最近の Windows では、前の出力に示すように、<code>KINTERRUPT</code> の <code>ConnectionData</code> フィールドに格納された <code>INTERRUPT_CONNECTION_DATA</code> 構造体に、この情報が記録されます。次のように <code>dt</code> コマンドを使って、自分のシステムでそのポインターの参照先を表示できます。</p>
 <pre>6: kd&gt; dt 0xffffe50f`9db3bd90 _INTERRUPT_CONNECTION_DATA Vectors[0]..
@@ -13018,11 +13019,12 @@ Current IDT Allocation:
 ...
 000000070 - 00000070  D  ffffe50f9959baf0 (i8042prt) A:ffffce0717950280 IRQ(GSIV):1
 ...</pre>
+<p>デバッガーの <code>Current IDT Allocation</code> は、現在の割り込み記述子テーブル（IDT）の割り当てを示します。プロセッサー 0 の一覧で、ベクター <code>0x70</code> に <code>i8042prt</code> が対応しています。</p>
 <p>キーボードの GSIV は IRQ 1 です。この番号は IBM PC/AT の時代から今まで引き継がれています。<code>!arbiter 4</code> でも、ACPI IRQ アービターの該当エントリを確認できます。<code>4</code> は IRQ アービターだけを表示する指定です。</p>
 <p>6: kd&gt; !arbiter 4</p>
 <p>DEVNODE ffffe50f97445c70 (ACPI_HAL\PNP0C08\0)</p>
 <p>Interrupt Arbiter &quot;ACPI_IRQ&quot; at fffff804575415a0</p>
-<p>Allocated ranges:</p>
+<p>割り当て済みの範囲（Allocated ranges）</p>
 <pre>0000000000000001 - 0000000000000001
                                             ffffe50f9959baf0  (i8042prt)</pre>
 <p>ここで表示される範囲は、割り込みベクターではなく GSIV（IRQ）を表します。どちらの出力にも、ベクターの所有者がデバイスオブジェクトとして表示されます。この例では <code>0xFFFFE50F9959BAF0</code> です。次に <code>!devobj</code> コマンドで、PS/2 ドライバーに対応する <code>i8042prt</code> デバイスの情報を確認できます。</p>

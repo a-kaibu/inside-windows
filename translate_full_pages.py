@@ -19290,3 +19290,22 @@ full_pages_ja['p2-page-230'] = full_pages_ja['p2-page-230'].replace(
     'IRP List にはこのスレッドに関連付けられた I/O 要求が 2 件あり、'
     '呼び出しスタックには NTFS の非キャッシュ I/O と読み取り処理が表示されています。</p>',
 )
+
+
+full_pages_ja['p2-page-78'] = full_pages_ja['p2-page-78'].replace(
+    '<p>この例で Windows が割り込みに割り当てた IRQL は7です。',
+    '<p>出力の <code>ServiceRoutine</code> は割り込みサービスルーチンを示します。'
+    'この例では <code>i8042prt!I8042KeyboardInterruptService</code> です。'
+    '<code>Connected</code> の 1 は接続済み、<code>ShareVector</code> の 0 はベクターを共有しないことを示します。</p>\n'
+    '<p>この例で Windows が割り込みに割り当てた IRQL は7です。',
+)
+
+full_pages_ja['p2-page-79'] = full_pages_ja['p2-page-79'].replace(
+    '<p>Allocated ranges:</p>',
+    '<p>割り当て済みの範囲（Allocated ranges）</p>',
+).replace(
+    '<p>キーボードの GSIV は IRQ 1 です。',
+    '<p>デバッガーの <code>Current IDT Allocation</code> は、現在の割り込み記述子テーブル（IDT）の割り当てを示します。'
+    'プロセッサー 0 の一覧で、ベクター <code>0x70</code> に <code>i8042prt</code> が対応しています。</p>\n'
+    '<p>キーボードの GSIV は IRQ 1 です。',
+)
