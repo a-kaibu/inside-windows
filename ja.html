@@ -364,9 +364,9 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li>サービスをホストするプロセスは既定でピンク、自分のプロセスは青で表示されます。「オプション（Options）」メニューの「Configure Colors」で色を変更できます。</li>
 <li>プロセスのイメージ名にマウスポインターを重ねます。ツールチップに完全なパスが表示されます。プロセスの種類によっては、前述した追加情報も表示されます。</li>
 </ol></section><section class="page" id="page-35" aria-label="page-35"><ol start="3">
-<li>「View」メニューの「列の選択（Select Columns）」を選び、「プロセスイメージ（Process Image）」タブでイメージのパスを追加します。</li>
+<li>「表示（View）」メニューの「列の選択（Select Columns）」を選び、「プロセスイメージ（Process Image）」タブでイメージのパスを追加します。</li>
 <li>「Process」の列見出しをクリックして名前順に並べ替えます。ツリー表示は解除されます。ツリー表示と、任意の列による並べ替えは同時には使えません。もう一度クリックすると降順になり、3回目でツリー表示に戻ります。</li>
-<li>「View」メニューで「Show Processes from All Users」をオフにすると、自分のプロセスだけが表示されます。</li>
+<li>「表示（View）」メニューで「Show Processes from All Users」をオフにすると、自分のプロセスだけが表示されます。</li>
 <li>「オプション（Options）」メニューで「変化を強調表示する時間（Difference Highlight Duration）」を選び、3秒に設定します。任意のプロセスを起動すると、一覧で3秒間緑色になります。そのプロセスを終了すると、一覧から消える前に3秒間赤く表示されます。この色分けで、プロセスの開始と終了を確認できます。</li>
 <li>プロセスをダブルクリックしてプロパティを開き、各タブを確認します。本書の実験でも、表示される情報を説明する際にこれらのタブを使います。</li>
 </ol>
@@ -395,7 +395,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>プロセスのセキュリティコンテキストは、アクセストークンというオブジェクトに格納されます。アクセストークンには、プロセスのセキュリティ識別情報と資格情報が含まれます。既定ではスレッドは独自のアクセストークンを持ちませんが、必要に応じて取得できます。そのスレッドは、同じプロセスのほかのスレッドに影響を与えずに、別のプロセスのセキュリティコンテキストを借りて処理できます。リモートの Windows システム上で動くプロセスも対象です。詳しくは第7章を参照してください。</p>
 <p>仮想アドレス記述子（VAD）は、プロセスが使っている仮想アドレスをメモリマネージャーが追跡するためのデータ構造です。詳しくは第5章を参照してください。</p>
 <h3 id="ジョブ">ジョブ</h3>
-<p>Windows はプロセスモデルの拡張としてジョブを提供します。ジョブオブジェクトを使うと、プロセスのグループをひとまとまりとして管理・操作できます。ジョブに属するプロセスの一部の属性を制御したり、制限を設けたりできます。現在ジョブに属するプロセスに加え、以前属していてすでに終了したプロセスについても、基本的な使用量を記録します。ジョブオブジェクトは、Windows に UNIX のような構造化されたプロセスツリーがないことを補い、多くの点でそれ以上の管理機能を備えています。</p></section><section class="page" id="page-38" aria-label="page-38"><blockquote><p><strong>注</strong>　Process Explorer では、ジョブが管理するプロセスを色で識別できます。色は既定で茶色ですが、色分け自体は既定で無効です。「オプション（Options）」メニューの「Configure Colors」で有効にできます。該当プロセスのプロパティには「Job」タブが追加され、ジョブオブジェクトの情報を確認できます。</p></blockquote>
+<p>Windows はプロセスモデルの拡張としてジョブを提供します。ジョブオブジェクトを使うと、プロセスのグループをひとまとまりとして管理・操作できます。ジョブに属するプロセスの一部の属性を制御したり、制限を設けたりできます。現在ジョブに属するプロセスに加え、以前属していてすでに終了したプロセスについても、基本的な使用量を記録します。ジョブオブジェクトは、Windows に UNIX のような構造化されたプロセスツリーがないことを補い、多くの点でそれ以上の管理機能を備えています。</p></section><section class="page" id="page-38" aria-label="page-38"><blockquote><p><strong>注</strong>　Process Explorer では、ジョブが管理するプロセスを色で識別できます。色は既定で茶色ですが、色分け自体は既定で無効です。「オプション（Options）」メニューの「Configure Colors」で有効にできます。該当プロセスのプロパティには「ジョブ（Job）」タブが追加され、ジョブオブジェクトの情報を確認できます。</p></blockquote>
 <p>プロセスとジョブの内部構造は第3章で、スレッドとスケジューリングのアルゴリズムは第4章で詳しく説明します。</p>
 <h3 id="仮想メモリ">仮想メモリ</h3>
 <p>Windows の仮想メモリはフラット（線形）なアドレス空間を使います。各プロセスからは、広いアドレス空間を専有しているように見えます。仮想メモリが示す論理上の配置は、物理メモリ上の配置と一致するとは限りません。実行時には、メモリマネージャーがハードウェアの支援を受け、仮想アドレスをデータの実際の格納先である物理アドレスへ変換します。OS はページの保護とマッピングを制御し、プロセス同士が互いの領域に干渉したり、OS のデータを上書きしたりするのを防ぎます。</p>
@@ -521,7 +521,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <p>Dependency Walker で、Windows サブシステムの DLL がエクスポートする関数を調べます。</p>
 <ol>
 <li><a href="http://www.dependencywalker.com">Dependency Walker</a> から、使用するシステムに合った32ビット版または64ビット版をダウンロードします。ZIP ファイルを任意のフォルダーに展開します。</li>
-<li><code>depends.exe</code> を起動します。［File］メニューの［Open］を選び、Windows が C ドライブにある場合は <code>C:\Windows\System32</code> に移動して、<code>kernel32.dll</code> を開きます。</li>
+<li><code>depends.exe</code> を起動します。［ファイル（File）］メニューの［開く（Open）］を選び、Windows が C ドライブにある場合は <code>C:\Windows\System32</code> に移動して、<code>kernel32.dll</code> を開きます。</li>
 <li>警告が表示された場合は閉じて先に進みます。</li>
 <li>縦と横の区切り線で分かれた複数のペインが表示されます。左上のツリーで <code>kernel32.dll</code> が選択されていることを確かめます。</li>
 <li>右側の上から2番目のペインに、<code>kernel32.dll</code> がエクスポートする関数が並びます。［Function］の列見出しをクリックして名前順に並べ替え、<code>CreateFileA</code> を探します。図のように、その少し下に <code>CreateFileW</code> があります。</li>
@@ -573,7 +573,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li>Windows のシステムクラッシュ時に作成されたダンプファイルを開きます。カーネルのクラッシュダンプについては第2部のクラッシュダンプ解析の章を参照してください。</li>
 <li>稼働中のシステムに接続して状態を調べます。デバイスドライバーのコードを調べる場合は、ブレークポイントを設定できます。デバッグ対象のコンピューター（ターゲット）とデバッガーを実行するコンピューター（ホスト）が必要です。両者はヌルモデムケーブル、IEEE 1394 ケーブル、USB 2.0／3.0 デバッグケーブル、またはローカルネットワークで接続できます。ターゲットはデバッグモードで起動する必要があり、<code>Bcdedit.exe</code> または <code>Msconfig.exe</code> で起動設定を変更できます。</li>
 </ul></section><section class="page" id="page-57" aria-label="page-57"><p>UEFI BIOS の設定でセキュアブートを無効にする必要がある場合もあります。Hyper-V、VirtualBox、VMware Workstation などの仮想化製品で Windows 7 以前をデバッグする場合は、ゲスト OS のシリアルポートを名前付きパイプデバイスとして公開し、そのパイプ経由で接続することもできます。ゲストが Windows 8 以降なら、ゲスト OS の仮想 NIC を使ってホスト専用ネットワークを公開し、ローカルネットワーク経由でデバッグします。この方法なら、性能が1,000倍になります。</p>
-<p>Windows では、ローカルのシステムに接続してその状態を調べることもできます。この方法をローカルカーネルデバッグと呼びます。WinDbg で開始するには、まずシステムがデバッグモードに設定されていることを確認します。たとえば <code>msconfig.exe</code> を実行し、［ブート］タブの［詳細オプション］で［デバッグ］を選び、Windows を再起動します。次に WinDbg を管理者権限で起動し、［File］メニューの［カーネルデバッグ（Kernel Debug）］を選択して、［Local］タブで［OK］をクリックします。<code>bcdedit.exe</code> を使う方法もあります。図1-6に、64ビット版の Windows 10 での出力例を示します。ローカルカーネルデバッグでは、ブレークポイントの設定や <code>.dump</code> コマンドによるメモリダンプの作成など、一部の操作を実行できません。メモリダンプの作成には、この節の後半で紹介する LiveKd を使えます。</p>
+<p>Windows では、ローカルのシステムに接続してその状態を調べることもできます。この方法をローカルカーネルデバッグと呼びます。WinDbg で開始するには、まずシステムがデバッグモードに設定されていることを確認します。たとえば <code>msconfig.exe</code> を実行し、［ブート］タブの［詳細オプション］で［デバッグ］を選び、Windows を再起動します。次に WinDbg を管理者権限で起動し、［ファイル（File）］メニューの［カーネルデバッグ（Kernel Debug）］を選択して、［ローカル（Local）］タブで［OK］をクリックします。<code>bcdedit.exe</code> を使う方法もあります。図1-6に、64ビット版の Windows 10 での出力例を示します。ローカルカーネルデバッグでは、ブレークポイントの設定や <code>.dump</code> コマンドによるメモリダンプの作成など、一部の操作を実行できません。メモリダンプの作成には、この節の後半で紹介する LiveKd を使えます。</p>
 <figure><img loading="lazy" width="551" height="304" src="assets/34550846eb33cad587b68ec3.webp" alt="WinDbg に表示されたローカルカーネルデバッグの出力"><figcaption>図1-6 ローカルカーネルデバッグ</figcaption></figure>
 <p>カーネルデバッグモードで接続したら、デバッガーの拡張コマンドを使い、スレッド、プロセス、I/O 要求パケット、メモリ管理情報など、内部データ構造の内容を表示できます。これらのコマンドは感嘆符（<code>!</code>）で始まるため、バンコマンドとも呼ばれます。本書では、各項目に関連するカーネルデバッガーのコマンドと出力を随所に掲載しています。WinDbg のインストールフォルダーにあるヘルプファイル <code>Debugger.chm</code> には、カーネルデバッガーの機能と拡張コマンドがすべて記載されています。また、Windows のカーネルシンボルファイルには型情報が含まれているため、<code>dt</code>（display type）コマンドで1,000種類以上のカーネル構造体を整形して表示できます。</p></section><section class="page" id="page-58" aria-label="page-58"><h4 id="実験-カーネル構造体の型情報の表示-dt-nt-_">実験：カーネル構造体の型情報の表示（dt nt!_*）</h4>
 <p>カーネルデバッガー（WinDbg や LiveKd）で <code>dt nt!_*</code> と入力すると、カーネルシンボルに含まれる構造体のうち、型情報が提供されている一覧が表示されます（<code>ntkrnlmp</code> は64ビットマルチプロセッサカーネルの内部ファイル名です。詳細は第2章を参照）：</p>
@@ -967,7 +967,7 @@ False</pre>
 <p>前者は、ユーザーモードから呼べるエグゼクティブのシステムサービスへの入口です。<code>NtCreateFile</code> や <code>NtSetEvent</code> など、450を超える関数があります。これらの機能の大半は Windows API を介して利用できます。一部の機能は、OS 内部の特定のコンポーネントだけが使います。</p>
 <p><code>Ntdll.dll</code> には各関数と同じ名前のエントリーポイントがあります。関数内では、アーキテクチャ固有の命令を実行してカーネルモードに移り、システムサービスディスパッチャーを呼び出します。ディスパッチャーは一部の引数を検査し、実際の処理を実装した <code>Ntoskrnl.exe</code> 内のカーネルモードシステムサービスを呼び出します。詳しくは、第2部の第8章「<a href="#システムサービスの処理">システムサービスの処理</a>」を参照してください。次の実験で、スタブのコードを確認します。</p>
 <h4 id="実験-システムサービスを呼び出すコードを見る">実験：システムサービスを呼び出すコードを見る</h4>
-<p>システムのアーキテクチャに合った WinDbg（たとえば64ビット版 Windows なら x64 版）を開きます。「File」メニューの「実行ファイルを開く（Open Executable）」を選び、<code>%SystemRoot%\System32</code> に移動して <code>Notepad.exe</code> を選択します。</p>
+<p>システムのアーキテクチャに合った WinDbg（たとえば64ビット版 Windows なら x64 版）を開きます。「ファイル（File）」メニューの「実行ファイルを開く（Open Executable）」を選び、<code>%SystemRoot%\System32</code> に移動して <code>Notepad.exe</code> を選択します。</p>
 <p>メモ帳が起動し、デバッガーは最初のブレークポイントで停止します。この時点ではプロセスは初期化の途中です。<code>k</code> で呼び出しスタックを表示すると、イメージローダーの関数を示す <code>Ldr</code> で始まる名前がいくつか見えます。メモ帳のメイン関数はまだ実行されていないため、ウィンドウは表示されません。</p>
 <p><code>Ntdll.dll</code> の <code>NtCreateFile</code> にブレークポイントを設定します。デバッガーは大文字と小文字を区別しません。</p>
 <pre>bp ntdll!ntcreatefile</pre>
@@ -987,7 +987,7 @@ ntdll!NtCreateFile:
 00007ffa&#x27;9f4e5b27 c3              ret</pre>
 <p><code>EAX</code> にシステムサービス番号が入ります。この例の Windows 10 Pro x64 では16進数の <code>55</code> です。<code>syscall</code> 命令によってプロセッサーはカーネルモードに移り、システムサービスディスパッチャーは <code>EAX</code> の値を使って <code>NtCreateFile</code> を選びます。その前に、共有ユーザーデータのオフセット <code>0x308</code> にあるバイトを、マスク <code>1</code> で検査しています。この構造体については第4章を参照してください。フラグがセットされていれば、<code>syscall</code> の代わりに <code>int 2Eh</code> を実行します。第7章で説明する Credential Guard を有効にすると、このフラグがセットされます。ハイパーバイザーは <code>syscall</code> より <code>int</code> のほうを効率よく処理できるためです。</p>
 <p><code>syscall</code> と <code>int</code> の動作を含め、詳細は、第2部の第8章「<a href="#システムサービスの処理">システムサービスの処理</a>」で説明します。同じ方法で、<code>NtReadFile</code>、<code>NtWriteFile</code>、<code>NtClose</code> などのネイティブサービスも確認できます。</p>
-<p>仮想化ベースのセキュリティの節で説明したように、分離ユーザーモード（IUM）のアプリケーションは、<code>Ntdll.dll</code> に相当する <code>IumDll.dll</code> を使います。こちらにもシステムコールがありますが、番号は異なります。Credential Guard が有効な環境では、WinDbg の「File」メニューで「クラッシュダンプを開く（Open Crash Dump）」を選び、<code>IumDll.dll</code> を開いて同様に調べられます。次の出力例ではシステムコール番号の上位ビットがセットされています。共有ユーザーデータの検査はなく、常に <code>syscall</code> を使います。これをセキュアシステムコールと呼びます。</p>
+<p>仮想化ベースのセキュリティの節で説明したように、分離ユーザーモード（IUM）のアプリケーションは、<code>Ntdll.dll</code> に相当する <code>IumDll.dll</code> を使います。こちらにもシステムコールがありますが、番号は異なります。Credential Guard が有効な環境では、WinDbg の「ファイル（File）」メニューで「クラッシュダンプを開く（Open Crash Dump）」を選び、<code>IumDll.dll</code> を開いて同様に調べられます。次の出力例ではシステムコール番号の上位ビットがセットされています。共有ユーザーデータの検査はなく、常に <code>syscall</code> を使います。これをセキュアシステムコールと呼びます。</p>
 <pre>0:000&gt; u iumdll!IumCrypto
 iumdll!IumCrypto:
 00000001&#x27;80001130 4c8bd1          mov     r10,rcx
@@ -1131,7 +1131,7 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <p>ARM の割り込みコントローラーは似ていますが、同一ではありません。タイマーや、メモリと DMA のコントローラーも、ARM システムによって異なる場合があります。</p></section><section class="page" id="page-97" aria-label="page-97"><p>IoT 機器では、PC ベースのシステムでも Intel の DMA コントローラーなど、標準的な PC のハードウェアがなく、別のコントローラーへの対応が必要な場合があります。以前の Windows では、ベンダーがプラットフォームの組み合わせごとに独自の HAL を出荷しました。現在では、この方式は現実的ではなく、大量のコードが重複します。そこで Windows は、HAL 拡張と呼ぶ、ディスク上の追加 DLL に対応しました。特定のハードウェアが拡張を必要とする場合、ブートローダーが通常は ACPI とレジストリの構成に従って DLL を読み込みます。Windows 10 のデスクトップ版にも <code>HalExtPL080.dll</code> と <code>HalExtIntcLpioDMA.dll</code> が含まれることがあります。後者は一部の低消費電力の Intel プラットフォームで使います。</p>
 <p>HAL 拡張の開発には Microsoft との協力が必要です。また、ハードウェアベンダーだけが利用できる専用の証明書で署名する必要があります。利用できる API も限られており、従来の PE イメージとは異なる、制限されたインポート・エクスポートテーブルを使います。そのため、次の実験を HAL 拡張に対して行っても関数は表示されません。</p>
 <h4 id="実験-Ntoskrnl-exe-と-HAL-の依存関係を確認する">実験：Ntoskrnl.exe と HAL の依存関係を確認する</h4>
-<p>Dependency Walker（<code>Depends.exe</code>）で各イメージのエクスポートテーブルとインポートテーブルを調べると、カーネルと HAL の関係を確認できます。「File」メニューから「Open」を選び、調べるイメージファイルを開きます。</p>
+<p>Dependency Walker（<code>Depends.exe</code>）で各イメージのエクスポートテーブルとインポートテーブルを調べると、カーネルと HAL の関係を確認できます。「ファイル（File）」メニューから「開く（Open）」を選び、調べるイメージファイルを開きます。</p>
 <p>次は <code>Ntoskrnl.exe</code> の依存関係を表示した例です。Dependency Walker は API セットを解析できないため、ここではそれに伴うエラーを無視します。</p>
 <figure><img loading="lazy" width="279" height="285" src="assets/a58a67ea16dc4b5c5e304c83.webp" alt="Dependency Walker で Ntoskrnl.exe の依存関係を表示した画面"><figcaption>Dependency Walker の依存関係ツリー。NTOSKRNL.EXE の配下に HAL.DLL などが並び、HAL.DLL を展開すると NTOSKRNL.EXE、KDCOM.DLL、PSHED.DLL が表示されます。</figcaption></figure>
 <p><code>Ntoskrnl.exe</code> は HAL にリンクし、HAL も <code>Ntoskrnl.exe</code> にリンクしています。それぞれが相手の関数を使うためです。<code>Ntoskrnl.exe</code> は、次のバイナリにもリンクしています。</p>
@@ -1270,7 +1270,7 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <li><strong>サービス制御マネージャー</strong>（<code>Services.exe</code>）と、その子プロセスとして起動されるサービスプロセス。Windows 標準の汎用サービスホスト（<code>Svchost.exe</code>）などがあります。</li>
 <li><strong>ローカルセキュリティ認証サービス</strong>（<code>Lsass.exe</code>）。Credential Guard が有効な場合は、分離ローカルセキュリティ認証サーバー（<code>Lsaiso.exe</code>）も動作します。</li>
 </ul>
-<p>これらの関係を理解するには、プロセスの親子関係を示すプロセスツリーを見ると分かりやすくなります。どのプロセスが作成元かを見れば、各プロセスがどこから起動したかを追えます。図2-6は、Process Monitor で起動時に採取したトレースのプロセスツリーです。採取するには、「オプション（Options）」メニューから「ブートログの有効化（Enable Boot Logging）」を選びます。システムを再起動して Process Monitor を開き直し、「Tools」メニューから「プロセスツリー（Process Tree）」を選ぶか Ctrl+T を押します。すでに終了したプロセスも表示され、アイコンが薄い色で示されます。</p>
+<p>これらの関係を理解するには、プロセスの親子関係を示すプロセスツリーを見ると分かりやすくなります。どのプロセスが作成元かを見れば、各プロセスがどこから起動したかを追えます。図2-6は、Process Monitor で起動時に採取したトレースのプロセスツリーです。採取するには、「オプション（Options）」メニューから「ブートログの有効化（Enable Boot Logging）」を選びます。システムを再起動して Process Monitor を開き直し、「ツール（Tools）」メニューから「プロセスツリー（Process Tree）」を選ぶか Ctrl+T を押します。すでに終了したプロセスも表示され、アイコンが薄い色で示されます。</p>
 <figure><img loading="lazy" width="369" height="368" src="assets/fa01fa449464dbda9733f88b.webp" alt="起動時のトレースを Process Monitor で開き、作成元ごとにプロセスを示したツリー"><figcaption>図2-6　起動時のシステムプロセスツリー</figcaption></figure>
 <p>続く節では、図2-6に示した主なシステムプロセスと、起動する順序を説明します。Windows の起動手順については、<a href="#第12章-起動とシャットダウン">第12章「起動とシャットダウン」</a>を参照してください。</p>
 <h4 id="システムのアイドルプロセス">システムのアイドルプロセス</h4>
@@ -1751,9 +1751,9 @@ Windows はこれらのバイナリが常に WinTcb-Light で動作するよう�
 </tbody></table></div>
 <p>* UEFI ファームウェアを使うシステムに限ります。</p>
 <h4 id="実験-Process-Explorer-で保護プロセスを確認する">実験：Process Explorer で保護プロセスを確認する</h4>
-<p>Process Explorer が、2種類の保護プロセスをどのように表示するかを確認します。Process Explorer を起動し、列の選択画面の「プロセスイメージ（Process Image）」タブで「Protection」にチェックを入れ、「Protection」列を表示します。</p>
+<p>Process Explorer が、2種類の保護プロセスをどのように表示するかを確認します。Process Explorer を起動し、列の選択画面の「プロセスイメージ（Process Image）」タブで「Protection」にチェックを入れ、「保護（Protection）」列を表示します。</p>
 <figure><img loading="lazy" width="250" height="347" src="assets/ce11ef87f83ffbac932b6914.webp" alt="Process Explorer の Process Image タブで Protection 列を選択した画面"><figcaption>「列の選択」ダイアログの「プロセスイメージ」タブで「保護」にチェックを付けると、プロセス一覧に保護レベルの列が加わります。</figcaption></figure>
-<p>「Protection」列で降順に並べ替え、一覧の先頭へスクロールします。保護されているすべてのプロセスと、それぞれの保護の種類が表示されます。続く図は、64ビット版 Windows 10 での表示例です。</p></section><section class="page" id="page-136" aria-label="page-136"><figure><img loading="lazy" width="379" height="229" src="assets/dbd9ad5a508602c2a990989b.webp" alt="Process Explorer の Protection 列に表示された各プロセスの保護レベル"><figcaption>この例では、<code>System</code> は <code>PsProtectedSignerWinTcb</code>、<code>wininit.exe</code>、<code>smss.exe</code>、<code>services.exe</code>、<code>csrss.exe</code> は <code>PsProtectedSignerWinTcb-Light</code> と表示されています。マルウェア対策の <code>NisSrv.exe</code> と <code>MsMpEng.exe</code> は <code>PsProtectedSignerAntimalware-Light</code> です。</figcaption></figure>
+<p>「保護（Protection）」列で降順に並べ替え、一覧の先頭へスクロールします。保護されているすべてのプロセスと、それぞれの保護の種類が表示されます。続く図は、64ビット版 Windows 10 での表示例です。</p></section><section class="page" id="page-136" aria-label="page-136"><figure><img loading="lazy" width="379" height="229" src="assets/dbd9ad5a508602c2a990989b.webp" alt="Process Explorer の Protection 列に表示された各プロセスの保護レベル"><figcaption>この例では、<code>System</code> は <code>PsProtectedSignerWinTcb</code>、<code>wininit.exe</code>、<code>smss.exe</code>、<code>services.exe</code>、<code>csrss.exe</code> は <code>PsProtectedSignerWinTcb-Light</code> と表示されています。マルウェア対策の <code>NisSrv.exe</code> と <code>MsMpEng.exe</code> は <code>PsProtectedSignerAntimalware-Light</code> です。</figcaption></figure>
 <p>保護プロセスを選び、下部ペインを DLL 表示に切り替えても、何も表示されません。Process Explorer はユーザーモード API で読み込み済みのモジュールを照会しますが、保護プロセスに対しては、この照会に必要なアクセス権が認められないためです。例外は System プロセスです。System も保護されていますが、System プロセスには DLL が読み込まれないため、Process Explorer は読み込み済みのカーネルモジュール（主にドライバー）を一覧表示します。これには、プロセスハンドルを必要としないシステム API の <code>EnumDeviceDrivers</code> を使います。</p>
 <p>ハンドル表示に切り替えると、ハンドルの情報はすべて表示されます。Process Explorer は、対象プロセスを指すハンドルを開かずに、システム上のすべてのハンドルを列挙する非公開 API を使います。この API が各ハンドルに対応する PID を返すため、Process Explorer は各ハンドルを所有するプロセスを特定できます。</p>
 <h3 id="サードパーティー向け-PPL-のサポート">サードパーティー向け PPL のサポート</h3>
@@ -2289,12 +2289,12 @@ VDM が別のデスクトップで動作している場合や、呼び出し元�
 <ol>
 <li>Process Monitor に、Cmd.exe 用と Notepad.exe 用の2つのフィルターを追加します。対象に含めるプロセスはこの2つだけです。対象のイベントを見分けられるよう、この時点ではどちらのプロセスも動作していないことを確認してください。フィルターの設定画面は次のようになります。
 <figure><img loading="lazy" width="389" height="245" src="assets/08d9650721ca324b12d09091.webp" alt="Process Monitor で Cmd.exe と Notepad.exe だけを対象にするフィルター"><figcaption>「プロセス名」が <code>cmd.exe</code> または <code>notepad.exe</code> と一致するイベントを含める設定です。画面には、Process Explorer、Autoruns、Process Monitor 自身のイベントを除外する条件も示されています。</figcaption></figure></li>
-<li>「File」メニューで「Capture Events」をオフにして、イベントの記録が止まっていることを確認します。その後、コマンドプロンプトを起動します。</li>
-<li>「File」メニューの「Capture Events」、Ctrl+E キー、またはツールバーの虫眼鏡アイコンでイベントの記録を再開します。<code>Notepad.exe</code> と入力し、Enter キーを押します。一般的な Windows システムでは、500〜3,500件ほどのイベントが表示されます。</li>
+<li>「ファイル（File）」メニューで「Capture Events」をオフにして、イベントの記録が止まっていることを確認します。その後、コマンドプロンプトを起動します。</li>
+<li>「ファイル（File）」メニューの「Capture Events」、Ctrl+E キー、またはツールバーの虫眼鏡アイコンでイベントの記録を再開します。<code>Notepad.exe</code> と入力し、Enter キーを押します。一般的な Windows システムでは、500〜3,500件ほどのイベントが表示されます。</li>
 <li>記録を停止し、「Sequence」と「Time of Day」の列を非表示にして、調べたい列に絞ります。続く画面例のように表示されます。</li>
 </ol>
 <p><code>CreateProcess</code> の第1段階で述べたように、プロセスが起動して最初のスレッドが作成される直前に、Cmd.exe は <code>HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Notepad.exe</code> を読み取ります。このトレース例では、Notepad.exe のイメージファイル実行オプションが登録されていなかったため、指定どおり Notepad.exe のプロセスが作成されました。</p></section><section class="page" id="page-168" aria-label="page-168"><figure><img loading="lazy" width="544" height="317" src="assets/a6ef065fae4b1fc9640fd385.webp" alt="Process Monitor に記録された Cmd.exe と Notepad.exe のイベント"><figcaption>cmd.exe が検索先のディレクトリを順に調べ、System32 の notepad.exe を開きます。末尾の「プロセス作成（Process Create）」は cmd.exe のイベントで、その直後の「プロセス開始（Process Start）」は新しい notepad.exe のイベントです。</figcaption></figure>
-<p>Process Monitor のログでは、このイベントもほかのイベントも、呼び出しスタックを調べられます。スタックを見れば、プロセス作成の各処理がユーザーモードとカーネルモードのどちらで行われたか、どのルーチンが処理したかがわかります。<code>RegOpenKey</code> イベントをダブルクリックし、「Stack」タブに切り替えます。次の図は、64ビット版 Windows 10 での典型的な呼び出しスタックです。</p>
+<p>Process Monitor のログでは、このイベントもほかのイベントも、呼び出しスタックを調べられます。スタックを見れば、プロセス作成の各処理がユーザーモードとカーネルモードのどちらで行われたか、どのルーチンが処理したかがわかります。<code>RegOpenKey</code> イベントをダブルクリックし、「スタック（Stack）」タブに切り替えます。次の図は、64ビット版 Windows 10 での典型的な呼び出しスタックです。</p>
 <figure><img loading="lazy" width="484" height="463" src="assets/6a79522c810e5ce4bd13f5ce.webp" alt="RegOpenKey イベントの Stack タブに表示された呼び出しスタック"><figcaption>「スタック」タブには、フレーム番号、モジュール、関数名とそのオフセット、アドレス、ファイルパスが並びます。K はカーネルモード、U はユーザーモードのフレームを示します。</figcaption></figure></section><section class="page" id="page-169" aria-label="page-169"><p>このスタックから、処理が <code>NtCreateUserProcess</code> を通じてカーネルモードのプロセス作成に進んでおり、その中の補助ルーチン <code>PspAllocateProcess</code> がこの確認を行っていることがわかります。</p>
 <p>スレッドとプロセスの作成後のイベントを順に見ると、次の3つのグループが見つかります。</p>
 <ul>
@@ -2349,7 +2349,7 @@ IOCTL については第6章「I/O システム」を参照してください。
 <ol>
 <li>WinDbg をインストールしたディレクトリから <code>Gflags.exe</code> を起動し、［イメージファイル（Image File）］タブを開きます。</li>
 <li>［Image］に <code>Notepad.exe</code> と入力し、Tab キーを押します。設定項目を操作できるようになったら、［ローダーの詳細ログを表示（Show Loader Snaps）］を選び、［OK］または［Apply］を押します。</li>
-<li>WinDbg を起動し、［File］メニューから［実行ファイルを開く（Open Executable）］を選びます。<code>C:\Windows\System32\notepad.exe</code> を選んで起動します。次のようなデバッグ情報が数画面分表示されます。</li>
+<li>WinDbg を起動し、［ファイル（File）］メニューから［実行ファイルを開く（Open Executable）］を選びます。<code>C:\Windows\System32\notepad.exe</code> を選んで起動します。次のようなデバッグ情報が数画面分表示されます。</li>
 </ol>
 <pre>0f64:2090 @ 02405218 - LdrpInitializeProcess - INFO: Beginning execution of
 notepad.exe (C:\WINDOWS\notepad.exe)
@@ -2831,11 +2831,11 @@ api-ms-win-core-job-l1-1-0
 <li>パスワードの入力を求められます。指定したユーザーのパスワードを入力すると、新しいコマンドプロンプトウィンドウが開きます。<code>runas</code> の要求を実行する Windows サービスは、すべての関連プロセスを収める名前のないジョブを作成します。これにより、ログオフ時にそれらのプロセスを終了できます。</li>
 <li>Process Explorer を起動します。「オプション（Options）」メニューで「色の設定（Configure Colors）」を選び、「Jobs」にチェックを入れます。次の画面のように、Cmd.exe と、その子である ConHost.exe が、ジョブに属するプロセスとして強調表示されます。
 <figure><img loading="lazy" width="595" height="143" src="assets/d0a66140e51a378c6780a493.webp" alt="ジョブに属する Cmd.exe と ConHost.exe を強調表示した Process Explorer"><figcaption>Process Explorer のプロセスツリー。cmd.exe（PID 1500）の下に conhost.exe（PID 16136）が表示されています。どちらもジョブに属するプロセスとして色が付いています。</figcaption></figure></li>
-<li>Cmd.exe または ConHost.exe をダブルクリックし、プロパティのダイアログを開きます。「Job」タブを開くと、プロセスが属するジョブの情報が表示されます。</li>
+<li>Cmd.exe または ConHost.exe をダブルクリックし、プロパティのダイアログを開きます。「ジョブ（Job）」タブを開くと、プロセスが属するジョブの情報が表示されます。</li>
 </ol></section><section class="page" id="page-198" aria-label="page-198"><figure><img loading="lazy" width="337" height="280" src="assets/7fe90b5358f939d5faf126c3.webp" alt="Process Explorer の Job タブに表示されたジョブの情報"><figcaption>cmd.exe のプロパティにある「ジョブ（Job）」タブ。ジョブ名（Job Name）は「名前なしのジョブ（&lt;Unnamed Job&gt;）」です。「ジョブ内のプロセス（Processes in Job）」には cmd.exe（PID 1500）と conhost.exe（PID 16136）が表示され、「ジョブの制限（Job Limits）」の一覧は空です。</figcaption></figure>
 <ol start="5">
 <li>コマンドプロンプトから <code>Notepad.exe</code> を起動します。</li>
-<li>Process Explorer でメモ帳のプロセスのプロパティを開き、「Job」タブを確認します。Cmd.exe はプロセス作成時に <code>CREATE_BREAKAWAY_FROM_JOB</code> フラグを使わないため、メモ帳も同じジョブで実行されています。ジョブが入れ子になっている場合、このタブには、対象のプロセスが直接属するジョブと、その子ジョブすべてに属するプロセスが表示されます。</li>
+<li>Process Explorer でメモ帳のプロセスのプロパティを開き、「ジョブ（Job）」タブを確認します。Cmd.exe はプロセス作成時に <code>CREATE_BREAKAWAY_FROM_JOB</code> フラグを使わないため、メモ帳も同じジョブで実行されています。ジョブが入れ子になっている場合、このタブには、対象のプロセスが直接属するジョブと、その子ジョブすべてに属するプロセスが表示されます。</li>
 <li>稼働中のシステムでカーネルデバッガーを起動します。<code>!process</code> コマンドで <code>notepad.exe</code> を探し、基本情報を表示します。
 <pre>lkd&gt; !process 0 1 notepad.exe
 PROCESS ffffe001eacf2080
@@ -3260,7 +3260,7 @@ Office16\GROOVEEX.DLL
 <p>カーネルデバッガーでもユーザーモードデバッガーでも、<code>!teb</code> コマンドで TEB の内容を表示できます。引数なしならデバッガーで選択中のスレッド、TEB のアドレスを指定すればそのアドレスに対応するスレッドが対象です。カーネルデバッガーで TEB のアドレスを指定する場合は、正しいプロセスコンテキストで参照できるよう、先に対象プロセスを選択してからコマンドを実行します。</p></section><section class="page" id="page-219" aria-label="page-219"><p>ユーザーモードデバッガーで TEB を表示するには、次の手順を実行します。カーネルデバッガーでの表示方法は次の実験で扱います。</p>
 <ol>
 <li>WinDbg を開きます。</li>
-<li>「File」メニューから「実行ファイルを起動（Run Executable）」を選びます。</li>
+<li>「ファイル（File）」メニューから「実行ファイルを起動（Run Executable）」を選びます。</li>
 <li><code>C:\Windows\System32\Notepad.exe</code> を選びます。デバッガーは最初のブレークポイントで実行を中断します。</li>
 <li><code>!teb</code> コマンドで、この時点で唯一存在するスレッドの TEB を表示します。次は64ビット版 Windows での例です。
 <pre>0:000&gt; !teb
@@ -3283,7 +3283,7 @@ Count Owned Locks:    0
 HardErrorMode:        0</pre></li>
 <li><code>g</code> コマンドを入力するか、F5 キーを押してメモ帳の実行を再開します。</li>
 <li>メモ帳の「ファイル」メニューで「開く」を選び、「キャンセル」をクリックしてダイアログを閉じます。</li>
-<li>Ctrl+Break キーを押すか、「Debug」メニューの「Break」を選び、対象プロセスの実行を中断します。</li>
+<li>Ctrl+Break キーを押すか、「デバッグ（Debug）」メニューの「中断（Break）」を選び、対象プロセスの実行を中断します。</li>
 <li><code>~</code>（チルダ）コマンドを入力して、プロセス内のすべてのスレッドを表示します。次のような出力が表示されます。
 <pre>0:005&gt; ~
 0  Id: 21bc.1b74 Suspend: 1 Teb: 000000ef&#x27;125c1000 Unfrozen
@@ -3435,17 +3435,17 @@ HardErrorMode:        0</pre></li>
 <p>Windows のスレッドの状態を調べるツールには、WinDbg（ユーザープロセスへのアタッチとカーネルデバッグの両モード）、パフォーマンスモニター、Process Explorer があります。スレッドスケジューリングの情報を表示するツールは、「スレッドスケジューリング」で紹介します。</p>
 <p>Process Explorer でプロセス内のスレッドを表示するには、対象のプロセスをダブルクリックして「Properties」ダイアログを開きます。プロセスを右クリックし、メニューから「プロパティ（Properties）」を選んでも開けます。</p></section><section class="page" id="page-225" aria-label="page-225"><p>「スレッド（Threads）」タブを開くと、プロセス内のスレッドが一覧表示されます。各行にはスレッド ID、設定した更新間隔での CPU 使用率、スレッドに計上されたクロックサイクル数、開始アドレスの4列があり、どの列でも並べ替えられます。</p>
 <p>新しく作成されたスレッドは緑、終了したスレッドは赤で強調表示されます。強調表示の時間は「オプション（Options）」メニューの「Difference Highlight Duration」で設定できます。この表示は、プロセスが不要なスレッドを作成していないか確認するときに役立ちます。一般には、要求を処理するたびにスレッドを作るより、プロセスの起動時に作成しておきます。</p>
-<p>一覧からスレッドを選ぶと、ID、開始時刻、状態、CPU 時間のカウンター、計上サイクル数、コンテキスト切り替え回数、優先して実行するプロセッサとそのグループ、I/O 優先度、メモリ優先度、基本優先度と現在の動的優先度が表示されます。「Kill」ボタンを押すと個々のスレッドを強制終了できるため、使用には十分な注意が必要です。「Suspend」ではスレッドの実行を止め、暴走するスレッドが CPU 時間を消費するのを防げます。ただしデッドロックを引き起こす場合があるため、「Kill」と同様に慎重に使ってください。「アクセス許可（Permissions）」ボタンでは、スレッドのセキュリティ記述子を表示できます。セキュリティ記述子の詳細は第7章「セキュリティ」を参照してください。</p>
+<p>一覧からスレッドを選ぶと、ID、開始時刻、状態、CPU 時間のカウンター、計上サイクル数、コンテキスト切り替え回数、優先して実行するプロセッサとそのグループ、I/O 優先度、メモリ優先度、基本優先度と現在の動的優先度が表示されます。「終了（Kill）」ボタンを押すと個々のスレッドを強制終了できるため、使用には十分な注意が必要です。「Suspend」ではスレッドの実行を止め、暴走するスレッドが CPU 時間を消費するのを防げます。ただしデッドロックを引き起こす場合があるため、「Kill」と同様に慎重に使ってください。「アクセス許可（Permissions）」ボタンでは、スレッドのセキュリティ記述子を表示できます。セキュリティ記述子の詳細は第7章「セキュリティ」を参照してください。</p>
 <p>タスクマネージャーなどのプロセス・プロセッサ監視ツールは、クロック間隔タイマーで CPU 時間を測ります。Process Explorer は、本章後半で説明するスレッド実行時間の計上用クロックサイクルカウンターを使うため、CPU 使用率の見え方が大きく異なります。多くのスレッドはごく短時間しか実行されないので、クロック間隔タイマーの割り込みが起きた瞬間に実行中であることはめったにありません。実際に使った CPU 時間の多くが計上されず、タイマーに基づくツールでは CPU 使用率が0パーセントと表示されることがあります。クロックサイクルの合計は、プロセス内の各スレッドが実際に消費したプロセッササイクル数です。プロセッサがサイクルごとに内部カウンターを更新し、Windows が割り込み処理の開始時に計上するため、クロック間隔タイマーの分解能には依存しません。コンテキスト切り替えの直前にも、最後の計上を行います。</p>
 <p>スレッドの開始アドレスは <code>モジュール!関数</code> の形式で表示されます。モジュール名は .EXE または .DLL のファイル名です。関数名の表示には、そのモジュールのシンボルファイルが必要です。第1章「概念とツール」の「<a href="#実験-Process-Explorer-でプロセスの詳細を確認する">実験：Process Explorer でプロセスの詳細を表示する</a>」を参照してください。モジュールの詳細がわからない場合は、「モジュール（Module）」ボタンを押すと、開始アドレスを含む .EXE または .DLL のファイルのプロパティがエクスプローラーで開きます。</p>
-<p><strong>注</strong>　Windows の <code>CreateThread</code> で作成されたスレッドについて、Process Explorer は、その呼び出しで渡された関数を表示します。Windows のスレッドはすべて、Ntdll.dll にある共通の起動ラッパー <code>RtlUserThreadStart</code> から実行を開始します。実際の開始アドレスを表示すると、ほとんどのスレッドが同じアドレスから始まるように見え、どのコードを実行していたかを調べる役に立ちません。保護プロセスなど、ユーザーが指定した開始アドレスを照会できない場合は、Process Explorer はラッパーを表示します。その場合は、すべてのスレッドが <code>RtlUserThreadStart</code> から始まるように見えます。</p></section><section class="page" id="page-226" aria-label="page-226"><p>表示されたスレッドの開始アドレスだけでは、スレッドが何をしているのか、プロセス内のどのコンポーネントが CPU 時間を消費しているのかを特定できない場合があります。特に、開始アドレスが汎用の起動関数を指し、関数名から実際の処理がわからない場合は、スレッドのスタックを調べます。Process Explorer では、対象のスレッドをダブルクリックするか、選択して「Stack」ボタンを押します。そのスレッドのユーザーモードスタックが表示され、スレッドがカーネルモードにいた場合はカーネルスタックも表示されます。</p>
+<p><strong>注</strong>　Windows の <code>CreateThread</code> で作成されたスレッドについて、Process Explorer は、その呼び出しで渡された関数を表示します。Windows のスレッドはすべて、Ntdll.dll にある共通の起動ラッパー <code>RtlUserThreadStart</code> から実行を開始します。実際の開始アドレスを表示すると、ほとんどのスレッドが同じアドレスから始まるように見え、どのコードを実行していたかを調べる役に立ちません。保護プロセスなど、ユーザーが指定した開始アドレスを照会できない場合は、Process Explorer はラッパーを表示します。その場合は、すべてのスレッドが <code>RtlUserThreadStart</code> から始まるように見えます。</p></section><section class="page" id="page-226" aria-label="page-226"><p>表示されたスレッドの開始アドレスだけでは、スレッドが何をしているのか、プロセス内のどのコンポーネントが CPU 時間を消費しているのかを特定できない場合があります。特に、開始アドレスが汎用の起動関数を指し、関数名から実際の処理がわからない場合は、スレッドのスタックを調べます。Process Explorer では、対象のスレッドをダブルクリックするか、選択して「スタック（Stack）」ボタンを押します。そのスレッドのユーザーモードスタックが表示され、スレッドがカーネルモードにいた場合はカーネルスタックも表示されます。</p>
 <p><strong>注</strong>　WinDbg、Ntsd、Cdb などのユーザーモードデバッガーは、プロセスにアタッチしてスレッドのユーザースタックを表示できます。Process Explorer では、ボタン1つでユーザーとカーネルの両方のスタックを確認できます。WinDbg のローカルカーネルデバッグでも両方を調べられます。次の2つの実験でその方法を示します。</p>
 <p>64ビットシステム上で WoW64 によって動作する32ビットプロセスでは、Process Explorer はスレッドの32ビットと64ビットの両方のスタックを表示します。詳しくは第8章の「<a href="#WOW64-Windows-on-Windows">WOW64（Windows-on-Windows）</a>」を参照してください。実際の64ビットのシステムコールが実行される時点では、スレッドはすでに64ビットのスタックとコンテキストに切り替わっています。そのスタックだけを見ても、WoW64 の変換コードを含む64ビット側の処理しかわかりません。WoW64 プロセスを調べるときは、32ビットと64ビットの両方のスタックを確認してください。</p>
 <h4 id="実験-ユーザーモードデバッガーでスレッドのスタックを表示する">実験：ユーザーモードデバッガーでスレッドのスタックを表示する</h4>
 <p>WinDbg をプロセスにアタッチし、スレッドの情報とスタックを表示します。</p>
 <ol>
 <li><code>notepad.exe</code> と <code>WinDbg.exe</code> を起動します。</li>
-<li>WinDbg の「File」メニューで「プロセスにアタッチ（Attach to Process）」を選びます。</li>
+<li>WinDbg の「ファイル（File）」メニューで「プロセスにアタッチ（Attach to Process）」を選びます。</li>
 <li><code>notepad.exe</code> を選んで「OK」をクリックし、アタッチします。デバッガーがメモ帳の実行を中断します。</li>
 <li><code>~</code> コマンドでプロセス内のスレッドを一覧表示します。各スレッドには、デバッガー内の ID、クライアント ID（プロセス ID とスレッド ID）、一時停止カウント、TEB のアドレス、デバッガーのコマンドでフリーズしたかどうかが表示されます。ブレークポイントで一時停止しているため、通常、一時停止カウントは1です。
 <pre>0:005&gt; ~
@@ -3574,7 +3574,7 @@ Priority 8 BasePriority 8 PriorityDecrement 0 IoPriority 2 PagePriority 5
 <li>プロセス一覧で、Audiodg.exe や Csrss.exe などの保護プロセスまたは軽量保護プロセス（PPL）を探します。</li>
 <li>対象プロセスの「Properties」ダイアログを開き、「スレッド（Threads）」タブを選びます。
 <figure><img loading="lazy" width="332" height="426" src="assets/8559b7647cedeab4bb14a45a.webp" alt="保護プロセスのスレッドに対して Process Explorer が表示できる情報"><figcaption>保護された csrss.exe（PID 692）の「スレッド」タブ。選択中のスレッド（TID 3324）の待機理由は WrLpcReceive で、基本優先度は 13、動的優先度は 14 です。I/O 優先度、メモリ優先度、サイクル数の欄には n/a と表示されています。</figcaption></figure></li>
-<li>開始アドレスの列には、アプリケーションが指定した Win32 の開始アドレスに代わり、<code>Ntdll.dll</code> にある標準のスレッド起動ラッパーのアドレスが表示されます。「Stack」ボタンを押すとエラーになります。スタックを表示するには対象プロセスの仮想メモリを読む必要がありますが、Process Explorer には保護プロセスのメモリを読む権限がありません。</li>
+<li>開始アドレスの列には、アプリケーションが指定した Win32 の開始アドレスに代わり、<code>Ntdll.dll</code> にある標準のスレッド起動ラッパーのアドレスが表示されます。「スタック（Stack）」ボタンを押すとエラーになります。スタックを表示するには対象プロセスの仮想メモリを読む必要がありますが、Process Explorer には保護プロセスのメモリを読む権限がありません。</li>
 <li>基本優先度と動的優先度は表示されますが、I/O 優先度、メモリ優先度、サイクル数（「Cycles」）は表示されません。これは、制限付きの照会権限 <code>THREAD_QUERY_LIMITED_INFORMATION</code> と、完全な照会権限 <code>THREAD_QUERY_INFORMATION</code> の違いの一例です。</li>
 <li>保護プロセス内のスレッドを強制終了しようとすると、ここでもアクセス拒否のエラーになります。必要な <code>THREAD_TERMINATE</code> 権限が付与されていないためです。</li>
 </ol></section><section class="page" id="page-231" aria-label="page-231"><h3 id="スレッドスケジューリング">スレッドスケジューリング</h3>
@@ -4511,7 +4511,7 @@ Flags: 0 (0x0)  Parked: False  Allocated: False  Realtime: False  Tag: 0
 <li>CPU 0 でどのスレッドが動いているかを詳しく見てみます。Windows SDK に含まれる Windows Performance Recorder（WPR）と Windows Performance Analyzer（WPA）を使います。「スタート」を開き、「WPR」と入力して、「Windows Performance Recorder」を選びます。管理者権限への昇格を許可すると、次の画面が表示されます。
 <figure><img loading="lazy" width="453" height="357" src="assets/83608fb18cddb19f50e89ae1.webp" alt="Windows Performance Recorder の記録設定画面"><figcaption>Windows Performance Recorder の「システム情報の記録」画面。「リソース分析」で「CPU 使用率」を選択します。パフォーマンスシナリオは「全般」、詳細レベルは「詳細」、ログ記録モードは「メモリ」です。この画面では記録はまだ始まっていません。</figcaption></figure></li>
 </ol></section><section class="page" id="page-298" aria-label="page-298"><ol start="9">
-<li>既定の設定で、この実験に必要な CPU 使用状況を記録できます。WPR は Event Tracing for Windows（ETW）のイベントを記録します。ETW は Part 2 の第8章で説明します。ダイアログの「Start」をクリックし、1〜2秒後に、ラベルが「Save」に変わった同じボタンをクリックします。</li>
+<li>既定の設定で、この実験に必要な CPU 使用状況を記録できます。WPR は Event Tracing for Windows（ETW）のイベントを記録します。ETW は Part 2 の第8章で説明します。ダイアログの「開始（Start）」をクリックし、1〜2秒後に、ラベルが「Save」に変わった同じボタンをクリックします。</li>
 <li>WPR が記録データの保存先を提示します。そのまま使うか、別のファイル名やフォルダーを指定します。</li>
 <li>保存が終わると、WPR がファイルを WPA で開くかどうか尋ねます。WPA で開く方を選びます。</li>
 <li>WPA が起動し、保存したファイルを読み込みます。WPA には本書で扱う範囲を超える多くの機能があります。左側には、記録された情報のカテゴリが次のように表示されます。
@@ -4795,17 +4795,17 @@ Scheduling Group: ffff9e0628d7c1c0</pre>
 <p>多くの中核システムコンポーネントやアプリケーションが、スレッドプールを使っています。特に ALPC ポートのようなリソースを扱う場合、到着する要求の量に応じて処理を増減できます。どのプロセスがワーカーファクトリを使っているかを調べる方法の一つは、Process Explorer のハンドル一覧を見ることです。次の手順で詳細を確認します。</p>
 <ol>
 <li>Process Explorer を起動します。</li>
-<li>「View」メニューで「名前のないハンドルとマッピングを表示（Show Unnamed Handles and Mappings）」を選びます。<code>Ntdll.dll</code> はワーカーファクトリに名前を付けないため、ハンドルを表示するにはこの設定が必要です。</li>
+<li>「表示（View）」メニューで「名前のないハンドルとマッピングを表示（Show Unnamed Handles and Mappings）」を選びます。<code>Ntdll.dll</code> はワーカーファクトリに名前を付けないため、ハンドルを表示するにはこの設定が必要です。</li>
 <li>プロセスの一覧から <code>svchost.exe</code> のインスタンスを1つ選びます。</li>
-<li>「View」メニューで「下ペインを表示（Show Lower Pane）」を選び、下部ペインを表示します。</li>
-<li>「View」メニューから「Lower Pane View」、「Handles」の順に選び、下部ペインをハンドル表示に切り替えます。</li>
+<li>「表示（View）」メニューで「下ペインを表示（Show Lower Pane）」を選び、下部ペインを表示します。</li>
+<li>「表示（View）」メニューから「Lower Pane View」、「Handles」の順に選び、下部ペインをハンドル表示に切り替えます。</li>
 <li>下部ペインの列見出しを右クリックし、「列の選択（Select Columns）」を選びます。</li>
 <li>「Type」と「Handle Value」にチェックが入っていることを確認します。</li>
 <li>「Type」の列見出しをクリックし、型で並べ替えます。</li>
-<li>「Type」列を見ながら一覧をスクロールし、型が <code>TpWorkerFactory</code> のハンドルを探します。</li>
+<li>「種類（Type）」列を見ながら一覧をスクロールし、型が <code>TpWorkerFactory</code> のハンドルを探します。</li>
 <li>「Handle」の列見出しをクリックし、ハンドル値で並べ替えます。次のページの画面のように、<code>TpWorkerFactory</code> の直前に <code>IoCompletion</code> のハンドルがあります。ワーカーファクトリを作成する前に、作業を送信する I/O 完了ポートのハンドルを作る必要があるためです。</li>
 </ol></section><section class="page" id="page-317" aria-label="page-317"><figure><img loading="lazy" width="369" height="204" src="assets/eaeaac43ae87027f12e9f272.webp" alt="Process Explorer のハンドル一覧で IoCompletion の直後に TpWorkerFactory が並ぶ画面"><figcaption>Process Explorer の下ペインに表示されたハンドル一覧。「種類（Type）」列で、ハンドル 0x14 の IoCompletion の直後に、0x18 の TpWorkerFactory が表示されています。</figcaption></figure>
-<ol start="11"><li>プロセス一覧で選んだプロセスをダブルクリックし、「スレッド（Threads）」タブを開いて、「Start Address」列をクリックします。次のような画面が表示されます。ワーカーファクトリのスレッドは、開始アドレスが <code>Ntdll.dll</code> の <code>TppWorkerThread</code> であることから識別できます。<code>Tpp</code> は thread pool private の略です。
+<ol start="11"><li>プロセス一覧で選んだプロセスをダブルクリックし、「スレッド（Threads）」タブを開いて、「開始アドレス（Start Address）」列をクリックします。次のような画面が表示されます。ワーカーファクトリのスレッドは、開始アドレスが <code>Ntdll.dll</code> の <code>TppWorkerThread</code> であることから識別できます。<code>Tpp</code> は thread pool private の略です。
 <figure><img loading="lazy" width="333" height="345" src="assets/6ff9e89d3924a10cdb124410.webp" alt="開始アドレスで並べ替えたスレッド一覧に TppWorkerThread が表示される"><figcaption>svchost.exe（PID 1144）の「スレッド（Threads）」タブには 74 本のスレッドがあります。「開始アドレス（Start Address）」列には ntdll.dll!TppWorkerThread が複数並んでいます。選択中のスレッドの基本優先度と動的優先度はいずれも 8 です。</figcaption></figure></li></ol>
 <p>ほかのワーカースレッドを調べると、イベントなどのオブジェクトを待っているものもあります。1つのプロセスは複数のスレッドプールを持つことができ、同じプールの中でも、スレッドごとにまったく無関係な作業を担当することがあります。開発者は、作業の割り当てを決め、スレッドプール API を呼び出して、<code>Ntdll.dll</code> を通じて作業を登録します。</p>
 <h3 id="まとめ-4">まとめ</h3>
@@ -4868,7 +4868,7 @@ Scheduling Group: ffff9e0628d7c1c0</pre>
 <tr><th scope="row">非ページプール</th><td>空き領域と割り当て済み領域を含む、非ページプール全体のサイズです。</td></tr>
 </tbody></table></div>
 <p>ページプールと非ページプールの使用量の内訳を調べるには、後述の「プールの使用状況を監視する」で説明する Poolmon を使います。</p>
-<p>Sysinternals の Process Explorer では、物理メモリと仮想メモリについて、さらに詳しい情報を表示できます。メイン画面の「View」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開きます。次は64ビット版 Windows 10 での表示例です。これらのカウンターの大半については、この章の関連する節で説明します。</p>
+<p>Sysinternals の Process Explorer では、物理メモリと仮想メモリについて、さらに詳しい情報を表示できます。メイン画面の「表示（View）」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開きます。次は64ビット版 Windows 10 での表示例です。これらのカウンターの大半については、この章の関連する節で説明します。</p>
 <figure><img loading="lazy" width="490" height="329" src="assets/3b9292ea2ba7b5b1b1887c96.webp" alt="Process Explorer の System Information にある Memory タブの表示例"><figcaption>Process Explorer の「システム情報」にある「メモリ」タブ。上段にはシステム全体のコミット量と物理メモリ使用量の履歴が表示されます。下段ではコミット量の現在値、上限、ピークに加え、物理メモリ、カーネルメモリ、ページング、優先度別のスタンバイリストなどの内訳を確認できます。</figcaption></figure></section><section class="page" id="page-324" aria-label="page-324"><p>さらに詳しいメモリ情報を表示できる Sysinternals のツールが2つあります。</p>
 <dl>
 <dt>VMMap</dt><dd>プロセス内の仮想メモリの用途を細かく表示します。</dd>
@@ -5020,9 +5020,9 @@ The operation completed successfully.</pre></li>
 <p>セクションオブジェクトは、プロセスのアドレス空間に収まらないほど大きなファイルも参照できます。ページングファイルをバッキングストアに使う場合は、対象を収容できるだけの空きがページングファイルか RAM、または両方に必要です。大きなセクションにアクセスするには、<code>MapViewOfFile</code>、<code>MapViewOfFileEx</code>、<code>MapViewOfFileFromApp</code>、<code>MapViewOfFileExNuma</code> のいずれかで範囲を指定し、必要な部分だけをビューとしてマップします。その時点で必要なビューだけをマップすれば、アドレス空間を節約できます。</p>
 <p>Windows アプリケーションは、マップ済みファイルを自分のアドレス空間にあるデータとして扱い、ファイル I/O を行えます。イメージローダーもセクションオブジェクトを使って、実行可能イメージや DLL、デバイスドライバーをメモリにマップします。キャッシュマネージャーは、キャッシュ済みファイル内のデータへのアクセスに使います。キャッシュマネージャーとメモリマネージャーの連携は Part 2 のキャッシュマネージャーの章を参照してください。共有メモリのセクションのアドレス変換と内部データ構造は、後述の「セクションオブジェクト」で説明します。</p>
 <h4 id="実験-メモリマップトファイルを表示する">実験：メモリマップトファイルを表示する</h4>
-<p>Process Explorer で、プロセスがメモリにマップしているファイルの一覧を表示できます。「View」メニューから「Lower Pane View」、「DLLs」の順に選び、下部ペインを DLL 表示にします。この一覧には、プロセスのアドレス空間にメモリマップされているファイルがすべて表示されます。DLL のほか、実行中のイメージファイル（EXE）が1つあり、マップされたデータファイルも表示される場合があります。</p>
+<p>Process Explorer で、プロセスがメモリにマップしているファイルの一覧を表示できます。「表示（View）」メニューから「Lower Pane View」、「DLLs」の順に選び、下部ペインを DLL 表示にします。この一覧には、プロセスのアドレス空間にメモリマップされているファイルがすべて表示されます。DLL のほか、実行中のイメージファイル（EXE）が1つあり、マップされたデータファイルも表示される場合があります。</p>
 <p>次のページの Process Explorer の画面では、WinDbg のプロセスが、解析しているメモリダンプファイルにアクセスするために、複数のマッピングを使っています。多くの Windows プログラムと同様、WinDbg 自身か、それが使う Windows の DLL も、国際化機能の一部である Windows データファイル <code>Locale.nls</code> をメモリマッピングで参照しています。</p></section><section class="page" id="page-334" aria-label="page-334"><figure><img loading="lazy" width="605" height="255" src="assets/b75a8f89a1f0974413db2e93.webp" alt="Process Explorer で WinDbg のマップ済みファイルを表示した画面"><figcaption>Process Explorer の下ペインに表示された WinDbg のマッピング一覧。「マッピング（Mapping）」列では、kernel32.dll などが実行イメージ（Image）、MEMORY.DMP がデータ（Data）です。同じダンプファイルが異なるベースアドレス（Base）に複数回マップされています。</figcaption></figure>
-<p>「Find」メニューから「ハンドルまたは DLL の検索（Find Handle or DLL）」を選ぶか、Ctrl+F を押して、メモリマップトファイルを検索することもできます。置き換えようとする DLL やメモリマップトファイルを、どのプロセスが使っているかを調べるときに役立ちます。</p>
+<p>「検索（Find）」メニューから「ハンドルまたは DLL の検索（Find Handle or DLL）」を選ぶか、Ctrl+F を押して、メモリマップトファイルを検索することもできます。置き換えようとする DLL やメモリマップトファイルを、どのプロセスが使っているかを調べるときに役立ちます。</p>
 <h3 id="メモリの保護">メモリの保護</h3>
 <p>第1章「概念とツール」で説明したように、Windows はメモリを保護し、ユーザープロセスがほかのプロセスや OS のアドレス空間を、誤って、あるいは意図的に壊すのを防ぎます。主な保護の仕組みは4つあります。</p>
 <ul>
@@ -5126,7 +5126,7 @@ The operation completed successfully.</pre></li>
 <tr><th scope="row"><code>MiState.Vs.SizeOfPagedPoolInBytes</code>（Windows 10、Windows Server 2016）</th><td>なし</td><td>ページプールの仮想サイズの上限です。</td></tr>
 </tbody></table></div>
 <h4 id="実験-プールの最大サイズを確認する">実験：プールの最大サイズを確認する</h4>
-<p>プールの上限は、Process Explorer または第1章で説明したライブカーネルデバッグで確認できます。Process Explorer では、「View」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開きます。次の画面のように、「Kernel Memory」にプールの上限が表示されます。</p>
+<p>プールの上限は、Process Explorer または第1章で説明したライブカーネルデバッグで確認できます。Process Explorer では、「表示（View）」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開きます。次の画面のように、「Kernel Memory」にプールの上限が表示されます。</p>
 <figure><img loading="lazy" width="347" height="233" src="assets/17c2cee4ce65b658487a0658.webp" alt="Process Explorer の Kernel Memory 欄に表示されたプールの上限"><figcaption>「カーネルメモリ（Kernel Memory）」欄の Paged Limit はページプールの上限、Nonpaged Limit は非ページプールの上限を示します。</figcaption></figure></section><section class="page" id="page-344" aria-label="page-344"><p><strong>注記</strong> Process Explorer がこの情報を取得するには、システムで動作中のカーネルのシンボルが必要です。シンボルの設定方法は、第1章の「実験：Process Explorer でプロセスの詳細を確認する」を参照してください。</p>
 <p>カーネルデバッガーで同じ情報を確認するには、この章で先ほど紹介した <code>!vm</code> コマンドを使います。</p>
 <h3 id="プールの使用状況を監視する">プールの使用状況を監視する</h3>
@@ -5176,12 +5176,12 @@ Pool         8     12834368          0           0        プールテーブル�
 <p>この実験では、Sysinternals の Notmyfault でページプールのメモリリークを発生させ、前節で紹介した方法で原因を特定します。</p>
 <ol>
 <li>OS のビット数に合った <code>Notmyfault.exe</code> を起動します。たとえば、64ビットシステムでは64ビット版を使います。</li>
-<li><code>Notmyfault.exe</code> はデバイスドライバー <code>Myfault.sys</code> を読み込み、「Crash」タブを選んだ状態で「Not My Fault」ダイアログを表示します。「Leak」タブを開くと、次のページのような画面が表示されます。</li>
+<li><code>Notmyfault.exe</code> はデバイスドライバー <code>Myfault.sys</code> を読み込み、「クラッシュ（Crash）」タブを選んだ状態で「Not My Fault」ダイアログを表示します。「リーク（Leak）」タブを開くと、次のページのような画面が表示されます。</li>
 </ol></section><section class="page" id="page-347" aria-label="page-347"><figure><img loading="lazy" width="239" height="307" src="assets/a750cfb95b1fc4f2b1ca8b9b.webp" alt="Not My Fault の Leak タブと、リーク量を指定する欄"><figcaption>Not My Fault の「リーク（Leak）」タブ。毎秒のリーク量は 1,000 KB です。現在はページプールと非ページプールのどちらもリークしていません。割り当てたメモリはアプリケーションを閉じると解放されます。</figcaption></figure>
 <ol start="3">
 <li>「Leak/Second」が1,000 KBに設定されていることを確認します。</li>
 <li>「ページプールのリークを開始（Leak Paged）」をクリックします。Notmyfault が Myfault デバイスドライバーに、ページプールからメモリを割り当てる要求を送ります。「ページプールのリークを停止（Stop Paged）」をクリックするまで要求を送り続けます。通常、不具合のあるデバイスドライバーを介してページプールのリークを起こしたプログラムを閉じても、リークしたメモリは解放されず、再起動まで残ります。Myfault ドライバーは、テストしやすいよう、Notmyfault のプロセスが終了したことを検知し、そのプロセスの要求で確保したページプールのメモリを解放します。</li>
-<li>リークが進んでいる間にタスクマネージャーを開き、「パフォーマンス」タブの「メモリ」を選びます。「ページプール」の値が増えていくことを確認します。Process Explorer でも、「View」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開くと確認できます。</li>
+<li>リークが進んでいる間にタスクマネージャーを開き、「パフォーマンス」タブの「メモリ」を選びます。「ページプール」の値が増えていくことを確認します。Process Explorer でも、「表示（View）」メニューから「システム情報（System Information）」を選び、「メモリ（Memory）」タブを開くと確認できます。</li>
 <li>リークしているプールタグを特定するため、Poolmon を起動し、<kbd>B</kbd> を押してバイト数で並べ替えます。</li>
 <li><kbd>P</kbd> を2回押し、ページプールだけを表示します。<code>Leak</code> タグが一覧の上位に上がっていきます。Poolmon は、割り当てが変化した行を強調表示します。</li>
 <li>システムのページプールを使い切る前に、「ページプールのリークを停止（Stop Paged）」をクリックします。</li>
@@ -5473,7 +5473,7 @@ Next block         : 0x000001f72a5eb960</pre>
 <li>「Image」欄に <code>notepad.exe</code> と入力し、Tab キーを押します。各種のチェックボックスを選べるようになります。</li>
 <li>「Enable Page Heap」にチェックを入れます。ダイアログは次のようになります。
 <figure><img loading="lazy" width="362" height="359" src="assets/e51d37d1150939ee4a99ee84.webp" alt="Gflags の Image File タブで notepad.exe の Enable Page Heap を選択した画面"><figcaption>Gflags の「イメージファイル（Image File）」タブで notepad.exe を指定し、「ページヒープを有効にする（Enable page heap）」を選んだ状態です。</figcaption></figure></li>
-<li>「Apply」をクリックします。</li>
+<li>「適用（Apply）」をクリックします。</li>
 <li>最初のメモ帳を開いたまま、もう1つメモ帳を起動します。</li>
 <li>タスクマネージャーで2つのメモ帳のコミットサイズを比較します。どちらも何も入力していないのに、2つ目のプロセスのコミットサイズは大幅に増えています。ページヒープが追加のメモリを割り当てるためです。次のページに32ビット版 Windows 10 での画面を示します。</li>
 </ol></section><section class="page" id="page-362" aria-label="page-362"><figure><img loading="lazy" width="343" height="147" src="assets/dc56f4863eb0ce45865f545f.webp" alt="タスクマネージャーで2つのメモ帳のコミットサイズを比較した画面"><figcaption>タスクマネージャーの「詳細」タブ。ページヒープが有効なメモ帳（PID 8168）のコミットサイズは 10,248 K で、比較対象（PID 3552）は 1,532 K です。</figcaption></figure>
@@ -5488,7 +5488,7 @@ Next block         : 0x000001f72a5eb960</pre>
 <figure><img loading="lazy" width="600" height="120" src="assets/75f294d0fc07d357ba834615.webp" alt="2つの VMMap ウィンドウに表示したプライベートデータ領域の内訳"><figcaption>両プロセスのプライベートデータ領域の一覧。左がページヒープを有効にした場合で、各領域のアドレス、サイズ、コミット済み容量、プライベート容量、ワーキングセットの合計を比較できます。</figcaption></figure></li>
 <li>左の画面はページヒープを使ったメモ帳で、より多くのメモリを消費しています。1,024 KBの領域を1つ展開すると、次のように表示されます。
 <figure><img loading="lazy" width="414" height="119" src="assets/579d0996344349cf2be7d3b2.webp" alt="コミット済みページの間に予約済みページが並ぶ VMMap の表示"><figcaption>VMMap に表示された 4 K のプライベートデータ領域。コミット済み容量が 4 K と表示される行と、同じ列が空欄の予約済みページの行が交互に並んでいます。</figcaption></figure></li>
-<li>コミット済みページの間に予約済みページが見えます。ページヒープはこれらのページを使って、バッファーの末尾を越えるアクセスや、先頭より前へのアクセスを検出します。Gflags の「Enable Page Heap」のチェックを外し、「Apply」をクリックします。以降に起動するメモ帳にはページヒープが適用されません。</li>
+<li>コミット済みページの間に予約済みページが見えます。ページヒープはこれらのページを使って、バッファーの末尾を越えるアクセスや、先頭より前へのアクセスを検出します。Gflags の「Enable Page Heap」のチェックを外し、「適用（Apply）」をクリックします。以降に起動するメモ帳にはページヒープが適用されません。</li>
 </ol>
 <p>ページヒープの詳細は、Debugging Tools for Windows のヘルプを参照してください。</p></section><section class="page" id="page-364" aria-label="page-364"><h3 id="フォールトトレラントヒープ">フォールトトレラントヒープ</h3>
 <p>Microsoft は、ヒープのメタデータの破損を、アプリケーションが異常終了する主な原因の一つとして特定しました。Windows のフォールトトレラントヒープ（FTH）は、この問題の影響を抑え、アプリケーション開発者が原因を調べるための情報を提供します。FTH は主に、検出を行う FTH サーバーと、問題の影響を緩和する FTH クライアントの2つで構成されます。</p>
@@ -5898,7 +5898,7 @@ Created 10727844 handles. Lasterror: 1450</pre>
 <p>オフセットを計算したあと、メモリマネージャーは <code>MI_SECTION_STATE</code> の <code>ImageBitMap</code> を初期化します。Windows 8.x、Windows Server 2012、Windows Server 2012 R2 では、グローバル変数 <code>MiImageBitMap</code> を使います。ビットマップの各ビットは64 KBの割り当て単位を表します。DLL を読み込むと、対応するビットをセットして配置を記録します。同じ DLL を再び読み込むときは、再配置済みの情報を持つセクションオブジェクトを共有します。</p>
 <p>DLL の読み込み時には、起動時のバイアスで決まる位置からビットマップを走査し、空き領域を探します。最初に読み込む <code>Ntdll.dll</code> の時点ではビットマップが空です。以降の DLL が規則的に並ぶと、既知の読み込み位置から他の位置も推定されやすくなるため、セッションマネージャーは初期化時に既知の DLL をマップする順序もランダム化します。ビットマップに空きがなければ、実行可能ファイルの場合と同様に、優先ベースアドレスの近くにある64 KB境界へ読み込みます。</p>
 <h4 id="実験-Ntdll-dll-の読み込み位置を確認する">実験：Ntdll.dll の読み込み位置を確認する</h4>
-<p>Windows 10 x86 でローカルカーネルデバッグを開始します。読み込み後の実アドレスは、カーネルデバッガーのモジュール一覧から確認できます。</p></section><section class="page" id="page-386" aria-label="page-386"><p>Process Explorer でプロセスを選び、DLL の一覧で <code>Ntdll.dll</code> を探します。「Base」または「Image Base」列が、実際の読み込みアドレスです。64ビットシステムでも、同じ方法で読み込み位置を確認できます。</p>
+<p>Windows 10 x86 でローカルカーネルデバッグを開始します。読み込み後の実アドレスは、カーネルデバッガーのモジュール一覧から確認できます。</p></section><section class="page" id="page-386" aria-label="page-386"><p>Process Explorer でプロセスを選び、DLL の一覧で <code>Ntdll.dll</code> を探します。「Base」または「イメージのベースアドレス（Image Base）」列が、実際の読み込みアドレスです。64ビットシステムでも、同じ方法で読み込み位置を確認できます。</p>
 <h4 id="スタックの配置のランダム化">スタックの配置のランダム化</h4>
 <p>ASLR は、最初のスレッドと、その後に作成するスレッドのスタックの位置もランダム化します。プロセスの <code>StackRandomizationDisabled</code> フラグが設定されていなければ、まず適切な空き領域を起点に、64 KB または 256 KB 間隔で配置候補を用意します。スタックのベースアドレスは、候補から選んだ位置にアラインメントを保ったオフセットを加えて決めます。候補とオフセットの選択には、現在のプロセッサーのタイムスタンプカウンター（TSC）から得た別々の値を使用します。</p>
 <h4 id="ヒープの配置のランダム化">ヒープの配置のランダム化</h4>
@@ -6258,7 +6258,7 @@ Created 29900 threads. Lasterror: 8</pre>
 <ol>
 <li>前の TestLimit の実験を繰り返し、TestLimit を実行したままにします。</li>
 <li>RAMMap に切り替えます。</li>
-<li>「File」メニューの「更新（Refresh）」を選ぶか、F5 を押します。カーネルスタックの使用量が大きく増えたことを確認できます。</li>
+<li>「ファイル（File）」メニューの「更新（Refresh）」を選ぶか、F5 を押します。カーネルスタックの使用量が大きく増えたことを確認できます。</li>
 </ol></section><section class="page" id="page-418" aria-label="page-418"><figure><img loading="lazy" width="353" height="38" src="assets/1f57833db5e7fc38c3bdeaa7.webp" alt="TestLimit の実行後に増えたカーネルスタックの使用量を示す RAMMap の画面"><figcaption>TestLimit 実行後の RAMMap。「カーネルスタック（Kernel Stack）」の合計は 346,076 K、アクティブは 339,916 K に増えています。</figcaption></figure>
 <p>先に起動した TestLimit を閉じずにさらに数回起動すると、32ビットシステムでは物理メモリがすぐに不足します。この制約は、32ビットシステム全体で作成できるスレッド数を制限する主な要因の1つです。</p>
 <h3 id="DPC-スタック">DPC スタック</h3>
@@ -6323,12 +6323,12 @@ Total shared commit:  0x478 pages (4576 KB)</pre>
 </tbody></table></div></section><section class="page" id="page-423" aria-label="page-423"><h4 id="実験-セクションオブジェクトを確認する">実験：セクションオブジェクトを確認する</h4>
 <p>Sysinternals の Process Explorer を使うと、プロセスがマップしたファイルを確認できます。</p>
 <ol>
-<li>「View」メニューから「Lower Pane View」、「DLLs」の順に選びます。</li>
-<li>「View」メニューから「列の選択（Select Columns）」を選び、「DLL」タブで「Mapping Type」列を有効にします。</li>
-<li>「Mapping」列で「Data」と表示されているファイルを確認します。これらはデータとしてマップされたファイルで、イメージローダーがモジュールとして読み込む DLL などとは区別されます。ページファイルをバッキングストアにするセクションオブジェクトの「Name」列には <code>&lt;Pagefile Backed&gt;</code> と表示されます。ファイルをバッキングストアにする場合は、ファイル名が表示されます。</li>
+<li>「表示（View）」メニューから「Lower Pane View」、「DLLs」の順に選びます。</li>
+<li>「表示（View）」メニューから「列の選択（Select Columns）」を選び、「DLL」タブで「マッピングの種類（Mapping Type）」列を有効にします。</li>
+<li>「マッピング（Mapping）」列で「Data」と表示されているファイルを確認します。これらはデータとしてマップされたファイルで、イメージローダーがモジュールとして読み込む DLL などとは区別されます。ページファイルをバッキングストアにするセクションオブジェクトの「名前（Name）」列には <code>&lt;Pagefile Backed&gt;</code> と表示されます。ファイルをバッキングストアにする場合は、ファイル名が表示されます。</li>
 </ol>
 <figure><img loading="lazy" width="548" height="386" src="assets/e96c4ceccd9718b4c75e98bc.webp" alt="Process Explorer の DLL ビューでマップされたデータファイルを確認する画面"><figcaption>Explorer の DLL ビュー。マッピングの種類は「データ（Data）」と「実行イメージ（Image）」です。ページファイルを裏付けとする領域は「Pagefile Backed」と表示され、実行イメージのベースアドレス欄は 0x0 です。</figcaption></figure>
-<p>ハンドルビューでもセクションオブジェクトを確認できます。「View」メニューから「Lower Pane View」、「Handles」の順に選び、種類が「Section」のオブジェクトを探します。以下の画面では、名前が付いているオブジェクトの名前が表示されています。これはオブジェクトマネージャーの名前空間でセクションに付けられた名前です。セクションを裏付けるファイルがある場合でも、この欄に表示されるのはセクションに付けられた名前です。オブジェクトマネージャーについては、第2部の第8章を参照してください。項目をダブルクリックすると、開いているハンドルの数やセキュリティ記述子など、詳しい情報が表示されます。</p></section><section class="page" id="page-424" aria-label="page-424"><figure><img loading="lazy" width="510" height="360" src="assets/911f9ef316b1526bcaaf14ea.webp" alt="Process Explorer のハンドルビューでセクションオブジェクトを確認する画面"><figcaption>Explorer のハンドルビュー。下ペインの「種類（Type）」が Section の行はセクションオブジェクトを指します。各行でハンドル値、名前、オブジェクトのアドレス、アクセス権を確認できます。</figcaption></figure>
+<p>ハンドルビューでもセクションオブジェクトを確認できます。「表示（View）」メニューから「Lower Pane View」、「Handles」の順に選び、種類が「Section」のオブジェクトを探します。以下の画面では、名前が付いているオブジェクトの名前が表示されています。これはオブジェクトマネージャーの名前空間でセクションに付けられた名前です。セクションを裏付けるファイルがある場合でも、この欄に表示されるのはセクションに付けられた名前です。オブジェクトマネージャーについては、第2部の第8章を参照してください。項目をダブルクリックすると、開いているハンドルの数やセキュリティ記述子など、詳しい情報が表示されます。</p></section><section class="page" id="page-424" aria-label="page-424"><figure><img loading="lazy" width="510" height="360" src="assets/911f9ef316b1526bcaaf14ea.webp" alt="Process Explorer のハンドルビューでセクションオブジェクトを確認する画面"><figcaption>Explorer のハンドルビュー。下ペインの「種類（Type）」が Section の行はセクションオブジェクトを指します。各行でハンドル値、名前、オブジェクトのアドレス、アクセス権を確認できます。</figcaption></figure>
 <p>図5-32に、マップされたセクションを記述するためにメモリマネージャーが保持するデータ構造を示します。これらの構造により、ファイルを直接開く場合も、メモリにマップする場合も、読み取るデータの整合性が保たれます。開いているファイルはファイルオブジェクトで表され、ファイルごとにセクションオブジェクトポインター構造体が1つあります。この構造体を使って、ファイルへのさまざまなアクセス方法の間で整合性を保ち、ファイルのキャッシュを管理します。</p>
 <p>セクションオブジェクトポインター構造体は、1つまたは2つの制御領域を指します。一方はファイルをデータとしてマップする場合に使い、もう一方は実行可能イメージとしてマップする場合に使います。各制御領域はサブセクション構造体を指します。サブセクション構造体は、読み取り専用、読み書き可能、コピーオンライトなど、ファイルの各部分のマッピング情報を記述します。制御領域は、ページプールに割り当てられたセグメント構造体も指します。セグメント構造体は、セクションオブジェクトによってマップされる実際のページを記述するプロトタイプ PTE を指します。この章で先に説明したとおり、プロセスのページテーブルはプロトタイプ PTE を参照し、そこから対象のページのマッピングを取得します。</p>
 <figure><img loading="lazy" width="465" height="243" src="assets/c6a40716d6ebf9fad6813a91.webp" alt="セクションオブジェクトポインター、制御領域、サブセクション、セグメント、プロトタイプ PTE の参照関係"><figcaption>図5-32　セクションの内部構造</figcaption></figure></section><section class="page" id="page-425" aria-label="page-425"><p>Windows は、どのプロセスがファイルを読み書きしても、整合性のある同じデータが見えるようにします。ただし、ファイルの同じページのコピーが物理メモリに2つ存在し得る場合が1つあります。この場合も、すべてのアクセス元が最新のコピーを取得し、データの整合性は保たれます。重複が起こり得るのは、イメージファイルをデータとして読み書きした後、実行可能イメージとして実行した場合です。たとえば、イメージをリンクした後で実行すると、リンカーはデータアクセス用にファイルを開き、実行時にはイメージローダーが同じファイルを実行可能イメージとしてマップします。内部では次のように処理されます。</p>
@@ -6556,7 +6556,7 @@ Leaked 800 MB of private memory (800 MB total leaked). Lasterror: 0
 The operation completed successfully.</pre>
 </li>
 <li>Process Explorer を開きます。</li>
-<li>「View」メニューの「列の選択（Select Columns）」を選び、「プロセスのメモリ（Process Memory）」タブを開きます。</li>
+<li>「表示（View）」メニューの「列の選択（Select Columns）」を選び、「プロセスのメモリ（Process Memory）」タブを開きます。</li>
 <li>「Private Bytes」、「Virtual Size」、「Working Set Size」、「WS Shareable Bytes」、「WS Private Bytes」の各列を有効にします。</li>
 <li>次の画面例のように、TestLimit の3つのインスタンスを探します。</li>
 </ol></section><section class="page" id="page-437" aria-label="page-437"><figure><img loading="lazy" width="546" height="189" src="assets/3c7053f08a0df0cc0b137a71.webp" alt="Process Explorer で3つの TestLimit プロセスの仮想サイズとワーキングセットを比較する画面"><figcaption>TestLimit の3プロセスで仮想サイズとワーキングセットを比較した結果</figcaption></figure>
@@ -6660,7 +6660,7 @@ a5fc09          6        0        1
 <blockquote><p><strong>注</strong>　空きメモリの上下のしきい値は、レジストリキー <code>HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management</code> に DWORD 値 <code>LowMemoryThreshold</code> または <code>HighMemoryThreshold</code> を追加して変更できます。値は MB 単位です。また、同じキーの DWORD 値 <code>PageValidationAction</code> を1にすると、不良ページの検出時にイベントを通知する代わりに、システムを停止するよう構成できます。</p></blockquote>
 <h4 id="実験-メモリリソースの通知イベントを確認する">実験：メモリリソースの通知イベントを確認する</h4>
 <p>Sysinternals の WinObj を起動し、「KernelObjects」フォルダーをクリックします。右側のペインに、空きメモリの不足と余裕を示す両方のイベントが表示されます。</p></section><section class="page" id="page-442" aria-label="page-442"><figure><img loading="lazy" width="491" height="334" src="assets/26cf70c32e37e79a14b42852.webp" alt="WinObj の KernelObjects ディレクトリに表示されたメモリ状態の通知イベント"><figcaption>WinObj で KernelObjects ディレクトリを開いた画面。コミット量、物理メモリ、ページプール、非ページプールについて、高水準（High）と低水準（Low）を通知するイベントが並んでいます。MaximumCommitCondition はコミット上限、PhysicalMemoryChange は物理メモリ構成の変更を通知するイベントです。</figcaption></figure>
-<p>どちらかのイベントをダブルクリックすると、そのオブジェクトのハンドル数や参照数を確認できます。メモリリソースの通知を要求しているプロセスがあるかを調べるには、ハンドルテーブルに <code>LowMemoryCondition</code> または <code>HighMemoryCondition</code> への参照があるかを検索します。Process Explorer の「Find」メニューから「ハンドルまたは DLL の検索（Find Handle or DLL）」を選ぶか、WinDbg を使います。ハンドルテーブルについては、第2部の第8章「オブジェクトマネージャー」を参照してください。</p>
+<p>どちらかのイベントをダブルクリックすると、そのオブジェクトのハンドル数や参照数を確認できます。メモリリソースの通知を要求しているプロセスがあるかを調べるには、ハンドルテーブルに <code>LowMemoryCondition</code> または <code>HighMemoryCondition</code> への参照があるかを検索します。Process Explorer の「検索（Find）」メニューから「ハンドルまたは DLL の検索（Find Handle or DLL）」を選ぶか、WinDbg を使います。ハンドルテーブルについては、第2部の第8章「オブジェクトマネージャー」を参照してください。</p>
 <h3 id="ページフレーム番号データベース">ページフレーム番号データベース</h3>
 <p>ここまでは、ページテーブル、PTE、VAD など、Windows プロセスから見た仮想メモリを説明しました。この章の残りでは、まず Windows が物理メモリの状態を追跡する方法を取り上げ、続いて物理メモリの管理全体を説明します。ワーキングセットはプロセスやシステムが所有する常駐ページを記述し、ページフレーム番号（PFN）データベースは物理メモリの各ページの状態を記述します。表5-19に物理ページの状態を示します。</p>
 <div class="table-scroll" role="region" tabindex="0" aria-label="表。横にスクロールできます"><table><caption>表5-19　物理ページの状態</caption><thead><tr><th scope="col">状態</th><th scope="col">説明</th></tr></thead><tbody>
@@ -6721,7 +6721,7 @@ The operation completed successfully.</pre>
 <p><code>-d</code> オプションを指定すると、TestLimit はプライベートメモリとしてコミットした領域に実際にアクセスします。その結果、コミット済みの仮想メモリに対応する物理メモリが割り当てられ、プロセスのワーキングセットに入ります。利用可能な RAM が十分なら、1,500 MBすべてがそのプロセス用に RAM に常駐します。プロセスは、コマンドウィンドウで Ctrl+C を押すなどして終了させるまで待機します。この状態で次の手順を実行します。</p>
 <ol>
 <li>Process Explorer を開きます。</li>
-<li>「View」メニューの「システム情報（System Information）」を選び、「メモリ（Memory）」タブをクリックします。</li>
+<li>「表示（View）」メニューの「システム情報（System Information）」を選び、「メモリ（Memory）」タブをクリックします。</li>
 <li>空きページ（「Free」）とゼロ初期化済みページ（「Zeroed」）のリストのサイズを確認します。</li>
 <li>TestLimit プロセスを終了させます。</li>
 </ol>
@@ -6741,17 +6741,17 @@ Process ID: 7548
 Leaking private bytes with touch (MB)...
 Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 </li>
-<li>TestLimit は1 MBずつ、合計1,975回の割り当てを行いました。RAMMap の「File」メニューから「更新（Refresh）」を選び、表示を更新します。情報を集める処理の負荷が高いため、RAMMap は表示を継続的には更新しません。</li>
+<li>TestLimit は1 MBずつ、合計1,975回の割り当てを行いました。RAMMap の「ファイル（File）」メニューから「更新（Refresh）」を選び、表示を更新します。情報を集める処理の負荷が高いため、RAMMap は表示を継続的には更新しません。</li>
 </ol></section><section class="page" id="page-449" aria-label="page-449"><figure><img loading="lazy" width="493" height="308" src="assets/3359df0078aea093c7ebd56b.webp" alt="TestLimit の実行後、アクティブなページが増え、空きページが減った RAMMap の集計画面"><figcaption>TestLimit の実行後は、アクティブなページが 2,863,428 K に増え、スタンバイが 165,384 K に減りました。用途別では、プロセスのプライベートメモリが 2,505,828 K を占めています。</figcaption></figure>
 <ol start="6">
 <li>アクティブなメモリは2.8 GBを超え、そのうち2.4 GBが「Process Private」行にあります。これは、TestLimit プロセスがメモリを割り当て、実際にアクセスしたためです。スタンバイリスト、ゼロページリスト、空きリストはいずれも大幅に縮小しています。TestLimit に割り当てた RAM の大半は、これらのリストから取得したものです。</li>
-<li>次に、RAMMap でプロセスに割り当てられた物理ページを確認します。「物理ページ（Physical Pages）」タブに切り替え、画面下部のフィルターで「Process」列を選び、値に <code>Testlimit.exe</code> を指定します。これで、プロセスのワーキングセットに属するすべての物理ページが表示されます。</li>
+<li>次に、RAMMap でプロセスに割り当てられた物理ページを確認します。「物理ページ（Physical Pages）」タブに切り替え、画面下部のフィルターで「プロセス（Process）」列を選び、値に <code>Testlimit.exe</code> を指定します。これで、プロセスのワーキングセットに属するすべての物理ページが表示されます。</li>
 </ol>
 <figure><img loading="lazy" width="568" height="354" src="assets/0fdfa7fa6e2936d23bcdff41.webp" alt="RAMMap の Physical Pages タブで Testlimit.exe の物理ページだけを表示した画面"><figcaption>RAMMap の「物理ページ（Physical Pages）」タブを Testlimit.exe（PID 7548）で絞り込んだ結果です。各行に物理アドレス、状態、用途、優先度、対応する仮想アドレスが表示されています。</figcaption></figure></section><section class="page" id="page-450" aria-label="page-450"><ol start="8">
 <li>TestLimit の <code>-d</code> オプションで割り当てた仮想アドレス空間に対応する物理ページを特定します。RAMMap の表示からは、どの仮想メモリ領域がこの実験の <code>VirtualAlloc</code> 呼び出しで割り当てられたかは分かりません。そこで、同じプロセスを VMMap で開き、割り当てられた領域を調べます。
 <figure><img loading="lazy" width="525" height="463" src="assets/71e4b8fcdc19e28aac9feb89.webp" alt="VMMap で TestLimit のプライベートメモリの割り当てを表示し、先頭アドレスが 0x310000 の領域を選んだ画面"><figcaption>VMMap で Testlimit.exe（PID 7548）を表示した結果。下段では仮想アドレス 0x310000 から始まるプライベートデータ領域を選択しています。この領域は 1,024 K で、全体がコミット済みです。</figcaption></figure></li>
 <li>画面下部には、プロセスのプライベートな割り当てが数百件表示されます。それぞれのサイズは1 MBで、コミット済みのサイズも1 MBです。これは TestLimit の割り当てサイズと一致します。上の画面例で選択した領域の先頭仮想アドレス <code>0x310000</code> を控えます。</li>
-<li>RAMMap の物理メモリ表示に戻ります。「Virtual Address」列が見やすくなるように列を並べ替え、その列をクリックして値でソートすると、先ほど控えた仮想アドレスを見つけられます。</li>
+<li>RAMMap の物理メモリ表示に戻ります。「仮想アドレス（Virtual Address）」列が見やすくなるように列を並べ替え、その列をクリックして値でソートすると、先ほど控えた仮想アドレスを見つけられます。</li>
 </ol></section><section class="page" id="page-451" aria-label="page-451"><figure><img loading="lazy" width="409" height="255" src="assets/67839ea05f12edb637f0e558.webp" alt="RAMMap で仮想アドレス 0x310000 に対応する物理アドレスを確認する画面"><figcaption>RAMMap の物理ページ一覧で、仮想アドレス列の 0x310000 の行を選択しています。同じ行の物理アドレス列で、対応する物理ページを確認できます。</figcaption></figure>
 <ol start="11">
 <li>この表示では、仮想アドレス <code>0x310000</code> から始まるページは、現在、物理アドレス <code>0x212D1000</code> にマップされています。TestLimit の <code>-d</code> オプションは、割り当てた領域の先頭にプログラム自身の名前を書き込みます。ローカルカーネルデバッガーの <code>!dc</code> コマンドを使うと、物理アドレスを指定して文字列を表示し、これを確認できます。
@@ -6761,7 +6761,7 @@ Leaked 1975 MB of private memory (1975 MB total leaked). Lasterror: 8</pre>
 ...</pre>
 </li>
 <li>確認に時間がかかると、そのページがすでにワーキングセットから外れ、同じ結果が得られない場合があります。実験の最後では、プロセスのワーキングセットが縮小され、ページが変更済みリスト、次いでスタンバイリストに移っても、データがしばらく保持されることを確認します。</li>
-<li>VMMap で TestLimit プロセスを選んだ状態で、「View」メニューから「ワーキングセットを空にする（Empty Working Set）」を選び、プロセスのワーキングセットを最小限まで縮小します。すると、VMMap は次のように表示されます。
+<li>VMMap で TestLimit プロセスを選んだ状態で、「表示（View）」メニューから「ワーキングセットを空にする（Empty Working Set）」を選び、プロセスのワーキングセットを最小限まで縮小します。すると、VMMap は次のように表示されます。
 <figure><img loading="lazy" width="359" height="317" src="assets/12fb09c58afa9e94fab27353.webp" alt="ワーキングセットを縮小した後の TestLimit を表示する VMMap の画面"><figcaption>ワーキングセット縮小後の VMMap。プライベートバイトは 2,027,204 K で、ワーキングセットは縮小前の 2,031,284 K から約 4 MB に減りました。</figcaption></figure></li>
 </ol></section><section class="page" id="page-452" aria-label="page-452"><ol start="14">
 <li>「Working Set」の棒グラフはほとんど空です。画面中央の集計では、プロセスのワーキングセットは合計わずか4 KBで、そのほぼすべてをページテーブルが占めています。RAMMap に戻り、表示を更新します。「用途別集計（Use Counts）」タブでは、アクティブなページが大幅に減り、多数のページが変更済みリストに、一部のページがスタンバイリストに移ったことが分かります。
@@ -7417,7 +7417,7 @@ UWEV  pfn ea886     C---A--UR-V</pre>
 <h4 id="実験-読み込まれているドライバーの一覧を確認する">実験：読み込まれているドライバーの一覧を確認する</h4>
 <p>スタートメニューから「ファイル名を指定して実行」を開き、<code>Msinfo32.exe</code> を実行すると、登録済みのドライバーを確認できます。「ソフトウェア環境」の下にある「システム ドライバー」を選ぶと、そのシステムに構成されているドライバーが一覧表示されます。次の画面例のように、読み込まれているドライバーは「開始済み」（<code>Started</code>）列に「はい」（<code>Yes</code>）と表示されます。</p></section><section class="page" id="page-514" aria-label="page-514"><figure><img loading="lazy" width="586" height="238" src="assets/532814e5784937d0a4ebc3c1.webp" alt="システム情報のシステム ドライバー一覧と開始状態"><figcaption>「システム情報」で「ソフトウェア環境」から「システム ドライバー」を開いた例。各行に名前、説明、ファイル、種類、起動済みかどうか、開始モード、現在の状態が並びます。ACPI ドライバーはブート時に起動し、現在は実行中です。</figcaption></figure>
 <p>ドライバーの一覧は、レジストリの <code>HKLM\System\CurrentControlSet\Services</code> のサブキーから取得します。このキーはドライバーとサービスの両方で使われ、どちらもサービスコントロールマネージャー（SCM）から起動できます。各サブキーがどちらを表すかは、<code>Type</code> 値で判別できます。1、2、4、8はドライバーを、16（<code>0x10</code>）と32（<code>0x20</code>）は Windows サービスを示します。<code>Services</code> キーについて詳しくは第2部の第9章を参照してください。</p>
-<p>読み込まれているカーネルモードドライバーは、Process Explorer でも確認できます。Process Explorer を起動して System プロセスを選び、「View」メニューから「Lower Pane View」、「DLLs」の順に選びます。</p>
+<p>読み込まれているカーネルモードドライバーは、Process Explorer でも確認できます。Process Explorer を起動して System プロセスを選び、「表示（View）」メニューから「Lower Pane View」、「DLLs」の順に選びます。</p>
 <figure><img loading="lazy" width="486" height="235" src="assets/a7a4b4e594bbdae992165355.webp" alt="Process Explorer で System プロセスを選び、読み込まれているドライバーを表示した画面"><figcaption>Process Explorer の上ペインで System プロセス（PID 4）を選んだ例。下ペインでは読み込み済みドライバーの名前、説明、発行元、パス、バージョン、ベースアドレスを確認できます。</figcaption></figure>
 <p>Process Explorer には、読み込まれているドライバーの一覧が表示されます。対応する列を有効にすると、ドライバー名、会社名や説明を含むバージョン情報、読み込みアドレスも確認できます。</p>
 <p>カーネルデバッガーでクラッシュダンプや稼働中のシステムを調べている場合は、<code>lm kv</code> コマンドで同様の一覧を表示できます。</p>
@@ -7670,7 +7670,7 @@ DESCRIPTION\SYSTEM&quot;
 <blockquote><p><strong>注</strong>　ファイルオブジェクトは、ファイルを開いた個々のインスタンスを表します。vnode を使う UNIX とは異なり、Windows では各ファイルシステムドライバーが、ファイルそのものの表現を定義します。</p></blockquote>
 <p>エグゼクティブのオブジェクトと同様に、ファイルはアクセス制御リスト（ACL）を含むセキュリティ記述子で保護されます。I/O マネージャーはセキュリティサブシステムに問い合わせ、スレッドが要求する方法でプロセスがファイルにアクセスできるかを、ファイルの ACL に基づいて確認します。許可されれば、オブジェクトマネージャーはアクセスを認め、返すファイルハンドルに許可されたアクセス権を関連付けます。同じプロセスのスレッドが、最初の要求に含まれない操作を行う必要がある場合は、異なるアクセス権を指定して同じファイルを開き直すか、要求するアクセス権でハンドルを複製します。新しいハンドルを取得するときに、改めてセキュリティチェックが行われます。オブジェクトの保護については第7章を参照してください。</p>
 <h4 id="実験-デバイスのハンドルを確認する">実験：デバイスのハンドルを確認する</h4>
-<p>デバイスへのハンドルを開いているプロセスのハンドルテーブルには、開いたインスタンスに対応するファイルオブジェクトがあります。Process Explorer でプロセスを選び、「View」メニューの「Lower Pane View」から「ハンドル（Handles）」を選ぶと、これらのハンドルを確認できます。「Type」列で並べ替え、種類が「File」のハンドルまでスクロールします。</p></section><section class="page" id="page-526" aria-label="page-526"><figure><img loading="lazy" width="566" height="313" src="assets/1900347945f7a69a1a452292.webp" alt="Process Explorer で dwm.exe が開いているデバイスのファイルハンドルを表示した画面"><figcaption>Process Explorer でデスクトップ ウィンドウ マネージャー（dwm.exe）のハンドルを表示した例。下ペインにはファイル、イベント、レジストリキーなどのハンドルがあります。選択中の行は、デバイスオブジェクトを開いたファイルハンドルです。</figcaption></figure>
+<p>デバイスへのハンドルを開いているプロセスのハンドルテーブルには、開いたインスタンスに対応するファイルオブジェクトがあります。Process Explorer でプロセスを選び、「表示（View）」メニューの「Lower Pane View」から「ハンドル（Handles）」を選ぶと、これらのハンドルを確認できます。「種類（Type）」列で並べ替え、種類が「File」のハンドルまでスクロールします。</p></section><section class="page" id="page-526" aria-label="page-526"><figure><img loading="lazy" width="566" height="313" src="assets/1900347945f7a69a1a452292.webp" alt="Process Explorer で dwm.exe が開いているデバイスのファイルハンドルを表示した画面"><figcaption>Process Explorer でデスクトップ ウィンドウ マネージャー（dwm.exe）のハンドルを表示した例。下ペインにはファイル、イベント、レジストリキーなどのハンドルがあります。選択中の行は、デバイスオブジェクトを開いたファイルハンドルです。</figcaption></figure>
 <p>この例では、デスクトップウィンドウマネージャー（<code>dwm.exe</code>）が、カーネルのセキュリティデバイスドライバー（<code>Ksecdd.sys</code>）の作成したデバイスを開いています。カーネルデバッガーで対応するファイルオブジェクトを調べるには、まずオブジェクトのアドレスを取得します。次のコマンドでは、プロセス ID が10進数で452の <code>dwm.exe</code> を対象に、画面で選択されているハンドル <code>0x348</code> の情報を表示します（原文の本文は <code>0xD4</code> と記載していますが、画面とコマンド例は <code>0x348</code> です）。</p>
 <pre>lkd&gt; !handle 348 f 0n452
 PROCESS ffffc404b62fb780
@@ -9231,11 +9231,11 @@ ACTIVELOCKSCREEN:
 <p>Process Explorer では、開いているハンドルに関連付けられたアクセスマスクを確認できます。</p>
 <ol>
 <li>Process Explorer を開きます。</li>
-<li>「View」メニューの「Lower Pane View」で「ハンドル（Handles）」を選び、下部ペインにハンドルを表示します。</li>
+<li>「表示（View）」メニューの「Lower Pane View」で「ハンドル（Handles）」を選び、下部ペインにハンドルを表示します。</li>
 <li>下部ペインの列見出しを右クリックし、「列の選択（Select Columns）」を選んで、次のダイアログを開きます。
 <figure><img loading="lazy" width="147" height="208" src="assets/1f653af61bc88d07d7285443.webp" alt="Process Explorer の下部ペインに表示する列を選ぶダイアログ"><figcaption>「列の選択」の「ハンドル」タブで、下ペインに「アクセスマスク（Access Mask）」と「アクセス権の内訳（Decoded Access Mask）」を表示するよう設定します。</figcaption></figure></li>
 <li>「Access Mask」と「アクセスマスクの内訳（Decoded Access Mask）」を選択して「OK」をクリックします。「Decoded Access Mask」はバージョン16.10以降で利用できます。</li>
-<li>プロセス一覧で <code>Explorer.exe</code> を選び、下部ペインのハンドルを確認します。各ハンドルのアクセスマスクは、そのハンドルで許可されたアクセス権を示します。「Decoded Access Mask」列では、多くの種類のオブジェクトについて、各ビットが表す権限を名前で確認できます。
+<li>プロセス一覧で <code>Explorer.exe</code> を選び、下部ペインのハンドルを確認します。各ハンドルのアクセスマスクは、そのハンドルで許可されたアクセス権を示します。「アクセスマスクの内訳（Decoded Access Mask）」列では、多くの種類のオブジェクトについて、各ビットが表す権限を名前で確認できます。
 <figure><img loading="lazy" width="422" height="240" src="assets/5f4bc7ea7c0a584b42691fb3.webp" alt="Access Mask と Decoded Access Mask を表示したハンドル一覧"><figcaption>ハンドル一覧の「アクセス」列にはアクセスマスクが 16 進数で表示されます。右隣の列には、マスクに含まれるアクセス権が READ_CONTROL や KEY_READ などの名前で表示されます。</figcaption></figure></li>
 </ol>
 <p>一覧には、<code>READ_CONTROL</code> や <code>SYNCHRONIZE</code> のように複数のオブジェクト型に共通するアクセス権と、<code>KEY_READ</code> や <code>MODIFY_STATE</code> のように、その型に固有のアクセス権があります。固有のアクセス権の表示名の多くは、Windows のヘッダーで定義された定数の略称です。たとえば、<code>EVENT_MODIFY_STATE</code> は <code>MODIFY_STATE</code>、<code>PROCESS_TERMINATE</code> は <code>TERMINATE</code> と表示されます。</p></section><section class="page" id="page-642" aria-label="page-642"><h3 id="セキュリティ識別子">セキュリティ識別子</h3>
@@ -10338,11 +10338,11 @@ C:\&gt; auditpol /resourceSACL /type:Key /view</code></pre></li>
 <p><code>Calc.exe</code> を起動し、Process Explorer に切り替えます。<code>Calculator.exe</code> など、複数のプロセスがシアンで表示されます。電卓アプリを最小化すると、電卓のプロセスが中断され、表示が灰色に変わります。電卓のウィンドウを元に戻すと、表示もシアンに戻ります。</p>
 <p>ほかのアプリでも同じ変化を確認できます。たとえば、タスクバーの Cortana アイコンをクリックまたはタップして Cortana を開き、閉じます。<code>SearchUI.exe</code> の表示が灰色からシアンに変わり、灰色に戻ります。スタートボタンをクリックまたはタップすると、<code>ShellExperienceHost.exe</code> が同様に強調表示されます。</p>
 <p><code>Explorer.exe</code>、<code>TaskMgr.exe</code>、<code>RuntimeBroker.exe</code> などもシアンで表示されます。これらは UWP アプリではありませんが、Windows Runtime API を使うため、イマーシブプロセスに分類されます。Runtime Broker の役割は後述します。</p>
-<p>最後に、Process Explorer で「Integrity」列を表示し、その列で並べ替えます。<code>Calculator.exe</code> や <code>SearchUI.exe</code> の整合性レベルは「AppContainer」と表示されます。Explorer や Task Manager はこのグループに含まれず、UWP プロセスとは異なるルールに従います。</p>
+<p>最後に、Process Explorer で「整合性（Integrity）」列を表示し、その列で並べ替えます。<code>Calculator.exe</code> や <code>SearchUI.exe</code> の整合性レベルは「AppContainer」と表示されます。Explorer や Task Manager はこのグループに含まれず、UWP プロセスとは異なるルールに従います。</p>
 <figure><img loading="lazy" width="628" height="203" src="assets/3f98f081e6b0a57e59f31422.webp" alt="Process Explorer の Integrity 列に表示された AppContainer プロセス"><figcaption>「整合性（Integrity）」列では、電卓、天気、検索、シェル エクスペリエンス ホストなどが AppContainer と表示されています。Firefox は「低（Low）」です。</figcaption></figure>
 <h4 id="実験-AppContainer-トークンを表示する">実験：AppContainer トークンを表示する</h4>
 <p>AppContainer 内で動くプロセスのプロパティは、複数のツールで調べられます。Process Explorer では「セキュリティ（Security）」タブに、トークンに関連付けられたケイパビリティが表示されます。次の画面は、<code>Calculator.exe</code> の「セキュリティ（Security）」タブです。</p></section><section class="page" id="page-708" aria-label="page-708"><figure><img loading="lazy" width="369" height="451" src="assets/e60ce4e6c8152b52f3c66e0d.webp" alt="電卓の AppContainer SID と機能 SID を表示した Process Explorer の Security タブ"><figcaption>電卓（PID 11128）の「セキュリティ」タブ。グループ一覧には低整合性レベルのラベルと、属性が AppContainer の SID（S-1-15-2 で始まる行）、機能（Capability）の SID（S-1-15-3 で始まる行）が並んでいます。</figcaption></figure>
-<p>「Flags」列に「AppContainer」と表示された AppContainer SID と、その直下にある1つのケイパビリティに注目します。ベース RID はそれぞれ <code>SECURITY_APP_PACKAGE_BASE_RID</code> と <code>SECURITY_CAPABILITY_BASE_RID</code> ですが、残り8個の RID は一致します。どちらも、前述のようにパッケージ名の SHA-2 ハッシュを表します。つまり、パッケージ自身を表す暗黙のケイパビリティが常に1つあります。電卓は、それ以外のケイパビリティを必要としません。後述するケイパビリティの節では、より複雑な例を示します。</p>
+<p>「フラグ（Flags）」列に「AppContainer」と表示された AppContainer SID と、その直下にある1つのケイパビリティに注目します。ベース RID はそれぞれ <code>SECURITY_APP_PACKAGE_BASE_RID</code> と <code>SECURITY_CAPABILITY_BASE_RID</code> ですが、残り8個の RID は一致します。どちらも、前述のようにパッケージ名の SHA-2 ハッシュを表します。つまり、パッケージ自身を表す暗黙のケイパビリティが常に1つあります。電卓は、それ以外のケイパビリティを必要としません。後述するケイパビリティの節では、より複雑な例を示します。</p>
 <h4 id="実験-AppContainer-トークンの属性を表示する">実験：AppContainer トークンの属性を表示する</h4>
 <p>Sysinternals の AccessChk を使うと、コマンドラインでも同様の情報を取得でき、トークンの属性をすべて表示できます。たとえば、<code>-p -f</code> オプションに続けて、Cortana をホストする <code>SearchUI.exe</code> のプロセス ID を指定すると、次のように表示されます。</p>
 <pre>C:\ &gt;accesschk -p -f 3728
@@ -10538,7 +10538,7 @@ wchar_t * 0xffff950a&#x27;ac2f8fea
 <p>機能がトークンに格納されると、システムの各コンポーネントはそれを読み取り、AppContainer に操作を許可するかを判定します。UWP アプリケーションとの通信や相互運用は公式にはサポートされていないため、関連 API の大半は文書化されていません。この処理は、ブローカーサービス、組み込みドライバー、カーネルコンポーネントが担います。たとえばカーネルやドライバーは、<code>RtlCapabilityCheck</code> API で、一部のハードウェアインターフェイスや API へのアクセスを確認できます。</p></section><section class="page" id="page-718" aria-label="page-718"><p>たとえば、電源マネージャーは、AppContainer から画面を消す要求を受けると、<code>ID_CAP_SCREENOFF</code> ケイパビリティを確認してから許可します。Bluetooth ポートドライバーは <code>bluetoothDiagnostics</code> ケイパビリティを確認します。アプリケーション ID ドライバーは、<code>enterpriseDataPolicy</code> ケイパビリティを調べて、エンタープライズデータ保護（EDP）に対応しているかを確認します。ユーザーモードでは、文書化されている <code>CheckTokenCapability</code> API を使えます。この API にはケイパビリティ名を直接渡せないため、ケイパビリティ SID が必要です。文書化されていない <code>RtlDeriveCapabilitySidFromName</code> で SID を生成できます。同じく文書化されていない <code>CapabilityCheck</code> API なら、ケイパビリティ名を文字列で受け取れます。</p>
 <p>多くの RPC サービスでは、トークンの取得を代行するヘルパー関数 <code>RpcClientCapabilityCheck</code> を利用します。渡す必要があるのはケイパビリティ名の文字列だけです。WinRT に対応するサービスやブローカーは、UWP クライアントアプリケーションとの通信に RPC を使うため、この関数をよく利用します。</p>
 <h4 id="実験-AppContainer-のケイパビリティを表示する">実験：AppContainer のケイパビリティを表示する</h4>
-<p>さまざまなケイパビリティがどのように組み合わされてトークンに入るかを確認するため、Cortana のような複雑なアプリのケイパビリティを調べます。先ほど示したマニフェストと画面の表示を比較できます。まず Process Explorer で <code>SearchUI.exe</code> の「セキュリティ（Security）」タブを開き、「Flags」列で並べ替えると、次のように表示されます。</p>
+<p>さまざまなケイパビリティがどのように組み合わされてトークンに入るかを確認するため、Cortana のような複雑なアプリのケイパビリティを調べます。先ほど示したマニフェストと画面の表示を比較できます。まず Process Explorer で <code>SearchUI.exe</code> の「セキュリティ（Security）」タブを開き、「フラグ（Flags）」列で並べ替えると、次のように表示されます。</p>
 <figure><img loading="lazy" width="351" height="409" src="assets/373cb0241e82d355dfc15502.webp" alt="Process Explorer で Flags 列を基準に並べ替えた Cortana のケイパビリティ SID の一覧"><figcaption>Cortana の SearchUI.exe の「セキュリティ」タブ。グループ一覧を属性（Flags）で並べ替えると、AppContainer SID と機能（Capability）SID を確認できます。表示されている機能にはインターネット接続、音楽ライブラリ、画像ライブラリなどがあります。</figcaption></figure>
 <p>Cortana にはマニフェストに記載されたすべてのケイパビリティが付与されています。そのうち、Windows 8 で導入された一部のケイパビリティは <code>IsWellKnownSid</code> などの関数で識別できるため、Process Explorer は分かりやすい名前で表示します。前述のように、ほかのケイパビリティはハッシュ値や GUID を表すため、SID のまま表示されます。</p></section><section class="page" id="page-719" aria-label="page-719"><p>UWP プロセスの元になったパッケージの詳細を確認するには、本書のダウンロード資料に含まれる UWPList ツールを使います。システム上のイマーシブプロセスをすべて表示することも、プロセス ID を指定して1つだけ表示することもできます。</p>
 <pre>C:\WindowsInternals&gt;UwpList.exe 3728
@@ -11260,7 +11260,7 @@ Address
 ...</pre>
 <p>原本では、上の出力のうち CFG に関する情報が太字で示されています。これらの項目は後述します。まず Process Explorer を開き、プロセス一覧の列見出しを右クリックして「列の選択（Select Columns）」を選びます。「プロセスイメージ（Process Image）」タブで「Control Flow Guard」にチェックを入れ、「プロセスのメモリ（Process Memory）」タブで「Virtual Size」も選びます。次のような表示になります。</p>
 <figure><img loading="lazy" width="439" height="329" src="assets/68cf798c286d0547605d876c.webp" alt="Process Explorer に表示されたプロセスごとの Control Flow Guard と Virtual Size の列"><figcaption>Process Explorer の一覧で「制御フロー ガード（Control Flow Guard）」と「仮想サイズ（Virtual Size）」を比較しています。audiodg.exe と conhost.exe の行には CFG の表示があります。</figcaption></figure>
-<p>Smss、Csrss、Audiodg、メモ帳など、Microsoft が提供するプロセスの大半は CFG を有効にしてビルドされています。これらのプロセスの仮想サイズは非常に大きくなります。仮想サイズは、コミット済みか予約のみかを問わず、そのプロセスが使う仮想アドレス空間の合計です。「Private Bytes」列が示すのは、コミット済みのプライベートメモリの量であり、共有メモリなども含む仮想サイズよりはるかに小さくなります。この実験で CFG が有効な64ビットプロセスの仮想サイズは、少なくとも2 TBです。その理由を次に見ていきます。</p>
+<p>Smss、Csrss、Audiodg、メモ帳など、Microsoft が提供するプロセスの大半は CFG を有効にしてビルドされています。これらのプロセスの仮想サイズは非常に大きくなります。仮想サイズは、コミット済みか予約のみかを問わず、そのプロセスが使う仮想アドレス空間の合計です。「プライベートバイト（Private Bytes）」列が示すのは、コミット済みのプライベートメモリの量であり、共有メモリなども含む仮想サイズよりはるかに小さくなります。この実験で CFG が有効な64ビットプロセスの仮想サイズは、少なくとも2 TBです。その理由を次に見ていきます。</p>
 <h4 id="CFG-ビットマップ">CFG ビットマップ</h4>
 <p>前述のように、数命令ごとに関数の一覧を走査するのは現実的ではありません。性能を保つには、関数の数に比例する O(<var>n</var>) の探索を避け、関数の数にかかわらず一定時間で参照できる O(1) のアルゴリズムが必要です。1回の参照にかかる時間も、できる限り短くする必要があります。単純な方法としては、分岐先の関数アドレスを添字に使い、そのアドレスが有効かどうかを <code>BOOL</code> などで示す配列が考えられます。しかし、128 TB分のアドレスに対してこの方法を使うと、配列のサイズは 128 TB × <code>sizeof(BOOL)</code> になります。アドレス空間自体よりも大きく、実用になりません。どうすればこの配列を小さくできるでしょうか。</p></section><section class="page" id="page-762" aria-label="page-762"><p>コンパイラーが x64 の関数を16バイト境界に配置するなら、必要な配列は 8 TB × <code>sizeof(BOOL)</code> まで小さくなります。有効か無効かを示すだけなら、1〜4バイトを使う <code>BOOL</code> ではなく、1ビットで足ります。この場合、16バイト区画ごとに1ビットを割り当てるので、配列のサイズは1 TBになります。ただし、手書きのアセンブリコードや一部の最適化では、関数が16バイト境界に配置されるとは限りません。そこで、先頭の境界以外の15バイトのどこかに関数が始まるかどうかを、もう1ビットで表します。</p>
 <ul>
@@ -13325,7 +13325,7 @@ IRQL を戻すケースとして、ドライバーが DPC を実行している�
 アイドルスレッドとスケジューリングについては第1部の第4章を参照してください。
 デリゲートスレッドもアイドルスレッドと同じく System Idle Process に属しますが、スケジューラーの通常のスレッド選択の対象にはならず、カーネルが特定の処理で必要とするまで待機します。
 図8-18のシステムには論理プロセッサーが16個あり、アイドルスレッドと DPC デリゲートスレッドが16個ずつあります。
-デリゲートスレッドには実際のスレッド ID（TID）があり、この表示では「Processor」列をそのスレッドの TID として読みます。</p>
+デリゲートスレッドには実際のスレッド ID（TID）があり、この表示では「プロセッサー（Processor）」列をそのスレッドの TID として読みます。</p>
 <figure>
 <img loading="lazy" width="318" height="598" src="assets/57e8d5419d2ed22ace7b6552.webp" alt="16個の論理プロセッサーに対応する DPC デリゲートスレッドの一覧">
 <figcaption>図8-18　16個の論理プロセッサーを持つシステムの DPC デリゲートスレッド</figcaption>
@@ -14221,7 +14221,7 @@ Process Explorer はスレッドの開始アドレスを表示する際に、ラ
 <img loading="lazy" width="770" height="953" src="assets/bdd35149f400e73afda589c7.webp" alt="Process Explorer でメモ帳のスレッド開始アドレスを表示した原本ページ">
 <figcaption>Process Explorer に表示されたメモ帳のスレッド開始アドレス</figcaption>
 </figure></section><section class="page" id="p2-page-121" aria-label="p2-page-121"><p>Process Explorer のコールスタックには、呼び出しの階層が省略されずに表示されます。
-［Stack］をクリックすると、次のように表示されます。</p>
+［スタック（Stack）］をクリックすると、次のように表示されます。</p>
 <figure>
 <img loading="lazy" width="371" height="478" src="assets/f415d2adf35a3d21e8ea3786.webp" alt="Process Explorer のスレッド情報">
 <img loading="lazy" width="328" height="348" src="assets/16890bd837868207449722a9.webp" alt="Process Explorer のスタック表示">
@@ -14599,8 +14599,8 @@ lkd&gt; dx (((int(*)[90000])&amp;(nt!KiServiceTable)))-&gt;Take(*(int*)&amp;nt!K
 4    0xfffff8047ee24810           nt!NtWaitForSingleObject(0xfffff8047f012450) 0n32359680</pre></li>
 </ol></section><section class="page" id="p2-page-135" aria-label="p2-page-135"><h4 id="実験-システムサービスの動作を監視する">実験：システムサービスの動作を監視する</h4>
 <p>システムサービスの動作は、System オブジェクトの <code>System Calls/Sec</code> パフォーマンスカウンターで監視できます。
-パフォーマンスモニターを起動し、［Monitoring Tools］の下の［Performance Monitor］を選び、［Add］をクリックしてグラフにカウンターを追加します。
-［System］オブジェクトの［System Calls/Sec］カウンターを選び、［Add］をクリックします。</p>
+パフォーマンスモニターを起動し、［Monitoring Tools］の下の［Performance Monitor］を選び、［追加（Add）］をクリックしてグラフにカウンターを追加します。
+［System］オブジェクトの［System Calls/Sec］カウンターを選び、［追加（Add）］をクリックします。</p>
 <p>グラフの上限値は大幅に引き上げた方が見やすくなります。
 特にプロセッサー数の多いシステムでは、1秒あたり数十万回のシステムコールも珍しくありません。
 図は著者のコンピューターでの測定例です。</p>
@@ -15017,7 +15017,7 @@ XTA キャッシュのファイル名は次の形式です。</p>
 <figure>
 <img loading="lazy" width="396" height="238" src="assets/1d6ced8d39cd6b6985f455a9.webp" alt="Process Monitor の XtaCache.exe フィルター設定">
 <figcaption>Process Monitor で XtaCache.exe のイベントを表示するフィルター</figcaption>
-</figure></section><section class="page" id="p2-page-151" aria-label="p2-page-151"><p>イベントの記録をまだ開始していなければ、Process Monitor の［File］メニューから［イベントの取り込み（Capture Events）］を選びます。
+</figure></section><section class="page" id="p2-page-151" aria-label="p2-page-151"><p>イベントの記録をまだ開始していなければ、Process Monitor の［ファイル（File）］メニューから［イベントの取り込み（Capture Events）］を選びます。
 次に MPC-HC を起動し、動画を再生します。
 MPC-HC を終了し、Process Monitor でイベントの記録を停止します。
 イベントが多数表示されるので、ツールバーの対応するアイコンをクリックし、この実験では使わないレジストリのイベントを表示対象から外します。</p>
@@ -15088,16 +15088,16 @@ WDK または SDK に含まれる比較的新しいバージョンの Debugging 
 インストールしたら、スタートメニューから ARM64 版の WinDbg を開きます。</p>
 <p>セッションを開始する前に、XtaJit エミュレーターが発生させるデータのアラインメント違反（Data Misaligned）やインページ I/O エラーを無視するよう設定します。
 これらの例外はエミュレーター自身が処理するためです。
-［Debug］メニューから［Event Filters］を開き、一覧の［データのアラインメント不一致（Data Misaligned）］を選び、［Execution］グループの［無視（Ignore）］を選択します。
+［デバッグ（Debug）］メニューから［Event Filters］を開き、一覧の［データのアラインメント不一致（Data Misaligned）］を選び、［Execution］グループの［無視（Ignore）］を選択します。
 ［In-page I/O error］にも同じ設定を行います。
 最終的に図のような設定になります。</p>
 <figure>
 <img loading="lazy" width="770" height="953" src="assets/3098390b948f43d596292aa0.webp" alt="WinDbg の Event Filters ダイアログを含む原本ページ">
 <figcaption>WinDbg でエミュレーターが処理する例外を無視する設定</figcaption>
-</figure></section><section class="page" id="p2-page-154" aria-label="p2-page-154"><p>［Close］をクリックし、デバッガーのメイン画面の［File］メニューから［実行ファイルを開く（Open Executable）］を選びます。
+</figure></section><section class="page" id="p2-page-154" aria-label="p2-page-154"><p>［閉じる（Close）］をクリックし、デバッガーのメイン画面の［ファイル（File）］メニューから［実行ファイルを開く（Open Executable）］を選びます。
 <code>%SystemRoot%&#92;SysWOW64</code> フォルダーにある32ビット x86 実行ファイルを1つ選びます。
 この例では <code>notepad.exe</code> を使いますが、ほかの x86 アプリケーションでも構いません。
-［View］メニューから逆アセンブリウィンドウも開きます。
+［表示（View）］メニューから逆アセンブリウィンドウも開きます。
 <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/symbol-path">デバッガーのシンボルパスの説明</a>に従ってシンボルを正しく設定していれば、ネイティブ版 Ntdll の最初のブレークポイントで停止します。
 <code>k</code> コマンドでスタックを表示すると確認できます。</p>
 <pre>0:000&gt; k
@@ -15665,7 +15665,7 @@ I/O マネージャーの解析ルーチンは名前の文字列を該当する�
 <img loading="lazy" width="464" height="238" src="assets/37b2ee1153911ffb3c5c5697.webp" alt="Process Explorer が Cmd.exe の開いているハンドルを示す画面">
 <figcaption>Process Explorer に表示されたカレントディレクトリのハンドル</figcaption>
 </figure>
-<p>スペースキーを押すか、［View］→［Update Speed］→［Pause］を選び、Process Explorer の更新を一時停止します。
+<p>スペースキーを押すか、［View］→［Update Speed］→［一時停止（Pause）］を選び、Process Explorer の更新を一時停止します。
 次に <code>cd</code> コマンドでカレントディレクトリを変更し、F5 キーを押して表示を更新します。
 Process Explorer で、変更前のディレクトリへのハンドルが閉じられ、変更後のディレクトリへのハンドルが新しく開かれたことを確認できます。
 以前のハンドルは赤、新しいハンドルは緑で強調されます。</p></section><section class="page" id="p2-page-176" aria-label="p2-page-176"><p>Process Explorer の変更箇所を強調する機能を使うと、ハンドルテーブルの変化を簡単に確認できます。
@@ -17599,7 +17599,7 @@ ALPC では <code>NtAlpcCancelMessage</code> システム呼び出しでメッ�
 <p>名前付き ALPC ポートオブジェクトは、Sysinternals の WinObj または GitHub の WinObjEx64 で確認できます。
 どちらかを管理者権限で実行し、ルートディレクトリを選択してください。
 図のように、WinObj では歯車、WinObjEx64 では電源プラグのアイコンでポートオブジェクトを見分けられます。
-「Type」列をクリックすると、すべてのオブジェクトを型で並べ替えられます。</p>
+「種類（Type）」列をクリックすると、すべてのオブジェクトを型で並べ替えられます。</p>
 <figure><img loading="lazy" width="525" height="409" src="assets/710a193b1dfdcc48dd480486.webp" alt="ルートディレクトリにある名前付き ALPC ポートオブジェクトの一覧"><figcaption>名前付き ALPC ポートオブジェクトの表示例</figcaption></figure></section><section class="page" id="p2-page-245" aria-label="p2-page-245"><p>電源マネージャー、セキュリティマネージャー、その他の Windows 内部サービスが使う ALPC ポートが表示されます。
 RPC が使う ALPC ポートオブジェクトを見るには、<code>\RPC Control</code> ディレクトリを選びます。
 ローカル RPC に加え、Windows サブシステムも ALPC の主な利用者です。
@@ -22166,7 +22166,7 @@ fffff800`d0527318  000009ca</code></pre>
 <p>まず、Process Monitor のフィルターで、コピー元とコピー先のファイルパス、<code>Explorer.exe</code> と <code>System</code> の両プロセス、<code>ReadFile</code> と <code>WriteFile</code> の両操作を対象にします。この例でコピー元に指定したのは <code>C:&#92;Users&#92;Andrea&#92;Documents&#92;Windows_10_RS3.iso</code>、コピー先は <code>C:&#92;ISOs&#92;Windows_10_RS3.iso</code> です。</p><figure><img loading="lazy" width="358" height="212" src="assets/8e1eceb464dbb9512166e833.webp" alt="コピー元とコピー先、対象プロセス、読み書き操作を指定したフィルター"><figcaption>フィルターは System と explorer.exe の ReadFile（読み取り）および WriteFile（書き込み）を対象とし、パスをコピー元とコピー先の ISO ファイルに限定しています。</figcaption></figure>
 <p>ファイルをコピーすると、図のようなトレースが Process Monitor に表示されます。最初の数行には、コピーエンジンが最初に発行した I/O と、それに続くキャッシュマネージャーの処理が記録されます。</p><figure><img loading="lazy" width="649" height="270" src="assets/953842f3c38fb370bac9b11d.webp" alt="ファイルコピー開始時の読み取りと書き込みのトレース"><figcaption>コピー開始時のイベント。Explorer.EXE の読み取りと書き込みが成功し、System による非キャッシュのページング読み取りも記録されています。読み書きの長さは 1,048,576 バイトです。</figcaption></figure>
 <ul><li>1行目は、エクスプローラーによる最初の1 MB のキャッシュ読み取りです。この読み取りのサイズは、ファイルサイズに基づく内部の計算で決まり、128 KB から1 MB の範囲で変化します。この例では対象ファイルが大きいため、コピーエンジンは1 MB を選びました。</li></ul></section><section class="page" id="p2-page-623" aria-label="p2-page-623"><ul>
-<li>最初の1 MB の読み取りに続いて、キャッシュを使わない1 MB の読み取りが発生します。非キャッシュ読み取りは、通常、ページフォールトやキャッシュマネージャーによるアクセスに伴って発生します。Process Monitor で該当する行をダブルクリックして「Stack」タブを開き、スタックトレースを調べます。すると、NTFS ドライバーの読み取りルーチンがキャッシュマネージャーの <code>CcCopyRead</code> を呼び出し、それに伴うページフォールトをメモリマネージャーが処理して、コピー元のデータを物理メモリに読み込んだことがわかります。<figure><img loading="lazy" width="280" height="328" src="assets/6d73e1dda4ad3a8a72f23c3a.webp" alt="ページフォールトに伴う非キャッシュ読み取りのスタック"><figcaption>「イベントのプロパティ」の「スタック」タブ。フレームの K はカーネルモード、U はユーザーモードを示します。下部に ReadFile とコピー処理の呼び出し元が表示されています。</figcaption></figure></li>
+<li>最初の1 MB の読み取りに続いて、キャッシュを使わない1 MB の読み取りが発生します。非キャッシュ読み取りは、通常、ページフォールトやキャッシュマネージャーによるアクセスに伴って発生します。Process Monitor で該当する行をダブルクリックして「スタック（Stack）」タブを開き、スタックトレースを調べます。すると、NTFS ドライバーの読み取りルーチンがキャッシュマネージャーの <code>CcCopyRead</code> を呼び出し、それに伴うページフォールトをメモリマネージャーが処理して、コピー元のデータを物理メモリに読み込んだことがわかります。<figure><img loading="lazy" width="280" height="328" src="assets/6d73e1dda4ad3a8a72f23c3a.webp" alt="ページフォールトに伴う非キャッシュ読み取りのスタック"><figcaption>「イベントのプロパティ」の「スタック」タブ。フレームの K はカーネルモード、U はユーザーモードを示します。下部に ReadFile とコピー処理の呼び出し元が表示されています。</figcaption></figure></li>
 <li>この1 MB のページフォールト I/O の後、キャッシュマネージャーがファイルの先読みを始めます。続いて、<code>System</code> プロセスによる、オフセット1 MB からの非キャッシュ読み取りが1 MB 分記録されます。キャッシュマネージャーは、ファイルサイズとエクスプローラーの読み取り要求のサイズを基に、先読みサイズを1 MB と決めました。図に示す先読み操作のスタックトレースから、キャッシュマネージャーのワーカースレッドが先読みを実行していることを確認できます。<figure><img loading="lazy" width="280" height="328" src="assets/bfaef01ad353f4cb773757e0.webp" alt="先読みを実行したワーカースレッドのスタック"><figcaption>先読みのスタックには CcPerformReadAhead、CcWorkerThread、ExpWorkerThread が並びます。読み取りを実行したのはキャッシュマネージャーのワーカースレッドです。</figcaption></figure></li>
 </ul></section><section class="page" id="p2-page-624" aria-label="p2-page-624"><p>この時点以降、エクスプローラーによる1 MB 単位の読み取りでは、通常はページフォールトが発生しません。先読みスレッドが、キャッシュを使わない1 MB 単位の読み取りで、必要なファイルデータを先に取得しているためです。ただし、ときどき先読みが間に合わず、複数ページをまとめて取り込むページフォールトが発生します。Process Monitor では、これは同期ページング I/O（Synchronous Paging I/O）として表示されます。</p><figure><img loading="lazy" width="631" height="263" src="assets/cdc0bccc97c12f36739b491c.webp" alt="同期ページング I/O のトレース"><figcaption>選択行は Explorer.EXE による 1 MiB の読み取りです。詳細欄の I/O フラグで、非キャッシュのページング I/O と確認できます。</figcaption></figure>
 <p>該当する行のスタックを調べると、<code>MmPrefetchForCacheManager</code> の代わりに、<code>MmAccessFault</code> と <code>MiIssueHardFault</code> が呼び出されています。</p>
