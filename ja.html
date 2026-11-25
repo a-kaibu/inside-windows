@@ -20168,18 +20168,18 @@ lkd&gt; k
 <p>Process Monitor は、実行時に自身の実行ファイルからデバイスドライバーを取り出して起動します。初回の実行には、実行アカウントにドライバーの読み込み特権とデバッグ特権が必要です。一度読み込まれたドライバーは常駐するため、同じブートセッション内での2回目以降の起動には、デバッグ特権だけが必要です。</p>
 <h4 id="実験-アイドル状態のシステムでレジストリ操作を観察する">実験　アイドル状態のシステムでレジストリ操作を観察する</h4>
 <p>レジストリの <code>RegNotifyChangeKey</code> 関数を使うと、アプリケーションはポーリングせずに変更通知を受け取れます。そのため、アイドル状態のシステムで Process Monitor を起動しても、同じキーや値へのアクセスが繰り返し現れることは通常ありません。そのようなアクセスがある場合は、アプリケーションが不要な処理を行ってシステム全体の性能を下げている可能性があります。</p>
-<p>Process Monitor を起動し、ツールバーで <span lang="en">Show Registry Activity</span> アイコンだけが有効になっていることを確認します。これでファイルシステム、ネットワーク、プロセスやスレッドのイベントを除外できます。数秒待ってからログを確認し、ポーリングと思われる操作を探します。該当する行を右クリックし、コンテキストメニューから <span lang="en">Process Properties</span> を選ぶと、操作を行ったプロセスの詳細が表示されます。</p>
+<p>Process Monitor を起動し、ツールバーで 「レジストリ操作の表示（<span lang="en">Show Registry Activity</span>）」 アイコンだけが有効になっていることを確認します。これでファイルシステム、ネットワーク、プロセスやスレッドのイベントを除外できます。数秒待ってからログを確認し、ポーリングと思われる操作を探します。該当する行を右クリックし、コンテキストメニューから 「プロセスのプロパティ（<span lang="en">Process Properties</span>）」 を選ぶと、操作を行ったプロセスの詳細が表示されます。</p>
 <h4 id="実験-Process-Monitor-でアプリケーションのレジストリ設定を探す">実験　Process Monitor でアプリケーションのレジストリ設定を探す</h4>
 <p>問題の診断では、システムやアプリケーションが特定の設定をレジストリのどこに保存するかを調べることがあります。この実験では、Process Monitor を使ってメモ帳の設定の保存先を見つけます。多くの Windows アプリケーションと同様に、メモ帳は行の折り返し、フォントとそのサイズ、ウィンドウの位置などの設定を次回の起動に備えて保存します。メモ帳が設定を読み書きするときの操作を監視すれば、設定を保持するレジストリキーが分かります。</p>
 <ol>
 <li>Process Monitor のトレースから簡単に検索できる設定をメモ帳に保存します。メモ帳を起動してフォントを Times New Roman に変更し、終了します。</li>
-<li>Process Monitor を起動します。フィルターダイアログを開き、<span lang="en">Process Name</span> フィルターを選び、一致条件として <code>notepad.exe</code> を入力します。<span lang="en">Add</span> をクリックして追加します。これで、<code>notepad.exe</code> プロセスの操作だけをログで確認できます。</li>
-<li>メモ帳を起動し直します。起動後、Process Monitor の <span lang="en">File</span> メニューで <span lang="en">Capture Events</span> を切り替え、イベントの取り込みを停止します。</li>
+<li>Process Monitor を起動します。フィルターダイアログを開き、「プロセス名（<span lang="en">Process Name</span>）」 フィルターを選び、一致条件として <code>notepad.exe</code> を入力します。「追加（<span lang="en">Add</span>）」 をクリックして追加します。これで、<code>notepad.exe</code> プロセスの操作だけをログで確認できます。</li>
+<li>メモ帳を起動し直します。起動後、Process Monitor の 「ファイル（<span lang="en">File</span>）」 メニューで <span lang="en">Capture Events</span> を切り替え、イベントの取り込みを停止します。</li>
 <li>ログの先頭行までスクロールし、その行を選択します。</li>
 </ol></section><section class="page" id="p2-page-437" aria-label="p2-page-437"><ol start="5">
 <li><kbd>Ctrl</kbd>+<kbd>F</kbd> を押して検索ダイアログを開き、<code>times new</code> を検索します。次の画面例のように、メモ帳がレジストリからフォントの値を読み取った行が強調表示されるはずです。その前後には、メモ帳のほかの設定に関する操作も記録されているはずです。
 <figure><img loading="lazy" width="588" height="267" src="assets/b1edcc95fc0de0c775f4fc97.webp" alt="Process Monitor でメモ帳によるフォント設定の読み取りを検索した結果"><figcaption>メモ帳がレジストリからフォント設定を読み取ったイベント。</figcaption></figure></li>
-<li>強調表示された行を右クリックし、<span lang="en">Jump To</span> を選択します。Process Monitor は、レジストリエディターが起動していなければ起動し、メモ帳が参照したレジストリ値に移動して選択します。</li>
+<li>強調表示された行を右クリックし、「対象に移動（<span lang="en">Jump To</span>）」 を選択します。Process Monitor は、レジストリエディターが起動していなければ起動し、メモ帳が参照したレジストリ値に移動して選択します。</li>
 </ol>
 <h3 id="レジストリの内部構造">レジストリの内部構造</h3>
 <p>この節では、レジストリを実装するエグゼクティブのサブシステムである構成マネージャーが、ディスク上のファイルをどう構成するかを説明します。アプリケーションやほかの OS コンポーネントがレジストリのキーや値を読み取ったり変更したりするとき、構成マネージャーがレジストリをどう管理するかを見ていきます。また、レジストリの変更中にシステムがクラッシュしても復旧できる状態を保つための仕組みを取り上げます。</p>
@@ -20227,7 +20227,7 @@ lkd&gt; k
 <p>構成マネージャーは、レジストリのシンボリックリンクという特殊な種類のキーを使って、キー同士をつなぎ、レジストリを構成します。シンボリックリンクにたどり着くと、構成マネージャーは別のキーに移動します。たとえば、<code>HKLM&#92;SAM</code> は SAM ハイブのルートキーへのシンボリックリンクです。リンクを作成するには、<code>RegCreateKey</code> または <code>RegCreateKeyEx</code> に <code>REG_CREATE_LINK</code> を指定します。構成マネージャーは内部で、リンク先のキーパスを保持する <code>REG_LINK</code> 型の値 <code>SymbolicLinkValue</code> を作成します。この値は <code>REG_SZ</code> 型ではないため、レジストリエディターには表示されませんが、ディスク上のレジストリハイブには格納されています。</p>
 <h4 id="実験-ハイブのハンドルを調べる">実験　ハイブのハンドルを調べる</h4>
 <p>構成マネージャーは、どのプロセスコンテキストからでもハイブにアクセスできるよう、第8章で説明したカーネルハンドルテーブルを使ってハイブを開きます。カーネルハンドルテーブルを使えば、ユーザープロセスから保護すべきハンドルに、ドライバーやエグゼクティブコンポーネントが System プロセスのコンテキストに切り替えてアクセスする手間が省けます。</p>
-<p>ハイブのハンドルを確認するには、Process Explorer を管理者として起動します。ハンドルは System プロセスで開かれているものとして表示されます。System プロセスを選択し、<span lang="en">View</span> メニューの <span lang="en">Lower Pane View</span> から <span lang="en">Handles</span> を選びます。ハンドルの種類で並べ替え、次の画面例のようにハイブファイルが見える位置までスクロールします。</p>
+<p>ハイブのハンドルを確認するには、Process Explorer を管理者として起動します。ハンドルは System プロセスで開かれているものとして表示されます。System プロセスを選択し、「表示（<span lang="en">View</span>）」 メニューの 「下ペインの表示（<span lang="en">Lower Pane View</span>）」 から <span lang="en">Handles</span> を選びます。ハンドルの種類で並べ替え、次の画面例のようにハイブファイルが見える位置までスクロールします。</p>
 <figure><img loading="lazy" width="628" height="507" src="assets/f23eb190022bafdcde9ecd5d.webp" alt="Process Explorer の下部ペインに表示された System プロセスのファイルハンドル"><figcaption>System プロセスのハンドル一覧で、レジストリハイブのファイルを確認する。</figcaption></figure></section><section class="page" id="p2-page-442" aria-label="p2-page-442"><h4 id="ハイブの構造">ハイブの構造</h4>
 <p>ファイルシステムがディスクをクラスターに分けるのと同様に、構成マネージャーはハイブをブロックと呼ばれる論理的な割り当て単位に分割します。レジストリのブロックサイズは定義上4096バイト（4 KB）です。データを追加してハイブが拡張されるときは、常にブロック単位で拡張されます。ハイブの先頭のブロックをベースブロックと呼びます。</p>
 <p>ベースブロックには、ハイブ全体に関する情報が含まれます。ファイルがハイブであることを示すシグネチャ <code>regf</code>、2つの更新シーケンス番号、ハイブへの書き込みを最後に開始した時刻、Winload によるレジストリの修復または復旧の情報、ハイブ形式のバージョン番号、チェックサム、ハイブファイルの内部ファイル名（例 <code>&#92;Device&#92;HarddiskVolume1&#92;WINDOWS&#92;SYSTEM32&#92;CONFIG&#92;SAM</code>）です。2つの更新シーケンス番号とタイムスタンプの意味は、ハイブファイルにデータを書き込む仕組みを説明する際に取り上げます。</p>
@@ -20594,7 +20594,7 @@ KeyLock          : 0xe1034d40</pre>
 <li>CryptSvc は共有ホストプロセスで実行されるサービスです。Windows 10 では、タスクマネージャーを使うと、対象のプロセスを簡単に特定できます。<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Services&#92;CryptSvc&#92;Parameters</code> キーに記載されているサービス DLL の名前を調べる必要はありません。</li>
 <li>タスクマネージャーを開き、「サービス」タブで CryptSvc をホストするプロセスの PID を確認します。</li>
 <li>Process Explorer に戻り、同じ PID の <code>Svchost.exe</code> プロセスをダブルクリックして、プロパティを開きます。</li>
-<li><span lang="en">Services</span> タブに CryptSvc があることを確認します。サービスの分離が有効ならサービスは1つだけ、無効なら複数表示されます。続いて <span lang="en">Security</span> タブを開くと、次の画面例のようなセキュリティ情報が表示されます。</li>
+<li>「サービス（<span lang="en">Services</span>）」 タブに CryptSvc があることを確認します。サービスの分離が有効ならサービスは1つだけ、無効なら複数表示されます。続いて 「セキュリティ（<span lang="en">Security</span>）」 タブを開くと、次の画面例のようなセキュリティ情報が表示されます。</li>
 </ol>
 <figure><img loading="lazy" width="343" height="522" src="assets/3da3895a14f4c8f327bdf9fb.webp" alt="Process Explorer の Security タブで CryptSvc をホストするプロセスのセキュリティトークンを確認する画面"><figcaption>CryptSvc をホストするプロセスのグループと特権。</figcaption></figure></section><section class="page" id="p2-page-470" aria-label="p2-page-470"><p>サービスはローカルサービスアカウントで動作していますが、Windows が実際に割り当てた特権は、表10-10に示す同アカウントで利用可能な特権より大幅に少なくなっています。</p>
 <p>サービスをホストするプロセスのトークンには、そのプロセス内の全サービスが要求する特権の和集合が含まれます。したがって、DnsCache や LanmanWorkstation などのサービスも、Process Explorer に表示されたもの以外の特権は要求していないことが分かります。Svchost によるサービスの分離が無効な場合は、これらのサービスも <code>sc.exe</code> で調べて確認できます。</p>
@@ -20606,7 +20606,7 @@ KeyLock          : 0xe1034d40</pre>
 <p>第9章の実験「VM ワーカープロセスと仮想ハードディスクファイルのセキュリティを理解する」では、システムが VM ワーカープロセスごとに VM SID を生成する方法を示しました。サービス SID も、決まったアルゴリズムで生成されます。この実験では Process Explorer でサービス SID を表示し、システムがその値を生成する方法を確認します。</p>
 <p>まず、仮想サービスアカウント、制限付きアクセストークン、制限なしアクセストークンのいずれかで動作するサービスを選びます。Cortana の検索ボックスで <code>regedit</code> と入力してレジストリエディターを開き、<code>HKLM&#92;SYSTEM&#92;CurrentControlSet&#92;Services</code> キーに移動します。「編集」メニューから「検索」を選びます。前述のとおり、サービスアカウントは <code>ObjectName</code> 値に保存されています。<code>NT SERVICE&#92;</code> で始まる仮想サービスアカウントで動作するサービスは多くないため、制限付きまたは制限なしのトークンを使うサービスのほうが探しやすくなります。検索欄に <code>ServiceSidType</code> と入力し、「次を検索」をクリックします。この値は、サービスがどちらのトークンで実行されるかを示します。</p>
 <p>この実験では、<code>ServiceSidType</code> が <code>3</code> の制限付きサービスを探します。値が <code>1</code> の制限なしサービスでも実験できます。目的の値と一致しなければ、<kbd>F3</kbd> キーで次のサービスを探します。ここでは BFE サービスを使います。</p>
-<p>Process Explorer を開き、前の実験と同じ方法で BFE をホストするプロセスを見つけ、ダブルクリックします。<span lang="en">Security</span> タブで <code>NT SERVICE&#92;BFE</code> グループを選びます。この名前はサービス SID を人が読める形で表したものです。別のサービスを使った場合は、そのサービスに対応する項目を選びます。グループ一覧の下に表示される SID を確認します。仮想サービスアカウントで動作するサービスでは、<span lang="en">Security</span> タブの2行目にサービス SID が表示されます。</p>
+<p>Process Explorer を開き、前の実験と同じ方法で BFE をホストするプロセスを見つけ、ダブルクリックします。<span lang="en">Security</span> タブで <code>NT SERVICE&#92;BFE</code> グループを選びます。この名前はサービス SID を人が読める形で表したものです。別のサービスを使った場合は、そのサービスに対応する項目を選びます。グループ一覧の下に表示される SID を確認します。仮想サービスアカウントで動作するサービスでは、「セキュリティ（<span lang="en">Security</span>）」 タブの2行目にサービス SID が表示されます。</p>
 <pre><code>S-1-5-80-1383147646-27650227-2710666058-1662982300-1023958487</code></pre>
 <p>サービス SID は NT 機関（ID 5）のもとで、サービスの基準 RID（80）と、大文字に変換したサービス名を UTF-16 で表した文字列の SHA-1 ハッシュを使って生成されます。SHA-1 の出力は160ビット（20バイト）です。Windows の SID では、これを4バイトずつ5つのサブ機関値に分けます。UTF-16 で表したサービス名 <code>BFE</code> の SHA-1 ハッシュは次のとおりです。</p>
 <pre><code>7e 28 71 52 b3 e8 a5 01 4a 7b 91 a1 9c 18 1f 63 d7 5d 08 3d</code></pre>
@@ -20998,7 +20998,7 @@ windbg.exe /I</code></pre>
 <li>レジストリエディターを閉じ、タスクスケジューラに戻ります。</li>
 <li><code>CacheTask</code> を右クリックし、「実行」を選びます。</li>
 <li>設定が正しければ、新しい WinDbg ウィンドウが開きます。</li>
-<li>WinDbg の <span lang="en">File</span> メニューから <span lang="en">Symbol File Path</span> を選び、<a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/microsoft-public-symbols">Windows シンボルサーバー</a>の有効なパスを指定します。</li>
+<li>WinDbg の 「ファイル（<span lang="en">File</span>）」 メニューから 「シンボルファイルのパス（<span lang="en">Symbol File Path</span>）」 を選び、<a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/microsoft-public-symbols">Windows シンボルサーバー</a>の有効なパスを指定します。</li>
 <li><code>k</code> コマンドで、中断時点の <code>Taskhostw.exe</code> のコールスタックを確認します。
 <pre>0:000&gt; k
 # Child-SP
@@ -21099,12 +21099,12 @@ uint32  OverwriteOutDated;
 <p>Windows に付属する Windows Management Instrumentation Tester（WbemTest）を使うと、任意の WMI クラスの MOF 定義を表示できます。この実験では <code>Win32_NTEventLogFile</code> クラスを取り上げます。</p>
 <ol>
 <li>Cortana の検索ボックスに <code>Wbemtest</code> と入力して <kbd>Enter</kbd> を押します。Windows Management Instrumentation Tester が開きます。</li>
-<li><span lang="en">Connect</span> をクリックし、<span lang="en">Namespace</span> を <code>root&#92;cimv2</code> に変更して接続します。次の画面例のように、すべての操作ボタンが有効になります。</li>
+<li>「接続（<span lang="en">Connect</span>）」 をクリックし、「名前空間（<span lang="en">Namespace</span>）」 を <code>root&#92;cimv2</code> に変更して接続します。次の画面例のように、すべての操作ボタンが有効になります。</li>
 </ol></section><section class="page" id="p2-page-523" aria-label="p2-page-523"><figure><img loading="lazy" width="385" height="328" src="assets/e42c7fffce7c94bc0a6458a2.webp" alt="名前空間に接続し、クラス列挙などのボタンが有効になった WbemTest"><figcaption>WbemTest で名前空間に接続した状態。</figcaption></figure>
 <ol start="3">
-<li><span lang="en">Enum Classes</span> をクリックし、<span lang="en">Recursive</span> を選んで「OK」をクリックします。</li>
+<li>「クラスの列挙（<span lang="en">Enum Classes</span>）」 をクリックし、「再帰的（<span lang="en">Recursive</span>）」 を選んで「OK」をクリックします。</li>
 <li>クラスの一覧で <code>Win32_NTEventLogFile</code> を探し、ダブルクリックしてクラスのプロパティを表示します。</li>
-<li><span lang="en">Show MOF</span> をクリックすると、MOF のテキストを表示するウィンドウが開きます。</li>
+<li>「MOF の表示（<span lang="en">Show MOF</span>）」 をクリックすると、MOF のテキストを表示するウィンドウが開きます。</li>
 </ol>
 <p>開発者は MOF でクラスを定義したあと、いくつかの方法でその定義を WMI に渡せます。WDM ドライバーの開発者は、MOF ファイルをよりコンパクトなバイナリ MOF（BMF）ファイルにコンパイルし、実行時に WDM インフラストラクチャに渡すか、ドライバーのバイナリに組み込めます。プロバイダーが MOF をコンパイルして、WMI COM API 経由で定義を WMI インフラストラクチャに渡す方法もあります。また、MOF コンパイラー（<code>Mofcomp.exe</code>）を使い、コンパイル済みのクラス定義を WMI インフラストラクチャに直接登録することもできます。</p>
 <aside><p><strong>注</strong>　Windows 7 までの旧版では、WMI 管理ツールに WMI CIM Studio という GUI ツールが付属し、WMI の名前空間、クラス、プロパティ、メソッドを画面で確認できました。原著の執筆時点では、Windows PowerShell の WMI 機能に置き換わり、CIM Studio のサポートと配布は終了していました。PowerShell はスクリプト言語で、WMI を閲覧するための GUI はありません。CIM Studio に似たインターフェイスを備えたサードパーティ製ツールには、<a href="https://github.com/vinaypamnani/wmie2/releases">WMI Explorer</a> などがあります。</p></aside></section><section class="page" id="p2-page-524" aria-label="p2-page-524"><p>Common Information Model（CIM）リポジトリは <code>%SystemRoot%&#92;System32&#92;wbem&#92;Repository</code> にあり、次のファイルを含みます。</p>
