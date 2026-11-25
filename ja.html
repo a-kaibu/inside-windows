@@ -4503,27 +4503,27 @@ Flags: 0 (0x0)  Parked: False  Allocated: False  Realtime: False  Tag: 0
 <li>コマンドプロンプトで次のコマンドを実行します。<code>-p</code> の後の値は、実験環境の CPUSTRES プロセスの ID に置き換えてください。
 <pre>CpuSet.exe -p 18276 -s 3</pre>
 <p><code>-s</code> は、プロセスの既定値として設定するプロセッサマスクを指定します。ここでは、<code>3</code> が CPU 0 と CPU 1 を表します。タスクマネージャーには、次のように、この2つの CPU の使用率が高くなったことが表示されます。</p>
-<figure><img loading="lazy" width="396" height="210" src="assets/52475c417b7babc8109a09a1.webp" alt="タスクマネージャーで CPU 0 と CPU 1 の使用率が上がったグラフ"></figure></li>
+<figure><img loading="lazy" width="396" height="210" src="assets/52475c417b7babc8109a09a1.webp" alt="タスクマネージャーで CPU 0 と CPU 1 の使用率が上がったグラフ"><figcaption>タスクマネージャーの「パフォーマンス」タブ。8 個のグラフが論理プロセッサーごとに過去 60 秒の使用率を示します。左上の 2 つが CPU 0 と CPU 1 です。</figcaption></figure></li>
 <li>CPU 0 でどのスレッドが動いているかを詳しく見てみます。Windows SDK に含まれる Windows Performance Recorder（WPR）と Windows Performance Analyzer（WPA）を使います。「スタート」を開き、「WPR」と入力して、「Windows Performance Recorder」を選びます。管理者権限への昇格を許可すると、次の画面が表示されます。
-<figure><img loading="lazy" width="453" height="357" src="assets/83608fb18cddb19f50e89ae1.webp" alt="Windows Performance Recorder の記録設定画面"></figure></li>
+<figure><img loading="lazy" width="453" height="357" src="assets/83608fb18cddb19f50e89ae1.webp" alt="Windows Performance Recorder の記録設定画面"><figcaption>Windows Performance Recorder の「システム情報の記録」画面。「リソース分析」で「CPU 使用率」を選択します。パフォーマンスシナリオは「全般」、詳細レベルは「詳細」、ログ記録モードは「メモリ」です。この画面では記録はまだ始まっていません。</figcaption></figure></li>
 </ol></section><section class="page" id="page-298" aria-label="page-298"><ol start="9">
 <li>既定の設定で、この実験に必要な CPU 使用状況を記録できます。WPR は Event Tracing for Windows（ETW）のイベントを記録します。ETW は Part 2 の第8章で説明します。ダイアログの「Start」をクリックし、1〜2秒後に、ラベルが「Save」に変わった同じボタンをクリックします。</li>
 <li>WPR が記録データの保存先を提示します。そのまま使うか、別のファイル名やフォルダーを指定します。</li>
 <li>保存が終わると、WPR がファイルを WPA で開くかどうか尋ねます。WPA で開く方を選びます。</li>
 <li>WPA が起動し、保存したファイルを読み込みます。WPA には本書で扱う範囲を超える多くの機能があります。左側には、記録された情報のカテゴリが次のように表示されます。
-<figure><img loading="lazy" width="195" height="228" src="assets/da9148c40d5f3f9d1305c94c.webp" alt="WPA の左側に表示される記録データのカテゴリ"></figure></li>
+<figure><img loading="lazy" width="195" height="228" src="assets/da9148c40d5f3f9d1305c94c.webp" alt="WPA の左側に表示される記録データのカテゴリ"><figcaption>Windows Performance Analyzer のグラフエクスプローラー。カテゴリには「システム活動（System Activity）」「計算処理（Computation）」「メモリ（Memory）」「電力（Power）」があります。</figcaption></figure></li>
 <li>「Computation」を展開し、その下の「CPU Usage (Precise)」を展開します。</li>
 <li>「Utilization by CPU」グラフをダブルクリックします。メイン領域に次のように表示されます。
-<figure><img loading="lazy" width="540" height="251" src="assets/c77e1247336b946a4c18cd38.webp" alt="論理プロセッサ別の使用率を表示した WPA のグラフ"></figure></li>
+<figure><img loading="lazy" width="540" height="251" src="assets/c77e1247336b946a4c18cd38.webp" alt="論理プロセッサ別の使用率を表示した WPA のグラフ"><figcaption>「CPU 使用率（高精度）」の CPU 別表示。各色の線は CPU 0 から CPU 7 までの使用率を示します。下の表では CPU ごとに、件数、切り替え先のプロセスとスレッド、実行可能にしたプロセス、CPU 使用時間、実行可能状態での待ち時間、待機時間を確認できます。</figcaption></figure></li>
 <li>ここでは CPU 0 に注目します。次の手順で、CPU 0 を CPUSTRES 専用にします。まず「CPU 0」を展開します。CPUSTRES に加え、ほかのプロセスも表示されます。</li>
-</ol></section><section class="page" id="page-299" aria-label="page-299"><figure><img loading="lazy" width="274" height="307" src="assets/574bae92f556dd12a8673774.webp" alt="設定変更前の CPU 0 で実行されたプロセスの一覧"></figure>
+</ol></section><section class="page" id="page-299" aria-label="page-299"><figure><img loading="lazy" width="274" height="307" src="assets/574bae92f556dd12a8673774.webp" alt="設定変更前の CPU 0 で実行されたプロセスの一覧"><figcaption>設定変更前の CPU 0 のトレース。件数は 2,321 で、表示範囲には System、RuntimeBroker.exe、MsMpEng.exe、SearchIndexer.exe、CPUSTRES.exe などへの切り替えが含まれます。</figcaption></figure>
 <ol start="16">
 <li>次のコマンドを実行して、システムが CPU 0 以外のプロセッサを使うように制限します。このシステムにはプロセッサが8個あるため、すべてを含むマスクは255（<code>0xff</code>）です。CPU 0 を除くと254（<code>0xfe</code>）になります。実験環境に合ったマスクに置き換えてください。
 <pre>CpuSet.exe -s 0xfe</pre></li>
 <li>タスクマネージャーの表示は、ほとんど変わらないはずです。CPU 0 の内訳を詳しく見るため、もう一度 WPR を起動し、先ほどと同じ設定で1〜2秒間記録します。</li>
 <li>記録したトレースを WPA で開き、「Utilization by CPU」を表示します。</li>
 <li>「CPU 0」を展開します。ほとんどが CPUSTRES で、ときどき System プロセスも表示されます。
-<figure><img loading="lazy" width="237" height="220" src="assets/2e70f148397a62fd18bd89ec.webp" alt="設定変更後の CPU 0 で実行されたプロセスの一覧"></figure></li>
+<figure><img loading="lazy" width="237" height="220" src="assets/2e70f148397a62fd18bd89ec.webp" alt="設定変更後の CPU 0 で実行されたプロセスの一覧"><figcaption>設定変更後の CPU 0 のトレース。件数は 15 で、切り替え先は主に CPUSTRES.exe（PID 18276）です。System（PID 4）への切り替えも確認できます。</figcaption></figure></li>
 <li>「CPU Usage (in View) (ms)」列を見ると、System プロセスが使った時間はマイクロ秒単位で、ごくわずかです。CPU 0 が実質的に CPUSTRES 専用になったことがわかります。</li>
 <li>引数なしでもう一度 <code>CPUSET.exe</code> を実行します。最初のセット（CPU 0）には <code>Allocated: True</code> と表示されます。システム汎用の CPU から外れ、特定のプロセスに割り当てられたためです。</li>
 </ol></section><section class="page" id="page-300" aria-label="page-300"><ol start="22">
