@@ -227,7 +227,7 @@
 <figure><img loading="lazy" width="223" height="215" src="assets/8546556391580688f277db8f.webp" alt="タスク マネージャーの詳細表示で開いたプロセスタブ"><figcaption>「プロセス」タブでは、アプリとバックグラウンドプロセスを分けて表示し、各プロセスの CPU、メモリ、ディスク、ネットワークの使用状況を確認できます。左下の「簡易表示」で元に戻ります。</figcaption></figure>
 <p>「プロセス」タブにはプロセスの一覧と、CPU、メモリ、ディスク、ネットワークの4つの列が表示されます。列の見出しを右クリックすると、プロセス名（イメージ名）、プロセス ID、種類、状態、発行元、コマンドラインの列も表示できます。一部のプロセスは展開でき、そのプロセスが作成した、画面に表示されるトップレベルウィンドウを確認できます。</p></section><section class="page" id="page-27" aria-label="page-27"><p>プロセスの情報をさらに詳しく見るには、「詳細」タブをクリックします。「プロセス」タブで対象を右クリックし、「詳細の表示」を選ぶと、「詳細」タブに切り替わり、そのプロセスが選択されます。</p>
 <blockquote><p><strong>注</strong>　Windows 7 のタスク マネージャーの「プロセス」タブは、Windows 8 以降の「詳細」タブにおおむね相当します。Windows 7 の「アプリケーション」タブには、画面に表示されているトップレベルウィンドウが並びます。Windows 8 以降では、この情報は「プロセス」タブに含まれます。</p></blockquote>
-<figure><img loading="lazy" width="330" height="331" src="assets/b8c60cd4670bf78f80c41e1b.webp" alt="タスク マネージャーの詳細タブに並ぶプロセス"></figure>
+<figure><img loading="lazy" width="330" height="331" src="assets/b8c60cd4670bf78f80c41e1b.webp" alt="タスク マネージャーの詳細タブに並ぶプロセス"><figcaption>タスクマネージャーの「詳細」タブ。プロセスごとに名前、PID、状態、ユーザー名、CPU 使用率、メモリ使用量、説明を確認できます。csrss.exe や dwm.exe のように、同じ名前で PID が異なるプロセスもあります。</figcaption></figure>
 <p>「詳細」タブにもプロセスが並びます。表示は「プロセス」タブより簡潔で、各プロセスが作成したウィンドウは表示されません。選べる列の種類は増えています。</p>
 <p>プロセスは、対応する実行イメージの名前で表示されます。Windows の一部のオブジェクトと異なり、プロセスにグローバルな名前を付けることはできません。表示する項目を増やすには、列の見出しを右クリックし、「列の選択」をクリックします。次のように列の一覧が表示されます。</p>
 <figure><img loading="lazy" width="188" height="197" src="assets/62941789a387e65fc1d9b9f6.webp" alt="詳細タブに表示する列を選択するダイアログ"><figcaption>「列の選択」では、チェックを付けた項目が一覧に表示されます。画面では PID、状態、ユーザー名、CPU が選択され、セッション ID、CPU 時間、サイクル、ワーキングセットなども選べます。</figcaption></figure></section><section class="page" id="page-28" aria-label="page-28"><p>主な列には次のものがあります。</p>
@@ -308,7 +308,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li>「プロセス」タブをクリックします。</li>
 </ol></section><section class="page" id="page-31" aria-label="page-31"><ol start="10">
 <li>「Windows コマンド プロセッサ」を探して展開します。次の画面例のように、タイトルが Parent の項目が表示されます。
-<figure><img loading="lazy" width="349" height="364" src="assets/ac850d7d88b0e5074dae37e7.webp" alt="タスク マネージャーの Windows コマンド プロセッサを展開すると Parent が表示される"></figure></li>
+<figure><img loading="lazy" width="349" height="364" src="assets/ac850d7d88b0e5074dae37e7.webp" alt="タスク マネージャーの Windows コマンド プロセッサを展開すると Parent が表示される"><figcaption>タスクマネージャーの「プロセス」タブで「Windows コマンド プロセッサ」を展開した例。その下に、この実験で起動した Parent が表示されています。</figcaption></figure></li>
 <li>「Windows コマンド プロセッサ」を右クリックし、「詳細の表示」を選びます。</li>
 <li>選択された <code>cmd.exe</code> を右クリックし、「プロセス ツリーの終了」を選びます。</li>
 <li>タスク マネージャーの確認ダイアログで「プロセス ツリーの終了」をクリックします。</li>
@@ -442,7 +442,7 @@ SystemSettingsAdminFlows.exe (4608)</pre><p>プロセス一覧の字下げは親
 <li><code>Processor</code> のカウンター一覧を展開して <code>% Privileged Time</code> を選びます。Ctrl キーを押しながら <code>% User Time</code> も選びます。</li>
 <li>「追加」をクリックしてから「OK」をクリックします。</li>
 <li>コマンドプロンプトを開き、<code>dir \\%computername%\c$ /s</code> と入力して、自分のコンピューターの C ドライブのディレクトリを走査します。
-<figure><img loading="lazy" width="591" height="426" src="assets/18f36dad166b8a4bd7fe543a.webp" alt="パフォーマンス モニターでカーネルモードとユーザーモードの CPU 時間を表示した画面"></figure></li>
+<figure><img loading="lazy" width="591" height="426" src="assets/18f36dad166b8a4bd7fe543a.webp" alt="パフォーマンス モニターでカーネルモードとユーザーモードの CPU 時間を表示した画面"><figcaption>パフォーマンスモニターで CPU 時間の内訳を記録した例。赤線はカーネルモードの割合（% Privileged Time）、緑線はユーザーモードの割合（% User Time）です。どちらも Processor オブジェクトの全プロセッサーの集計（_Total）です。</figcaption></figure></li>
 <li>確認が終わったらパフォーマンス モニターを閉じます。</li>
 </ol></section><section class="page" id="page-44" aria-label="page-44"><p>タスク マネージャーでも、カーネルモードの CPU 時間をすぐに確認できます。「パフォーマンス」タブを開き、CPU グラフを右クリックして「カーネル時間を表示する」を選びます。CPU 使用率のグラフで、カーネルモードの使用分が濃い青で表示されます。</p>
 <p>パフォーマンス モニター自体が各モードで使う時間を確認するには、パフォーマンス モニターをもう一度開き、プロセス別の <code>% User Time</code> と <code>% Privileged Time</code> を追加します。</p>
@@ -1133,7 +1133,7 @@ Evaluate expression: 2195 = 00000000&#x27;00000893</pre>
 <h4 id="実験-Ntoskrnl-exe-と-HAL-の依存関係を確認する">実験：Ntoskrnl.exe と HAL の依存関係を確認する</h4>
 <p>Dependency Walker（<code>Depends.exe</code>）で各イメージのエクスポートテーブルとインポートテーブルを調べると、カーネルと HAL の関係を確認できます。「File」メニューから「Open」を選び、調べるイメージファイルを開きます。</p>
 <p>次は <code>Ntoskrnl.exe</code> の依存関係を表示した例です。Dependency Walker は API セットを解析できないため、ここではそれに伴うエラーを無視します。</p>
-<figure><img loading="lazy" width="279" height="285" src="assets/a58a67ea16dc4b5c5e304c83.webp" alt="Dependency Walker で Ntoskrnl.exe の依存関係を表示した画面"></figure>
+<figure><img loading="lazy" width="279" height="285" src="assets/a58a67ea16dc4b5c5e304c83.webp" alt="Dependency Walker で Ntoskrnl.exe の依存関係を表示した画面"><figcaption>Dependency Walker の依存関係ツリー。NTOSKRNL.EXE の配下に HAL.DLL などが並び、HAL.DLL を展開すると NTOSKRNL.EXE、KDCOM.DLL、PSHED.DLL が表示されます。</figcaption></figure>
 <p><code>Ntoskrnl.exe</code> は HAL にリンクし、HAL も <code>Ntoskrnl.exe</code> にリンクしています。それぞれが相手の関数を使うためです。<code>Ntoskrnl.exe</code> は、次のバイナリにもリンクしています。</p>
 <ul><li><strong><code>Pshed.dll</code></strong>　Platform-Specific Hardware Error Driver（PSHED）は、プラットフォーム固有のハードウェアエラー報告機能を抽象化します。プラットフォームごとのエラー処理の詳細を隠し、Windows に共通のインターフェイスを提供します。</li></ul></section><section class="page" id="page-98" aria-label="page-98"><ul>
 <li><strong><code>Bootvid.dll</code></strong>　x86 の起動時ビデオドライバーです。起動中にテキストとロゴを表示するための VGA コマンドを扱います。</li>
