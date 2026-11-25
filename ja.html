@@ -7887,7 +7887,7 @@ ffffc404b69ad920: (0006,02c8) Flags: 00060800  Mdl: 00000000
 ...</pre>
 <p>多数のスレッドが表示され、その多くではスレッド情報の <code>IRP List</code> 欄に IRP が表示されます。未完了の I/O 要求が17件を超えるスレッドでは、デバッガーは先頭の17件だけを表示します。IRP を1つ選び、<code>!irp</code> コマンドで調べます。</p>
 <pre>lkd&gt; !irp ffffc404b69ad920
-Irp is active with 2 stacks 1 is current (= 0xffffc404b69ad9f0)
+IRP は処理中です。スタック位置は2個で、現在の位置は1です (= 0xffffc404b69ad9f0)
 No Mdl: No System Buffer: Thread ffffc404b613c7c0:  Irp stack trace.
 cmd  flg cl Device   File     Completion-Context
 &gt;[IRP_MJ_FILE_SYSTEM_CONTROL(d), N/A(0)]
@@ -7976,7 +7976,7 @@ object or _DEVICE_OBJECT not found
 <p>一覧には完了済みの IRP もあります。まもなく解放されるものもあれば、すでに解放されたものの、ルックアサイドリストから割り当てられた領域がまだ新しい IRP に再利用されていないものもあります。</p>
 <p>各行にはまず IRP のアドレスが表示され、次に要求を発行したスレッドのアドレスが続きます。そのあと、現在のスタックロケーションのメジャー機能コードとマイナー機能コードが括弧内に表示されます。個々の IRP は <code>!irp</code> コマンドで詳しく調べられます。</p>
 <pre>kd&gt; !irp 8a6f4d28
-Irp is active with 15 stacks 6 is current (= 0x8a6f4e4c)
+IRP は処理中です。スタック位置は15個で、現在の位置は6です (= 0x8a6f4e4c)
 Mdl=8b14b250: No System Buffer: Thread 8632e6c0:  Irp stack trace.
 cmd  flg cl Device   File     Completion-Context</pre></section><section class="page" id="page-540" aria-label="page-540"><pre>[N/A(0), N/A(0)]
 0  0 00000000 00000000 00000000-00000000
@@ -8244,7 +8244,7 @@ nt!KiSystemServiceCopyEnd+0x13 (TrapFrame @ ffffb881&#x27;3ecf7b00)</pre>
 </ol></section><section class="page" id="page-558" aria-label="page-558"><ol start="5">
 <li>スタックトレースから、I/O を開始したスレッドがキャンセルまたは完了を待っていることがわかります。次に、前の実験でも使ったデバッガー拡張コマンド <code>!irp</code> で原因を調べます。IRP のポインターをコピーし、<code>!irp</code> に渡します。
 <pre>lkd&gt; !irp ffff8c0b84f1d130
-Irp is active with 1 stacks 1 is current (= 0xffff8c0b84f1d200)
+IRP は処理中です。スタック位置は1個で、現在の位置は1です (= 0xffff8c0b84f1d200)
 No Mdl: No System Buffer: Thread ffff8c0b85377300:  Irp stack trace.
 cmd  flg cl Device   File     Completion-Context
 &gt;[IRP_MJ_DEVICE_CONTROL(e), N/A(0)]
@@ -12371,7 +12371,7 @@ https://ionescu007.github.io/SpecuCheck/  --   @aionescu
                                                        yes</pre>
 <p>掲載スペースの都合で、出力の一部を省略しています。</p>
 <p>Windows Insider の最新版をダウンロードして SkTool を試すこともできます。引数を指定せずに起動すると、既定ではハイパーバイザーとセキュアカーネルの状態が表示されます。すべてのサイドチャネル緩和策の状態を表示するには、コマンドライン引数 <code>/mitigations</code> を指定します。</p>
-<p>Hypervisor / Secure Kernel / Secure Mitigations Parser Tool 1.0</p>
+<p>ハイパーバイザー、セキュアカーネル、セキュリティ緩和策の解析ツール 1.0</p>
 <pre>Querying Speculation Features... Success!
 This system supports Secure Speculation Controls.</pre>
 <pre>System Speculation Features.
@@ -15853,7 +15853,7 @@ HandleCount: 0  PointerCount: 1
 Directory Object: ffffc704ade04ca0  Name: C:
 Flags: 00000000 ( Local )
 Target String is &#x27;\Device\HarddiskVolume3&#x27;
-Drive Letter Index is 3 (C:)</pre></li>
+ドライブ文字のインデックス: 3（C:）</pre></li>
 <li><p>続いて、対象のボリューム名を <code>!object</code> に渡し、Device オブジェクトを取得します。</p>
 <pre>1: kd&gt; !object \Device\HarddiskVolume1
 Object: FFFF898F0820D8F0 Type: (fffffa8000ca0750) Device</pre>
