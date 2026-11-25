@@ -4670,14 +4670,14 @@ Scheduling Group: ffffd28c089e7a40 KSCB: ffffd28c089e7c68 rank 0</pre>
 <li>マシンに別のローカルユーザーを作成します。</li>
 <li>現在のセッションで CPU Stress を起動します。</li>
 <li>マシン全体が過負荷にならない範囲で、数個のスレッドを最高の活動レベルで動かします。次の画面は、プロセッサが3個の仮想マシンで、2つのスレッドを最高の活動レベルで動かした例です。
-<figure><img loading="lazy" width="304" height="141" src="assets/109c840def43bfc7530a1117.webp" alt="CPU Stress で2つのスレッドの活動レベルを Maximum に設定した画面"></figure></li>
+<figure><img loading="lazy" width="304" height="141" src="assets/109c840def43bfc7530a1117.webp" alt="CPU Stress で2つのスレッドの活動レベルを Maximum に設定した画面"><figcaption>CPU Stress（PID 8328）はプロセスの優先度クラスが「高（High）」です。有効なスレッド 1 と 2 は、活動量が「最大（Maximum）」、優先度が「通常（Normal）」です。</figcaption></figure></li>
 </ol></section><section class="page" id="page-309" aria-label="page-309"><ol start="8">
 <li>Ctrl+Alt+Del を押して「ユーザーの切り替え」を選びます。先ほど作成した別のユーザーのアカウントを選び、サインインします。</li>
 <li>このセッションでも CPU Stress を起動し、先ほどと同じ数のスレッドを最高の活動レベルで動かします。</li>
 <li>この CPUSTRES プロセスの「Process」メニューから「Priority Class」を開き、「High」を選びます。DFSS が無効なら、3つのプロセッサを4つのスレッドが取り合い、優先度の低いプロセスに属するスレッドの1つが実行機会を得られなくなるため、高い優先度クラスのプロセスが CPU 時間の大半を使います。</li>
 <li>Process Explorer を開き、2つの CPUSTRES プロセスをそれぞれダブルクリックして、「Performance Graph」タブを選びます。</li>
 <li>両方のウィンドウを横に並べます。DFSS が有効な状態では、優先度クラスが異なる両プロセスに、ほぼ同じだけの CPU 時間が配分されます。
-<figure><img loading="lazy" width="590" height="159" src="assets/a6b6373646301f023ce6e703.webp" alt="DFSS が有効なとき、2つの CPUSTRES プロセスの CPU 使用量がおおむね等しいことを示すグラフ"></figure></li>
+<figure><img loading="lazy" width="590" height="159" src="assets/a6b6373646301f023ce6e703.webp" alt="DFSS が有効なとき、2つの CPUSTRES プロセスの CPU 使用量がおおむね等しいことを示すグラフ"><figcaption>DFSS が有効な状態で比較した CPU 使用率。左の CPUSTRES.EXE（PID 8328）は 41.90%、右の CPUSTRES.EXE（PID 6472）は 46.96% です。</figcaption></figure></li>
 <li>実験で追加したレジストリキーを削除して DFSS を無効にし、システムを再起動します。</li>
 <li>実験を繰り返します。優先度の高いプロセスに CPU 時間の大半が割り当てられることを確認できます。</li>
 </ol>
@@ -4693,13 +4693,13 @@ Scheduling Group: ffffd28c089e7a40 KSCB: ffffd28c089e7c68 rank 0</pre>
 <p>この実験では、ジョブオブジェクトを使った CPU 使用率制限を確認します。執筆時点ではデバッガーに不具合があるため、ローカルのカーネルをデバッグするより、仮想マシン上で実験してそのカーネルに接続する方が確実です。</p>
 <ol>
 <li>テスト用の仮想マシンで CPU Stress を起動し、数個のスレッドで CPU 時間の約50%を使うように設定します。たとえば、8プロセッサのシステムでは、4つのスレッドを有効にし、最高の活動レベルで動かします。
-<figure><img loading="lazy" width="400" height="144" src="assets/9a120cd0b15e83e96919c45f.webp" alt="CPU Stress で4つのスレッドを有効にし、活動レベルを Maximum にした画面"></figure></li>
+<figure><img loading="lazy" width="400" height="144" src="assets/9a120cd0b15e83e96919c45f.webp" alt="CPU Stress で4つのスレッドを有効にし、活動レベルを Maximum にした画面"><figcaption>CPU Stress（PID 6324）では 4 本のスレッドをすべて有効にし、活動量を「最大（Maximum）」に設定しています。プロセスの優先度クラスと各スレッドの優先度は「通常（Normal）」です。</figcaption></figure></li>
 <li>Process Explorer を開き、対象の CPUSTRES プロセスのプロパティを開いて「Performance Graph」タブを選びます。CPU 使用率は約50%です。</li>
 <li>本書のダウンロード資料から CPULIMIT ツールをダウンロードします。このツールは、ハードキャップを使って1つのプロセスの CPU 使用率を制限します。</li>
 <li>次のコマンドを実行し、CPUSTRES プロセスの CPU 使用率を20%に制限します。<code>6324</code> は実験環境のプロセス ID に置き換えてください。
 <pre>CpuLimit.exe 6324 20</pre></li>
 <li>Process Explorer のウィンドウを確認します。CPU 使用率が約20%に下がります。
-<figure><img loading="lazy" width="368" height="108" src="assets/3ad8bf3d82fbccb5ad338df3.webp" alt="CPU 使用率が約50%から約20%に下がったグラフ"></figure></li>
+<figure><img loading="lazy" width="368" height="108" src="assets/3ad8bf3d82fbccb5ad338df3.webp" alt="CPU 使用率が約50%から約20%に下がったグラフ"><figcaption>CPU 使用率の履歴は約 50% から約 20% に低下しています。画面左の現在値は 23.22% です。</figcaption></figure></li>
 </ol></section><section class="page" id="page-311" aria-label="page-311"><ol start="6">
 <li>ホストシステムで WinDbg を開きます。</li>
 <li>テストシステムのカーネルに接続し、実行を中断します。</li>
@@ -4800,9 +4800,9 @@ Scheduling Group: ffff9e0628d7c1c0</pre>
 <li>「Type」の列見出しをクリックし、型で並べ替えます。</li>
 <li>「Type」列を見ながら一覧をスクロールし、型が <code>TpWorkerFactory</code> のハンドルを探します。</li>
 <li>「Handle」の列見出しをクリックし、ハンドル値で並べ替えます。次のページの画面のように、<code>TpWorkerFactory</code> の直前に <code>IoCompletion</code> のハンドルがあります。ワーカーファクトリを作成する前に、作業を送信する I/O 完了ポートのハンドルを作る必要があるためです。</li>
-</ol></section><section class="page" id="page-317" aria-label="page-317"><figure><img loading="lazy" width="369" height="204" src="assets/eaeaac43ae87027f12e9f272.webp" alt="Process Explorer のハンドル一覧で IoCompletion の直後に TpWorkerFactory が並ぶ画面"></figure>
+</ol></section><section class="page" id="page-317" aria-label="page-317"><figure><img loading="lazy" width="369" height="204" src="assets/eaeaac43ae87027f12e9f272.webp" alt="Process Explorer のハンドル一覧で IoCompletion の直後に TpWorkerFactory が並ぶ画面"><figcaption>Process Explorer の下ペインに表示されたハンドル一覧。「種類（Type）」列で、ハンドル 0x14 の IoCompletion の直後に、0x18 の TpWorkerFactory が表示されています。</figcaption></figure>
 <ol start="11"><li>プロセス一覧で選んだプロセスをダブルクリックし、「Threads」タブを開いて、「Start Address」列をクリックします。次のような画面が表示されます。ワーカーファクトリのスレッドは、開始アドレスが <code>Ntdll.dll</code> の <code>TppWorkerThread</code> であることから識別できます。<code>Tpp</code> は thread pool private の略です。
-<figure><img loading="lazy" width="333" height="345" src="assets/6ff9e89d3924a10cdb124410.webp" alt="開始アドレスで並べ替えたスレッド一覧に TppWorkerThread が表示される"></figure></li></ol>
+<figure><img loading="lazy" width="333" height="345" src="assets/6ff9e89d3924a10cdb124410.webp" alt="開始アドレスで並べ替えたスレッド一覧に TppWorkerThread が表示される"><figcaption>svchost.exe（PID 1144）の「スレッド（Threads）」タブには 74 本のスレッドがあります。「開始アドレス（Start Address）」列には ntdll.dll!TppWorkerThread が複数並んでいます。選択中のスレッドの基本優先度と動的優先度はいずれも 8 です。</figcaption></figure></li></ol>
 <p>ほかのワーカースレッドを調べると、イベントなどのオブジェクトを待っているものもあります。1つのプロセスは複数のスレッドプールを持つことができ、同じプールの中でも、スレッドごとにまったく無関係な作業を担当することがあります。開発者は、作業の割り当てを決め、スレッドプール API を呼び出して、<code>Ntdll.dll</code> を通じて作業を登録します。</p>
 <h3 id="まとめ-4">まとめ</h3>
 <p>この章では、スレッドの構造と、スレッドを作成・管理する仕組みを説明しました。また、Windows が、どのスレッドを、どのプロセッサで、どのくらいの間実行するかを決める方法を見てきました。次章では、OS の主要な機能の一つであるメモリ管理を扱います。</p></section><section class="page" id="page-318" aria-label="page-318"><h2 id="第5章-メモリ管理">第5章 メモリ管理</h2>
