@@ -3941,12 +3941,12 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>オブジェクト「Thread」を選び、カウンター「Priority Current」を選びます。</li>
 <li>インスタンス欄で「すべてのインスタンス」を選び、「検索」をクリックします。</li>
 <li>CPUSTRES プロセスまでスクロールし、2番目のスレッド（スレッド1）を選んで「追加」をクリックします。最初のスレッドは GUI スレッドです。次のように表示されます。
-<figure><img loading="lazy" width="483" height="364" src="assets/eed84fce6ec34fa553c2b292.webp" alt="CPUSTRES のスレッド1に Priority Current カウンターを追加した画面"></figure></li>
+<figure><img loading="lazy" width="483" height="364" src="assets/eed84fce6ec34fa553c2b292.webp" alt="CPUSTRES のスレッド1に Priority Current カウンターを追加した画面"><figcaption>「カウンターの追加」ダイアログで、Thread オブジェクトの「現在の優先度（Priority Current）」を選び、インスタンス CPUSTRES/1 に追加します。</figcaption></figure></li>
 <li>「OK」をクリックします。</li>
 <li>カウンターを右クリックし、「プロパティ」を選びます。</li>
 <li>「グラフ」タブを開き、縦軸の最大値を16に変更して「OK」をクリックします。</li>
 <li>CPU Stress のウィンドウをフォアグラウンドに移します。対象スレッドの優先度が2段階上がり、そのあと徐々に下がって基本優先度に戻る様子を確認できます。「Busy」では、スレッドは時間の約25%をスリープに費やし、スリープが終わるたびに優先度が2段階上がります。活動レベルを「Maximum」にすると、スレッドが無限ループに入り、待機関数を呼ばなくなるため、ブーストは観察できません。</li>
-</ol></section><section class="page" id="page-262" aria-label="page-262"><figure><img loading="lazy" width="569" height="409" src="assets/ce585eb9acfab4a731f8a94f.webp" alt="CPUSTRES のスレッドの優先度が上がり、基本優先度に戻る様子を示すグラフ"></figure>
+</ol></section><section class="page" id="page-262" aria-label="page-262"><figure><img loading="lazy" width="569" height="409" src="assets/ce585eb9acfab4a731f8a94f.webp" alt="CPUSTRES のスレッドの優先度が上がり、基本優先度に戻る様子を示すグラフ"><figcaption>CPUSTRES のスレッド 1 の現在の優先度。横軸は時刻、縦軸は優先度です。優先度は基本値 8 から一時的に 10 に上がり、8 に戻ります。</figcaption></figure>
 <ol start="14"><li>観察を終えたら、パフォーマンスモニターと CPU Stress を終了します。</li></ol>
 <h5 id="GUI-スレッドの待機解除後の優先度ブースト">GUI スレッドの待機解除後の優先度ブースト</h5>
 <p>ウィンドウを所有するスレッドは、ウィンドウメッセージの到着など、ウィンドウの処理に伴って起こされると、優先度がさらに2段階上がります。ウィンドウシステム（<code>Win32k.sys</code>）が、GUI スレッドを起こすイベントをセットするために <code>KeSetEvent</code> を呼ぶとき、このブーストを適用します。先ほどのブーストと同じく、対話型アプリケーションの応答性を高めるためです。</p>
@@ -3984,7 +3984,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 </ol></section><section class="page" id="page-265" aria-label="page-265"><ol start="4">
 <li>スレッド2を選び、活動レベルを「Low」から「Maximum」に変更します。</li>
 <li>プロセスのアフィニティマスクを変更して、実行先を任意の論理プロセッサ1つに制限します。CPU Stress の「Process」メニューから「Affinity」を選ぶか、タスクマネージャーで設定します。画面は次のようになります。
-<figure><img loading="lazy" width="382" height="143" src="assets/33d79d72bf31c74d11d58140.webp" alt="CPU Stress で2つのスレッドの活動レベルと優先度を設定した画面"></figure></li>
+<figure><img loading="lazy" width="382" height="143" src="assets/33d79d72bf31c74d11d58140.webp" alt="CPU Stress で2つのスレッドの活動レベルと優先度を設定した画面"><figcaption>CPU Stress のスレッド 1 と 2 は有効で、活動量は「最大（Maximum）」です。スレッド 1 の優先度は「最低（Lowest）」、スレッド 2 は「通常（Normal）」です。</figcaption></figure></li>
 <li>パフォーマンスモニターを起動します。</li>
 <li>ツールバーのカウンター追加ボタンをクリックするか、Ctrl+I を押して、「カウンターの追加」ダイアログを開きます。</li>
 <li>オブジェクト「Thread」を選び、カウンター「Priority Current」を選びます。</li>
@@ -3992,7 +3992,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>スレッド1と2を選び、「追加」、次に「OK」をクリックします。スレッド0は GUI スレッドです。</li>
 <li>両方のカウンターについて、縦軸の最大値を16に変更します。</li>
 <li>パフォーマンスモニターは1秒に1回しか表示を更新しないため、優先度ブーストを見逃す場合があります。観察しやすくするには、Ctrl+F を押して表示を停止し、続けて Ctrl+U を押し続けて更新頻度を上げます。タイミングが合えば、次のように、優先度の低いスレッドが15に引き上げられる様子が見えます。
-<figure><img loading="lazy" width="462" height="325" src="assets/820a4d3522a862bf53fa114f.webp" alt="優先度の低いスレッドが一時的に15に上がったグラフ"></figure></li>
+<figure><img loading="lazy" width="462" height="325" src="assets/820a4d3522a862bf53fa114f.webp" alt="優先度の低いスレッドが一時的に15に上がったグラフ"><figcaption>スレッド 1（橙）の優先度は通常 6 で、一時的に 15 まで上がります。スレッド 2（緑）の優先度は 8 のままです。</figcaption></figure></li>
 <li>パフォーマンスモニターと CPU Stress を終了します。</li>
 </ol></section><section class="page" id="page-266" aria-label="page-266"><h5 id="ブーストの適用">ブーストの適用</h5>
 <p><code>KiExitDispatcher</code> は <code>KiProcessThreadWaitList</code> を呼び、Deferred Ready リストのスレッドを処理します。ここで呼び出し元から渡されたブースト情報を処理します。リストの各スレッドについて、待機ブロックのうち Active と Bypassed のものをリストから外し、カーネルのスレッド制御ブロックに <code>AdjustReason</code> と <code>AdjustIncrement</code> を設定します。前者には先述した2種類の調整理由のいずれかを、後者にはブースト値を設定します。そのあと <code>KiDeferredReadyThread</code> を呼びます。このルーチンは、クォンタムと優先度を選ぶアルゴリズムと、プロセッサを選ぶアルゴリズムの両方を実行し、スレッドを実行可能にします。前者はここから適用と解除に分けて説明し、後者は後述の「プロセッサの選択」で説明します。</p>
@@ -4043,7 +4043,7 @@ lkd&gt; dt nt!_KPROCESS ffffe001&#x27;4f51f080 QuantumReset
 <li>CPUSTRES の優先度クラスを「High」に変更します。</li>
 <li>CPUSTRES のアフィニティを変更し、Wmplayer と同じ CPU だけを使うようにします。システムの応答は大幅に遅くなりますが、音楽の再生は続きます。システムのほかの部分も、ときどき応答が戻ります。</li>
 <li>パフォーマンスモニターで、Wmplayer のスレッドの優先度が、ときどき16から下がる様子を確認します。
-<figure><img loading="lazy" width="550" height="405" src="assets/1892d00d833911b435559d5d.webp" alt="Wmplayer のスレッドの優先度が16から一時的に下がるグラフ"></figure></li>
+<figure><img loading="lazy" width="550" height="405" src="assets/1892d00d833911b435559d5d.webp" alt="Wmplayer のスレッドの優先度が16から一時的に下がるグラフ"><figcaption>Windows Media Player のスレッドごとの現在の優先度（Priority Current）。横軸は時刻、縦軸は優先度です。一部のスレッドの優先度は 16 から一時的に下がります。</figcaption></figure></li>
 </ol></section><section class="page" id="page-271" aria-label="page-271"><p>MMCSS は優先度の引き上げ以外の処理も行います。Windows のネットワークドライバーと NDIS スタックでは、ネットワークカードから割り込みを受けたあとの処理を後回しにするため、DPC をよく使います。DPC はユーザーモードのコードより高い IRQL で動作します。そのため、ネットワーク転送中やゲーム中など、ネットワークカードのドライバーが長時間動くと、メディア再生が中断されることがあります。DPC と IRQL は第6章で説明します。</p>
 <p>MMCSS はネットワークスタックに専用のコマンドを送り、メディアの再生中はパケットの処理量を抑えるよう指示します。ネットワークスループットがわずかに下がる代わりに、再生性能を確保します。オンラインゲームなど、再生中に通常行うネットワーク処理では、この低下は目立ちません。具体的な制御はスケジューラーの範囲外です。</p>
 <p>MMCSS はデッドラインスケジューリングにも対応します。音声再生プログラムが、常にカテゴリ内で最高の優先度を必要とするとは限らない点を利用します。たとえば、ディスクやネットワークから音声データをバッファーに読み込み、そのバッファーを再生しながら次のバッファーを用意する場合です。クライアントスレッドは、音切れを避けるために高い優先度が必要になる時刻を知らせ、それまでは同じカテゴリ内の低い優先度で動作できます。<code>AvTaskIndexYield</code> を使うと、次に実行が必要な時刻を、カテゴリ内の最高優先度が必要になる時刻として指定できます。それまではカテゴリ内の最低優先度で動くため、システムのほかの処理に CPU 時間を回せる場合があります。</p>
