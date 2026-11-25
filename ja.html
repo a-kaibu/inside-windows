@@ -21336,7 +21336,7 @@ xperf -start TestSession -on Microsoft-Windows-Kernel-Process -f c:&#92;process_
 <li>コマンドプロンプトを開き、前の実験「ETW でプロセスの活動を記録する」で作成した ETL ファイルのフォルダーに移動し、次のコマンドを入力します。
 <pre><code>netsh trace convert input=process_trace.etl output=process_trace.txt dump=txt overwrite=yes</code></pre></li>
 <li><code>process_trace.etl</code> は入力ログファイル名、<code>process_trace.txt</code> はデコードしたテキストの出力先です。</li>
-<li>テキストファイルを開くと、デコードされたイベントが説明付きで1件ずつ表示されます。次は、親プロセス6924が起動したメモ帳のプロセス1808が、セッション1で実行されたときの例です。
+<li>テキストファイルを開くと、デコードされたイベントが説明付きで1件ずつ表示されます。次は、2020年5月1日19時00分42.075562700秒（UTC）に、親プロセス 6924 がセッション 1 でメモ帳（PID 1808）を起動したことを示す例です。出力の末尾には、デバイス名から始まる notepad.exe のパスが表示されます。
 <pre><code>[2]1B0C.1154::2020-05-01 12:00:42.075601200 [Microsoft-Windows-Kernel-Process]
 Process 1808 started at time 2020-05-01T19:00:42.075562700Z by parent 6924
 running in session 1 with name &#92;Device&#92;HarddiskVolume4&#92;Windows&#92;System32&#92;notepad.exe.</code></pre></li>
