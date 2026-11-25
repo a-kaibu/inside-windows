@@ -5123,7 +5123,7 @@ The operation completed successfully.</pre></li>
 </tbody></table></div>
 <h4 id="実験-プールの最大サイズを確認する">実験：プールの最大サイズを確認する</h4>
 <p>プールの上限は、Process Explorer または第1章で説明したライブカーネルデバッグで確認できます。Process Explorer では、「View」メニューから「System Information」を選び、「Memory」タブを開きます。次の画面のように、「Kernel Memory」にプールの上限が表示されます。</p>
-<figure><img loading="lazy" width="347" height="233" src="assets/17c2cee4ce65b658487a0658.webp" alt="Process Explorer の Kernel Memory 欄に表示されたプールの上限"></figure></section><section class="page" id="page-344" aria-label="page-344"><p><strong>注記</strong> Process Explorer がこの情報を取得するには、システムで動作中のカーネルのシンボルが必要です。シンボルの設定方法は、第1章の「実験：Process Explorer でプロセスの詳細を確認する」を参照してください。</p>
+<figure><img loading="lazy" width="347" height="233" src="assets/17c2cee4ce65b658487a0658.webp" alt="Process Explorer の Kernel Memory 欄に表示されたプールの上限"><figcaption>「カーネルメモリ（Kernel Memory）」欄の Paged Limit はページプールの上限、Nonpaged Limit は非ページプールの上限を示します。</figcaption></figure></section><section class="page" id="page-344" aria-label="page-344"><p><strong>注記</strong> Process Explorer がこの情報を取得するには、システムで動作中のカーネルのシンボルが必要です。シンボルの設定方法は、第1章の「実験：Process Explorer でプロセスの詳細を確認する」を参照してください。</p>
 <p>カーネルデバッガーで同じ情報を確認するには、この章で先ほど紹介した <code>!vm</code> コマンドを使います。</p>
 <h3 id="プールの使用状況を監視する">プールの使用状況を監視する</h3>
 <p>パフォーマンスモニターの「Memory」オブジェクトには、非ページプールとページプールの使用量を個別に表示するカウンターがあります。ページプールについては仮想サイズと物理メモリに常駐するサイズの両方を確認できます。WDK の Tools ディレクトリにある Poolmon では、両プールの使用状況をさらに詳しく監視できます。Poolmon を起動すると、図5-7のように表示されます。</p>
@@ -5173,7 +5173,7 @@ Pool         8     12834368          0           0        プールテーブル�
 <ol>
 <li>OS のビット数に合った <code>Notmyfault.exe</code> を起動します。たとえば、64ビットシステムでは64ビット版を使います。</li>
 <li><code>Notmyfault.exe</code> はデバイスドライバー <code>Myfault.sys</code> を読み込み、「Crash」タブを選んだ状態で「Not My Fault」ダイアログを表示します。「Leak」タブを開くと、次のページのような画面が表示されます。</li>
-</ol></section><section class="page" id="page-347" aria-label="page-347"><figure><img loading="lazy" width="239" height="307" src="assets/a750cfb95b1fc4f2b1ca8b9b.webp" alt="Not My Fault の Leak タブと、リーク量を指定する欄"></figure>
+</ol></section><section class="page" id="page-347" aria-label="page-347"><figure><img loading="lazy" width="239" height="307" src="assets/a750cfb95b1fc4f2b1ca8b9b.webp" alt="Not My Fault の Leak タブと、リーク量を指定する欄"><figcaption>Not My Fault の「リーク（Leak）」タブ。毎秒のリーク量は 1,000 KB です。現在はページプールと非ページプールのどちらもリークしていません。割り当てたメモリはアプリケーションを閉じると解放されます。</figcaption></figure>
 <ol start="3">
 <li>「Leak/Second」が1,000 KBに設定されていることを確認します。</li>
 <li>「Leak Paged」をクリックします。Notmyfault が Myfault デバイスドライバーに、ページプールからメモリを割り当てる要求を送ります。「Stop Paged」をクリックするまで要求を送り続けます。通常、不具合のあるデバイスドライバーを介してページプールのリークを起こしたプログラムを閉じても、リークしたメモリは解放されず、再起動まで残ります。Myfault ドライバーは、テストしやすいよう、Notmyfault のプロセスが終了したことを検知し、そのプロセスの要求で確保したページプールのメモリを解放します。</li>
@@ -5468,22 +5468,22 @@ Next block         : 0x000001f72a5eb960</pre>
 <li>「Image File」タブを開きます。</li>
 <li>「Image」欄に <code>notepad.exe</code> と入力し、Tab キーを押します。各種のチェックボックスを選べるようになります。</li>
 <li>「Enable Page Heap」にチェックを入れます。ダイアログは次のようになります。
-<figure><img loading="lazy" width="362" height="359" src="assets/e51d37d1150939ee4a99ee84.webp" alt="Gflags の Image File タブで notepad.exe の Enable Page Heap を選択した画面"></figure></li>
+<figure><img loading="lazy" width="362" height="359" src="assets/e51d37d1150939ee4a99ee84.webp" alt="Gflags の Image File タブで notepad.exe の Enable Page Heap を選択した画面"><figcaption>Gflags の「イメージファイル（Image File）」タブで notepad.exe を指定し、「ページヒープを有効にする（Enable page heap）」を選んだ状態です。</figcaption></figure></li>
 <li>「Apply」をクリックします。</li>
 <li>最初のメモ帳を開いたまま、もう1つメモ帳を起動します。</li>
 <li>タスクマネージャーで2つのメモ帳のコミットサイズを比較します。どちらも何も入力していないのに、2つ目のプロセスのコミットサイズは大幅に増えています。ページヒープが追加のメモリを割り当てるためです。次のページに32ビット版 Windows 10 での画面を示します。</li>
-</ol></section><section class="page" id="page-362" aria-label="page-362"><figure><img loading="lazy" width="343" height="147" src="assets/dc56f4863eb0ce45865f545f.webp" alt="タスクマネージャーで2つのメモ帳のコミットサイズを比較した画面"></figure>
+</ol></section><section class="page" id="page-362" aria-label="page-362"><figure><img loading="lazy" width="343" height="147" src="assets/dc56f4863eb0ce45865f545f.webp" alt="タスクマネージャーで2つのメモ帳のコミットサイズを比較した画面"><figcaption>タスクマネージャーの「詳細」タブ。ページヒープが有効なメモ帳（PID 8168）のコミットサイズは 10,248 K で、比較対象（PID 3552）は 1,532 K です。</figcaption></figure>
 <ol start="11">
 <li>ページヒープを有効にしたメモ帳で、どの領域のコミットサイズが増えたかを調べるには、Sysinternals の VMMap を使います。メモ帳の両方のプロセスを実行したまま <code>VMMap.exe</code> を開き、ページヒープを使っている方のメモ帳を選びます。
-<figure><img loading="lazy" width="383" height="384" src="assets/5ddf0e8fddaa73e45160a34a.webp" alt="VMMap のプロセス選択画面でページヒープを使うメモ帳を選ぶ"></figure></li>
+<figure><img loading="lazy" width="383" height="384" src="assets/5ddf0e8fddaa73e45160a34a.webp" alt="VMMap のプロセス選択画面でページヒープを使うメモ帳を選ぶ"><figcaption>VMMap の「プロセスの選択または起動」ダイアログで「実行中のプロセスを表示」を開き、notepad.exe（PID 8168）を選択しています。</figcaption></figure></li>
 <li>VMMap をもう1つ起動し、もう一方のメモ帳を選びます。両方を比較できるようにウィンドウを横に並べます。</li>
-</ol></section><section class="page" id="page-363" aria-label="page-363"><figure><img loading="lazy" width="604" height="331" src="assets/210894ec8ab8ba93f014ecd9.webp" alt="VMMap でページヒープが有効なメモ帳と無効なメモ帳の使用量を比較"></figure>
+</ol></section><section class="page" id="page-363" aria-label="page-363"><figure><img loading="lazy" width="604" height="331" src="assets/210894ec8ab8ba93f014ecd9.webp" alt="VMMap でページヒープが有効なメモ帳と無効なメモ帳の使用量を比較"><figcaption>VMMap による比較。左はページヒープが有効なメモ帳（PID 8168）、右は比較対象（PID 3552）です。黄色はプライベートデータを表し、左のプライベートバイトの棒で大きな割合を占めています。</figcaption></figure>
 <ol start="13">
 <li>黄色で示された「Private Data」の部分に、コミットサイズの差がはっきり現れています。</li>
 <li>双方の VMMap ウィンドウの中央ペインで「Private Data」の行をクリックします。下部ペインに内訳が表示されます。次の画面ではサイズ順に並べています。
-<figure><img loading="lazy" width="600" height="120" src="assets/75f294d0fc07d357ba834615.webp" alt="2つの VMMap ウィンドウに表示したプライベートデータ領域の内訳"></figure></li>
+<figure><img loading="lazy" width="600" height="120" src="assets/75f294d0fc07d357ba834615.webp" alt="2つの VMMap ウィンドウに表示したプライベートデータ領域の内訳"><figcaption>両プロセスのプライベートデータ領域の一覧。左がページヒープを有効にした場合で、各領域のアドレス、サイズ、コミット済み容量、プライベート容量、ワーキングセットの合計を比較できます。</figcaption></figure></li>
 <li>左の画面はページヒープを使ったメモ帳で、より多くのメモリを消費しています。1,024 KBの領域を1つ展開すると、次のように表示されます。
-<figure><img loading="lazy" width="414" height="119" src="assets/579d0996344349cf2be7d3b2.webp" alt="コミット済みページの間に予約済みページが並ぶ VMMap の表示"></figure></li>
+<figure><img loading="lazy" width="414" height="119" src="assets/579d0996344349cf2be7d3b2.webp" alt="コミット済みページの間に予約済みページが並ぶ VMMap の表示"><figcaption>VMMap に表示された 4 K のプライベートデータ領域。コミット済み容量が 4 K と表示される行と、同じ列が空欄の予約済みページの行が交互に並んでいます。</figcaption></figure></li>
 <li>コミット済みページの間に予約済みページが見えます。ページヒープはこれらのページを使って、バッファーの末尾を越えるアクセスや、先頭より前へのアクセスを検出します。Gflags の「Enable Page Heap」のチェックを外し、「Apply」をクリックします。以降に起動するメモ帳にはページヒープが適用されません。</li>
 </ol>
 <p>ページヒープの詳細は、Debugging Tools for Windows のヘルプを参照してください。</p></section><section class="page" id="page-364" aria-label="page-364"><h3 id="フォールトトレラントヒープ">フォールトトレラントヒープ</h3>
