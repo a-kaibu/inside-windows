@@ -19549,3 +19549,13 @@ full_pages_ja['p2-page-851'] += (
     '<code>IoPortAccessSupported</code> は 1 で、I/O ポートへのアクセスをサポートしています。'
     '<code>BootDebuggerActive</code> は 0 で、ブートデバッガーは動作していません。</p>'
 )
+
+
+full_pages_ja['page-199'] = full_pages_ja['page-199'].replace(
+    '<!-- original-pre --></li>\n</ol>',
+    '<!-- original-pre -->'
+    '<p><code>ProcessListHead</code> は所属プロセスのリストの先頭、'
+    '<code>JobLock</code> はジョブを保護する同期オブジェクトです。'
+    'この時点の <code>TotalProcesses</code> は 4、<code>ActiveProcesses</code> は 3 です。</p></li>\n</ol>',
+    1,
+)
