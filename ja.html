@@ -26102,7 +26102,7 @@ DeviceId FriendlyName
                                                                                            True
 0
          Msft Virtual Disk 6002248048976A586FE149B00A43FC73  274877906944 Unspecified   False</code></pre></section><section class="page" id="p2-page-806" aria-label="p2-page-806"><p>新しい仮想ディスクを構成する物理ディスクをまとめるストレージプールを作り、その中にストレージ階層を作ります。
-この例ではプール名を <code>DefaultPool</code> に統一しています。</p>
+この例ではプール名を <code>DefaultPool</code> に統一しています。</p><p>作成結果の <code>OperationalStatus</code> は動作状態、<code>HealthStatus</code> は正常性です。このプールは正常（<code>OK</code>、<code>Healthy</code>）で、容量は 1.12 TB、割り当て済みの容量（<code>AllocatedSize</code>）は 512 MB です。</p>
 <pre><code>PS C:\&gt; New-StoragePool -StorageSubSystemId (Get-StorageSubSystem).UniqueId -FriendlyName DefaultPool -PhysicalDisks (Get-PhysicalDisk -CanPool $true)
 FriendlyName OperationalStatus HealthStatus IsPrimordial IsReadOnly    Size AllocatedSize
 ------------ ----------------- ------------ ------------ ----------    ---- -------------

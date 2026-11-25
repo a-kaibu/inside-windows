@@ -19486,3 +19486,12 @@ full_pages_ja['p2-page-805'] = full_pages_ja['p2-page-805'].replace(
     '仮想環境では、基盤ディスクのメディアの種類をシステムが正しく識別できないことがあります。'
     '次の出力では、仮想ディスクの種類が「未指定」（<code>Unspecified</code>）と表示されています。',
 )
+
+
+full_pages_ja['p2-page-806'] = full_pages_ja['p2-page-806'].replace(
+    'この例ではプール名を <code>DefaultPool</code> に統一しています。</p>',
+    'この例ではプール名を <code>DefaultPool</code> に統一しています。</p>'
+    '<p>作成結果の <code>OperationalStatus</code> は動作状態、<code>HealthStatus</code> は正常性です。'
+    'このプールは正常（<code>OK</code>、<code>Healthy</code>）で、容量は 1.12 TB、'
+    '割り当て済みの容量（<code>AllocatedSize</code>）は 512 MB です。</p>',
+)
