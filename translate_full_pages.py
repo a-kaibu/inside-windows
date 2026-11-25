@@ -19511,3 +19511,12 @@ full_pages_ja['p2-page-682'] = full_pages_ja['p2-page-682'].replace(
     '（<code>Completely on tier</code>）、状態（<code>State</code>）は「正常」'
     '（<code>OK</code>）です。一方、',
 )
+
+for source, localized in (
+    ('説明: USB Storage', '説明: USB ストレージ（USB Storage）'),
+    ('説明: Windows Boot Manager', '説明: Windows ブートマネージャー（Windows Boot Manager）'),
+    ('説明: Internal Storage', '説明: 内部ストレージ（Internal Storage）'),
+    ('説明: PXE Network', '説明: PXE ネットワーク（PXE Network）'),
+    ('Path: Harddisk0', 'パス（Path）: Harddisk0'),
+):
+    full_pages_ja['p2-page-819'] = full_pages_ja['p2-page-819'].replace(source, localized)
